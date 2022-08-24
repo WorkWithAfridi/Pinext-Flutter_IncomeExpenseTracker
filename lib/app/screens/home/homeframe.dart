@@ -43,7 +43,7 @@ class HomeframeView extends StatelessWidget {
             onTap: (value) {
               context.read<HomeframeNavbarCubit>().changeNavbarState(value);
             },
-            selectedItemColor: customBlackColor,
+            selectedItemColor: customBlueColor,
             unselectedItemColor: customBlackColor.withOpacity(.4),
             type: BottomNavigationBarType.fixed,
             showSelectedLabels: false,
