@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:pinext/app/app_data/colors.dart';
-import 'package:pinext/app/app_data/domentions.dart';
+import 'package:pinext/app/app_data/app_dimentions/domentions.dart';
 import 'package:pinext/app/shared/widgets/custom_button.dart';
 import 'package:pinext/app/shared/widgets/custom_text_field.dart';
+
+import '../../app_data/theme_data/colors.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);

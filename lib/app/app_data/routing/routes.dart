@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 
-import '../screens/login/login_screen.dart';
-import '../screens/splash/splash_screen.dart';
+import '../../screens/login/login_screen.dart';
+import '../../screens/splash/splash_screen.dart';
 
 class ROUTECONTROLLER {
   static Route<dynamic> routeController(RouteSettings settings) {

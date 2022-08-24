@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pinext/app/app_data/theme.dart';
 
-import 'app/routing/routes.dart';
+import 'app/app_data/routing/routes.dart';
+import 'app/app_data/theme_data/theme.dart';
 
 void main(List<String> args) {
   runApp(const Pinext());

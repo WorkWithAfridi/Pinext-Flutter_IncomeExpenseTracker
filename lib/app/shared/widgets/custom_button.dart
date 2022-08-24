@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pinext/app/app_data/colors.dart';
 
-import '../../app_data/domentions.dart';
+import '../../app_data/app_dimentions/domentions.dart';
+import '../../app_data/theme_data/colors.dart';
 
 class GetCustomButton extends StatelessWidget {
   final String title;

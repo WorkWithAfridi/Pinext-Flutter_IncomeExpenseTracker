@@ -1,26 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pinext/app/app_data/domentions.dart';
-import 'package:pinext/app/screens/splash/cubit/splash_cubit.dart';
+import 'package:pinext/app/app_data/app_dimentions/domentions.dart';
+
+import '../../app_data/routing/routes.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => SplashCubit(),
-      child: const SplashScreenView(),
-    );
+  void triggerSplashScreenAnimation(BuildContext context) {
+    Future.delayed(
+      const Duration(seconds: 2),
+    ).then((_) {
+      Navigator.pushReplacementNamed(context, ROUTES.getLoginRoute);
+    });
   }
-}
-
-class SplashScreenView extends StatelessWidget {
-  const SplashScreenView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    context.read<SplashCubit>().triggerSplashScreen(context);
+    triggerSplashScreenAnimation(context);
     return Scaffold(
       body: SizedBox(
         height: getHeight(context),

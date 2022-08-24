@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pinext/app/app_data/colors.dart';
+
+import 'colors.dart';
+
 
 class PinextTheme {
   static ThemeData lightTheme = ThemeData.light().copyWith(

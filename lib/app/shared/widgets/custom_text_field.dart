@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../app_data/colors.dart';
-import '../../app_data/domentions.dart';
+import '../../app_data/app_dimentions/domentions.dart';
+import '../../app_data/theme_data/colors.dart';
 
 class GetCustomTextField extends StatelessWidget {
   final String hintTitle;
