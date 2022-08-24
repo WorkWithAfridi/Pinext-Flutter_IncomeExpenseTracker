@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:pinext/app/app_data/app_dimentions/domentions.dart';
+import 'package:pinext/app/app_data/app_constants/constants.dart';
+import 'package:pinext/app/app_data/app_constants/domentions.dart';
 
 import '../../app_data/routing/routes.dart';
+import '../../app_data/theme_data/colors.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
   void triggerSplashScreenAnimation(BuildContext context) {
     Future.delayed(
-      const Duration(seconds: 2),
+      const Duration(seconds: defaultDelayDuration),
     ).then((_) {
       Navigator.pushReplacementNamed(context, ROUTES.getLoginRoute);
     });
@@ -22,7 +24,14 @@ class SplashScreen extends StatelessWidget {
         height: getHeight(context),
         width: getWidth(context),
         child: const Center(
-          child: Text("Pinext"),
+          child: Text(
+            "Pinext",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 30,
+              color: customBlackColor,
+            ),
+          ),
         ),
       ),
     );

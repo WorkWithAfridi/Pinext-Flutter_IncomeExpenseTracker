@@ -1,8 +1,10 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:pinext/app/screens/home/homeframe.dart';
 
 import '../../screens/login/login_screen.dart';
+import '../../screens/signup/signup_screen.dart';
 import '../../screens/splash/splash_screen.dart';
 
 class ROUTECONTROLLER {
@@ -16,6 +18,14 @@ class ROUTECONTROLLER {
         return MaterialPageRoute(
           builder: (context) => const LoginScreen(),
         );
+      case ROUTES.getSignupRoute:
+        return MaterialPageRoute(
+          builder: (context) => const SignupScreen(),
+        );
+      case ROUTES.getHomeframeRoute:
+        return MaterialPageRoute(
+          builder: (context) => const Homeframe(),
+        );
       default:
         log(settings.name.toString());
         throw ("Not a valid route ");
@@ -26,4 +36,6 @@ class ROUTECONTROLLER {
 class ROUTES {
   static const getSplashRoute = '/';
   static const getLoginRoute = '/login';
+  static const getSignupRoute = '/signup';
+  static const getHomeframeRoute = '/homeframe';
 }
