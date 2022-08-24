@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pinext/app/app_data/theme.dart';
 
 import 'app/routing/routes.dart';
 
@@ -11,10 +12,11 @@ class Pinext extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       onGenerateRoute: ROUTECONTROLLER.routeController,
       initialRoute: ROUTES.getSplashRoute,
+      theme: PinextTheme.lightTheme,
     );
   }
 }
