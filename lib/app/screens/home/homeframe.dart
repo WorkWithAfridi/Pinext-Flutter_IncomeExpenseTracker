@@ -66,6 +66,9 @@ class HomeframeView extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const SizedBox(
+                    height: 4,
+                  ),
                   IconButton(
                     onPressed: () {
                       Navigator.pop(context);
