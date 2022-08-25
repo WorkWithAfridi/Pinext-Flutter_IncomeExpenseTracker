@@ -114,46 +114,61 @@ class CardsAndBalancePage extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(15),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text(
-                                "Bkash",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                  color: customBlackColor,
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(15),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text(
+                                  "Bkash",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                    color: customBlackColor,
+                                  ),
                                 ),
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Current balance",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 10,
-                                      color: customBlackColor.withOpacity(.4),
+                                Container(
+                                  width: double.maxFinite,
+                                  height: .5,
+                                  color: customBlackColor.withOpacity(.2),
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Current balance",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.normal,
+                                        fontSize: 10,
+                                        color: customBlackColor.withOpacity(.4),
+                                      ),
                                     ),
-                                  ),
-                                  const Text(
-                                    "67000Tk",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20,
-                                      color: customBlackColor,
+                                    const Text(
+                                      "67000Tk",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                        color: customBlackColor,
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              )
-                            ],
+                                  ],
+                                )
+                              ],
+                            ),
                           ),
                         ),
                         Row(
                           children: [
+                            Container(
+                              width: .5,
+                              height: getHeight(context),
+                              color: customBlackColor.withOpacity(.2),
+                            ),
+                            const SizedBox(
+                              width: 8,
+                            ),
                             RotatedBox(
                               quarterTurns: 3,
                               child: Column(
@@ -241,10 +256,12 @@ class CardsAndBalancePage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    height: 20,
-                    width: 20,
+                    height: 25,
+                    width: 25,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(
+                        25,
+                      ),
                       border: Border.all(
                         color: customBlackColor.withOpacity(.4),
                       ),
