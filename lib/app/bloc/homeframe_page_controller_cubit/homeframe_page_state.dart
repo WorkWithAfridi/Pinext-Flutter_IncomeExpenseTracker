@@ -2,11 +2,16 @@
 part of 'homeframe_page_cubit.dart';
 
 @immutable
-abstract class HomeframePageState {
+abstract class HomeframePageState extends Equatable {
   int selectedIndex;
   PageController pageController;
   HomeframePageState(
       {required this.selectedIndex, required this.pageController});
+
+  @override
+  List<Object> get props => [
+        selectedIndex,
+      ];
 }
 
 class PageState extends HomeframePageState {

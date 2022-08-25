@@ -2,11 +2,15 @@
 part of 'homepage_filter_cubit.dart';
 
 @immutable
-abstract class HomepageFilterState {
+abstract class HomepageFilterState extends Equatable{
   String selectedFilter;
   HomepageFilterState({
     required this.selectedFilter,
   });
+    @override
+  List<Object> get props => [
+        selectedFilter,
+      ];
 }
 
 class FilterState extends HomepageFilterState {
