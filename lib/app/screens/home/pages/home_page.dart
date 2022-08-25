@@ -176,7 +176,7 @@ class HomepageView extends StatelessWidget {
                     "Expenses",
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
-                      fontSize: 14,
+                      fontSize: 15,
                       color: customBlackColor,
                     ),
                   ),
@@ -288,7 +288,7 @@ class HomepageView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Overview",
+                          "Today's overview",
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 14,
@@ -384,6 +384,88 @@ class HomepageView extends StatelessWidget {
                   const SizedBox(
                     height: 16,
                   ),
+                  const Text(
+                    "Top Expenses in August",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 15,
+                      color: customBlackColor,
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 2,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ListView.builder(
+                          itemCount: 6,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: ((context, index) {
+                            return Column(
+                              children: [
+                                const SizedBox(
+                                  height: 8,
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "12/12/12",
+                                      style: TextStyle(
+                                        color:
+                                            customBlackColor.withOpacity(.80),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 32,
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        "Bought something off Ryans Shantinager Branch",
+                                        style: TextStyle(
+                                          color:
+                                              customBlackColor.withOpacity(.80),
+                                        ),
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 8,
+                                    ),
+                                    Container(
+                                      width: 100,
+                                      alignment: Alignment.centerRight,
+                                      child: Text(
+                                        "- 120000Tk",
+                                        style: TextStyle(
+                                          color:
+                                              customBlackColor.withOpacity(.80),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 8,
+                                ),
+                                Container(
+                                  height: 1,
+                                  width: getWidth(context),
+                                  color: customBlackColor.withOpacity(.05),
+                                )
+                              ],
+                            );
+                          }),
+                        )
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
                 ],
               ),
             )
@@ -451,6 +533,9 @@ class PinextCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(right: 10),
       child: Container(
+        padding: const EdgeInsets.all(
+          15,
+        ),
         height: 180,
         width: getWidth(context) * .8,
         decoration: BoxDecoration(
@@ -458,6 +543,71 @@ class PinextCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(
             defaultBorder,
           ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  "Bkash",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: whiteColor,
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Current balance",
+                      style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 13,
+                        color: whiteColor.withOpacity(.4),
+                      ),
+                    ),
+                    const Text(
+                      "67000Tk",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25,
+                        color: whiteColor,
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+            RotatedBox(
+              quarterTurns: 3,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Last transaction",
+                    style: TextStyle(
+                      fontWeight: FontWeight.normal,
+                      fontSize: 10,
+                      color: whiteColor.withOpacity(.4),
+                    ),
+                  ),
+                  const Text(
+                    "12/12/12",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25,
+                      color: whiteColor,
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
         ),
       ),
     );
