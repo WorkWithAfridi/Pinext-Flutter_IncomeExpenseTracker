@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/homeframe_page_controller_cubit/homeframe_page_cubit.dart';
 import 'package:pinext/app/screens/home/pages/archive_page.dart';
+import 'package:pinext/app/screens/home/pages/cards_and_balance_page.dart';
 import 'package:pinext/app/screens/home/pages/home_page.dart';
 
 class Homeframe extends StatelessWidget {
@@ -24,9 +25,7 @@ class Homeframe extends StatelessWidget {
 List homeframePages = [
   const Homepage(),
   ArchivePage(),
-  const Center(
-    child: Text("Current balance"),
-  ),
+  CardsAndBalancePage(),
   const Center(
     child: Text("profile"),
   ),
