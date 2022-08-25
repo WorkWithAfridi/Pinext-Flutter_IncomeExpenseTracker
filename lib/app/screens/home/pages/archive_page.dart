@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
+import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/archive_month_controller_cubit/archive_month_cubit.dart';
 
@@ -56,13 +57,27 @@ class ArchiveMonthView extends StatelessWidget {
                   color: customBlackColor.withOpacity(.6),
                 ),
               ),
-              const Text(
-                "Archives",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 25,
-                  color: customBlackColor,
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: const [
+                  Text(
+                    "Archives",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25,
+                      color: customBlackColor,
+                    ),
+                  ),
+                  Text(
+                    "2022",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: customBlackColor,
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(
                 height: 8,
@@ -124,36 +139,98 @@ class ArchiveMonthView extends StatelessWidget {
             padding: const EdgeInsets.symmetric(
               horizontal: defaultPadding,
             ),
-            child: ListView.builder(
-              itemCount: months.length,
-              itemBuilder: ((context, index) {
-                return Container(
-                  child: Column(
-                    children: [
-                      Text(
-                        months[index],
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 25,
-                          color: customBlackColor,
-                        ),
-                      ),
-                      ListView.builder(
-                        itemCount: 6,
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: ((context, index) {
-                          return Row(
-                            children: const [
-                              Text("test"),
-                            ],
-                          );
-                        }),
-                      )
-                    ],
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 16,
                   ),
-                );
-              }),
+                  ListView.builder(
+                    itemCount: months.length,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: ((context, index) {
+                      return Container(
+                        padding: const EdgeInsets.only(bottom: 16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "${index + 1}. ${months[index]}",
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 25,
+                                color: customBlackColor,
+                              ),
+                            ),
+                            ListView.builder(
+                              itemCount: 6,
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemBuilder: ((context, index) {
+                                return Column(
+                                  children: [
+                                    const SizedBox(
+                                      height: 8,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "12/12/12",
+                                          style: TextStyle(
+                                            color: customBlackColor
+                                                .withOpacity(.80),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 32,
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            "Bought something off Ryans Shantinager Branch",
+                                            style: TextStyle(
+                                              color: customBlackColor
+                                                  .withOpacity(.80),
+                                            ),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 8,
+                                        ),
+                                        Container(
+                                          width: 100,
+                                          alignment: Alignment.centerRight,
+                                          child: Text(
+                                            "- 120000Tk",
+                                            style: TextStyle(
+                                              color: customBlackColor
+                                                  .withOpacity(.80),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 8,
+                                    ),
+                                    Container(
+                                      height: 1,
+                                      width: getWidth(context),
+                                      color: customBlackColor.withOpacity(.05),
+                                    )
+                                  ],
+                                );
+                              }),
+                            )
+                          ],
+                        ),
+                      );
+                    }),
+                  ),
+                ],
+              ),
             ),
           ),
         )
