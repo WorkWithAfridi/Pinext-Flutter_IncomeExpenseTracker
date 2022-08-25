@@ -115,11 +115,11 @@ class SignupScreenView extends StatelessWidget {
                   isLoading:
                       state is LoginWithAppleIDLoadingState ? true : false,
                   callBackFunction: () {
-                    state is LoginButtonLoadingState
+                    state is LoginWithEmailAndPasswordButtonLoadingState
                         ? () {}
                         : context
                             .read<LoginCubit>()
-                            .onLoginWithAppleIdButtonClick();
+                            .login(loginTypes: LoginTypes.appleId);
                   },
                 );
               },

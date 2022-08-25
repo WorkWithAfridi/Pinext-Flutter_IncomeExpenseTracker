@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/homeframe_page_controller_cubit/homeframe_page_cubit.dart';
-import 'package:pinext/app/screens/home/pages/homepage.dart';
+import 'package:pinext/app/screens/home/pages/archive_page.dart';
+import 'package:pinext/app/screens/home/pages/home_page.dart';
 
 class Homeframe extends StatelessWidget {
   const Homeframe({Key? key}) : super(key: key);
@@ -22,14 +23,12 @@ class Homeframe extends StatelessWidget {
 
 List homeframePages = [
   const Homepage(),
+  ArchivePage(),
   const Center(
-    child: Text("Page 1"),
+    child: Text("Current balance"),
   ),
   const Center(
-    child: Text("Page 2"),
-  ),
-  const Center(
-    child: Text("Page 3"),
+    child: Text("profile"),
   ),
 ];
 
@@ -60,6 +59,21 @@ class HomeframeView extends StatelessWidget {
           );
         },
       ),
+      floatingActionButton: BlocBuilder<HomeframePageCubit, HomeframePageState>(
+        builder: (context, state) {
+          return state.selectedIndex == 0
+              ? FloatingActionButton(
+                  onPressed: () {},
+                  backgroundColor: customBlackColor,
+                  child: const Icon(
+                    Icons.add,
+                    color: whiteColor,
+                  ),
+                )
+              : const SizedBox.shrink();
+        },
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
       bottomNavigationBar: BlocBuilder<HomeframePageCubit, HomeframePageState>(
         builder: (context, state) {
           return BottomNavigationBar(
@@ -80,14 +94,14 @@ class HomeframeView extends StatelessWidget {
                 label: "Home",
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.wallet),
-                label: "Wallet",
-              ),
-              BottomNavigationBarItem(
                 icon: Icon(
                   Icons.list,
                 ),
-                label: "List",
+                label: "Archive",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.wallet),
+                label: "Wallet",
               ),
               BottomNavigationBarItem(
                 icon: Icon(

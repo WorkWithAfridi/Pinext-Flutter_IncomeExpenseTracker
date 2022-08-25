@@ -92,11 +92,13 @@ class LoginScreenView extends StatelessWidget {
                       titleColor: whiteColor,
                       buttonColor: customBlueColor,
                       isLoading:
-                          state is LoginButtonLoadingState ? true : false,
+                          state is LoginWithEmailAndPasswordButtonLoadingState ? true : false,
                       callBackFunction: () {
                         state is LoginWithAppleIDLoadingState
                             ? () {}
-                            : context.read<LoginCubit>().onLoginButtonClick();
+                            : context
+                                .read<LoginCubit>()
+                                .login(loginTypes: LoginTypes.emailAndPassword);
                       },
                     ),
                     const SizedBox(
@@ -110,11 +112,11 @@ class LoginScreenView extends StatelessWidget {
                       isLoading:
                           state is LoginWithAppleIDLoadingState ? true : false,
                       callBackFunction: () {
-                        state is LoginButtonLoadingState
+                        state is LoginWithEmailAndPasswordButtonLoadingState
                             ? () {}
                             : context
                                 .read<LoginCubit>()
-                                .onLoginWithAppleIdButtonClick();
+                                .login(loginTypes: LoginTypes.appleId);
                       },
                     ),
                   ],

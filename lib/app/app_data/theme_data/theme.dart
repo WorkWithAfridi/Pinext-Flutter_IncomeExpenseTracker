@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'colors.dart';
 
-
 class PinextTheme {
   static ThemeData lightTheme = ThemeData.light().copyWith(
     primaryColor: customBlueColor,
