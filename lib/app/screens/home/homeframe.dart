@@ -1,10 +1,16 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/homeframe_page_controller_cubit/homeframe_page_cubit.dart';
 import 'package:pinext/app/screens/home/pages/archive_page.dart';
 import 'package:pinext/app/screens/home/pages/cards_and_balance_page.dart';
 import 'package:pinext/app/screens/home/pages/home_page.dart';
+
+import '../../app_data/app_constants/constants.dart';
+import '../../app_data/app_constants/fonts.dart';
 
 class Homeframe extends StatelessWidget {
   const Homeframe({Key? key}) : super(key: key);
@@ -24,8 +30,8 @@ class Homeframe extends StatelessWidget {
 
 List homeframePages = [
   const Homepage(),
-  ArchivePage(),
-  CardsAndBalancePage(),
+  const ArchivePage(),
+  const CardsAndBalancePage(),
   const Center(
     child: Text("profile"),
   ),
@@ -33,16 +39,105 @@ List homeframePages = [
 
 class HomeframeView extends StatelessWidget {
   HomeframeView({Key? key}) : super(key: key);
-  final homeframePageController = PageController();
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       appBar: AppBar(
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            scaffoldKey.currentState!.openDrawer();
+          },
           icon: const Icon(
             Icons.menu,
             color: customBlueColor,
+          ),
+        ),
+      ),
+      drawer: SafeArea(
+        child: Container(
+          height: getHeight(context),
+          color: greyColor,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(
+                      Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: defaultPadding,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Pinext",
+                          style: regularTextStyle.copyWith(
+                            color: customBlackColor.withOpacity(.6),
+                          ),
+                        ),
+                        Text(
+                          "Space",
+                          style: boldTextStyle.copyWith(
+                            fontSize: 25,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  RotatedBox(
+                    quarterTurns: 2,
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(
+                        Icons.arrow_back,
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: defaultPadding),
+                      child: Text(
+                        "Logout",
+                        style: boldTextStyle.copyWith(
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),
