@@ -8,6 +8,7 @@ import 'package:pinext/app/shared/widgets/custom_button.dart';
 import 'package:pinext/app/shared/widgets/custom_text_field.dart';
 
 import '../../app_data/app_constants/constants.dart';
+import '../../app_data/app_constants/fonts.dart';
 import '../../app_data/theme_data/colors.dart';
 
 class SignupScreen extends StatelessWidget {
@@ -48,21 +49,16 @@ class SignupScreenView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               "Welcome",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 30,
-                color: customBlackColor,
-              ),
+              style: boldTextStyle.copyWith(fontSize: 30),
             ),
             const SizedBox(
               height: 4,
             ),
             Text(
               "Please provide the following data\nto register a new account.",
-              style: TextStyle(
-                fontWeight: FontWeight.normal,
+              style: regularTextStyle.copyWith(
                 fontSize: 14,
                 color: customBlackColor.withOpacity(.6),
               ),
@@ -135,17 +131,15 @@ class SignupScreenView extends StatelessWidget {
                 text: TextSpan(
                   children: [
                     TextSpan(
-                      text: "Already have an account?",
-                      style: TextStyle(
-                        fontWeight: FontWeight.normal,
+                      text: "Already have an account? ",
+                      style: regularTextStyle.copyWith(
                         fontSize: 14,
                         color: customBlackColor.withOpacity(.6),
                       ),
                     ),
-                    const TextSpan(
+                    TextSpan(
                       text: "Sign in",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
+                      style: boldTextStyle.copyWith(
                         fontSize: 14,
                         color: customBlueColor,
                       ),

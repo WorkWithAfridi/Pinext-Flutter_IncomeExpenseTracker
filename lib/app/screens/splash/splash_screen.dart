@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
 import 'package:pinext/app/app_data/app_constants/domentions.dart';
+import 'package:pinext/app/app_data/app_constants/fonts.dart';
 
 import '../../app_data/routing/routes.dart';
-import '../../app_data/theme_data/colors.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -23,14 +23,10 @@ class SplashScreen extends StatelessWidget {
       body: SizedBox(
         height: getHeight(context),
         width: getWidth(context),
-        child: const Center(
+        child: Center(
           child: Text(
             "Pinext",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 30,
-              color: customBlackColor,
-            ),
+            style: boldTextStyle.copyWith(fontSize: 30),
           ),
         ),
       ),

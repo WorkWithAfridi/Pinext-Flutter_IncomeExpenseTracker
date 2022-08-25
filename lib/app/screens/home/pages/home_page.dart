@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pie_chart/pie_chart.dart';
+import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/bloc/homepage_filter_cubit/homepage_filter_cubit.dart';
 
 import '../../../app_data/app_constants/constants.dart';
@@ -49,6 +50,7 @@ class HomepageView extends StatelessWidget {
       height: getHeight(context),
       width: getWidth(context),
       child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -64,18 +66,14 @@ class HomepageView extends StatelessWidget {
                   ),
                   Text(
                     "Good morning,",
-                    style: TextStyle(
-                      fontWeight: FontWeight.normal,
-                      fontSize: 14,
+                    style: regularTextStyle.copyWith(
                       color: customBlackColor.withOpacity(.6),
                     ),
                   ),
-                  const Text(
+                  Text(
                     "Khondakar Afridi",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
+                    style: boldTextStyle.copyWith(
                       fontSize: 25,
-                      color: customBlackColor,
                     ),
                   ),
                   const SizedBox(
@@ -87,6 +85,7 @@ class HomepageView extends StatelessWidget {
             SizedBox(
               height: 40,
               child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: [
@@ -120,19 +119,17 @@ class HomepageView extends StatelessWidget {
                 horizontal: defaultPadding,
               ),
               child: Column(
-                children: const [
-                  SizedBox(
+                children: [
+                  const SizedBox(
                     height: 16,
                   ),
                   Text(
                     "Your Cards",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
+                    style: boldTextStyle.copyWith(
                       fontSize: 20,
-                      color: customBlackColor,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 8,
                   ),
                 ],
@@ -141,6 +138,7 @@ class HomepageView extends StatelessWidget {
             SizedBox(
               height: 185,
               child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: [
@@ -172,14 +170,7 @@ class HomepageView extends StatelessWidget {
                   const SizedBox(
                     height: 16,
                   ),
-                  const Text(
-                    "Expenses",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 15,
-                      color: customBlackColor,
-                    ),
-                  ),
+                  Text("Expenses", style: boldTextStyle),
                   const SizedBox(
                     height: 8,
                   ),
@@ -202,12 +193,11 @@ class HomepageView extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children: [
                               FittedBox(
                                 child: Text(
-                                  "1200Tk",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
+                                  "- 1200Tk",
+                                  style: boldTextStyle.copyWith(
                                     fontSize: 25,
                                     color: whiteColor,
                                   ),
@@ -215,10 +205,9 @@ class HomepageView extends StatelessWidget {
                               ),
                               Text(
                                 "Today",
-                                style: TextStyle(
+                                style: boldTextStyle.copyWith(
                                   fontWeight: FontWeight.w600,
-                                  fontSize: 14,
-                                  color: whiteColor,
+                                  color: whiteColor.withOpacity(.8),
                                 ),
                               ),
                             ],
@@ -245,22 +234,20 @@ class HomepageView extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children: [
                               FittedBox(
                                 child: Text(
-                                  "27000Tk",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
+                                  "- 27000Tk",
+                                  style: boldTextStyle.copyWith(
                                     fontSize: 25,
-                                    color: whiteColor,
+                                    color: whiteColor.withOpacity(.8),
                                   ),
                                 ),
                               ),
                               Text(
                                 "This week",
-                                style: TextStyle(
+                                style: boldTextStyle.copyWith(
                                   fontWeight: FontWeight.w600,
-                                  fontSize: 14,
                                   color: whiteColor,
                                 ),
                               ),
@@ -289,9 +276,8 @@ class HomepageView extends StatelessWidget {
                       children: [
                         Text(
                           "Today's overview",
-                          style: TextStyle(
+                          style: boldTextStyle.copyWith(
                             fontWeight: FontWeight.w600,
-                            fontSize: 14,
                             color: customBlackColor.withOpacity(.4),
                           ),
                         ),
@@ -322,8 +308,6 @@ class HomepageView extends StatelessWidget {
                             showChartValuesOutside: false,
                             decimalPlaces: 1,
                           ),
-                          // gradientList: ---To add gradient colors---
-                          // emptyColorGradient: ---Empty Color gradient---
                         ),
                         const SizedBox(
                           height: 32,
@@ -355,8 +339,7 @@ class HomepageView extends StatelessWidget {
                                     children: [
                                       Text(
                                         "Snacks",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w600,
+                                        style: boldTextStyle.copyWith(
                                           fontSize: 14,
                                           color:
                                               customBlackColor.withOpacity(.8),
@@ -364,9 +347,8 @@ class HomepageView extends StatelessWidget {
                                       ),
                                       Text(
                                         "Amount: 100Tk",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 14,
+                                        style: regularTextStyle.copyWith(
+                                          fontWeight: FontWeight.w400,
                                           color:
                                               customBlackColor.withOpacity(.6),
                                         ),
@@ -384,13 +366,9 @@ class HomepageView extends StatelessWidget {
                   const SizedBox(
                     height: 16,
                   ),
-                  const Text(
+                  Text(
                     "Top Expenses in August",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 15,
-                      color: customBlackColor,
-                    ),
+                    style: boldTextStyle,
                   ),
                   Container(
                     padding: const EdgeInsets.symmetric(
@@ -413,7 +391,7 @@ class HomepageView extends StatelessWidget {
                                   children: [
                                     Text(
                                       "12/12/12",
-                                      style: TextStyle(
+                                      style: regularTextStyle.copyWith(
                                         color:
                                             customBlackColor.withOpacity(.80),
                                       ),
@@ -424,7 +402,7 @@ class HomepageView extends StatelessWidget {
                                     Expanded(
                                       child: Text(
                                         "Bought something off Ryans Shantinager Branch",
-                                        style: TextStyle(
+                                        style: regularTextStyle.copyWith(
                                           color:
                                               customBlackColor.withOpacity(.80),
                                         ),
@@ -440,7 +418,7 @@ class HomepageView extends StatelessWidget {
                                       alignment: Alignment.centerRight,
                                       child: Text(
                                         "- 120000Tk",
-                                        style: TextStyle(
+                                        style: boldTextStyle.copyWith(
                                           color:
                                               customBlackColor.withOpacity(.80),
                                         ),
@@ -511,10 +489,10 @@ class MenuFilterPill extends StatelessWidget {
           ),
           child: Text(
             filtertitle,
-            style: TextStyle(
-              color:
-                  selectedFilter == filtertitle ? whiteColor : customBlackColor,
-              fontWeight: FontWeight.bold,
+            style: boldTextStyle.copyWith(
+              color: selectedFilter == filtertitle
+                  ? whiteColor
+                  : customBlackColor.withOpacity(.4),
             ),
           ),
         ),

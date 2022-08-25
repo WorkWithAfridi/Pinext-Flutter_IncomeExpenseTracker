@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pinext/app/app_data/app_constants/fonts.dart';
 
 import '../../app_data/app_constants/constants.dart';
 import '../../app_data/theme_data/colors.dart';
@@ -18,16 +19,16 @@ class GetCustomTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
+      style: regularTextStyle,
       maxLines: 1,
       keyboardType: TextInputType.text,
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
         hintText: hintTitle,
-        hintStyle: TextStyle(
+        hintStyle: regularTextStyle.copyWith(
           color: customBlackColor.withOpacity(
             .5,
           ),
-          fontSize: 14,
         ),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: defaultPadding,

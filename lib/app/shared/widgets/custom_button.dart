@@ -3,6 +3,7 @@ import 'package:lottie/lottie.dart';
 
 import '../../app_data/app_constants/constants.dart';
 import '../../app_data/app_constants/domentions.dart';
+import '../../app_data/app_constants/fonts.dart';
 import '../../app_data/theme_data/colors.dart';
 
 class GetCustomButton extends StatelessWidget {
@@ -60,9 +61,8 @@ class GetCustomButton extends StatelessWidget {
                           : const SizedBox.shrink(),
                       Text(
                         title,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 15,
+                        style: boldTextStyle.copyWith(
+                          fontSize: 14,
                           color: titleColor,
                         ),
                       ),

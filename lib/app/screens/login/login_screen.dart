@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/app_data/routing/routes.dart';
 import 'package:pinext/app/bloc/login_cubit/login_cubit.dart';
 
@@ -37,21 +38,16 @@ class LoginScreenView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               "Sign In\nTo Account",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 30,
-                color: customBlackColor,
-              ),
+              style: boldTextStyle.copyWith(fontSize: 30),
             ),
             const SizedBox(
               height: 4,
             ),
             Text(
               "Please sign in with your email and password\nto continue using the app.",
-              style: TextStyle(
-                fontWeight: FontWeight.normal,
+              style: regularTextStyle.copyWith(
                 fontSize: 14,
                 color: customBlackColor.withOpacity(.6),
               ),
@@ -92,7 +88,9 @@ class LoginScreenView extends StatelessWidget {
                       titleColor: whiteColor,
                       buttonColor: customBlueColor,
                       isLoading:
-                          state is LoginWithEmailAndPasswordButtonLoadingState ? true : false,
+                          state is LoginWithEmailAndPasswordButtonLoadingState
+                              ? true
+                              : false,
                       callBackFunction: () {
                         state is LoginWithAppleIDLoadingState
                             ? () {}
@@ -135,16 +133,14 @@ class LoginScreenView extends StatelessWidget {
                   children: [
                     TextSpan(
                       text: "Don't have an account? ",
-                      style: TextStyle(
-                        fontWeight: FontWeight.normal,
+                      style: regularTextStyle.copyWith(
                         fontSize: 14,
                         color: customBlackColor.withOpacity(.6),
                       ),
                     ),
-                    const TextSpan(
+                    TextSpan(
                       text: "Sign up",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
+                      style: boldTextStyle.copyWith(
                         fontSize: 14,
                         color: customBlueColor,
                       ),

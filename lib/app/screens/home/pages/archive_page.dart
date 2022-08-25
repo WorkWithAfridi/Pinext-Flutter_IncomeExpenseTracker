@@ -5,6 +5,8 @@ import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/archive_month_controller_cubit/archive_month_cubit.dart';
 
+import '../../../app_data/app_constants/fonts.dart';
+
 class ArchivePage extends StatelessWidget {
   const ArchivePage({Key? key}) : super(key: key);
 
@@ -51,30 +53,24 @@ class ArchiveMonthView extends StatelessWidget {
               ),
               Text(
                 "Pinext",
-                style: TextStyle(
-                  fontWeight: FontWeight.normal,
-                  fontSize: 14,
+                style: regularTextStyle.copyWith(
                   color: customBlackColor.withOpacity(.6),
                 ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: const [
+                children: [
                   Text(
                     "Archives",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
+                    style: boldTextStyle.copyWith(
                       fontSize: 25,
-                      color: customBlackColor,
                     ),
                   ),
                   Text(
                     "2022",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
+                    style: boldTextStyle.copyWith(
                       fontSize: 20,
-                      color: customBlackColor,
                     ),
                   ),
                 ],
@@ -90,6 +86,7 @@ class ArchiveMonthView extends StatelessWidget {
           child: Container(
             color: whiteColor,
             child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
               scrollDirection: Axis.horizontal,
               child: BlocBuilder<ArchiveMonthCubit, ArchiveMonthState>(
                 builder: (context, state) {
@@ -114,11 +111,10 @@ class ArchiveMonthView extends StatelessWidget {
                             ),
                             child: Text(
                               currentMonth,
-                              style: TextStyle(
+                              style: regularTextStyle.copyWith(
                                 fontWeight: state.selectedMonth == currentMonth
                                     ? FontWeight.bold
                                     : FontWeight.normal,
-                                fontSize: 14,
                                 color: state.selectedMonth == currentMonth
                                     ? customBlackColor
                                     : customBlackColor.withOpacity(.4),
@@ -140,6 +136,7 @@ class ArchiveMonthView extends StatelessWidget {
               horizontal: defaultPadding,
             ),
             child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
               child: Column(
                 children: [
                   const SizedBox(
@@ -157,10 +154,8 @@ class ArchiveMonthView extends StatelessWidget {
                           children: [
                             Text(
                               "${index + 1}. ${months[index]}",
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
+                              style: boldTextStyle.copyWith(
                                 fontSize: 25,
-                                color: customBlackColor,
                               ),
                             ),
                             ListView.builder(
@@ -177,7 +172,7 @@ class ArchiveMonthView extends StatelessWidget {
                                       children: [
                                         Text(
                                           "12/12/12",
-                                          style: TextStyle(
+                                          style: regularTextStyle.copyWith(
                                             color: customBlackColor
                                                 .withOpacity(.80),
                                           ),
@@ -188,7 +183,7 @@ class ArchiveMonthView extends StatelessWidget {
                                         Expanded(
                                           child: Text(
                                             "Bought something off Ryans Shantinager Branch",
-                                            style: TextStyle(
+                                            style: regularTextStyle.copyWith(
                                               color: customBlackColor
                                                   .withOpacity(.80),
                                             ),
@@ -204,7 +199,7 @@ class ArchiveMonthView extends StatelessWidget {
                                           alignment: Alignment.centerRight,
                                           child: Text(
                                             "- 120000Tk",
-                                            style: TextStyle(
+                                            style: boldTextStyle.copyWith(
                                               color: customBlackColor
                                                   .withOpacity(.80),
                                             ),
