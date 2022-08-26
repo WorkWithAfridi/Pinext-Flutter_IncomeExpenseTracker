@@ -258,7 +258,7 @@ class HomepageView extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(
-                    height: 16,
+                    height: 8,
                   ),
                   Container(
                     padding: const EdgeInsets.all(
@@ -367,7 +367,7 @@ class HomepageView extends StatelessWidget {
                     height: 16,
                   ),
                   Text(
-                    "Top Expenses in August",
+                    "Top Transactions in August",
                     style: boldTextStyle,
                   ),
                   Container(
