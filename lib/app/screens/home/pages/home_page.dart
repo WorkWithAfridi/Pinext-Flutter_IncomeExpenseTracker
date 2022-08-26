@@ -170,7 +170,12 @@ class HomepageView extends StatelessWidget {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text("Expenses", style: boldTextStyle),
+                  Text(
+                    "Expenses",
+                    style: boldTextStyle.copyWith(
+                      fontSize: 20,
+                    ),
+                  ),
                   const SizedBox(
                     height: 8,
                   ),
@@ -368,7 +373,9 @@ class HomepageView extends StatelessWidget {
                   ),
                   Text(
                     "Top Transactions in August",
-                    style: boldTextStyle,
+                    style: boldTextStyle.copyWith(
+                      fontSize: 20,
+                    ),
                   ),
                   Container(
                     padding: const EdgeInsets.symmetric(

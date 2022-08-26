@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/domentions.dart';
-import 'package:pinext/app/bloc/login_cubit/login_cubit.dart';
+import 'package:pinext/app/bloc/signin_cubit/signin_cubit_cubit.dart';
 import 'package:pinext/app/shared/widgets/custom_button.dart';
 import 'package:pinext/app/shared/widgets/custom_text_field.dart';
 import 'package:pinext/app/shared/widgets/socials_button.dart';
@@ -18,7 +18,7 @@ class SignupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => LoginCubit(),
+      create: (context) => SigninCubit(),
       child: SignupScreenView(),
     );
   }
@@ -45,20 +45,26 @@ class SignupScreenView extends StatelessWidget {
           ),
         ),
       ),
-      body: PageView.builder(
-        physics: const BouncingScrollPhysics(),
-        itemCount: registrationPages.length,
-        itemBuilder: ((context, index) {
-          return registrationPages[index];
-        }),
+      body: BlocBuilder<SigninCubit, SigninState>(
+        builder: (context, state) {
+          return PageView.builder(
+            controller: state.pageController,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: registrationPages.length,
+            itemBuilder: ((context, index) {
+              return registrationPages[index];
+            }),
+          );
+        },
       ),
     );
   }
 }
 
 class UserRegistrationPage extends StatelessWidget {
-  const UserRegistrationPage({Key? key}) : super(key: key);
-
+  const UserRegistrationPage({
+    Key? key,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -109,14 +115,22 @@ class UserRegistrationPage extends StatelessWidget {
           const SizedBox(
             height: 16,
           ),
-          BlocBuilder<LoginCubit, LoginState>(
+          BlocBuilder<SigninCubit, SigninState>(
             builder: (context, state) {
               return GetCustomButton(
                 title: "Next",
                 titleColor: whiteColor,
                 buttonColor: customBlueColor,
                 isLoading: false,
-                callBackFunction: () {},
+                callBackFunction: () {
+                  state.pageController.animateToPage(
+                    1,
+                    duration: const Duration(
+                      milliseconds: 200,
+                    ),
+                    curve: Curves.linear,
+                  );
+                },
               );
             },
           ),
@@ -464,21 +478,27 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
             const SizedBox(
               height: 16,
             ),
-            BlocBuilder<LoginCubit, LoginState>(
+            BlocBuilder<SigninCubit, SigninState>(
               builder: (context, state) {
                 return GetCustomButton(
                   title: "Back",
                   titleColor: whiteColor,
                   buttonColor: customBlueColor,
                   isLoading: false,
-                  callBackFunction: () {},
+                  callBackFunction: () {
+                    state.pageController.animateToPage(
+                      0,
+                      duration: const Duration(milliseconds: 200),
+                      curve: Curves.easeInOut,
+                    );
+                  },
                 );
               },
             ),
             const SizedBox(
               height: 8,
             ),
-            BlocBuilder<LoginCubit, LoginState>(
+            BlocBuilder<SigninCubit, SigninState>(
               builder: (context, state) {
                 return GetCustomButton(
                   title: "Register",
