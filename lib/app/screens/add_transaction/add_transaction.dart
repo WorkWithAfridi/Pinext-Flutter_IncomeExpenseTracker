@@ -267,7 +267,7 @@ class AddTransactionView extends StatelessWidget {
                       Navigator.pop(context);
                       ElegantNotification.success(
                         title: Text(
-                          "Yaay",
+                          "Transaction added!!",
                           style: boldTextStyle,
                         ),
                         description: Text(
