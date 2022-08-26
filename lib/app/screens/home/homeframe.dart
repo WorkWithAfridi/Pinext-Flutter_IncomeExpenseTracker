@@ -111,26 +111,17 @@ class HomeframeView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  RotatedBox(
-                    quarterTurns: 2,
-                    child: IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: const Icon(
-                        Icons.arrow_back,
-                      ),
-                    ),
-                  ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: defaultPadding),
                       child: Text(
                         "Logout",
                         style: boldTextStyle.copyWith(
-                          fontSize: 20,
+                          fontSize: 25,
                         ),
                       ),
                     ),

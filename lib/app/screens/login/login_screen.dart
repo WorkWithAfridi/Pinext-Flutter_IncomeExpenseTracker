@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/app_data/routing/routes.dart';
 import 'package:pinext/app/bloc/login_cubit/login_cubit.dart';
+import 'package:pinext/app/shared/widgets/socials_button.dart';
 
 import '../../app_data/app_constants/constants.dart';
 import '../../app_data/app_constants/domentions.dart';
@@ -80,47 +81,38 @@ class LoginScreenView extends StatelessWidget {
                 }
               },
               builder: (context, state) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    GetCustomButton(
-                      title: "Sign In",
-                      titleColor: whiteColor,
-                      buttonColor: customBlueColor,
-                      isLoading:
-                          state is LoginWithEmailAndPasswordButtonLoadingState
-                              ? true
-                              : false,
-                      callBackFunction: () {
-                        state is LoginWithAppleIDLoadingState
-                            ? () {}
-                            : context
-                                .read<LoginCubit>()
-                                .login(loginTypes: LoginTypes.emailAndPassword);
-                      },
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    GetCustomButton(
-                      title: "Sign in with Apple ID",
-                      titleColor: whiteColor,
-                      buttonColor: Colors.black,
-                      icon: Icons.apple,
-                      isLoading:
-                          state is LoginWithAppleIDLoadingState ? true : false,
-                      callBackFunction: () {
-                        state is LoginWithEmailAndPasswordButtonLoadingState
-                            ? () {}
-                            : context
-                                .read<LoginCubit>()
-                                .login(loginTypes: LoginTypes.appleId);
-                      },
-                    ),
-                  ],
+                return GetCustomButton(
+                  title: "Sign In",
+                  titleColor: whiteColor,
+                  buttonColor: customBlueColor,
+                  isLoading:
+                      state is LoginWithEmailAndPasswordButtonLoadingState
+                          ? true
+                          : false,
+                  callBackFunction: () {
+                    state is LoginWithAppleIDLoadingState
+                        ? () {}
+                        : context
+                            .read<LoginCubit>()
+                            .login(loginTypes: LoginTypes.emailAndPassword);
+                  },
                 );
               },
             ),
+            const SizedBox(
+              height: 16,
+            ),
+            Text(
+              "Or sign in with socials",
+              style: regularTextStyle.copyWith(
+                fontSize: 14,
+                color: customBlackColor.withOpacity(.6),
+              ),
+            ),
+            const SizedBox(
+              height: 4,
+            ),
+            SocialsButton(),
             const SizedBox(
               height: 16,
             ),

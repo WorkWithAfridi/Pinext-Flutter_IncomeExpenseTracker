@@ -6,6 +6,7 @@ import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/bloc/login_cubit/login_cubit.dart';
 import 'package:pinext/app/shared/widgets/custom_button.dart';
 import 'package:pinext/app/shared/widgets/custom_text_field.dart';
+import 'package:pinext/app/shared/widgets/socials_button.dart';
 
 import '../../app_data/app_constants/constants.dart';
 import '../../app_data/app_constants/fonts.dart';
@@ -68,14 +69,14 @@ class SignupScreenView extends StatelessWidget {
             ),
             GetCustomTextField(
               controller: TextEditingController(),
-              hintTitle: "Enter email address...",
+              hintTitle: "Enter username...",
             ),
             const SizedBox(
               height: 8,
             ),
             GetCustomTextField(
               controller: TextEditingController(),
-              hintTitle: "Enter username...",
+              hintTitle: "Enter email address...",
             ),
             const SizedBox(
               height: 8,
@@ -90,7 +91,7 @@ class SignupScreenView extends StatelessWidget {
             BlocBuilder<LoginCubit, LoginState>(
               builder: (context, state) {
                 return GetCustomButton(
-                  title: "Sign Up",
+                  title: "Next",
                   titleColor: whiteColor,
                   buttonColor: customBlueColor,
                   isLoading: false,
@@ -99,27 +100,19 @@ class SignupScreenView extends StatelessWidget {
               },
             ),
             const SizedBox(
-              height: 8,
+              height: 16,
             ),
-            BlocBuilder<LoginCubit, LoginState>(
-              builder: (context, state) {
-                return GetCustomButton(
-                  title: "Sign in with Apple ID",
-                  titleColor: whiteColor,
-                  buttonColor: Colors.black,
-                  icon: Icons.apple,
-                  isLoading:
-                      state is LoginWithAppleIDLoadingState ? true : false,
-                  callBackFunction: () {
-                    state is LoginWithEmailAndPasswordButtonLoadingState
-                        ? () {}
-                        : context
-                            .read<LoginCubit>()
-                            .login(loginTypes: LoginTypes.appleId);
-                  },
-                );
-              },
+            Text(
+              "Or sign up using socials",
+              style: regularTextStyle.copyWith(
+                fontSize: 14,
+                color: customBlackColor.withOpacity(.6),
+              ),
             ),
+            const SizedBox(
+              height: 4,
+            ),
+            SocialsButton(),
             const SizedBox(
               height: 16,
             ),
