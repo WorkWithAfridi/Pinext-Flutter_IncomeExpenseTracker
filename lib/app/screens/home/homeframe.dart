@@ -3,14 +3,15 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/domentions.dart';
+import 'package:pinext/app/app_data/routing/routes.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
-import 'package:pinext/app/bloc/homeframe_page_controller_cubit/homeframe_page_cubit.dart';
 import 'package:pinext/app/screens/home/pages/archive_page.dart';
 import 'package:pinext/app/screens/home/pages/cards_and_balance_page.dart';
 import 'package:pinext/app/screens/home/pages/home_page.dart';
 
 import '../../app_data/app_constants/constants.dart';
 import '../../app_data/app_constants/fonts.dart';
+import '../../bloc/homeframe_cubit/homeframe_page_cubit.dart';
 
 class Homeframe extends StatelessWidget {
   const Homeframe({Key? key}) : super(key: key);
@@ -20,7 +21,7 @@ class Homeframe extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => HomeframePageCubit(),
+          create: (context) => HomeframeCubit(),
         )
       ],
       child: HomeframeView(),
@@ -138,23 +139,28 @@ class HomeframeView extends StatelessWidget {
           ],
         ),
       ),
-      body: BlocBuilder<HomeframePageCubit, HomeframePageState>(
+      body: BlocBuilder<HomeframeCubit, HomeframeState>(
         builder: (context, state) {
           return PageView.builder(
             itemCount: homeframePages.length,
             controller: state.pageController,
             onPageChanged: ((value) {
-              context.read<HomeframePageCubit>().changeHomeframePage(value);
+              context.read<HomeframeCubit>().changeHomeframePage(value);
             }),
             itemBuilder: ((context, index) => homeframePages[index]),
           );
         },
       ),
-      floatingActionButton: BlocBuilder<HomeframePageCubit, HomeframePageState>(
+      floatingActionButton: BlocBuilder<HomeframeCubit, HomeframeState>(
         builder: (context, state) {
           return state.selectedIndex == 0
               ? FloatingActionButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(
+                      context,
+                      ROUTES.getAddTransactionsRoute,
+                    );
+                  },
                   backgroundColor: customBlackColor,
                   child: const Icon(
                     Icons.add,
@@ -165,12 +171,12 @@ class HomeframeView extends StatelessWidget {
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
-      bottomNavigationBar: BlocBuilder<HomeframePageCubit, HomeframePageState>(
+      bottomNavigationBar: BlocBuilder<HomeframeCubit, HomeframeState>(
         builder: (context, state) {
           return BottomNavigationBar(
             currentIndex: state.selectedIndex,
             onTap: (value) {
-              context.read<HomeframePageCubit>().changeHomeframePage(value);
+              context.read<HomeframeCubit>().changeHomeframePage(value);
             },
             selectedItemColor: customBlueColor,
             unselectedItemColor: customBlackColor.withOpacity(.4),

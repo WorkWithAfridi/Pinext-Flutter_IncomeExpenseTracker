@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
-import 'package:pinext/app/bloc/homepage_filter_cubit/homepage_filter_cubit.dart';
 
 import '../../../app_data/app_constants/constants.dart';
 import '../../../app_data/app_constants/domentions.dart';
 import '../../../app_data/theme_data/colors.dart';
+import '../../../bloc/homepage_cubit/homepage_cubit.dart';
 
 class Homepage extends StatelessWidget {
   const Homepage({Key? key}) : super(key: key);
@@ -16,7 +16,7 @@ class Homepage extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => HomepageFilterCubit(),
+          create: (context) => HomepageCubit(),
         ),
       ],
       child: HomepageView(),
@@ -92,7 +92,7 @@ class HomepageView extends StatelessWidget {
                     const SizedBox(
                       width: defaultPadding,
                     ),
-                    BlocBuilder<HomepageFilterCubit, HomepageFilterState>(
+                    BlocBuilder<HomepageCubit, HomepageState>(
                       builder: (context, state) {
                         return ListView.builder(
                           shrinkWrap: true,
@@ -477,7 +477,7 @@ class MenuFilterPill extends StatelessWidget {
       padding: const EdgeInsets.only(right: 10),
       child: GestureDetector(
         onTap: () {
-          context.read<HomepageFilterCubit>().changeMenuFilter(
+          context.read<HomepageCubit>().changeMenuFilter(
                 filtertitle,
               );
         },

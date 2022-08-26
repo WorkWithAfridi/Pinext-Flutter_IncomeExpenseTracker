@@ -1,19 +1,19 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-part 'archive_month_state.dart';
+part 'archive_state.dart';
 
-class ArchiveMonthCubit extends Cubit<ArchiveMonthState> {
-  ArchiveMonthCubit()
+class ArchiveCubit extends Cubit<ArchiveState> {
+  ArchiveCubit()
       : super(
-          ArchiveMonth(
+          ArchiveInitialState(
             selectedMonth: 'January',
           ),
         );
 
   changeMonth(String selectedMonth) {
     emit(
-      ArchiveMonth(
+      ArchiveInitialState(
         selectedMonth: selectedMonth,
       ),
     );

@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
 import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
-import 'package:pinext/app/bloc/archive_month_controller_cubit/archive_month_cubit.dart';
 
 import '../../../app_data/app_constants/fonts.dart';
+import '../../../bloc/archive_cubit/archive_cubit.dart';
 
 class ArchivePage extends StatelessWidget {
   const ArchivePage({Key? key}) : super(key: key);
@@ -13,7 +13,7 @@ class ArchivePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ArchiveMonthCubit(),
+      create: (context) => ArchiveCubit(),
       child: ArchiveMonthView(),
     );
   }
@@ -88,7 +88,7 @@ class ArchiveMonthView extends StatelessWidget {
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               scrollDirection: Axis.horizontal,
-              child: BlocBuilder<ArchiveMonthCubit, ArchiveMonthState>(
+              child: BlocBuilder<ArchiveCubit, ArchiveState>(
                 builder: (context, state) {
                   return Row(
                     children: [
@@ -100,7 +100,7 @@ class ArchiveMonthView extends StatelessWidget {
                         return GestureDetector(
                           onTap: () {
                             context
-                                .read<ArchiveMonthCubit>()
+                                .read<ArchiveCubit>()
                                 .changeMonth(currentMonth);
                           },
                           child: Container(

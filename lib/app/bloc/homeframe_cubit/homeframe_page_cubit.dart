@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 
 part 'homeframe_page_state.dart';
 
-class HomeframePageCubit extends Cubit<HomeframePageState> {
-  HomeframePageCubit()
+class HomeframeCubit extends Cubit<HomeframeState> {
+  HomeframeCubit()
       : super(
-          PageState(
+          HoemframeInitialState(
             selectedIndex: 0,
             pageController: PageController(initialPage: 0),
           ),
@@ -15,7 +15,7 @@ class HomeframePageCubit extends Cubit<HomeframePageState> {
 
   changeHomeframePage(int index) {
     state.pageController.jumpToPage(index);
-    emit(PageState(
+    emit(HoemframeInitialState(
       selectedIndex: index,
       pageController: state.pageController,
     ));

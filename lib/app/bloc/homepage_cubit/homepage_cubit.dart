@@ -2,19 +2,21 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
-part 'homepage_filter_state.dart';
+part 'homepage_state.dart';
 
-class HomepageFilterCubit extends Cubit<HomepageFilterState> {
-  HomepageFilterCubit()
+class HomepageCubit extends Cubit<HomepageState> {
+  HomepageCubit()
       : super(
-          FilterState(
+          HomepageInitialState(
             selectedFilter: 'Overview',
           ),
         );
 
   changeMenuFilter(String filterName) {
     emit(
-      FilterState(selectedFilter: filterName),
+      HomepageInitialState(
+        selectedFilter: filterName,
+      ),
     );
   }
 }
