@@ -29,6 +29,7 @@ environment:
 dependencies:
   bloc: ^8.1.0
   cupertino_icons: ^1.0.2
+  elegant_notification: ^1.6.1
   equatable: ^2.0.5
   flutter:
     sdk: flutter

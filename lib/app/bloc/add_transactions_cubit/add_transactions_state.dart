@@ -6,15 +6,37 @@ enum SelectedTransactionMode {
 }
 
 abstract class AddTransactionsState extends Equatable {
-  AddTransactionsState({required this.selectedTransactionMode});
+  AddTransactionsState({
+    required this.selectedTransactionMode,
+    required this.selectedCardNo,
+  });
   SelectedTransactionMode selectedTransactionMode;
+  String selectedCardNo;
 
   @override
   List<Object> get props => [
         selectedTransactionMode,
+        selectedCardNo,
       ];
 }
 
-class AddTransactionsInitialState extends AddTransactionsState {
-  AddTransactionsInitialState({required super.selectedTransactionMode});
+class AddTransactionsDefaultState extends AddTransactionsState {
+  AddTransactionsDefaultState({
+    required super.selectedTransactionMode,
+    required super.selectedCardNo,
+  });
+}
+
+class AddTransactionsSuccessState extends AddTransactionsState {
+  AddTransactionsSuccessState({
+    required super.selectedTransactionMode,
+    required super.selectedCardNo,
+  });
+}
+
+class AddTransactionsLoadingState extends AddTransactionsState {
+  AddTransactionsLoadingState({
+    required super.selectedTransactionMode,
+    required super.selectedCardNo,
+  });
 }
