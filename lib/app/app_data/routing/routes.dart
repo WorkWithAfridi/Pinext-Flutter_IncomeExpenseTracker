@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:pinext/app/screens/add_pinext_card/add_pinext_card.dart';
 import 'package:pinext/app/screens/add_transaction/add_transaction.dart';
 import 'package:pinext/app/screens/home/homeframe.dart';
 
@@ -31,6 +32,10 @@ class ROUTECONTROLLER {
         return MaterialPageRoute(
           builder: (context) => const AddTransactionScreen(),
         );
+      case ROUTES.getAddPinextCardRoute:
+        return MaterialPageRoute(
+          builder: (context) => const AddPinextCardScreen(),
+        );
       default:
         log(settings.name.toString());
         throw ("Not a valid route ");
@@ -44,4 +49,5 @@ class ROUTES {
   static const getSignupRoute = '/signup';
   static const getHomeframeRoute = '/homeframe';
   static const getAddTransactionsRoute = '/homeframe/add_transactions';
+  static const getAddPinextCardRoute = '/homeframe/add_pinext_card';
 }

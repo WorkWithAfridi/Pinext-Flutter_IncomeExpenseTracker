@@ -8,9 +8,15 @@ class PinextCard extends StatelessWidget {
   PinextCard({
     Key? key,
     this.isSelected = false,
+    this.cardColor = customBlueColor,
+    this.title = "Test Title",
+    this.balance = 0.00,
   }) : super(key: key);
 
   bool isSelected;
+  Color cardColor;
+  double balance;
+  String title;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +29,7 @@ class PinextCard extends StatelessWidget {
         height: 180,
         width: getWidth(context) * .8,
         decoration: BoxDecoration(
-          color: customBlueColor,
+          color: cardColor,
           borderRadius: BorderRadius.circular(
             defaultBorder,
           ),
@@ -36,40 +42,44 @@ class PinextCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  "Bkash",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                    color: whiteColor,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    title.toString(),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: whiteColor,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
                   ),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Current balance",
-                      style: TextStyle(
-                        fontWeight: FontWeight.normal,
-                        fontSize: 13,
-                        color: whiteColor.withOpacity(.4),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Current balance",
+                        style: TextStyle(
+                          fontWeight: FontWeight.normal,
+                          fontSize: 13,
+                          color: whiteColor.withOpacity(.4),
+                        ),
                       ),
-                    ),
-                    const Text(
-                      "67000Tk",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 25,
-                        color: whiteColor,
-                      ),
-                    ),
-                  ],
-                )
-              ],
+                      Text(balance.toString(),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 25,
+                            color: whiteColor,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1),
+                    ],
+                  )
+                ],
+              ),
             ),
             RotatedBox(
               quarterTurns: 3,

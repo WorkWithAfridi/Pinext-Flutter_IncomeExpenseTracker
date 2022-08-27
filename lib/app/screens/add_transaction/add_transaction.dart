@@ -54,7 +54,7 @@ class AddTransactionView extends StatelessWidget {
           ),
         ),
         title: Text(
-          "Adding new Transaction",
+          "Adding a new Transaction",
           style: regularTextStyle,
         ),
       ),

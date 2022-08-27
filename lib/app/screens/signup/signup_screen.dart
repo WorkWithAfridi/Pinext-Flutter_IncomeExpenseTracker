@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/domentions.dart';
+import 'package:pinext/app/app_data/routing/routes.dart';
 import 'package:pinext/app/bloc/signin_cubit/signin_cubit_cubit.dart';
 import 'package:pinext/app/shared/widgets/custom_button.dart';
 import 'package:pinext/app/shared/widgets/custom_text_field.dart';
@@ -67,119 +68,122 @@ class UserRegistrationPage extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: defaultPadding,
-      ),
-      height: getHeight(context),
-      width: getWidth(context),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Welcome",
-            style: boldTextStyle.copyWith(fontSize: 30),
-          ),
-          const SizedBox(
-            height: 4,
-          ),
-          Text(
-            "Please provide the following data\nto register a new account.",
-            style: regularTextStyle.copyWith(
-              fontSize: 14,
-              color: customBlackColor.withOpacity(.6),
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
+      child: Container(
+        padding: const EdgeInsets.symmetric(
+          horizontal: defaultPadding,
+        ),
+        height: getHeight(context) - kToolbarHeight,
+        width: getWidth(context),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Welcome",
+              style: boldTextStyle.copyWith(fontSize: 30),
             ),
-          ),
-          const SizedBox(
-            height: 16,
-          ),
-          GetCustomTextField(
-            controller: TextEditingController(),
-            hintTitle: "Enter username...",
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          GetCustomTextField(
-            controller: TextEditingController(),
-            hintTitle: "Enter email address...",
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          GetCustomTextField(
-            controller: TextEditingController(),
-            hintTitle: "Password",
-          ),
-          const SizedBox(
-            height: 16,
-          ),
-          BlocBuilder<SigninCubit, SigninState>(
-            builder: (context, state) {
-              return GetCustomButton(
-                title: "Next",
-                titleColor: whiteColor,
-                buttonColor: customBlueColor,
-                isLoading: false,
-                callBackFunction: () {
-                  state.pageController.animateToPage(
-                    1,
-                    duration: const Duration(
-                      milliseconds: 200,
-                    ),
-                    curve: Curves.linear,
-                  );
-                },
-              );
-            },
-          ),
-          const SizedBox(
-            height: 16,
-          ),
-          Text(
-            "Or sign up using socials",
-            style: regularTextStyle.copyWith(
-              fontSize: 14,
-              color: customBlackColor.withOpacity(.6),
+            const SizedBox(
+              height: 4,
             ),
-          ),
-          const SizedBox(
-            height: 4,
-          ),
-          SocialsButton(),
-          const SizedBox(
-            height: 16,
-          ),
-          GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: RichText(
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                    text: "Already have an account? ",
-                    style: regularTextStyle.copyWith(
-                      fontSize: 14,
-                      color: customBlackColor.withOpacity(.6),
-                    ),
-                  ),
-                  TextSpan(
-                    text: "Sign in",
-                    style: boldTextStyle.copyWith(
-                      fontSize: 14,
-                      color: customBlueColor,
-                    ),
-                  )
-                ],
+            Text(
+              "Please provide the following data\nto register a new account.",
+              style: regularTextStyle.copyWith(
+                fontSize: 14,
+                color: customBlackColor.withOpacity(.6),
               ),
             ),
-          ),
-          const SizedBox(
-            height: 100,
-          )
-        ],
+            const SizedBox(
+              height: 16,
+            ),
+            GetCustomTextField(
+              controller: TextEditingController(),
+              hintTitle: "Enter username...",
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            GetCustomTextField(
+              controller: TextEditingController(),
+              hintTitle: "Enter email address...",
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            GetCustomTextField(
+              controller: TextEditingController(),
+              hintTitle: "Password",
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            BlocBuilder<SigninCubit, SigninState>(
+              builder: (context, state) {
+                return GetCustomButton(
+                  title: "Next",
+                  titleColor: whiteColor,
+                  buttonColor: customBlueColor,
+                  isLoading: false,
+                  callBackFunction: () {
+                    state.pageController.animateToPage(
+                      1,
+                      duration: const Duration(
+                        milliseconds: 200,
+                      ),
+                      curve: Curves.linear,
+                    );
+                  },
+                );
+              },
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            Text(
+              "Or sign up using socials",
+              style: regularTextStyle.copyWith(
+                fontSize: 14,
+                color: customBlackColor.withOpacity(.6),
+              ),
+            ),
+            const SizedBox(
+              height: 4,
+            ),
+            SocialsButton(),
+            const SizedBox(
+              height: 16,
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: "Already have an account? ",
+                      style: regularTextStyle.copyWith(
+                        fontSize: 14,
+                        color: customBlackColor.withOpacity(.6),
+                      ),
+                    ),
+                    TextSpan(
+                      text: "Sign in",
+                      style: boldTextStyle.copyWith(
+                        fontSize: 14,
+                        color: customBlueColor,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 100,
+            )
+          ],
+        ),
       ),
     );
   }
@@ -433,46 +437,51 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
             const SizedBox(
               height: 8,
             ),
-            Container(
-              height: 100,
-              decoration: BoxDecoration(
-                color: greyColor,
-                borderRadius: BorderRadius.circular(
-                  defaultBorder,
+            GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, ROUTES.getAddPinextCardRoute);
+              },
+              child: Container(
+                height: 100,
+                decoration: BoxDecoration(
+                  color: greyColor,
+                  borderRadius: BorderRadius.circular(
+                    defaultBorder,
+                  ),
                 ),
-              ),
-              alignment: Alignment.center,
-              width: getWidth(context),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    height: 25,
-                    width: 25,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(
-                        25,
+                alignment: Alignment.center,
+                width: getWidth(context),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 25,
+                      width: 25,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(
+                          25,
+                        ),
+                        border: Border.all(
+                          color: customBlackColor.withOpacity(.4),
+                        ),
                       ),
-                      border: Border.all(
+                      child: Icon(
+                        Icons.add,
+                        size: 16,
                         color: customBlackColor.withOpacity(.4),
                       ),
                     ),
-                    child: Icon(
-                      Icons.add,
-                      size: 16,
-                      color: customBlackColor.withOpacity(.4),
+                    const SizedBox(
+                      width: 8,
                     ),
-                  ),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  Text(
-                    "Add a new card",
-                    style: boldTextStyle.copyWith(
-                      color: customBlackColor.withOpacity(.4),
+                    Text(
+                      "Add a new card",
+                      style: boldTextStyle.copyWith(
+                        color: customBlackColor.withOpacity(.4),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             const SizedBox(

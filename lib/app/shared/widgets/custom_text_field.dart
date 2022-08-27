@@ -9,12 +9,14 @@ class GetCustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final bool isPassword;
   int numberOfLines;
+  TextInputType textInputType;
   GetCustomTextField({
     Key? key,
     required this.controller,
     required this.hintTitle,
     this.numberOfLines = 1,
     this.isPassword = false,
+    this.textInputType = TextInputType.text,
   }) : super(key: key);
 
   @override
@@ -23,7 +25,7 @@ class GetCustomTextField extends StatelessWidget {
       controller: controller,
       style: regularTextStyle,
       maxLines: numberOfLines,
-      keyboardType: TextInputType.text,
+      keyboardType: textInputType,
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
         hintText: hintTitle,
