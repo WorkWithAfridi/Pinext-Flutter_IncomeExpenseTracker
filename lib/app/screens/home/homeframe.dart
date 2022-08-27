@@ -56,87 +56,88 @@ class HomeframeView extends StatelessWidget {
           ),
         ),
       ),
-      drawer: Container(
-        height: getHeight(context),
-        color: greyColor,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: 52,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 5,
+      drawer: SafeArea(
+        child: Container(
+          height: getHeight(context),
+          color: greyColor,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 20,
                   ),
-                  child: IconButton(
-                    onPressed: () {
+                  GestureDetector(
+                    onTap: () {
                       Navigator.pop(context);
                     },
-                    icon: Icon(
-                      Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back,
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: defaultPadding,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Pinext",
-                        style: regularTextStyle.copyWith(
-                          color: customBlackColor.withOpacity(.6),
-                        ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: defaultPadding,
                       ),
-                      Text(
-                        "Space",
-                        style: boldTextStyle.copyWith(
-                          fontSize: 25,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: defaultPadding),
-                    child: Text(
-                      "Logout",
-                      style: boldTextStyle.copyWith(
-                        fontSize: 25,
+                      child: Icon(
+                        Platform.isIOS
+                            ? Icons.arrow_back_ios
+                            : Icons.arrow_back,
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(
-                  height: 52,
-                ),
-              ],
-            ),
-          ],
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: defaultPadding,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Pinext",
+                          style: regularTextStyle.copyWith(
+                            color: customBlackColor.withOpacity(.6),
+                          ),
+                        ),
+                        Text(
+                          "Space",
+                          style: boldTextStyle.copyWith(
+                            fontSize: 25,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: defaultPadding),
+                      child: Icon(
+                        Icons.logout,
+                        color: customBlueColor,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
       body: BlocBuilder<HomeframeCubit, HomeframeState>(

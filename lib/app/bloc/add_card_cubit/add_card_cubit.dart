@@ -66,10 +66,10 @@ class AddCardCubit extends Cubit<AddCardState> {
     if (title.isNotEmpty && description.isNotEmpty && balance.isNotEmpty) {
       emit(
         AddCardSuccessState(
-          title: state.title,
-          description: state.description,
-          balance: state.balance,
-          color: state.color,
+          title: title,
+          description: description,
+          balance: double.parse(balance),
+          color: color,
         ),
       );
     } else {
@@ -82,5 +82,14 @@ class AddCardCubit extends Cubit<AddCardState> {
         ),
       );
     }
+  }
+
+  reset() {
+    emit(AddCardDefaultState(
+      title: state.title,
+      description: state.description,
+      balance: state.balance,
+      color: state.color,
+    ));
   }
 }

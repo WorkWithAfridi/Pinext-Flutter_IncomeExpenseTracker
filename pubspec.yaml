@@ -31,6 +31,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   elegant_notification: ^1.6.1
   equatable: ^2.0.5
+  firebase_auth: ^3.7.0
+  firebase_core: ^1.21.1
+  firebase_storage: ^10.3.7
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.1

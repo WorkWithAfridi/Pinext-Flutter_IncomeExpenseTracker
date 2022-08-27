@@ -1,16 +1,18 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/domentions.dart';
-import 'package:pinext/app/app_data/routing/routes.dart';
 import 'package:pinext/app/bloc/signin_cubit/signin_cubit_cubit.dart';
+import 'package:pinext/app/models/pinext_card_model.dart';
 import 'package:pinext/app/shared/widgets/custom_button.dart';
 import 'package:pinext/app/shared/widgets/custom_text_field.dart';
 import 'package:pinext/app/shared/widgets/socials_button.dart';
 
 import '../../app_data/app_constants/constants.dart';
 import '../../app_data/app_constants/fonts.dart';
+import '../../app_data/routing/routes.dart';
 import '../../app_data/theme_data/colors.dart';
 
 class SignupScreen extends StatelessWidget {
@@ -18,10 +20,7 @@ class SignupScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => SigninCubit(),
-      child: SignupScreenView(),
-    );
+    return SignupScreenView();
   }
 }
 
@@ -276,156 +275,187 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
             const SizedBox(
               height: 4,
             ),
-            cards.isEmpty
-                ? Text(
-                    "Please add a card to continue using the app!",
-                    style: regularTextStyle.copyWith(
-                      color: customBlackColor.withOpacity(.4),
-                    ),
-                  )
-                : const SizedBox.shrink(),
-            ListView.builder(
-              itemCount: cards.length,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: ((context, index) {
-                return Card(
-                  elevation: 0,
-                  shadowColor: greyColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(
-                      defaultBorder,
-                    ),
-                  ),
-                  child: Container(
-                    height: 100,
-                    decoration: BoxDecoration(
-                      color: greyColor,
-                      borderRadius: BorderRadius.circular(
-                        defaultBorder,
-                      ),
-                    ),
-                    width: getWidth(context),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.all(15),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+            BlocBuilder<SigninCubit, SigninState>(
+              builder: (context, state) {
+                log(state.cards.length.toString());
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    state.cards.isEmpty
+                        ? Text(
+                            "Please add a card to continue using the app!",
+                            style: regularTextStyle.copyWith(
+                              color: customBlackColor.withOpacity(.4),
+                            ),
+                          )
+                        : const SizedBox.shrink(),
+                    ListView.builder(
+                      itemCount: state.cards.length,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: ((context, index) {
+                        PinextCardModel pinextCardModel = state.cards[index];
+                        return Card(
+                          elevation: 0,
+                          shadowColor: greyColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                              defaultBorder,
+                            ),
+                          ),
+                          child: Container(
+                            height: 100,
+                            decoration: BoxDecoration(
+                              color: greyColor,
+                              borderRadius: BorderRadius.circular(
+                                defaultBorder,
+                              ),
+                            ),
+                            width: getWidth(context),
+                            child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
-                                  "Bkash",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18,
-                                    color: customBlackColor,
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(15),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          pinextCardModel.title,
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
+                                            color: customBlackColor,
+                                          ),
+                                        ),
+                                        Container(
+                                          width: double.maxFinite,
+                                          height: .5,
+                                          color:
+                                              customBlackColor.withOpacity(.2),
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "Current balance",
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.normal,
+                                                fontSize: 10,
+                                                color: customBlackColor
+                                                    .withOpacity(.4),
+                                              ),
+                                            ),
+                                            Text(
+                                              pinextCardModel.balance
+                                                  .toString(),
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20,
+                                                color: customBlackColor,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
-                                Container(
-                                  width: double.maxFinite,
-                                  height: .5,
-                                  color: customBlackColor.withOpacity(.2),
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                Row(
                                   children: [
-                                    Text(
-                                      "Current balance",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.normal,
-                                        fontSize: 10,
-                                        color: customBlackColor.withOpacity(.4),
+                                    Container(
+                                      width: .5,
+                                      height: getHeight(context),
+                                      color: customBlackColor.withOpacity(.2),
+                                    ),
+                                    const SizedBox(
+                                      width: 8,
+                                    ),
+                                    RotatedBox(
+                                      quarterTurns: 3,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "Last transaction",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.normal,
+                                              fontSize: 10,
+                                              color: customBlackColor
+                                                  .withOpacity(.4),
+                                            ),
+                                          ),
+                                          const Text(
+                                            "12/12/12",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 15,
+                                              color: customBlackColor,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                    const Text(
-                                      "67000Tk",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20,
-                                        color: customBlackColor,
-                                      ),
+                                    const SizedBox(
+                                      width: 8,
                                     ),
+                                    Row(
+                                      children: [
+                                        Container(
+                                          width: .5,
+                                          height: getHeight(context),
+                                          color:
+                                              customBlackColor.withOpacity(.2),
+                                        ),
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            IconButton(
+                                              onPressed: () {},
+                                              icon: const Icon(
+                                                Icons.edit,
+                                                color: customBlackColor,
+                                              ),
+                                            ),
+                                            Container(
+                                              width: 55,
+                                              height: .5,
+                                              color: customBlackColor
+                                                  .withOpacity(.2),
+                                            ),
+                                            IconButton(
+                                              onPressed: () {
+                                                context
+                                                    .read<SigninCubit>()
+                                                    .removeCard(index);
+                                              },
+                                              icon: const Icon(
+                                                Icons.delete,
+                                                color: customBlackColor,
+                                              ),
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    )
                                   ],
                                 )
                               ],
                             ),
                           ),
-                        ),
-                        Row(
-                          children: [
-                            Container(
-                              width: .5,
-                              height: getHeight(context),
-                              color: customBlackColor.withOpacity(.2),
-                            ),
-                            const SizedBox(
-                              width: 8,
-                            ),
-                            RotatedBox(
-                              quarterTurns: 3,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Last transaction",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 10,
-                                      color: customBlackColor.withOpacity(.4),
-                                    ),
-                                  ),
-                                  const Text(
-                                    "12/12/12",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15,
-                                      color: customBlackColor,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 8,
-                            ),
-                            Row(
-                              children: [
-                                Container(
-                                  width: .5,
-                                  height: getHeight(context),
-                                  color: customBlackColor.withOpacity(.2),
-                                ),
-                                Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    const Icon(
-                                      Icons.edit,
-                                      color: customBlackColor,
-                                    ),
-                                    Container(
-                                      width: 55,
-                                      height: .5,
-                                      color: customBlackColor.withOpacity(.2),
-                                    ),
-                                    const Icon(
-                                      Icons.delete,
-                                      color: customBlackColor,
-                                    ),
-                                  ],
-                                )
-                              ],
-                            )
-                          ],
-                        )
-                      ],
+                        );
+                      }),
                     ),
-                  ),
+                  ],
                 );
-              }),
+              },
             ),
             const SizedBox(
               height: 16,
@@ -439,6 +469,12 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
+                // context.read<SigninCubit>().addCard(PinextCardModel(
+                //     title: "title",
+                //     description: "description",
+                //     balance: 0.00,
+                //     color: "Black",
+                //     lastTransactionData: DateTime.now().toString()));
                 Navigator.pushNamed(context, ROUTES.getAddPinextCardRoute);
               },
               child: Container(

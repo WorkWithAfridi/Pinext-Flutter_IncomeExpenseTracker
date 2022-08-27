@@ -7,10 +7,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
 import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/bloc/add_card_cubit/add_card_cubit.dart';
+import 'package:pinext/app/models/pinext_card_model.dart';
 import 'package:pinext/app/shared/widgets/pinext_card.dart';
 
 import '../../app_data/app_constants/fonts.dart';
 import '../../app_data/theme_data/colors.dart';
+import '../../bloc/signin_cubit/signin_cubit_cubit.dart';
 import '../../shared/widgets/custom_button.dart';
 import '../../shared/widgets/custom_text_field.dart';
 
@@ -281,8 +283,20 @@ class _AddPinextCardViewState extends State<AddPinextCardView> {
                       animationDuration: const Duration(milliseconds: 200),
                       toastDuration: const Duration(seconds: 5),
                     ).show(context);
+                    context.read<AddCardCubit>().reset();
                   }
                   if (state is AddCardSuccessState) {
+                    PinextCardModel newPinextCard = PinextCardModel(
+                        title: state.title,
+                        description: state.description,
+                        balance: state.balance,
+                        color: state.color,
+                        lastTransactionData: DateTime.now().toString());
+                    context.read<SigninCubit>().addCard(
+                          newPinextCard,
+                        );
+                    Navigator.pop(context);
+
                     ElegantNotification.success(
                       title: Text(
                         "Pinext Card added!!",
@@ -296,6 +310,7 @@ class _AddPinextCardViewState extends State<AddPinextCardView> {
                       animationDuration: const Duration(milliseconds: 200),
                       toastDuration: const Duration(seconds: 5),
                     ).show(context);
+                    context.read<AddCardCubit>().reset();
                   }
                 },
                 builder: (context, state) {

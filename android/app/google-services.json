@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1049606352114",
+    "project_id": "pinext-495de",
+    "storage_bucket": "pinext-495de.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1049606352114:android:f425ec777c4e833859346b",
+        "android_client_info": {
+          "package_name": "com.workwithafridi.pinext"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1049606352114-aklmtn42no719jt0rlvvv8o7fqa98k13.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUU9y66kC7Un8LhBAGmH14VIymL9MKpcM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1049606352114-aklmtn42no719jt0rlvvv8o7fqa98k13.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

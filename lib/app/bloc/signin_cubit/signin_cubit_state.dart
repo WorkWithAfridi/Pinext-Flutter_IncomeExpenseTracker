@@ -1,13 +1,22 @@
 part of 'signin_cubit_cubit.dart';
 
 abstract class SigninState extends Equatable {
-  const SigninState(this.pageController);
+  SigninState(this.pageController, this.cards, this.numberOfCardsStored);
   final PageController pageController;
+  List<PinextCardModel> cards;
+  int numberOfCardsStored;
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [
+        cards,
+        numberOfCardsStored,
+      ];
 }
 
 class SigninDefaultState extends SigninState {
-  const SigninDefaultState(super.pageController);
+  SigninDefaultState(
+    super.pageController,
+    super.cards,
+    super.numberOfCardsStored,
+  );
 }

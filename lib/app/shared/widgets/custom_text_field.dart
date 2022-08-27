@@ -35,7 +35,7 @@ class GetCustomTextField extends StatelessWidget {
           ),
         ),
         contentPadding: const EdgeInsets.symmetric(
-          horizontal: defaultPadding,
+          horizontal: 15,
           vertical: 15,
         ),
         border: OutlineInputBorder(
