@@ -7,7 +7,11 @@ class ArchiveCubit extends Cubit<ArchiveState> {
   ArchiveCubit()
       : super(
           ArchiveInitialState(
-            selectedMonth: 'January',
+            selectedMonth: (int.parse(
+                      DateTime.now().toString().substring(5, 7),
+                    ) -
+                    1)
+                .toString(),
           ),
         );
 
