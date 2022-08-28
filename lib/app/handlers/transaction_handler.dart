@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pinext/app/handlers/card_handler.dart';
+import 'package:pinext/app/handlers/user_handler.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
 import 'package:pinext/app/models/pinext_transaction_model.dart';
+import 'package:pinext/app/models/pinext_user_model.dart';
 import 'package:pinext/app/services/firebase_services.dart';
 import 'package:uuid/uuid.dart';
 
@@ -65,6 +67,40 @@ class TransactionHandler {
       });
 
       // //Adjusting global balances
+      PinextUserModel pinextUserModel = await UserHandler().getCurrentUser();
+      if (transactionType == "Income") {
+        double adjustedMonthlySavings =
+            double.parse(pinextUserModel.monthlySavings) + double.parse(amount);
+        double adjustedNetBalance =
+            double.parse(pinextUserModel.netBalance) + double.parse(amount);
+        await FirebaseServices()
+            .firebaseFirestore
+            .collection("pinext_users")
+            .doc(FirebaseServices().getUserId())
+            .update({
+          "monthlySavings": adjustedMonthlySavings.toString(),
+          "netBalance": adjustedNetBalance.toString(),
+        });
+        await UserHandler().getCurrentUser();
+      } else {
+        double adjustedDailyExpenses =
+            double.parse(pinextUserModel.dailyExpenses) + double.parse(amount);
+        double adjustedMonthlyExpenses =
+            double.parse(pinextUserModel.monthlyExpenses) +
+                double.parse(amount);
+        double adjustedNetBalance =
+            double.parse(pinextUserModel.netBalance) - double.parse(amount);
+        await FirebaseServices()
+            .firebaseFirestore
+            .collection("pinext_users")
+            .doc(FirebaseServices().getUserId())
+            .update({
+          "netBalance": adjustedNetBalance.toString(),
+          "dailyExpenses": adjustedDailyExpenses.toString(),
+          "monthlyExpenses": adjustedMonthlyExpenses.toString(),
+        });
+        await UserHandler().getCurrentUser();
+      }
       // await FirebaseServices()
       //     .firebaseFirestore
       //     .collection("pinext_users")
