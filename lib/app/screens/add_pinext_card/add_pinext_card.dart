@@ -37,13 +37,6 @@ class AddPinextCardView extends StatefulWidget {
 }
 
 class _AddPinextCardViewState extends State<AddPinextCardView> {
-  List listOfCardColors = [
-    "Black",
-    "Red",
-    "Purple",
-    "Green",
-  ];
-
   late TextEditingController titleController;
   late TextEditingController descriptionController;
   late TextEditingController balanceController;
@@ -187,22 +180,7 @@ class _AddPinextCardViewState extends State<AddPinextCardView> {
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: ((context, index) {
                         String color = listOfCardColors[index];
-                        late Color cardColor;
-                        if (color == "Black") {
-                          cardColor = Colors.black;
-                        } else if (color == "Red") {
-                          cardColor = Colors.red;
-                        } else if (color == "Purple") {
-                          cardColor = Colors.purple;
-                        } else if (color == "Green") {
-                          cardColor = Colors.green;
-                        } else {
-                          cardColor = customBlueColor;
-                        }
-                        // "Black",
-                        // "Red",
-                        // "Purple",
-                        // "Green",
+                        late Color cardColor = getColorFromString(color);
                         return Padding(
                           padding: const EdgeInsets.only(right: 8),
                           child: GestureDetector(
@@ -239,20 +217,8 @@ class _AddPinextCardViewState extends State<AddPinextCardView> {
                   ),
                   BlocBuilder<AddCardCubit, AddCardState>(
                     builder: (context, state) {
-                      log(state.color);
                       String color = state.color;
-                      late Color cardColor;
-                      if (color == "Black") {
-                        cardColor = Colors.black;
-                      } else if (color == "Red") {
-                        cardColor = Colors.red;
-                      } else if (color == "Purple") {
-                        cardColor = Colors.purple;
-                      } else if (color == "Green") {
-                        cardColor = Colors.green;
-                      } else {
-                        cardColor = customBlueColor;
-                      }
+                      late Color cardColor = getColorFromString(color);
                       return PinextCard(
                         cardColor: cardColor,
                         title: "Example Wallet",

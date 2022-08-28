@@ -178,18 +178,7 @@ class HomepageView extends StatelessWidget {
                             );
 
                             String color = pinextCardModel.color;
-                            late Color cardColor;
-                            if (color == "Black") {
-                              cardColor = Colors.black;
-                            } else if (color == "Red") {
-                              cardColor = Colors.red;
-                            } else if (color == "Purple") {
-                              cardColor = Colors.purple;
-                            } else if (color == "Green") {
-                              cardColor = Colors.green;
-                            } else {
-                              cardColor = customBlueColor;
-                            }
+                            late Color cardColor = getColorFromString(color);
 
                             return PinextCard(
                               title: pinextCardModel.title,

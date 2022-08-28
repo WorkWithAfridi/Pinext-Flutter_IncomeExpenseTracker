@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
 import 'package:pinext/app/models/pinext_user_model.dart';
+import 'package:pinext/app/services/card_services.dart';
 import 'package:pinext/app/services/firebase_services.dart';
 import 'package:pinext/app/services/user_services.dart';
 
@@ -47,13 +48,7 @@ class AuthenticationServices {
 
       for (PinextCardModel pinextCard in pinextCards) {
         //storing userCards
-        await FirebaseServices()
-            .firebaseFirestore
-            .collection('pinext_users')
-            .doc(userId)
-            .collection('pinext_cards')
-            .doc(pinextCard.cardId)
-            .set(pinextCard.toMap());
+        await CardServices().addCard(pinextCard);
       }
       await UserServices().getCurrentUser();
       response = "Success";

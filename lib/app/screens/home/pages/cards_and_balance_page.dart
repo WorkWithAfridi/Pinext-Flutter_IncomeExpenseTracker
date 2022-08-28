@@ -1,9 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:pinext/app/services/user_services.dart';
 
 import '../../../app_data/app_constants/constants.dart';
 import '../../../app_data/app_constants/domentions.dart';
 import '../../../app_data/app_constants/fonts.dart';
 import '../../../app_data/theme_data/colors.dart';
+import '../../../models/pinext_card_model.dart';
+import '../../../services/firebase_services.dart';
+import '../../../shared/widgets/pinext_card_minimized.dart';
 
 class CardsAndBalancePage extends StatelessWidget {
   const CardsAndBalancePage({Key? key}) : super(key: key);
@@ -62,7 +67,7 @@ class CardsAndBalancePage extends StatelessWidget {
                   ),
                   FittedBox(
                     child: Text(
-                      "65000",
+                      UserServices().currentUser.netBalance,
                       style: boldTextStyle.copyWith(
                         color: whiteColor,
                         fontSize: 50,
@@ -89,146 +94,34 @@ class CardsAndBalancePage extends StatelessWidget {
             const SizedBox(
               height: 4,
             ),
-            ListView.builder(
-              itemCount: 4,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: ((context, index) {
-                return Card(
-                  elevation: 0,
-                  shadowColor: greyColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(
-                      defaultBorder,
-                    ),
-                  ),
-                  child: Container(
-                    height: 100,
-                    decoration: BoxDecoration(
-                      color: greyColor,
-                      borderRadius: BorderRadius.circular(
-                        defaultBorder,
-                      ),
-                    ),
-                    width: getWidth(context),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.all(15),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text(
-                                  "Bkash",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18,
-                                    color: customBlackColor,
-                                  ),
-                                ),
-                                Container(
-                                  width: double.maxFinite,
-                                  height: .5,
-                                  color: customBlackColor.withOpacity(.2),
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Current balance",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.normal,
-                                        fontSize: 10,
-                                        color: customBlackColor.withOpacity(.4),
-                                      ),
-                                    ),
-                                    const Text(
-                                      "67000Tk",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20,
-                                        color: customBlackColor,
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            Container(
-                              width: .5,
-                              height: getHeight(context),
-                              color: customBlackColor.withOpacity(.2),
-                            ),
-                            const SizedBox(
-                              width: 8,
-                            ),
-                            RotatedBox(
-                              quarterTurns: 3,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Last transaction",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 10,
-                                      color: customBlackColor.withOpacity(.4),
-                                    ),
-                                  ),
-                                  const Text(
-                                    "12/12/12",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15,
-                                      color: customBlackColor,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 8,
-                            ),
-                            Row(
-                              children: [
-                                Container(
-                                  width: .5,
-                                  height: getHeight(context),
-                                  color: customBlackColor.withOpacity(.2),
-                                ),
-                                Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    const Icon(
-                                      Icons.edit,
-                                      color: customBlackColor,
-                                    ),
-                                    Container(
-                                      width: 55,
-                                      height: .5,
-                                      color: customBlackColor.withOpacity(.2),
-                                    ),
-                                    const Icon(
-                                      Icons.delete,
-                                      color: customBlackColor,
-                                    ),
-                                  ],
-                                )
-                              ],
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
+            StreamBuilder(
+              stream: FirebaseServices()
+                  .firebaseFirestore
+                  .collection("pinext_users")
+                  .doc(FirebaseServices().getUserId())
+                  .collection("pinext_cards")
+                  .snapshots(),
+              builder: ((context,
+                  AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                return ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: ((context, index) {
+                    PinextCardModel pinextCardModel = PinextCardModel.fromMap(
+                      snapshot.data!.docs[index].data(),
+                    );
+
+                    String color = pinextCardModel.color;
+                    late Color cardColor = getColorFromString(color);
+                    return PinextCardMinimized(
+                        pinextCardModel: pinextCardModel);
+                  }),
                 );
               }),
             ),

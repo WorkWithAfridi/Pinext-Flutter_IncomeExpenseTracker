@@ -41,6 +41,7 @@ dependencies:
   font_awesome_flutter: ^10.1.0
   lottie: ^1.4.1
   pie_chart: ^5.3.2
+  timeago: ^3.3.0
   uuid: ^3.0.6
 
 dev_dependencies:
