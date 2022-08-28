@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:pinext/app/handlers/card_handler.dart';
+import 'package:pinext/app/handlers/user_handler.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
 import 'package:pinext/app/models/pinext_user_model.dart';
-import 'package:pinext/app/services/card_services.dart';
 import 'package:pinext/app/services/firebase_services.dart';
-import 'package:pinext/app/services/user_services.dart';
 
 class AuthenticationServices {
   AuthenticationServices._internal();
@@ -50,7 +50,7 @@ class AuthenticationServices {
         //storing userCards
         await CardServices().addCard(pinextCard);
       }
-      await UserServices().getCurrentUser();
+      await UserHandler().getCurrentUser();
       response = "Success";
     } on FirebaseException catch (err) {
       response = err.message.toString();
@@ -63,7 +63,7 @@ class AuthenticationServices {
   Future<bool> isUserSignedIn() async {
     bool status = FirebaseServices().firebaseAuth.currentUser != null;
     if (status) {
-      await UserServices().getCurrentUser();
+      await UserHandler().getCurrentUser();
     }
     return status;
   }
@@ -79,7 +79,7 @@ class AuthenticationServices {
                 email: emailAddress,
                 password: password,
               );
-      await UserServices().getCurrentUser();
+      await UserHandler().getCurrentUser();
       response = "Success";
     } on FirebaseException catch (err) {
       response = err.message.toString();

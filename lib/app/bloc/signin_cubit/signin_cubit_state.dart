@@ -1,8 +1,7 @@
 part of 'signin_cubit_cubit.dart';
 
 abstract class SigninState extends Equatable {
-  SigninState(this.pageController, this.cards, this.numberOfCardsStored);
-  final PageController pageController;
+  SigninState(this.cards, this.numberOfCardsStored);
   List<PinextCardModel> cards;
   int numberOfCardsStored;
 
@@ -15,7 +14,6 @@ abstract class SigninState extends Equatable {
 
 class SigninDefaultState extends SigninState {
   SigninDefaultState(
-    super.pageController,
     super.cards,
     super.numberOfCardsStored,
   );
@@ -23,7 +21,6 @@ class SigninDefaultState extends SigninState {
 
 class SigninLoadingState extends SigninState {
   SigninLoadingState(
-    super.pageController,
     super.cards,
     super.numberOfCardsStored,
   );
@@ -31,7 +28,6 @@ class SigninLoadingState extends SigninState {
 
 class SigninSuccessState extends SigninState {
   SigninSuccessState(
-    super.pageController,
     super.cards,
     super.numberOfCardsStored,
   );
@@ -40,7 +36,6 @@ class SigninSuccessState extends SigninState {
 class SigninErrorState extends SigninState {
   String errorMessage;
   SigninErrorState(
-    super.pageController,
     super.cards,
     super.numberOfCardsStored,
     this.errorMessage,

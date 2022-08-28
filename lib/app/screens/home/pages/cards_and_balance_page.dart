@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:pinext/app/services/user_services.dart';
+import 'package:pinext/app/handlers/user_handler.dart';
 
 import '../../../app_data/app_constants/constants.dart';
 import '../../../app_data/app_constants/domentions.dart';
@@ -67,7 +67,7 @@ class CardsAndBalancePage extends StatelessWidget {
                   ),
                   FittedBox(
                     child: Text(
-                      UserServices().currentUser.netBalance,
+                      UserHandler().currentUser.netBalance,
                       style: boldTextStyle.copyWith(
                         color: whiteColor,
                         fontSize: 50,

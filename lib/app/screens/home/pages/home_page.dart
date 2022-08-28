@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
+import 'package:pinext/app/handlers/user_handler.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
 import 'package:pinext/app/services/firebase_services.dart';
-import 'package:pinext/app/services/user_services.dart';
 
 import '../../../app_data/app_constants/constants.dart';
 import '../../../app_data/app_constants/domentions.dart';
@@ -76,7 +76,7 @@ class HomepageView extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    UserServices().currentUser.username,
+                    UserHandler().currentUser.username,
                     style: boldTextStyle.copyWith(
                       fontSize: 25,
                     ),
@@ -237,7 +237,7 @@ class HomepageView extends StatelessWidget {
                               style: regularTextStyle,
                             ),
                             Text(
-                              UserServices().currentUser.monthlyBudget,
+                              UserHandler().currentUser.monthlyBudget,
                               style: regularTextStyle.copyWith(
                                 fontWeight: FontWeight.w600,
                               ),
@@ -260,10 +260,10 @@ class HomepageView extends StatelessWidget {
                                 return Container(
                                   height: 5,
                                   width: constraints.maxWidth *
-                                      (double.parse(UserServices()
+                                      (double.parse(UserHandler()
                                               .currentUser
                                               .budgetSpentSoFar) /
-                                          double.parse(UserServices()
+                                          double.parse(UserHandler()
                                               .currentUser
                                               .monthlyBudget)),
                                   color: customBlueColor,
@@ -276,7 +276,7 @@ class HomepageView extends StatelessWidget {
                           height: 8,
                         ),
                         Text(
-                          "Your have spent ${((double.parse(UserServices().currentUser.budgetSpentSoFar) / double.parse(UserServices().currentUser.monthlyBudget)) * 100).ceil()}% of your budget!",
+                          "Your have spent ${((double.parse(UserHandler().currentUser.budgetSpentSoFar) / double.parse(UserHandler().currentUser.monthlyBudget)) * 100).ceil()}% of your budget!",
                           style: regularTextStyle.copyWith(
                               color: customBlackColor.withOpacity(.6)),
                         ),

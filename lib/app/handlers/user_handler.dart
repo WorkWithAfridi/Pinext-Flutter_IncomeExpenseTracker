@@ -4,10 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pinext/app/models/pinext_user_model.dart';
 import 'package:pinext/app/services/firebase_services.dart';
 
-class UserServices {
-  UserServices._internal();
-  static final UserServices _userServices = UserServices._internal();
-  factory UserServices() => _userServices;
+class UserHandler {
+  UserHandler._internal();
+  static final UserHandler _userServices = UserHandler._internal();
+  factory UserHandler() => _userServices;
 
   late PinextUserModel currentUser;
   Future<PinextUserModel> getCurrentUser() async {

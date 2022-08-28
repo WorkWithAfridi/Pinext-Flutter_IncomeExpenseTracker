@@ -12,21 +12,18 @@ class SigninCubit extends Cubit<SigninState> {
   SigninCubit()
       : super(
           SigninDefaultState(
-            PageController(initialPage: 0),
             const [],
             0,
           ),
         );
 
   reset() {
-    emit(SigninDefaultState(
-        state.pageController, state.cards, state.numberOfCardsStored));
+    emit(SigninDefaultState( state.cards, state.numberOfCardsStored));
   }
 
   addCard(PinextCardModel card) {
     List<PinextCardModel> userCards = [...state.cards, card];
     emit(SigninDefaultState(
-      state.pageController,
       userCards,
       userCards.length,
     ));
@@ -40,7 +37,6 @@ class SigninCubit extends Cubit<SigninState> {
     log(cardList.length.toString());
     emit(
       SigninDefaultState(
-        state.pageController,
         cardList,
         cardList.length,
       ),
@@ -56,8 +52,7 @@ class SigninCubit extends Cubit<SigninState> {
     required String monthlyBudget,
     required String budgetSpentSoFar,
   }) async {
-    emit(SigninLoadingState(
-        state.pageController, pinextCards, pinextCards.length));
+    emit(SigninLoadingState( pinextCards, pinextCards.length));
     await Future.delayed(const Duration(seconds: 2));
     String result =
         await AuthenticationServices().signupUserUsingEmailAndPassword(
@@ -70,11 +65,9 @@ class SigninCubit extends Cubit<SigninState> {
       budgetSpentSoFar: budgetSpentSoFar,
     );
     if (result == "Success") {
-      emit(SigninSuccessState(
-          state.pageController, pinextCards, pinextCards.length));
+      emit(SigninSuccessState( pinextCards, pinextCards.length));
     } else {
-      emit(SigninErrorState(
-          state.pageController, pinextCards, pinextCards.length, result));
+      emit(SigninErrorState( pinextCards, pinextCards.length, result));
     }
   }
 }

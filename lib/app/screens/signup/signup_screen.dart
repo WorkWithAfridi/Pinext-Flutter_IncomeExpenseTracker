@@ -8,6 +8,7 @@ import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/bloc/signin_cubit/signin_cubit_cubit.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
 import 'package:pinext/app/shared/widgets/custom_button.dart';
+import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 import 'package:pinext/app/shared/widgets/custom_text_field.dart';
 import 'package:pinext/app/shared/widgets/socials_button.dart';
 
@@ -42,6 +43,8 @@ class _SignupScreenViewState extends State<SignupScreenView> {
   late TextEditingController emailController;
   late TextEditingController passwordController;
 
+  late PageController signupPageController;
+
   @override
   void initState() {
     userNameController = TextEditingController();
@@ -50,12 +53,14 @@ class _SignupScreenViewState extends State<SignupScreenView> {
     netBalanceController = TextEditingController();
     monthlyBudgetController = TextEditingController();
     budgetSpentSoFarController = TextEditingController();
+    signupPageController = PageController();
 
     registrationPages.add(
       UserRegistrationPage(
         userNameController: userNameController,
         passwordController: passwordController,
         emailController: emailController,
+        pageController: signupPageController,
       ),
     );
     registrationPages.add(
@@ -66,6 +71,7 @@ class _SignupScreenViewState extends State<SignupScreenView> {
         emailController: emailController,
         userNameController: userNameController,
         passwordController: passwordController,
+        pageController: signupPageController,
       ),
     );
     super.initState();
@@ -79,6 +85,7 @@ class _SignupScreenViewState extends State<SignupScreenView> {
     netBalanceController.dispose();
     monthlyBudgetController.dispose();
     budgetSpentSoFarController.dispose();
+    signupPageController.dispose();
     super.dispose();
   }
 
@@ -98,7 +105,7 @@ class _SignupScreenViewState extends State<SignupScreenView> {
       body: BlocBuilder<SigninCubit, SigninState>(
         builder: (context, state) {
           return PageView.builder(
-            controller: state.pageController,
+            controller: signupPageController,
             physics: const NeverScrollableScrollPhysics(),
             itemCount: registrationPages.length,
             itemBuilder: ((context, index) {
@@ -112,15 +119,17 @@ class _SignupScreenViewState extends State<SignupScreenView> {
 }
 
 class UserRegistrationPage extends StatelessWidget {
-  UserRegistrationPage(
-      {Key? key,
-      required this.userNameController,
-      required this.emailController,
-      required this.passwordController})
-      : super(key: key);
+  UserRegistrationPage({
+    Key? key,
+    required this.userNameController,
+    required this.emailController,
+    required this.passwordController,
+    required this.pageController,
+  }) : super(key: key);
   TextEditingController userNameController;
   TextEditingController emailController;
   TextEditingController passwordController;
+  PageController pageController;
 
   @override
   Widget build(BuildContext context) {
@@ -175,41 +184,27 @@ class UserRegistrationPage extends StatelessWidget {
             const SizedBox(
               height: 16,
             ),
-            BlocBuilder<SigninCubit, SigninState>(
-              builder: (context, state) {
-                return GetCustomButton(
-                  title: "Next",
-                  titleColor: whiteColor,
-                  buttonColor: customBlueColor,
-                  isLoading: false,
-                  callBackFunction: () {
-                    if (userNameController.text.isNotEmpty &&
-                        emailController.text.isNotEmpty &&
-                        passwordController.text.isNotEmpty) {
-                      state.pageController.animateToPage(
-                        1,
-                        duration: const Duration(
-                          milliseconds: 200,
-                        ),
-                        curve: Curves.linear,
-                      );
-                    } else {
-                      ElegantNotification.info(
-                        title: Text(
-                          "....",
-                          style: boldTextStyle,
-                        ),
-                        description: Text(
-                          "You need to fill up the form to proceed to the next step!",
-                          style: regularTextStyle,
-                        ),
-                        width: getWidth(context) * .9,
-                        animationDuration: const Duration(milliseconds: 200),
-                        toastDuration: const Duration(seconds: 5),
-                      ).show(context);
-                    }
-                  },
-                );
+            GetCustomButton(
+              title: "Next",
+              titleColor: whiteColor,
+              buttonColor: customBlueColor,
+              isLoading: false,
+              callBackFunction: () {
+                if (userNameController.text.isNotEmpty &&
+                    emailController.text.isNotEmpty &&
+                    passwordController.text.isNotEmpty) {
+                  pageController.jumpToPage(
+                    1,
+                  );
+                } else {
+                  GetCustomSnackbar(
+                    title: "....",
+                    message:
+                        "You need to fill up the form to proceed to the next step!",
+                    snackbarType: SnackbarType.info,
+                    context: context,
+                  );
+                }
               },
             ),
             const SizedBox(
@@ -273,6 +268,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
     required this.emailController,
     required this.userNameController,
     required this.passwordController,
+    required this.pageController,
   }) : super(key: key);
 
   TextEditingController userNameController;
@@ -281,6 +277,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
   TextEditingController netBalanceController;
   TextEditingController monthlyBudgetController;
   TextEditingController budgetSpentSoFarController;
+  PageController pageController;
 
   @override
   Widget build(BuildContext context) {
@@ -700,19 +697,13 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                             budgetSpentSoFar: budgetSpentSoFarController.text,
                           );
                     } else {
-                      ElegantNotification.info(
-                        title: Text(
-                          "....",
-                          style: boldTextStyle,
-                        ),
-                        description: Text(
-                          "You need to fill up the form in order to create an account!",
-                          style: regularTextStyle,
-                        ),
-                        width: getWidth(context) * .9,
-                        animationDuration: const Duration(milliseconds: 200),
-                        toastDuration: const Duration(seconds: 5),
-                      ).show(context);
+                      GetCustomSnackbar(
+                        title: "....",
+                        message:
+                            "You need to fill up the form to create an account.",
+                        snackbarType: SnackbarType.info,
+                        context: context,
+                      );
                     }
                   },
                 );
@@ -721,20 +712,14 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
             const SizedBox(
               height: 8,
             ),
-            BlocBuilder<SigninCubit, SigninState>(
-              builder: (context, state) {
-                return GetCustomButton(
-                  title: "Back",
-                  titleColor: whiteColor,
-                  buttonColor: customBlackColor,
-                  isLoading: false,
-                  callBackFunction: () {
-                    state.pageController.animateToPage(
-                      0,
-                      duration: const Duration(milliseconds: 200),
-                      curve: Curves.easeInOut,
-                    );
-                  },
+            GetCustomButton(
+              title: "Back",
+              titleColor: whiteColor,
+              buttonColor: customBlackColor,
+              isLoading: false,
+              callBackFunction: () {
+                pageController.jumpToPage(
+                  0,
                 );
               },
             ),
