@@ -8,6 +8,7 @@ import 'package:pinext/app/app_data/app_constants/constants.dart';
 import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/bloc/add_card_cubit/add_card_cubit.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
+import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 import 'package:pinext/app/shared/widgets/pinext_card.dart';
 import 'package:uuid/uuid.dart';
 
@@ -265,21 +266,12 @@ class _AddPinextCardViewState extends State<AddPinextCardView> {
                           newPinextCard,
                         );
                     Navigator.pop(context);
-
-                    ElegantNotification.success(
-                      title: Text(
-                        "Pinext Card added!!",
-                        style: boldTextStyle,
-                      ),
-                      description: Text(
-                        "A new card has been added to your card list.",
-                        style: regularTextStyle,
-                      ),
-                      width: getWidth(context) * .9,
-                      animationDuration: const Duration(milliseconds: 200),
-                      toastDuration: const Duration(seconds: 5),
-                    ).show(context);
-                    context.read<AddCardCubit>().reset();
+                    GetCustomSnackbar(
+                      title: "Pinext Card added!!",
+                      message: "A new card has been added to your card list.",
+                      snackbarType: SnackbarType.success,
+                      context: context,
+                    );
                   }
                 },
                 builder: (context, state) {

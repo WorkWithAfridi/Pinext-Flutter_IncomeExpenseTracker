@@ -1,4 +1,3 @@
-import 'package:elegant_notification/elegant_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
@@ -131,19 +130,13 @@ class _LoginScreenViewState extends State<LoginScreenView> {
                               password: passwordController.text,
                             );
                       } else {
-                        ElegantNotification.info(
-                          title: Text(
-                            "Snap",
-                            style: boldTextStyle,
-                          ),
-                          description: Text(
-                            "We need your email and password in order to sign you in!",
-                            style: regularTextStyle,
-                          ),
-                          width: getWidth(context) * .9,
-                          animationDuration: const Duration(milliseconds: 200),
-                          toastDuration: const Duration(seconds: 5),
-                        ).show(context);
+                        GetCustomSnackbar(
+                          title: "Snap",
+                          message:
+                              "We need your email and password in order to sign you in!",
+                          snackbarType: SnackbarType.info,
+                          context: context,
+                        );
                       }
                     },
                   );

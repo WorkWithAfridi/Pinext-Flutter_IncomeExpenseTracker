@@ -7,14 +7,22 @@ class PinextUserModel {
   String emailAddress;
   String netBalance;
   String monthlyBudget;
-  String budgetSpentSoFar;
+  String monthlyExpenses;
+  String dailyExpenses;
+  String weeklyExpenses;
+  String monthlySavings;
+  String accountCreatedOn;
   PinextUserModel({
     required this.userId,
     required this.username,
     required this.emailAddress,
     required this.netBalance,
     required this.monthlyBudget,
-    required this.budgetSpentSoFar,
+    required this.monthlyExpenses,
+    required this.dailyExpenses,
+    required this.weeklyExpenses,
+    required this.monthlySavings,
+    required this.accountCreatedOn,
   });
 
   Map<String, dynamic> toMap() {
@@ -24,7 +32,11 @@ class PinextUserModel {
       'emailAddress': emailAddress,
       'netBalance': netBalance,
       'monthlyBudget': monthlyBudget,
-      'budgetSpentSoFar': budgetSpentSoFar,
+      'monthlyExpenses': monthlyExpenses,
+      'dailyExpenses': dailyExpenses,
+      'weeklyExpenses': weeklyExpenses,
+      'monthlySavings': monthlySavings,
+      'accountCreatedOn': accountCreatedOn,
     };
   }
 
@@ -35,17 +47,20 @@ class PinextUserModel {
       emailAddress: map['emailAddress'] as String,
       netBalance: map['netBalance'] as String,
       monthlyBudget: map['monthlyBudget'] as String,
-      budgetSpentSoFar: map['budgetSpentSoFar'] as String,
+      monthlyExpenses: map['monthlyExpenses'] as String,
+      dailyExpenses: map['dailyExpenses'] as String,
+      weeklyExpenses: map['weeklyExpenses'] as String,
+      monthlySavings: map['monthlySavings'] as String,
+      accountCreatedOn: map['accountCreatedOn'] as String,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory PinextUserModel.fromJson(String source) =>
-      PinextUserModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory PinextUserModel.fromJson(String source) => PinextUserModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
-    return 'PinextUserModel(userId: $userId, username: $username, emailAddress: $emailAddress, netBalance: $netBalance, monthlyBudget: $monthlyBudget, budgetSpentSoFar: $budgetSpentSoFar)';
+    return 'PinextUserModel(userId: $userId, username: $username, emailAddress: $emailAddress, netBalance: $netBalance, monthlyBudget: $monthlyBudget, monthlyExpenses: $monthlyExpenses, dailyExpenses: $dailyExpenses, weeklyExpenses: $weeklyExpenses, monthlySavings: $monthlySavings, accountCreatedOn: $accountCreatedOn)';
   }
 }

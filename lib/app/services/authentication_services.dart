@@ -36,7 +36,11 @@ class AuthenticationServices {
         username: username,
         netBalance: netBalance,
         monthlyBudget: monthlyBudget,
-        budgetSpentSoFar: budgetSpentSoFar,
+        dailyExpenses: '0',
+        monthlyExpenses: budgetSpentSoFar,
+        weeklyExpenses: '0',
+        monthlySavings: '0',
+        accountCreatedOn: DateTime.now().toString(),
       );
 
       //storing userData

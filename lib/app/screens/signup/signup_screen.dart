@@ -50,7 +50,6 @@ class _SignupScreenViewState extends State<SignupScreenView> {
     userNameController = TextEditingController();
     emailController = TextEditingController();
     passwordController = TextEditingController();
-    netBalanceController = TextEditingController();
     monthlyBudgetController = TextEditingController();
     budgetSpentSoFarController = TextEditingController();
     signupPageController = PageController();
@@ -66,7 +65,6 @@ class _SignupScreenViewState extends State<SignupScreenView> {
     registrationPages.add(
       CardsAndBalancesRegistrationPage(
         budgetSpentSoFarController: budgetSpentSoFarController,
-        netBalanceController: netBalanceController,
         monthlyBudgetController: monthlyBudgetController,
         emailController: emailController,
         userNameController: userNameController,
@@ -262,7 +260,6 @@ class UserRegistrationPage extends StatelessWidget {
 class CardsAndBalancesRegistrationPage extends StatelessWidget {
   CardsAndBalancesRegistrationPage({
     Key? key,
-    required this.netBalanceController,
     required this.monthlyBudgetController,
     required this.budgetSpentSoFarController,
     required this.emailController,
@@ -274,10 +271,10 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
   TextEditingController userNameController;
   TextEditingController emailController;
   TextEditingController passwordController;
-  TextEditingController netBalanceController;
   TextEditingController monthlyBudgetController;
   TextEditingController budgetSpentSoFarController;
   PageController pageController;
+  double netBalance = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -333,9 +330,19 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                   const SizedBox(
                     height: 8,
                   ),
-                  GetCustomTextField(
-                    controller: netBalanceController,
-                    hintTitle: "Enter your current NET balance...",
+                  BlocBuilder<SigninCubit, SigninState>(
+                    builder: (context, state) {
+                      for (PinextCardModel card in state.cards) {
+                        netBalance += double.parse(card.balance.toString());
+                      }
+                      return Text(
+                        netBalance.toString(),
+                        style: boldTextStyle.copyWith(
+                          color: customBlackColor,
+                          fontSize: 50,
+                        ),
+                      );
+                    },
                   ),
                   const SizedBox(
                     height: 8,
@@ -346,6 +353,14 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                       color: customBlackColor.withOpacity(.6),
                       fontSize: 16,
                     ),
+                  ),
+                  Text(
+                    "*Please add in cards to see your updated NET balance here!",
+                    style: boldTextStyle.copyWith(
+                      color: customBlackColor.withOpacity(.3),
+                      fontSize: 12,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
                 ],
               ),
@@ -363,6 +378,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
             GetCustomTextField(
               controller: monthlyBudgetController,
               hintTitle: "Enter your monthly budget",
+              textInputType: TextInputType.number,
             ),
             const SizedBox(
               height: 8,
@@ -377,6 +393,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
             GetCustomTextField(
               controller: budgetSpentSoFarController,
               hintTitle: "Budget spent so far...",
+              textInputType: TextInputType.number,
             ),
             const SizedBox(
               height: 16,
@@ -683,8 +700,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                   buttonColor: customBlueColor,
                   isLoading: state is SigninLoadingState,
                   callBackFunction: () {
-                    if (netBalanceController.text.isNotEmpty &&
-                        monthlyBudgetController.text.isNotEmpty &&
+                    if (monthlyBudgetController.text.isNotEmpty &&
                         budgetSpentSoFarController.text.isNotEmpty &&
                         state.cards.isNotEmpty) {
                       context.read<SigninCubit>().signupUser(
@@ -692,7 +708,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                             password: passwordController.text,
                             username: userNameController.text,
                             pinextCards: state.cards,
-                            netBalance: netBalanceController.text,
+                            netBalance: netBalance.floor().toString(),
                             monthlyBudget: monthlyBudgetController.text,
                             budgetSpentSoFar: budgetSpentSoFarController.text,
                           );

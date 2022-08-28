@@ -262,7 +262,7 @@ class HomepageView extends StatelessWidget {
                                   width: constraints.maxWidth *
                                       (double.parse(UserHandler()
                                               .currentUser
-                                              .budgetSpentSoFar) /
+                                              .monthlyExpenses) /
                                           double.parse(UserHandler()
                                               .currentUser
                                               .monthlyBudget)),
@@ -276,7 +276,7 @@ class HomepageView extends StatelessWidget {
                           height: 8,
                         ),
                         Text(
-                          "Your have spent ${((double.parse(UserHandler().currentUser.budgetSpentSoFar) / double.parse(UserHandler().currentUser.monthlyBudget)) * 100).ceil()}% of your budget!",
+                          "Your have spent ${((double.parse(UserHandler().currentUser.monthlyExpenses) / double.parse(UserHandler().currentUser.monthlyBudget)) * 100).ceil()}% of your budget!",
                           style: regularTextStyle.copyWith(
                               color: customBlackColor.withOpacity(.6)),
                         ),
