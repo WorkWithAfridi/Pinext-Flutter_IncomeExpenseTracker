@@ -34,6 +34,15 @@ class AddTransactionsSuccessState extends AddTransactionsState {
   });
 }
 
+class AddTransactionsErrorState extends AddTransactionsState {
+  String errorMessage;
+  AddTransactionsErrorState({
+    required super.selectedTransactionMode,
+    required super.selectedCardNo,
+    required this.errorMessage,
+  });
+}
+
 class AddTransactionsLoadingState extends AddTransactionsState {
   AddTransactionsLoadingState({
     required super.selectedTransactionMode,

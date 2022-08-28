@@ -2,14 +2,13 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:elegant_notification/elegant_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/add_transactions_cubit/add_transactions_cubit.dart';
 import 'package:pinext/app/shared/widgets/custom_button.dart';
+import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 import 'package:pinext/app/shared/widgets/custom_text_field.dart';
 
 import '../../app_data/app_constants/constants.dart';
@@ -41,8 +40,30 @@ class AddTransactionScreen extends StatelessWidget {
   }
 }
 
-class AddTransactionView extends StatelessWidget {
+class AddTransactionView extends StatefulWidget {
   const AddTransactionView({Key? key}) : super(key: key);
+
+  @override
+  State<AddTransactionView> createState() => _AddTransactionViewState();
+}
+
+class _AddTransactionViewState extends State<AddTransactionView> {
+  late TextEditingController amountController;
+  late TextEditingController detailsController;
+
+  @override
+  void initState() {
+    amountController = TextEditingController();
+    detailsController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    amountController.dispose();
+    detailsController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -178,8 +199,9 @@ class AddTransactionView extends StatelessWidget {
                     height: 8,
                   ),
                   GetCustomTextField(
-                    controller: TextEditingController(),
+                    controller: amountController,
                     hintTitle: "Enter amount...",
+                    textInputType: TextInputType.number,
                   ),
                   const SizedBox(
                     height: 16,
@@ -196,7 +218,7 @@ class AddTransactionView extends StatelessWidget {
                     height: 8,
                   ),
                   GetCustomTextField(
-                    controller: TextEditingController(),
+                    controller: detailsController,
                     hintTitle: "Enter description...",
                     numberOfLines: 3,
                   ),
@@ -297,22 +319,24 @@ class AddTransactionView extends StatelessWidget {
               ),
               child: BlocConsumer<AddTransactionsCubit, AddTransactionsState>(
                 listener: (context, state) {
-                  log("rebuilding");
                   if (state is AddTransactionsSuccessState) {
                     Navigator.pop(context);
-                    ElegantNotification.success(
-                      title: Text(
-                        "Transaction added!!",
-                        style: boldTextStyle,
-                      ),
-                      description: Text(
-                        "Your transaction data has been stored.",
-                        style: regularTextStyle,
-                      ),
-                      width: getWidth(context) * .9,
-                      animationDuration: const Duration(milliseconds: 200),
-                      toastDuration: const Duration(seconds: 5),
-                    ).show(context);
+
+                    GetCustomSnackbar(
+                      title: "Transaction added!!",
+                      message: "Your transaction data has been stored.",
+                      snackbarType: SnackbarType.success,
+                      context: context,
+                    );
+                  }
+                  if (state is AddTransactionsErrorState) {
+                    GetCustomSnackbar(
+                      title: "Snap",
+                      message: state.errorMessage,
+                      snackbarType: SnackbarType.error,
+                      context: context,
+                    );
+                    context.read<AddTransactionsCubit>().reset();
                   }
                 },
                 builder: (context, state) {
@@ -323,12 +347,33 @@ class AddTransactionView extends StatelessWidget {
                     isLoading:
                         state is AddTransactionsLoadingState ? true : false,
                     callBackFunction: () {
-                      context.read<AddTransactionsCubit>().addTransaction();
+                      if (amountController.text.isNotEmpty &&
+                          detailsController.text.isNotEmpty &&
+                          state.selectedCardNo != "none") {
+                        context.read<AddTransactionsCubit>().addTransaction(
+                              amount: amountController.text,
+                              details: detailsController.text,
+                              transctionType: state.selectedTransactionMode ==
+                                      SelectedTransactionMode.enpense
+                                  ? "Expense"
+                                  : "Income",
+                            );
+                      } else {
+                        GetCustomSnackbar(
+                          title: "Error",
+                          message: "Please fill up the form and try again",
+                          snackbarType: SnackbarType.error,
+                          context: context,
+                        );
+                      }
                     },
                   );
                 },
               ),
-            )
+            ),
+            const SizedBox(
+              height: 16,
+            ),
           ],
         ),
       ),
