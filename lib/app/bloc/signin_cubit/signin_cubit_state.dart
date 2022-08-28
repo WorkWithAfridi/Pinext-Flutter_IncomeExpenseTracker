@@ -20,3 +20,29 @@ class SigninDefaultState extends SigninState {
     super.numberOfCardsStored,
   );
 }
+
+class SigninLoadingState extends SigninState {
+  SigninLoadingState(
+    super.pageController,
+    super.cards,
+    super.numberOfCardsStored,
+  );
+}
+
+class SigninSuccessState extends SigninState {
+  SigninSuccessState(
+    super.pageController,
+    super.cards,
+    super.numberOfCardsStored,
+  );
+}
+
+class SigninErrorState extends SigninState {
+  String errorMessage;
+  SigninErrorState(
+    super.pageController,
+    super.cards,
+    super.numberOfCardsStored,
+    this.errorMessage,
+  );
+}

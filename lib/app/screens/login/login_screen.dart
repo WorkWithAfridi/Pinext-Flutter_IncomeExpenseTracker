@@ -1,5 +1,4 @@
-import 'dart:developer';
-
+import 'package:elegant_notification/elegant_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
@@ -25,12 +24,33 @@ class LoginScreen extends StatelessWidget {
   }
 }
 
-class LoginScreenView extends StatelessWidget {
+class LoginScreenView extends StatefulWidget {
   const LoginScreenView({Key? key}) : super(key: key);
 
   @override
+  State<LoginScreenView> createState() => _LoginScreenViewState();
+}
+
+class _LoginScreenViewState extends State<LoginScreenView> {
+  late TextEditingController emailController;
+  late TextEditingController passwordController;
+
+  @override
+  void initState() {
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    log("Rebuilding");
     return Scaffold(
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -62,14 +82,14 @@ class LoginScreenView extends StatelessWidget {
                 height: 16,
               ),
               GetCustomTextField(
-                controller: TextEditingController(),
+                controller: emailController,
                 hintTitle: "Username or email",
               ),
               const SizedBox(
                 height: 8,
               ),
               GetCustomTextField(
-                controller: TextEditingController(),
+                controller: passwordController,
                 hintTitle: "Password",
               ),
               const SizedBox(
@@ -77,12 +97,28 @@ class LoginScreenView extends StatelessWidget {
               ),
               BlocConsumer<LoginCubit, LoginState>(
                 listener: (context, state) {
-                  if (state is LoginButtonSuccessState) {
-                    Navigator.pushReplacementNamed(
-                            context, ROUTES.getHomeframeRoute)
-                        .then((_) {
-                      context.read<LoginCubit>().resetState();
-                    });
+                  if (state is LoginSuccessState) {
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      ROUTES.getHomeframeRoute,
+                      (route) => false,
+                    );
+                  }
+                  if (state is LoginErrorState) {
+                    ElegantNotification.error(
+                      title: Text(
+                        "Error",
+                        style: boldTextStyle,
+                      ),
+                      description: Text(
+                        "Failed to log you in",
+                        style: regularTextStyle,
+                      ),
+                      width: getWidth(context) * .9,
+                      animationDuration: const Duration(milliseconds: 200),
+                      toastDuration: const Duration(seconds: 5),
+                    ).show(context);
+                    context.read<LoginCubit>().resetState();
                   }
                 },
                 builder: (context, state) {
@@ -91,15 +127,29 @@ class LoginScreenView extends StatelessWidget {
                     titleColor: whiteColor,
                     buttonColor: customBlueColor,
                     isLoading:
-                        state is LoginWithEmailAndPasswordButtonLoadingState
-                            ? true
-                            : false,
+                        state is LoginWithEmailAndPasswordButtonLoadingState,
                     callBackFunction: () {
-                      state is LoginWithAppleIDLoadingState
-                          ? () {}
-                          : context
-                              .read<LoginCubit>()
-                              .login(loginTypes: LoginTypes.emailAndPassword);
+                      if (emailController.text.isNotEmpty &&
+                          passwordController.text.isNotEmpty) {
+                        context.read<LoginCubit>().loginWithEmailAndPassword(
+                              email: emailController.text,
+                              password: passwordController.text,
+                            );
+                      } else {
+                        ElegantNotification.info(
+                          title: Text(
+                            "Snap",
+                            style: boldTextStyle,
+                          ),
+                          description: Text(
+                            "We need your email and password in order to sign you in!",
+                            style: regularTextStyle,
+                          ),
+                          width: getWidth(context) * .9,
+                          animationDuration: const Duration(milliseconds: 200),
+                          toastDuration: const Duration(seconds: 5),
+                        ).show(context);
+                      }
                     },
                   );
                 },

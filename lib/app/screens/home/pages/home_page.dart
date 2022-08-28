@@ -172,6 +172,80 @@ class HomepageView extends StatelessWidget {
                     height: 16,
                   ),
                   Text(
+                    "Budget Estimations",
+                    style: boldTextStyle.copyWith(
+                      fontSize: 20,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(
+                      defaultPadding,
+                    ),
+                    width: getWidth(context),
+                    decoration: BoxDecoration(
+                      color: greyColor,
+                      borderRadius: BorderRadius.circular(
+                        defaultBorder,
+                      ),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Your budget for August",
+                              style: regularTextStyle,
+                            ),
+                            Text(
+                              "5000TK",
+                              style: regularTextStyle.copyWith(
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Stack(
+                          alignment: Alignment.topLeft,
+                          children: [
+                            Container(
+                              height: 5,
+                              width: getWidth(context),
+                              color: customBlueColor.withOpacity(.2),
+                            ),
+                            LayoutBuilder(
+                              builder: ((context, constraints) {
+                                return Container(
+                                  height: 5,
+                                  width: constraints.maxWidth * (1700 / 5000),
+                                  color: customBlueColor,
+                                );
+                              }),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Text(
+                          "Your have spent ${(1700 / 5000) * 100}% of your budget!",
+                          style: regularTextStyle.copyWith(
+                              color: customBlackColor.withOpacity(.6)),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Text(
                     "Expenses",
                     style: boldTextStyle.copyWith(
                       fontSize: 20,

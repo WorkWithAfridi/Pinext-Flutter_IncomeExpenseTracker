@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
-import 'package:pinext/app/app_data/app_constants/constants.dart';
+
+import '../../app_data/app_constants/constants.dart';
+import '../../services/authentication_services.dart';
 
 part 'login_state.dart';
 
@@ -13,46 +15,32 @@ enum LoginTypes {
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(LoginDefaultState());
 
-  login({required LoginTypes loginTypes}) {
-    switch (loginTypes) {
-      case LoginTypes.emailAndPassword:
-        _loginWithEmailAndPassword();
-        break;
-      case LoginTypes.appleId:
-        _loginWithAppleId();
-        break;
-      case LoginTypes.facebook:
-        // TODO: Handle this case.
-        break;
-      case LoginTypes.google:
-        // TODO: Handle this case.
-        break;
-    }
-  }
-
   resetState() {
     emit(LoginDefaultState());
   }
 
-  _loginWithEmailAndPassword() {
-    emit(LoginWithEmailAndPasswordButtonLoadingState());
-    Future.delayed(
+  loginWithEmailAndPassword(
+      {required String email, required String password}) async {
+    emit(
+      LoginWithEmailAndPasswordButtonLoadingState(),
+    );
+    await Future.delayed(
       const Duration(
         seconds: defaultDelayDuration,
       ),
-    ).then((value) {
-      emit(LoginButtonSuccessState());
-    });
-  }
-
-  _loginWithAppleId() {
-    emit(LoginWithAppleIDLoadingState());
-    Future.delayed(
-      const Duration(
-        seconds: defaultDelayDuration,
-      ),
-    ).then((value) {
-      emit(LoginDefaultState());
-    });
+    );
+    String response = await AuthenticationServices()
+        .signInUser(emailAddress: email, password: password);
+    if (response == "Success") {
+      emit(
+        LoginSuccessState(),
+      );
+    } else {
+      emit(
+        LoginErrorState(
+          errorMessage: response,
+        ),
+      );
+    }
   }
 }

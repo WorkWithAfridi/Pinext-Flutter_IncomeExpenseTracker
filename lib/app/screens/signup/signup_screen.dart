@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:elegant_notification/elegant_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/domentions.dart';
@@ -20,17 +21,66 @@ class SignupScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SignupScreenView();
+    return const SignupScreenView();
   }
 }
 
-class SignupScreenView extends StatelessWidget {
-  SignupScreenView({Key? key}) : super(key: key);
+class SignupScreenView extends StatefulWidget {
+  const SignupScreenView({Key? key}) : super(key: key);
 
-  List registrationPages = [
-    const UserRegistrationPage(),
-    CardsAndBalancesRegistrationPage(),
-  ];
+  @override
+  State<SignupScreenView> createState() => _SignupScreenViewState();
+}
+
+class _SignupScreenViewState extends State<SignupScreenView> {
+  List registrationPages = [];
+
+  late TextEditingController netBalanceController;
+  late TextEditingController monthlyBudgetController;
+  late TextEditingController budgetSpentSoFarController;
+  late TextEditingController userNameController;
+  late TextEditingController emailController;
+  late TextEditingController passwordController;
+
+  @override
+  void initState() {
+    userNameController = TextEditingController();
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+    netBalanceController = TextEditingController();
+    monthlyBudgetController = TextEditingController();
+    budgetSpentSoFarController = TextEditingController();
+
+    registrationPages.add(
+      UserRegistrationPage(
+        userNameController: userNameController,
+        passwordController: passwordController,
+        emailController: emailController,
+      ),
+    );
+    registrationPages.add(
+      CardsAndBalancesRegistrationPage(
+        budgetSpentSoFarController: budgetSpentSoFarController,
+        netBalanceController: netBalanceController,
+        monthlyBudgetController: monthlyBudgetController,
+        emailController: emailController,
+        userNameController: userNameController,
+        passwordController: passwordController,
+      ),
+    );
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    userNameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    netBalanceController.dispose();
+    monthlyBudgetController.dispose();
+    budgetSpentSoFarController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,9 +112,16 @@ class SignupScreenView extends StatelessWidget {
 }
 
 class UserRegistrationPage extends StatelessWidget {
-  const UserRegistrationPage({
-    Key? key,
-  }) : super(key: key);
+  UserRegistrationPage(
+      {Key? key,
+      required this.userNameController,
+      required this.emailController,
+      required this.passwordController})
+      : super(key: key);
+  TextEditingController userNameController;
+  TextEditingController emailController;
+  TextEditingController passwordController;
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -97,22 +154,23 @@ class UserRegistrationPage extends StatelessWidget {
               height: 16,
             ),
             GetCustomTextField(
-              controller: TextEditingController(),
+              controller: userNameController,
               hintTitle: "Enter username...",
             ),
             const SizedBox(
               height: 8,
             ),
             GetCustomTextField(
-              controller: TextEditingController(),
+              controller: emailController,
               hintTitle: "Enter email address...",
             ),
             const SizedBox(
               height: 8,
             ),
             GetCustomTextField(
-              controller: TextEditingController(),
+              controller: passwordController,
               hintTitle: "Password",
+              isPassword: true,
             ),
             const SizedBox(
               height: 16,
@@ -125,13 +183,31 @@ class UserRegistrationPage extends StatelessWidget {
                   buttonColor: customBlueColor,
                   isLoading: false,
                   callBackFunction: () {
-                    state.pageController.animateToPage(
-                      1,
-                      duration: const Duration(
-                        milliseconds: 200,
-                      ),
-                      curve: Curves.linear,
-                    );
+                    if (userNameController.text.isNotEmpty &&
+                        emailController.text.isNotEmpty &&
+                        passwordController.text.isNotEmpty) {
+                      state.pageController.animateToPage(
+                        1,
+                        duration: const Duration(
+                          milliseconds: 200,
+                        ),
+                        curve: Curves.linear,
+                      );
+                    } else {
+                      ElegantNotification.info(
+                        title: Text(
+                          "....",
+                          style: boldTextStyle,
+                        ),
+                        description: Text(
+                          "You need to fill up the form to proceed to the next step!",
+                          style: regularTextStyle,
+                        ),
+                        width: getWidth(context) * .9,
+                        animationDuration: const Duration(milliseconds: 200),
+                        toastDuration: const Duration(seconds: 5),
+                      ).show(context);
+                    }
                   },
                 );
               },
@@ -189,9 +265,22 @@ class UserRegistrationPage extends StatelessWidget {
 }
 
 class CardsAndBalancesRegistrationPage extends StatelessWidget {
-  CardsAndBalancesRegistrationPage({Key? key}) : super(key: key);
+  CardsAndBalancesRegistrationPage({
+    Key? key,
+    required this.netBalanceController,
+    required this.monthlyBudgetController,
+    required this.budgetSpentSoFarController,
+    required this.emailController,
+    required this.userNameController,
+    required this.passwordController,
+  }) : super(key: key);
 
-  List cards = [];
+  TextEditingController userNameController;
+  TextEditingController emailController;
+  TextEditingController passwordController;
+  TextEditingController netBalanceController;
+  TextEditingController monthlyBudgetController;
+  TextEditingController budgetSpentSoFarController;
 
   @override
   Widget build(BuildContext context) {
@@ -226,7 +315,6 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
               padding: const EdgeInsets.all(
                 35,
               ),
-              height: 180,
               width: getWidth(context),
               decoration: BoxDecoration(
                 color: greyColor,
@@ -249,7 +337,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                     height: 8,
                   ),
                   GetCustomTextField(
-                    controller: TextEditingController(),
+                    controller: netBalanceController,
                     hintTitle: "Enter your current NET balance...",
                   ),
                   const SizedBox(
@@ -269,6 +357,34 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
               height: 16,
             ),
             Text(
+              "Monthly Budget",
+              style: boldTextStyle,
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            GetCustomTextField(
+              controller: monthlyBudgetController,
+              hintTitle: "Enter your monthly budget",
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            Text(
+              "And how much of that have you spent so far?",
+              style: boldTextStyle,
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            GetCustomTextField(
+              controller: budgetSpentSoFarController,
+              hintTitle: "Budget spent so far...",
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            Text(
               "Manage Cards",
               style: boldTextStyle,
             ),
@@ -283,7 +399,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                   children: [
                     state.cards.isEmpty
                         ? Text(
-                            "Please add a card to continue using the app!",
+                            "Please add a card/'s to continue with the registration process!",
                             style: regularTextStyle.copyWith(
                               color: customBlackColor.withOpacity(.4),
                             ),
@@ -523,19 +639,77 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
             const SizedBox(
               height: 16,
             ),
-            BlocBuilder<SigninCubit, SigninState>(
+            BlocConsumer<SigninCubit, SigninState>(
+              listener: (context, state) {
+                if (state is SigninErrorState) {
+                  ElegantNotification.error(
+                    title: Text(
+                      "Snap, an error occurred!",
+                      style: boldTextStyle,
+                    ),
+                    description: Text(
+                      state.errorMessage,
+                      style: regularTextStyle,
+                    ),
+                    width: getWidth(context) * .9,
+                    animationDuration: const Duration(milliseconds: 200),
+                    toastDuration: const Duration(seconds: 5),
+                  ).show(context);
+                  context.read<SigninCubit>().reset();
+                }
+                if (state is SigninSuccessState) {
+                  Navigator.pop(context);
+                  ElegantNotification.success(
+                    title: Text(
+                      "Yaay!",
+                      style: boldTextStyle,
+                    ),
+                    description: Text(
+                      "Your account has been created!",
+                      style: regularTextStyle,
+                    ),
+                    width: getWidth(context) * .9,
+                    animationDuration: const Duration(milliseconds: 200),
+                    toastDuration: const Duration(seconds: 5),
+                  ).show(context);
+                  context.read<SigninCubit>().reset();
+                }
+              },
               builder: (context, state) {
                 return GetCustomButton(
-                  title: "Back",
+                  title: "Register",
                   titleColor: whiteColor,
                   buttonColor: customBlueColor,
-                  isLoading: false,
+                  isLoading: state is SigninLoadingState,
                   callBackFunction: () {
-                    state.pageController.animateToPage(
-                      0,
-                      duration: const Duration(milliseconds: 200),
-                      curve: Curves.easeInOut,
-                    );
+                    if (netBalanceController.text.isNotEmpty &&
+                        monthlyBudgetController.text.isNotEmpty &&
+                        budgetSpentSoFarController.text.isNotEmpty &&
+                        state.cards.isNotEmpty) {
+                      context.read<SigninCubit>().signupUser(
+                            emailAddress: emailController.text,
+                            password: passwordController.text,
+                            username: userNameController.text,
+                            pinextCards: state.cards,
+                            netBalance: netBalanceController.text,
+                            monthlyBudget: monthlyBudgetController.text,
+                            budgetSpentSoFar: budgetSpentSoFarController.text,
+                          );
+                    } else {
+                      ElegantNotification.info(
+                        title: Text(
+                          "....",
+                          style: boldTextStyle,
+                        ),
+                        description: Text(
+                          "You need to fill up the form in order to create an account!",
+                          style: regularTextStyle,
+                        ),
+                        width: getWidth(context) * .9,
+                        animationDuration: const Duration(milliseconds: 200),
+                        toastDuration: const Duration(seconds: 5),
+                      ).show(context);
+                    }
                   },
                 );
               },
@@ -546,11 +720,17 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
             BlocBuilder<SigninCubit, SigninState>(
               builder: (context, state) {
                 return GetCustomButton(
-                  title: "Register",
+                  title: "Back",
                   titleColor: whiteColor,
-                  buttonColor: customBlueColor,
+                  buttonColor: customBlackColor,
                   isLoading: false,
-                  callBackFunction: () {},
+                  callBackFunction: () {
+                    state.pageController.animateToPage(
+                      0,
+                      duration: const Duration(milliseconds: 200),
+                      curve: Curves.easeInOut,
+                    );
+                  },
                 );
               },
             ),

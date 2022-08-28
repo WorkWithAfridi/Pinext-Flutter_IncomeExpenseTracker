@@ -7,6 +7,11 @@ class LoginDefaultState extends LoginState {}
 
 class LoginWithEmailAndPasswordButtonLoadingState extends LoginState {}
 
-class LoginButtonSuccessState extends LoginState {}
+class LoginSuccessState extends LoginState {}
 
-class LoginWithAppleIDLoadingState extends LoginState {}
+class LoginErrorState extends LoginState {
+  String errorMessage;
+  LoginErrorState({
+    required this.errorMessage,
+  });
+}

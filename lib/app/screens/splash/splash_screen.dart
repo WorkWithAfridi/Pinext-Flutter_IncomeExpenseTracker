@@ -2,18 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
 import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
-
-import '../../app_data/routing/routes.dart';
+import 'package:pinext/app/app_data/routing/routes.dart';
+import 'package:pinext/app/services/authentication_services.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
-  void triggerSplashScreenAnimation(BuildContext context) {
-    Future.delayed(
+  void triggerSplashScreenAnimation(BuildContext context) async {
+    await Future.delayed(
       const Duration(seconds: defaultDelayDuration),
-    ).then((_) {
-      Navigator.pushReplacementNamed(context, ROUTES.getLoginRoute);
-    });
+    );
+    bool userSignedIn = await AuthenticationServices().isUserSignedIn();
+    if (userSignedIn) {
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        ROUTES.getHomeframeRoute,
+        (route) => false,
+      );
+    } else {
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        ROUTES.getLoginRoute,
+        (route) => false,
+      );
+    }
   }
 
   @override

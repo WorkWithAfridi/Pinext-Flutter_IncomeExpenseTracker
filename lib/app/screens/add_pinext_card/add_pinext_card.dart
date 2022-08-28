@@ -9,6 +9,7 @@ import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/bloc/add_card_cubit/add_card_cubit.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
 import 'package:pinext/app/shared/widgets/pinext_card.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../app_data/app_constants/fonts.dart';
 import '../../app_data/theme_data/colors.dart';
@@ -287,11 +288,13 @@ class _AddPinextCardViewState extends State<AddPinextCardView> {
                   }
                   if (state is AddCardSuccessState) {
                     PinextCardModel newPinextCard = PinextCardModel(
-                        title: state.title,
-                        description: state.description,
-                        balance: state.balance,
-                        color: state.color,
-                        lastTransactionData: DateTime.now().toString());
+                      cardId: const Uuid().v4().toString(),
+                      title: state.title,
+                      description: state.description,
+                      balance: state.balance,
+                      color: state.color,
+                      lastTransactionData: DateTime.now().toString(),
+                    );
                     context.read<SigninCubit>().addCard(
                           newPinextCard,
                         );

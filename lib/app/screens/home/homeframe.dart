@@ -8,6 +8,7 @@ import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/screens/home/pages/archive_page.dart';
 import 'package:pinext/app/screens/home/pages/cards_and_balance_page.dart';
 import 'package:pinext/app/screens/home/pages/home_page.dart';
+import 'package:pinext/app/services/authentication_services.dart';
 
 import '../../app_data/app_constants/constants.dart';
 import '../../app_data/app_constants/fonts.dart';
@@ -56,90 +57,7 @@ class HomeframeView extends StatelessWidget {
           ),
         ),
       ),
-      drawer: SafeArea(
-        child: Container(
-          height: getHeight(context),
-          color: greyColor,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: defaultPadding,
-                      ),
-                      child: Icon(
-                        Platform.isIOS
-                            ? Icons.arrow_back_ios
-                            : Icons.arrow_back,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: defaultPadding,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Pinext",
-                          style: regularTextStyle.copyWith(
-                            color: customBlackColor.withOpacity(.6),
-                          ),
-                        ),
-                        Text(
-                          "Space",
-                          style: boldTextStyle.copyWith(
-                            fontSize: 25,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: defaultPadding),
-                      child: Icon(
-                        Icons.logout,
-                        color: customBlueColor,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
+      drawer: const PinextDrawer(),
       body: BlocBuilder<HomeframeCubit, HomeframeState>(
         builder: (context, state) {
           return PageView.builder(
@@ -210,6 +128,104 @@ class HomeframeView extends StatelessWidget {
             ],
           );
         },
+      ),
+    );
+  }
+}
+
+class PinextDrawer extends StatelessWidget {
+  const PinextDrawer({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Container(
+        height: getHeight(context),
+        color: greyColor,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 20,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: defaultPadding - 5,
+                    ),
+                    child: Icon(
+                      Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: defaultPadding,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Pinext",
+                        style: regularTextStyle.copyWith(
+                          color: customBlackColor.withOpacity(.6),
+                        ),
+                      ),
+                      Text(
+                        "Space",
+                        style: boldTextStyle.copyWith(
+                          fontSize: 25,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    if (AuthenticationServices().signOutUser()) {
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        ROUTES.getLoginRoute,
+                        (route) => false,
+                      );
+                    } else {}
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: defaultPadding),
+                    child: Icon(
+                      Icons.logout,
+                      color: customBlueColor,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
