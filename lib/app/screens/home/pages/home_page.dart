@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,6 +13,7 @@ import '../../../app_data/app_constants/constants.dart';
 import '../../../app_data/app_constants/domentions.dart';
 import '../../../app_data/theme_data/colors.dart';
 import '../../../bloc/homepage_cubit/homepage_cubit.dart';
+import '../../../bloc/userBloc/user_bloc.dart';
 import '../../../shared/widgets/pinext_card.dart';
 
 class Homepage extends StatelessWidget {
@@ -514,11 +517,24 @@ class HomepageView extends StatelessWidget {
                         const SizedBox(
                           height: 4,
                         ),
-                        Text(
-                          "${UserHandler().currentUser.monthlySavings} Tk",
-                          style: boldTextStyle.copyWith(
-                            fontSize: 20,
-                          ),
+                        BlocBuilder<UserBloc, UserState>(
+                          builder: (context, state) {
+                            log("rebuilding at you have saved...");
+                            if (state is AuthenticatedUserState) {
+                              return Text(
+                                "${state.monthlySavings} Tk",
+                                style: boldTextStyle.copyWith(
+                                  fontSize: 20,
+                                ),
+                              );
+                            }
+                            return Text(
+                              "Loading...",
+                              style: boldTextStyle.copyWith(
+                                fontSize: 20,
+                              ),
+                            );
+                          },
                         ),
                         const SizedBox(
                           height: 4,

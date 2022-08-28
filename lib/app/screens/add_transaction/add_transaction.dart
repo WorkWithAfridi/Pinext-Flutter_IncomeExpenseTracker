@@ -12,6 +12,7 @@ import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 import 'package:pinext/app/shared/widgets/custom_text_field.dart';
 
 import '../../app_data/app_constants/constants.dart';
+import '../../bloc/userBloc/user_bloc.dart';
 import '../../models/pinext_card_model.dart';
 import '../../services/firebase_services.dart';
 import '../../shared/widgets/pinext_card.dart';
@@ -320,6 +321,7 @@ class _AddTransactionViewState extends State<AddTransactionView> {
               child: BlocConsumer<AddTransactionsCubit, AddTransactionsState>(
                 listener: (context, state) {
                   if (state is AddTransactionsSuccessState) {
+                    context.read<UserBloc>().add(RefreshUserStateEvent());
                     Navigator.pop(context);
 
                     GetCustomSnackbar(

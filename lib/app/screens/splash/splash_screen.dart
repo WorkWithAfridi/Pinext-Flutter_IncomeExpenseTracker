@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
 import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/app_data/routing/routes.dart';
+import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/services/authentication_services.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -14,6 +16,7 @@ class SplashScreen extends StatelessWidget {
     );
     bool userSignedIn = await AuthenticationServices().isUserSignedIn();
     if (userSignedIn) {
+      context.read<UserBloc>().add(RefreshUserStateEvent());
       Navigator.pushNamedAndRemoveUntil(
         context,
         ROUTES.getHomeframeRoute,

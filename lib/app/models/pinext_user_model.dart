@@ -63,4 +63,35 @@ class PinextUserModel {
   String toString() {
     return 'PinextUserModel(userId: $userId, username: $username, emailAddress: $emailAddress, netBalance: $netBalance, monthlyBudget: $monthlyBudget, monthlyExpenses: $monthlyExpenses, dailyExpenses: $dailyExpenses, weeklyExpenses: $weeklyExpenses, monthlySavings: $monthlySavings, accountCreatedOn: $accountCreatedOn)';
   }
+
+  @override
+  bool operator ==(covariant PinextUserModel other) {
+    if (identical(this, other)) return true;
+  
+    return 
+      other.userId == userId &&
+      other.username == username &&
+      other.emailAddress == emailAddress &&
+      other.netBalance == netBalance &&
+      other.monthlyBudget == monthlyBudget &&
+      other.monthlyExpenses == monthlyExpenses &&
+      other.dailyExpenses == dailyExpenses &&
+      other.weeklyExpenses == weeklyExpenses &&
+      other.monthlySavings == monthlySavings &&
+      other.accountCreatedOn == accountCreatedOn;
+  }
+
+  @override
+  int get hashCode {
+    return userId.hashCode ^
+      username.hashCode ^
+      emailAddress.hashCode ^
+      netBalance.hashCode ^
+      monthlyBudget.hashCode ^
+      monthlyExpenses.hashCode ^
+      dailyExpenses.hashCode ^
+      weeklyExpenses.hashCode ^
+      monthlySavings.hashCode ^
+      accountCreatedOn.hashCode;
+  }
 }
