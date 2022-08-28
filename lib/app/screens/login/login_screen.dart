@@ -138,6 +138,10 @@ class _LoginScreenViewState extends State<LoginScreenView> {
                           context: context,
                         );
                       }
+                      // String dateTimeNow = DateTime.now().toString();
+                      // String currentMonth =
+                      //     DateTime.now().toString().substring(5, 7);
+                      // log(currentMonth);
                     },
                   );
                 },

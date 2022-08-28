@@ -317,7 +317,7 @@ class HomepageView extends StatelessWidget {
                             children: [
                               FittedBox(
                                 child: Text(
-                                  "- 1200Tk",
+                                  "- ${UserHandler().currentUser.dailyExpenses}",
                                   style: boldTextStyle.copyWith(
                                     fontSize: 25,
                                     color: whiteColor,
@@ -358,7 +358,7 @@ class HomepageView extends StatelessWidget {
                             children: [
                               FittedBox(
                                 child: Text(
-                                  "- 27000Tk",
+                                  "- ${UserHandler().currentUser.weeklyExpenses}",
                                   style: boldTextStyle.copyWith(
                                     fontSize: 25,
                                     color: whiteColor.withOpacity(.8),
@@ -483,6 +483,57 @@ class HomepageView extends StatelessWidget {
                         )
                       ],
                     ),
+                  ),
+                  Text(
+                    "Savings",
+                    style: boldTextStyle.copyWith(
+                      fontSize: 20,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(
+                      defaultPadding,
+                    ),
+                    width: getWidth(context),
+                    decoration: BoxDecoration(
+                      color: greyColor,
+                      borderRadius: BorderRadius.circular(
+                        defaultBorder,
+                      ),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          "You have saved",
+                          style: regularTextStyle,
+                        ),
+                        const SizedBox(
+                          height: 4,
+                        ),
+                        Text(
+                          "${UserHandler().currentUser.monthlySavings} Tk",
+                          style: boldTextStyle.copyWith(
+                            fontSize: 20,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 4,
+                        ),
+                        Text(
+                          "in August alone!!",
+                          style: regularTextStyle.copyWith(
+                            color: customBlackColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 16,
                   ),
                   const SizedBox(
                     height: 16,
