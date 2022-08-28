@@ -1,7 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
+import 'package:pinext/app/models/pinext_card_model.dart';
+import 'package:pinext/app/services/firebase_services.dart';
+import 'package:pinext/app/services/user_services.dart';
 
 import '../../../app_data/app_constants/constants.dart';
 import '../../../app_data/app_constants/domentions.dart';
@@ -72,7 +76,7 @@ class HomepageView extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "Khondakar Afridi",
+                    UserServices().currentUser.username,
                     style: boldTextStyle.copyWith(
                       fontSize: 25,
                     ),
@@ -146,12 +150,54 @@ class HomepageView extends StatelessWidget {
                     const SizedBox(
                       width: defaultPadding,
                     ),
-                    ListView.builder(
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 4,
-                      itemBuilder: ((context, index) {
-                        return PinextCard();
+                    StreamBuilder(
+                      stream: FirebaseServices()
+                          .firebaseFirestore
+                          .collection("pinext_users")
+                          .doc(FirebaseServices().getUserId())
+                          .collection("pinext_cards")
+                          .snapshots(),
+                      builder: ((context,
+                          AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                              snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: snapshot.data!.docs.length,
+                          itemBuilder: ((context, index) {
+                            PinextCardModel pinextCardModel =
+                                PinextCardModel.fromMap(
+                              snapshot.data!.docs[index].data(),
+                            );
+
+                            String color = pinextCardModel.color;
+                            late Color cardColor;
+                            if (color == "Black") {
+                              cardColor = Colors.black;
+                            } else if (color == "Red") {
+                              cardColor = Colors.red;
+                            } else if (color == "Purple") {
+                              cardColor = Colors.purple;
+                            } else if (color == "Green") {
+                              cardColor = Colors.green;
+                            } else {
+                              cardColor = customBlueColor;
+                            }
+
+                            return PinextCard(
+                              title: pinextCardModel.title,
+                              balance: pinextCardModel.balance,
+                              cardColor: cardColor,
+                            );
+                          }),
+                        );
                       }),
                     ),
                     const SizedBox(
@@ -202,7 +248,7 @@ class HomepageView extends StatelessWidget {
                               style: regularTextStyle,
                             ),
                             Text(
-                              "5000TK",
+                              UserServices().currentUser.monthlyBudget,
                               style: regularTextStyle.copyWith(
                                 fontWeight: FontWeight.w600,
                               ),
@@ -224,7 +270,13 @@ class HomepageView extends StatelessWidget {
                               builder: ((context, constraints) {
                                 return Container(
                                   height: 5,
-                                  width: constraints.maxWidth * (1700 / 5000),
+                                  width: constraints.maxWidth *
+                                      (double.parse(UserServices()
+                                              .currentUser
+                                              .budgetSpentSoFar) /
+                                          double.parse(UserServices()
+                                              .currentUser
+                                              .monthlyBudget)),
                                   color: customBlueColor,
                                 );
                               }),
@@ -235,7 +287,7 @@ class HomepageView extends StatelessWidget {
                           height: 8,
                         ),
                         Text(
-                          "Your have spent ${(1700 / 5000) * 100}% of your budget!",
+                          "Your have spent ${((double.parse(UserServices().currentUser.budgetSpentSoFar) / double.parse(UserServices().currentUser.monthlyBudget)) * 100).ceil()}% of your budget!",
                           style: regularTextStyle.copyWith(
                               color: customBlackColor.withOpacity(.6)),
                         ),

@@ -658,7 +658,11 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                   context.read<SigninCubit>().reset();
                 }
                 if (state is SigninSuccessState) {
-                  Navigator.pop(context);
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    ROUTES.getHomeframeRoute,
+                    (route) => false,
+                  );
                   ElegantNotification.success(
                     title: Text(
                       "Yaay!",

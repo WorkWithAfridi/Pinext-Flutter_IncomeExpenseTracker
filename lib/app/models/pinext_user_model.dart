@@ -19,6 +19,7 @@ class PinextUserModel {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'userId': userId,
       'username': username,
       'emailAddress': emailAddress,
       'netBalance': netBalance,
@@ -42,4 +43,9 @@ class PinextUserModel {
 
   factory PinextUserModel.fromJson(String source) =>
       PinextUserModel.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() {
+    return 'PinextUserModel(userId: $userId, username: $username, emailAddress: $emailAddress, netBalance: $netBalance, monthlyBudget: $monthlyBudget, budgetSpentSoFar: $budgetSpentSoFar)';
+  }
 }

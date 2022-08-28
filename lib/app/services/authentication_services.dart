@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
 import 'package:pinext/app/models/pinext_user_model.dart';
 import 'package:pinext/app/services/firebase_services.dart';
+import 'package:pinext/app/services/user_services.dart';
 
 class AuthenticationServices {
   AuthenticationServices._internal();
@@ -54,7 +55,7 @@ class AuthenticationServices {
             .doc(pinextCard.cardId)
             .set(pinextCard.toMap());
       }
-
+      await UserServices().getCurrentUser();
       response = "Success";
     } on FirebaseException catch (err) {
       response = err.message.toString();
@@ -65,7 +66,11 @@ class AuthenticationServices {
   }
 
   Future<bool> isUserSignedIn() async {
-    return FirebaseServices().firebaseAuth.currentUser != null;
+    bool status = FirebaseServices().firebaseAuth.currentUser != null;
+    if (status) {
+      await UserServices().getCurrentUser();
+    }
+    return status;
   }
 
   Future signInUser({
@@ -79,6 +84,7 @@ class AuthenticationServices {
                 email: emailAddress,
                 password: password,
               );
+      await UserServices().getCurrentUser();
       response = "Success";
     } on FirebaseException catch (err) {
       response = err.message.toString();

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/app_data/routing/routes.dart';
 import 'package:pinext/app/bloc/login_cubit/login_cubit.dart';
+import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 import 'package:pinext/app/shared/widgets/socials_button.dart';
 
 import '../../app_data/app_constants/constants.dart';
@@ -91,6 +92,7 @@ class _LoginScreenViewState extends State<LoginScreenView> {
               GetCustomTextField(
                 controller: passwordController,
                 hintTitle: "Password",
+                isPassword: true,
               ),
               const SizedBox(
                 height: 16,
@@ -105,19 +107,12 @@ class _LoginScreenViewState extends State<LoginScreenView> {
                     );
                   }
                   if (state is LoginErrorState) {
-                    ElegantNotification.error(
-                      title: Text(
-                        "Error",
-                        style: boldTextStyle,
-                      ),
-                      description: Text(
-                        "Failed to log you in",
-                        style: regularTextStyle,
-                      ),
-                      width: getWidth(context) * .9,
-                      animationDuration: const Duration(milliseconds: 200),
-                      toastDuration: const Duration(seconds: 5),
-                    ).show(context);
+                    GetCustomSnackbar(
+                      title: "Snap",
+                      message: state.errorMessage,
+                      snackbarType: SnackbarType.error,
+                      context: context,
+                    );
                     context.read<LoginCubit>().resetState();
                   }
                 },

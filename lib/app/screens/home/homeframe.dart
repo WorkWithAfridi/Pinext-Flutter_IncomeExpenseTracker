@@ -9,6 +9,7 @@ import 'package:pinext/app/screens/home/pages/archive_page.dart';
 import 'package:pinext/app/screens/home/pages/cards_and_balance_page.dart';
 import 'package:pinext/app/screens/home/pages/home_page.dart';
 import 'package:pinext/app/services/authentication_services.dart';
+import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 
 import '../../app_data/app_constants/constants.dart';
 import '../../app_data/app_constants/fonts.dart';
@@ -146,10 +147,10 @@ class PinextDrawer extends StatelessWidget {
         color: greyColor,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(
                   height: 20,
@@ -175,7 +176,7 @@ class PinextDrawer extends StatelessWidget {
                     horizontal: defaultPadding,
                   ),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
                         "Pinext",
@@ -199,17 +200,27 @@ class PinextDrawer extends StatelessWidget {
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 GestureDetector(
-                  onTap: () {
-                    if (AuthenticationServices().signOutUser()) {
+                  onTap: () async {
+                    bool userSignedOutSuccessfully =
+                        await AuthenticationServices().signOutUser();
+                    if (userSignedOutSuccessfully) {
                       Navigator.pushNamedAndRemoveUntil(
                         context,
                         ROUTES.getLoginRoute,
                         (route) => false,
                       );
-                    } else {}
+                    } else {
+                      GetCustomSnackbar(
+                        title: "Snap",
+                        message:
+                            "An error occurred while trying to sign you out! Please try closing the app and opening it again.",
+                        snackbarType: SnackbarType.info,
+                        context: context,
+                      );
+                    }
                   },
                   child: const Padding(
                     padding: EdgeInsets.symmetric(horizontal: defaultPadding),
