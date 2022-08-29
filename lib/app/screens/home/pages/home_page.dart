@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:pie_chart/pie_chart.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
 import 'package:pinext/app/services/firebase_services.dart';
@@ -124,83 +123,6 @@ class HomepageView extends StatelessWidget {
                           }),
                         );
                       },
-                    ),
-                    const SizedBox(
-                      width: defaultPadding - 10,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: defaultPadding,
-              ),
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Text(
-                    "Your Cards",
-                    style: boldTextStyle.copyWith(
-                      fontSize: 20,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 185,
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    const SizedBox(
-                      width: defaultPadding,
-                    ),
-                    StreamBuilder(
-                      stream: FirebaseServices()
-                          .firebaseFirestore
-                          .collection("pinext_users")
-                          .doc(FirebaseServices().getUserId())
-                          .collection("pinext_cards")
-                          .snapshots(),
-                      builder: ((context,
-                          AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                              snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                        return ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          itemCount: snapshot.data!.docs.length,
-                          itemBuilder: ((context, index) {
-                            PinextCardModel pinextCardModel =
-                                PinextCardModel.fromMap(
-                              snapshot.data!.docs[index].data(),
-                            );
-
-                            String color = pinextCardModel.color;
-                            late Color cardColor = getColorFromString(color);
-
-                            return PinextCard(
-                              title: pinextCardModel.title,
-                              balance: pinextCardModel.balance,
-                              cardColor: cardColor,
-                            );
-                          }),
-                        );
-                      }),
                     ),
                     const SizedBox(
                       width: defaultPadding - 10,
@@ -406,9 +328,6 @@ class HomepageView extends StatelessWidget {
                   const SizedBox(
                     height: 16,
                   ),
-                  const SizedBox(
-                    height: 16,
-                  ),
                   Text(
                     "Expenses",
                     style: boldTextStyle.copyWith(
@@ -510,119 +429,16 @@ class HomepageView extends StatelessWidget {
                     },
                   ),
                   const SizedBox(
-                    height: 8,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(
-                      defaultPadding,
-                    ),
-                    width: getWidth(context),
-                    decoration: BoxDecoration(
-                      color: greyColor,
-                      borderRadius: BorderRadius.circular(
-                        defaultBorder,
-                      ),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Today's overview",
-                          style: boldTextStyle.copyWith(
-                            fontWeight: FontWeight.w600,
-                            color: customBlackColor.withOpacity(.4),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 32,
-                        ),
-                        PieChart(
-                          dataMap: demoData,
-                          animationDuration: const Duration(milliseconds: 800),
-                          chartLegendSpacing: 32,
-                          chartRadius: MediaQuery.of(context).size.width / 2,
-                          colorList: const [
-                            cyanColor,
-                            customBlackColor,
-                            customBlueColor,
-                          ],
-                          initialAngleInDegree: 0,
-                          chartType: ChartType.ring,
-                          ringStrokeWidth: 40,
-                          centerText: "Today",
-                          legendOptions: const LegendOptions(
-                            showLegends: false,
-                          ),
-                          chartValuesOptions: const ChartValuesOptions(
-                            showChartValueBackground: true,
-                            showChartValues: true,
-                            showChartValuesInPercentage: false,
-                            showChartValuesOutside: false,
-                            decimalPlaces: 1,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 32,
-                        ),
-                        ListView.builder(
-                          itemCount: 6,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: ((context, index) {
-                            return Padding(
-                              padding: const EdgeInsets.only(bottom: 6),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    height: 14,
-                                    width: 14,
-                                    decoration: BoxDecoration(
-                                      color: cyanColor,
-                                      borderRadius: BorderRadius.circular(14),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 6,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Snacks",
-                                        style: boldTextStyle.copyWith(
-                                          fontSize: 14,
-                                          color:
-                                              customBlackColor.withOpacity(.8),
-                                        ),
-                                      ),
-                                      Text(
-                                        "Amount: 100Tk",
-                                        style: regularTextStyle.copyWith(
-                                          fontWeight: FontWeight.w400,
-                                          color:
-                                              customBlackColor.withOpacity(.6),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            );
-                          }),
-                        )
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
                     height: 16,
                   ),
                   Text(
-                    "Latest transactions made in ${months[int.parse(currentMonth) - 1]}",
+                    "Last 10 transactions",
                     style: boldTextStyle.copyWith(
-                      fontSize: 18,
+                      fontSize: 20,
                     ),
+                  ),
+                  const SizedBox(
+                    height: 4,
                   ),
                   StreamBuilder(
                     stream: FirebaseServices()
@@ -660,14 +476,22 @@ class HomepageView extends StatelessWidget {
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 5.0),
                             child: ListView.builder(
-                              itemCount: snapshot.data!.docs.length > 6
-                                  ? 6
+                              itemCount: snapshot.data!.docs.length > 10
+                                  ? 10
                                   : snapshot.data!.docs.length,
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
                               itemBuilder: ((context, index) {
                                 if (snapshot.data!.docs.isEmpty) {
                                   return const Text("No data found! :(");
+                                }
+                                if (snapshot.data!.docs.isEmpty) {
+                                  return Text(
+                                    "No data found! :(",
+                                    style: regularTextStyle.copyWith(
+                                      color: customBlackColor.withOpacity(.4),
+                                    ),
+                                  );
                                 }
 
                                 PinextTransactionModel pinextTransactionModel =
@@ -745,12 +569,89 @@ class HomepageView extends StatelessWidget {
                       );
                     }),
                   ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: defaultPadding,
+              ),
+              child: Column(
+                children: [
                   const SizedBox(
                     height: 16,
                   ),
+                  Text(
+                    "Your Cards",
+                    style: boldTextStyle.copyWith(
+                      fontSize: 20,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
                 ],
               ),
-            )
+            ),
+            SizedBox(
+              height: 185,
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    const SizedBox(
+                      width: defaultPadding,
+                    ),
+                    StreamBuilder(
+                      stream: FirebaseServices()
+                          .firebaseFirestore
+                          .collection("pinext_users")
+                          .doc(FirebaseServices().getUserId())
+                          .collection("pinext_cards")
+                          .snapshots(),
+                      builder: ((context,
+                          AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                              snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: snapshot.data!.docs.length,
+                          itemBuilder: ((context, index) {
+                            PinextCardModel pinextCardModel =
+                                PinextCardModel.fromMap(
+                              snapshot.data!.docs[index].data(),
+                            );
+
+                            String color = pinextCardModel.color;
+                            late Color cardColor = getColorFromString(color);
+
+                            return PinextCard(
+                              title: pinextCardModel.title,
+                              balance: pinextCardModel.balance,
+                              cardColor: cardColor,
+                            );
+                          }),
+                        );
+                      }),
+                    ),
+                    const SizedBox(
+                      width: defaultPadding - 10,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 16,
+            ),
           ],
         ),
       ),

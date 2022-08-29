@@ -41,7 +41,7 @@ class SplashScreen extends StatelessWidget {
         child: Center(
           child: Text(
             "Pinext",
-            style: boldTextStyle.copyWith(fontSize: 30),
+            style: boldTextStyle.copyWith(fontSize: 50),
           ),
         ),
       ),

@@ -155,17 +155,12 @@ class PinextDrawer extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                GestureDetector(
-                  onTap: () {
+                IconButton(
+                  onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: defaultPadding - 5,
-                    ),
-                    child: Icon(
-                      Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back,
-                    ),
+                  icon: Icon(
+                    Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back,
                   ),
                 ),
                 const SizedBox(
@@ -202,8 +197,8 @@ class PinextDrawer extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                GestureDetector(
-                  onTap: () async {
+                IconButton(
+                  onPressed: () async {
                     bool userSignedOutSuccessfully =
                         await AuthenticationServices().signOutUser();
                     if (userSignedOutSuccessfully) {
@@ -222,12 +217,9 @@ class PinextDrawer extends StatelessWidget {
                       );
                     }
                   },
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: defaultPadding),
-                    child: Icon(
-                      Icons.logout,
-                      color: customBlueColor,
-                    ),
+                  icon: const Icon(
+                    Icons.logout,
+                    color: customBlueColor,
                   ),
                 ),
                 const SizedBox(
