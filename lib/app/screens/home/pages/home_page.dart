@@ -331,12 +331,6 @@ class HomepageView extends StatelessWidget {
                                   ],
                                 ),
                               );
-
-                              Text(
-                                "Your have spent ${((double.parse(state.monthlyExpenses) / double.parse(state.monthlyBudget)) * 100).ceil()}% of your budget!",
-                                style: regularTextStyle.copyWith(
-                                    color: customBlackColor.withOpacity(.6)),
-                              );
                             } else {
                               return const CircularProgressIndicator();
                             }
@@ -344,6 +338,73 @@ class HomepageView extends StatelessWidget {
                         ),
                       ],
                     ),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Text(
+                    "Savings",
+                    style: boldTextStyle.copyWith(
+                      fontSize: 20,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(
+                      defaultPadding,
+                    ),
+                    width: getWidth(context),
+                    decoration: BoxDecoration(
+                      color: greyColor,
+                      borderRadius: BorderRadius.circular(
+                        defaultBorder,
+                      ),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          "You have saved",
+                          style: regularTextStyle,
+                        ),
+                        const SizedBox(
+                          height: 4,
+                        ),
+                        BlocBuilder<UserBloc, UserState>(
+                          builder: (context, state) {
+                            log("rebuilding at you have saved...");
+                            if (state is AuthenticatedUserState) {
+                              return Text(
+                                "${state.monthlySavings} Tk",
+                                style: boldTextStyle.copyWith(
+                                  fontSize: 20,
+                                ),
+                              );
+                            }
+                            return Text(
+                              "Loading...",
+                              style: boldTextStyle.copyWith(
+                                fontSize: 20,
+                              ),
+                            );
+                          },
+                        ),
+                        const SizedBox(
+                          height: 4,
+                        ),
+                        Text(
+                          "in August alone!!",
+                          style: regularTextStyle.copyWith(
+                            color: customBlackColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 16,
                   ),
                   const SizedBox(
                     height: 16,
@@ -551,67 +612,6 @@ class HomepageView extends StatelessWidget {
                             );
                           }),
                         )
-                      ],
-                    ),
-                  ),
-                  Text(
-                    "Savings",
-                    style: boldTextStyle.copyWith(
-                      fontSize: 20,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(
-                      defaultPadding,
-                    ),
-                    width: getWidth(context),
-                    decoration: BoxDecoration(
-                      color: greyColor,
-                      borderRadius: BorderRadius.circular(
-                        defaultBorder,
-                      ),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          "You have saved",
-                          style: regularTextStyle,
-                        ),
-                        const SizedBox(
-                          height: 4,
-                        ),
-                        BlocBuilder<UserBloc, UserState>(
-                          builder: (context, state) {
-                            log("rebuilding at you have saved...");
-                            if (state is AuthenticatedUserState) {
-                              return Text(
-                                "${state.monthlySavings} Tk",
-                                style: boldTextStyle.copyWith(
-                                  fontSize: 20,
-                                ),
-                              );
-                            }
-                            return Text(
-                              "Loading...",
-                              style: boldTextStyle.copyWith(
-                                fontSize: 20,
-                              ),
-                            );
-                          },
-                        ),
-                        const SizedBox(
-                          height: 4,
-                        ),
-                        Text(
-                          "in August alone!!",
-                          style: regularTextStyle.copyWith(
-                            color: customBlackColor,
-                          ),
-                        ),
                       ],
                     ),
                   ),
