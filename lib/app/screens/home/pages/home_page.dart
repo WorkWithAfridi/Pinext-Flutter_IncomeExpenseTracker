@@ -87,7 +87,7 @@ class HomepageView extends StatelessWidget {
                           ),
                         );
                       } else {
-                        return const CircularProgressIndicator();
+                        return const SizedBox.shrink();
                       }
                     },
                   ),
@@ -180,7 +180,7 @@ class HomepageView extends StatelessWidget {
                                     ),
                                   );
                                 } else {
-                                  return const CircularProgressIndicator();
+                                  return const SizedBox.shrink();
                                 }
                               },
                             ),
@@ -214,7 +214,7 @@ class HomepageView extends StatelessWidget {
                                     }),
                                   );
                                 } else {
-                                  return const CircularProgressIndicator();
+                                  return const SizedBox.shrink();
                                 }
                               },
                             ),
@@ -252,7 +252,7 @@ class HomepageView extends StatelessWidget {
                                 ),
                               );
                             } else {
-                              return const CircularProgressIndicator();
+                              return const SizedBox.shrink();
                             }
                           },
                         ),
@@ -421,42 +421,89 @@ class HomepageView extends StatelessWidget {
                           ],
                         );
                       } else {
-                        return const CircularProgressIndicator();
+                        return const SizedBox.shrink();
                       }
                     },
                   ),
                   const SizedBox(
                     height: 16,
                   ),
-                  Text(
-                    "Last 10 transactions",
-                    style: boldTextStyle.copyWith(
-                      fontSize: 20,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 4,
-                  ),
-                  StreamBuilder(
-                    stream: FirebaseServices()
-                        .firebaseFirestore
-                        .collection('pinext_users')
-                        .doc(FirebaseServices().getUserId())
-                        .collection('pinext_transactions')
-                        .doc(currentYear)
-                        .collection(currentMonth)
-                        .orderBy(
-                          "transactionDate",
-                          descending: true,
-                        )
-                        .snapshots(),
-                    builder: ((context,
-                        AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                            snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
+                  const PastTransactionsModule(),
+                ],
+              ),
+            ),
+            const YourCardsModule(),
+            const SizedBox(
+              height: 16,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class PastTransactionsModule extends StatelessWidget {
+  const PastTransactionsModule({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Last 10 transactions",
+          style: boldTextStyle.copyWith(
+            fontSize: 20,
+          ),
+        ),
+        const SizedBox(
+          height: 4,
+        ),
+        StreamBuilder(
+          stream: FirebaseServices()
+              .firebaseFirestore
+              .collection('pinext_users')
+              .doc(FirebaseServices().getUserId())
+              .collection('pinext_transactions')
+              .doc(currentYear)
+              .collection(currentMonth)
+              .orderBy(
+                "transactionDate",
+                descending: true,
+              )
+              .snapshots(),
+          builder: ((context,
+              AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: SizedBox.shrink(),
+              );
+            }
+            if (snapshot.data!.docs.isEmpty) {
+              return Text(
+                "No data found! :(",
+                style: regularTextStyle.copyWith(
+                  color: customBlackColor.withOpacity(.4),
+                ),
+              );
+            }
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                  child: ListView.builder(
+                    itemCount: snapshot.data!.docs.length > 10
+                        ? 10
+                        : snapshot.data!.docs.length,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: ((context, index) {
+                      if (snapshot.data!.docs.isEmpty) {
+                        return const Text("No data found! :(");
                       }
                       if (snapshot.data!.docs.isEmpty) {
                         return Text(
@@ -466,192 +513,169 @@ class HomepageView extends StatelessWidget {
                           ),
                         );
                       }
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 5.0),
-                            child: ListView.builder(
-                              itemCount: snapshot.data!.docs.length > 10
-                                  ? 10
-                                  : snapshot.data!.docs.length,
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemBuilder: ((context, index) {
-                                if (snapshot.data!.docs.isEmpty) {
-                                  return const Text("No data found! :(");
-                                }
-                                if (snapshot.data!.docs.isEmpty) {
-                                  return Text(
-                                    "No data found! :(",
-                                    style: regularTextStyle.copyWith(
-                                      color: customBlackColor.withOpacity(.4),
-                                    ),
-                                  );
-                                }
 
-                                PinextTransactionModel pinextTransactionModel =
-                                    PinextTransactionModel.fromMap(
-                                  snapshot.data!.docs[index].data(),
-                                );
-                                return Column(
-                                  children: [
-                                    const SizedBox(
-                                      height: 8,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          DateFormat('dd-MM-yyyy').format(
-                                              DateTime.parse(
-                                                  pinextTransactionModel
-                                                      .transactionDate)),
-                                          style: regularTextStyle.copyWith(
-                                            color: customBlackColor
-                                                .withOpacity(.80),
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 32,
-                                        ),
-                                        Expanded(
-                                          child: Text(
-                                            pinextTransactionModel.details,
-                                            style: regularTextStyle.copyWith(
-                                              color: customBlackColor
-                                                  .withOpacity(.80),
-                                            ),
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 8,
-                                        ),
-                                        Container(
-                                          width: 100,
-                                          alignment: Alignment.centerRight,
-                                          child: Text(
-                                            pinextTransactionModel
-                                                        .transactionType ==
-                                                    'Expense'
-                                                ? "- ${pinextTransactionModel.amount}Tk"
-                                                : "+ ${pinextTransactionModel.amount}Tk",
-                                            style: boldTextStyle.copyWith(
-                                              color: pinextTransactionModel
-                                                          .transactionType ==
-                                                      'Expense'
-                                                  ? Colors.red
-                                                  : Colors.green,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 8,
-                                    ),
-                                    Container(
-                                      height: 1,
-                                      width: getWidth(context),
-                                      color: customBlackColor.withOpacity(.05),
-                                    )
-                                  ],
-                                );
-                              }),
-                            ),
+                      PinextTransactionModel pinextTransactionModel =
+                          PinextTransactionModel.fromMap(
+                        snapshot.data!.docs[index].data(),
+                      );
+                      return Column(
+                        children: [
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                DateFormat('dd-MM-yyyy').format(DateTime.parse(
+                                    pinextTransactionModel.transactionDate)),
+                                style: regularTextStyle.copyWith(
+                                  color: customBlackColor.withOpacity(.80),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 32,
+                              ),
+                              Expanded(
+                                child: Text(
+                                  pinextTransactionModel.details,
+                                  style: regularTextStyle.copyWith(
+                                    color: customBlackColor.withOpacity(.80),
+                                  ),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 8,
+                              ),
+                              Container(
+                                width: 100,
+                                alignment: Alignment.centerRight,
+                                child: Text(
+                                  pinextTransactionModel.transactionType ==
+                                          'Expense'
+                                      ? "- ${pinextTransactionModel.amount}Tk"
+                                      : "+ ${pinextTransactionModel.amount}Tk",
+                                  style: boldTextStyle.copyWith(
+                                    color: pinextTransactionModel
+                                                .transactionType ==
+                                            'Expense'
+                                        ? Colors.red
+                                        : Colors.green,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          Container(
+                            height: 1,
+                            width: getWidth(context),
+                            color: customBlackColor.withOpacity(.05),
                           )
                         ],
                       );
                     }),
                   ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: defaultPadding,
-              ),
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Text(
-                    "Your Cards",
-                    style: boldTextStyle.copyWith(
-                      fontSize: 20,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 185,
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    const SizedBox(
-                      width: defaultPadding,
-                    ),
-                    StreamBuilder(
-                      stream: FirebaseServices()
-                          .firebaseFirestore
-                          .collection("pinext_users")
-                          .doc(FirebaseServices().getUserId())
-                          .collection("pinext_cards")
-                          .snapshots(),
-                      builder: ((context,
-                          AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                              snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                        return ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          itemCount: snapshot.data!.docs.length,
-                          itemBuilder: ((context, index) {
-                            PinextCardModel pinextCardModel =
-                                PinextCardModel.fromMap(
-                              snapshot.data!.docs[index].data(),
-                            );
+                )
+              ],
+            );
+          }),
+        ),
+      ],
+    );
+  }
+}
 
-                            String color = pinextCardModel.color;
-                            late Color cardColor = getColorFromString(color);
+class YourCardsModule extends StatelessWidget {
+  const YourCardsModule({
+    Key? key,
+  }) : super(key: key);
 
-                            return PinextCard(
-                              title: pinextCardModel.title,
-                              balance: pinextCardModel.balance,
-                              cardColor: cardColor,
-                            );
-                          }),
-                        );
-                      }),
-                    ),
-                    const SizedBox(
-                      width: defaultPadding - 10,
-                    ),
-                  ],
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: defaultPadding,
+          ),
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 16,
+              ),
+              Text(
+                "Your Cards",
+                style: boldTextStyle.copyWith(
+                  fontSize: 20,
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-          ],
+              const SizedBox(
+                height: 8,
+              ),
+            ],
+          ),
         ),
-      ),
+        SizedBox(
+          height: 185,
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                const SizedBox(
+                  width: defaultPadding,
+                ),
+                StreamBuilder(
+                  stream: FirebaseServices()
+                      .firebaseFirestore
+                      .collection("pinext_users")
+                      .doc(FirebaseServices().getUserId())
+                      .collection("pinext_cards")
+                      .snapshots(),
+                  builder: ((context,
+                      AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                          snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(
+                        child: SizedBox.shrink(),
+                      );
+                    }
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: snapshot.data!.docs.length,
+                      itemBuilder: ((context, index) {
+                        PinextCardModel pinextCardModel =
+                            PinextCardModel.fromMap(
+                          snapshot.data!.docs[index].data(),
+                        );
+
+                        String color = pinextCardModel.color;
+                        late Color cardColor = getColorFromString(color);
+
+                        return PinextCard(
+                          title: pinextCardModel.title,
+                          balance: pinextCardModel.balance,
+                          cardColor: cardColor,
+                        );
+                      }),
+                    );
+                  }),
+                ),
+                const SizedBox(
+                  width: defaultPadding - 10,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
