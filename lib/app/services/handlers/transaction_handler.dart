@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:pinext/app/handlers/card_handler.dart';
-import 'package:pinext/app/handlers/user_handler.dart';
+import 'package:pinext/app/app_data/date_time/date_time.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
 import 'package:pinext/app/models/pinext_transaction_model.dart';
 import 'package:pinext/app/models/pinext_user_model.dart';
 import 'package:pinext/app/services/firebase_services.dart';
+import 'package:pinext/app/services/handlers/card_handler.dart';
+import 'package:pinext/app/services/handlers/user_handler.dart';
 import 'package:uuid/uuid.dart';
 
 class TransactionHandler {
@@ -20,20 +21,14 @@ class TransactionHandler {
     required String cardId,
   }) async {
     String response = "Error";
-    String dateTimeNow = DateTime.now().toString();
-    String year = dateTimeNow.substring(0, 3);
     try {
-      String dateTimeNow = DateTime.now().toString();
-      String year = dateTimeNow.substring(0, 4);
-      String month = dateTimeNow.substring(5, 7);
-      String date = dateTimeNow.substring(8, 10);
       String transactionId = const Uuid().v4();
       PinextTransactionModel pinextTransactionModel = PinextTransactionModel(
         transactionType: transactionType,
         amount: amount,
         details: description,
         cardId: cardId,
-        transactionDate: dateTimeNow,
+        transactionDate: DateTime.now().toString(),
         transactionId: transactionId,
       );
       //Adding transaction
@@ -42,8 +37,8 @@ class TransactionHandler {
           .collection("pinext_users")
           .doc(FirebaseServices().getUserId())
           .collection("pinext_transactions")
-          .doc(year)
-          .collection(month)
+          .doc(currentYear)
+          .collection(currentDate)
           .doc(
             transactionId,
           )
@@ -99,15 +94,7 @@ class TransactionHandler {
           "dailyExpenses": adjustedDailyExpenses.toString(),
           "monthlyExpenses": adjustedMonthlyExpenses.toString(),
         });
-        // await UserHandler().getCurrentUser();
       }
-      // await FirebaseServices()
-      //     .firebaseFirestore
-      //     .collection("pinext_users")
-      //     .doc(FirebaseServices().getUserId())
-      //     .update({
-      //   "balance": adjustedAmount,
-      // });
 
       response = "Success";
     } on FirebaseException catch (err) {

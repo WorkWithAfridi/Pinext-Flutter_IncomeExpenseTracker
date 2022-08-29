@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:pinext/app/models/pinext_user_model.dart';
 import 'package:pinext/app/services/authentication_services.dart';
 
-import '../../handlers/user_handler.dart';
+import '../../services/handlers/user_handler.dart';
 
 part 'user_event.dart';
 part 'user_state.dart';

@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:pinext/app/handlers/transaction_handler.dart';
+import 'package:pinext/app/services/handlers/transaction_handler.dart';
 
 part 'add_transactions_state.dart';
 

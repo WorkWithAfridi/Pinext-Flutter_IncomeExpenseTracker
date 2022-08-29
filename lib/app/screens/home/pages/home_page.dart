@@ -11,6 +11,7 @@ import 'package:pinext/app/services/firebase_services.dart';
 
 import '../../../app_data/app_constants/constants.dart';
 import '../../../app_data/app_constants/domentions.dart';
+import '../../../app_data/date_time/date_time.dart';
 import '../../../app_data/theme_data/colors.dart';
 import '../../../bloc/homepage_cubit/homepage_cubit.dart';
 import '../../../bloc/userBloc/user_bloc.dart';
@@ -52,12 +53,6 @@ class HomepageView extends StatelessWidget {
     "Snacks": 100,
     "Hangout": 80,
   };
-
-  String year = DateTime.now().toString().substring(0, 4);
-
-  String month = DateTime.now().toString().substring(5, 7);
-
-  String date = DateTime.now().toString().substring(8, 10);
 
   @override
   Widget build(BuildContext context) {
@@ -624,7 +619,7 @@ class HomepageView extends StatelessWidget {
                     height: 16,
                   ),
                   Text(
-                    "Latest transactions made in ${months[int.parse(month) - 1]}",
+                    "Latest transactions made in ${months[int.parse(currentMonth) - 1]}",
                     style: boldTextStyle.copyWith(
                       fontSize: 18,
                     ),
@@ -635,8 +630,8 @@ class HomepageView extends StatelessWidget {
                         .collection('pinext_users')
                         .doc(FirebaseServices().getUserId())
                         .collection('pinext_transactions')
-                        .doc(year)
-                        .collection(month)
+                        .doc(currentYear)
+                        .collection(currentMonth)
                         .orderBy(
                           "transactionDate",
                           descending: true,
