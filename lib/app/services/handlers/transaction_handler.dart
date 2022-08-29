@@ -38,7 +38,7 @@ class TransactionHandler {
           .doc(FirebaseServices().getUserId())
           .collection("pinext_transactions")
           .doc(currentYear)
-          .collection(currentDate)
+          .collection(currentMonth)
           .doc(
             transactionId,
           )

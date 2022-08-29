@@ -1,10 +1,9 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/app_data/routing/routes.dart';
 import 'package:pinext/app/bloc/login_cubit/login_cubit.dart';
+import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 import 'package:pinext/app/shared/widgets/socials_button.dart';
 
@@ -101,6 +100,7 @@ class _LoginScreenViewState extends State<LoginScreenView> {
               BlocConsumer<LoginCubit, LoginState>(
                 listener: (context, state) {
                   if (state is LoginSuccessState) {
+                    context.read<UserBloc>().add(RefreshUserStateEvent());
                     Navigator.pushNamedAndRemoveUntil(
                       context,
                       ROUTES.getHomeframeRoute,
