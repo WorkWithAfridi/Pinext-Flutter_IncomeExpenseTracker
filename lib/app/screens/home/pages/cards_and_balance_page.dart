@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:pinext/app/handlers/user_handler.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 
 import '../../../app_data/app_constants/constants.dart';
 import '../../../app_data/app_constants/domentions.dart';
@@ -65,14 +66,22 @@ class CardsAndBalancePage extends StatelessWidget {
                       fontSize: 16,
                     ),
                   ),
-                  FittedBox(
-                    child: Text(
-                      UserHandler().currentUser.netBalance,
-                      style: boldTextStyle.copyWith(
-                        color: whiteColor,
-                        fontSize: 50,
-                      ),
-                    ),
+                  BlocBuilder<UserBloc, UserState>(
+                    builder: (context, state) {
+                      if (state is AuthenticatedUserState) {
+                        return FittedBox(
+                          child: Text(
+                            state.netBalance,
+                            style: boldTextStyle.copyWith(
+                              color: whiteColor,
+                              fontSize: 50,
+                            ),
+                          ),
+                        );
+                      } else {
+                        return const CircularProgressIndicator();
+                      }
+                    },
                   ),
                   Text(
                     "Taka",

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
-import 'package:pinext/app/handlers/user_handler.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
 import 'package:pinext/app/services/firebase_services.dart';
 
@@ -78,11 +77,19 @@ class HomepageView extends StatelessWidget {
                       color: customBlackColor.withOpacity(.6),
                     ),
                   ),
-                  Text(
-                    UserHandler().currentUser.username,
-                    style: boldTextStyle.copyWith(
-                      fontSize: 25,
-                    ),
+                  BlocBuilder<UserBloc, UserState>(
+                    builder: (context, state) {
+                      if (state is AuthenticatedUserState) {
+                        return Text(
+                          state.username,
+                          style: boldTextStyle.copyWith(
+                            fontSize: 25,
+                          ),
+                        );
+                      } else {
+                        return const CircularProgressIndicator();
+                      }
+                    },
                   ),
                   const SizedBox(
                     height: 8,
@@ -239,11 +246,19 @@ class HomepageView extends StatelessWidget {
                               "Your budget for August",
                               style: regularTextStyle,
                             ),
-                            Text(
-                              UserHandler().currentUser.monthlyBudget,
-                              style: regularTextStyle.copyWith(
-                                fontWeight: FontWeight.w600,
-                              ),
+                            BlocBuilder<UserBloc, UserState>(
+                              builder: (context, state) {
+                                if (state is AuthenticatedUserState) {
+                                  return Text(
+                                    state.monthlyBudget,
+                                    style: regularTextStyle.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  );
+                                } else {
+                                  return const CircularProgressIndicator();
+                                }
+                              },
                             ),
                           ],
                         ),
@@ -258,30 +273,44 @@ class HomepageView extends StatelessWidget {
                               width: getWidth(context),
                               color: customBlueColor.withOpacity(.2),
                             ),
-                            LayoutBuilder(
-                              builder: ((context, constraints) {
-                                return Container(
-                                  height: 5,
-                                  width: constraints.maxWidth *
-                                      (double.parse(UserHandler()
-                                              .currentUser
-                                              .monthlyExpenses) /
-                                          double.parse(UserHandler()
-                                              .currentUser
-                                              .monthlyBudget)),
-                                  color: customBlueColor,
-                                );
-                              }),
+                            BlocBuilder<UserBloc, UserState>(
+                              builder: (context, state) {
+                                if (state is AuthenticatedUserState) {
+                                  return LayoutBuilder(
+                                    builder: ((context, constraints) {
+                                      return Container(
+                                        height: 5,
+                                        width: constraints.maxWidth *
+                                            (double.parse(
+                                                    state.monthlyExpenses) /
+                                                double.parse(
+                                                    state.monthlyBudget)),
+                                        color: customBlueColor,
+                                      );
+                                    }),
+                                  );
+                                } else {
+                                  return const CircularProgressIndicator();
+                                }
+                              },
                             ),
                           ],
                         ),
                         const SizedBox(
                           height: 8,
                         ),
-                        Text(
-                          "Your have spent ${((double.parse(UserHandler().currentUser.monthlyExpenses) / double.parse(UserHandler().currentUser.monthlyBudget)) * 100).ceil()}% of your budget!",
-                          style: regularTextStyle.copyWith(
-                              color: customBlackColor.withOpacity(.6)),
+                        BlocBuilder<UserBloc, UserState>(
+                          builder: (context, state) {
+                            if (state is AuthenticatedUserState) {
+                              return Text(
+                                "Your have spent ${((double.parse(state.monthlyExpenses) / double.parse(state.monthlyBudget)) * 100).ceil()}% of your budget!",
+                                style: regularTextStyle.copyWith(
+                                    color: customBlackColor.withOpacity(.6)),
+                              );
+                            } else {
+                              return const CircularProgressIndicator();
+                            }
+                          },
                         ),
                       ],
                     ),
@@ -298,88 +327,96 @@ class HomepageView extends StatelessWidget {
                   const SizedBox(
                     height: 8,
                   ),
-                  Row(
-                    children: [
-                      Flexible(
-                        flex: 1,
-                        child: Container(
-                          height: 100,
-                          padding: const EdgeInsets.all(
-                            defaultPadding,
-                          ),
-                          width: double.maxFinite,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(
-                              defaultBorder,
-                            ),
-                            color: customBlackColor,
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              FittedBox(
-                                child: Text(
-                                  "- ${UserHandler().currentUser.dailyExpenses}",
-                                  style: boldTextStyle.copyWith(
-                                    fontSize: 25,
-                                    color: whiteColor,
+                  BlocBuilder<UserBloc, UserState>(
+                    builder: (context, state) {
+                      if (state is AuthenticatedUserState) {
+                        return Row(
+                          children: [
+                            Flexible(
+                              flex: 1,
+                              child: Container(
+                                height: 100,
+                                padding: const EdgeInsets.all(
+                                  defaultPadding,
+                                ),
+                                width: double.maxFinite,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(
+                                    defaultBorder,
                                   ),
+                                  color: customBlackColor,
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    FittedBox(
+                                      child: Text(
+                                        "- ${state.dailyExpenses}",
+                                        style: boldTextStyle.copyWith(
+                                          fontSize: 25,
+                                          color: whiteColor,
+                                        ),
+                                      ),
+                                    ),
+                                    Text(
+                                      "Today",
+                                      style: boldTextStyle.copyWith(
+                                        fontWeight: FontWeight.w600,
+                                        color: whiteColor.withOpacity(.8),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              Text(
-                                "Today",
-                                style: boldTextStyle.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                  color: whiteColor.withOpacity(.8),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      Flexible(
-                        flex: 2,
-                        child: Container(
-                          height: 100,
-                          padding: const EdgeInsets.all(
-                            defaultPadding,
-                          ),
-                          width: double.maxFinite,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(
-                              defaultBorder,
                             ),
-                            color: customBlueColor,
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              FittedBox(
-                                child: Text(
-                                  "- ${UserHandler().currentUser.weeklyExpenses}",
-                                  style: boldTextStyle.copyWith(
-                                    fontSize: 25,
-                                    color: whiteColor.withOpacity(.8),
+                            const SizedBox(
+                              width: 8,
+                            ),
+                            Flexible(
+                              flex: 2,
+                              child: Container(
+                                height: 100,
+                                padding: const EdgeInsets.all(
+                                  defaultPadding,
+                                ),
+                                width: double.maxFinite,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(
+                                    defaultBorder,
                                   ),
+                                  color: customBlueColor,
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    FittedBox(
+                                      child: Text(
+                                        "- ${state.weeklyExpenses}",
+                                        style: boldTextStyle.copyWith(
+                                          fontSize: 25,
+                                          color: whiteColor.withOpacity(.8),
+                                        ),
+                                      ),
+                                    ),
+                                    Text(
+                                      "This week",
+                                      style: boldTextStyle.copyWith(
+                                        fontWeight: FontWeight.w600,
+                                        color: whiteColor,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              Text(
-                                "This week",
-                                style: boldTextStyle.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                  color: whiteColor,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
+                            ),
+                          ],
+                        );
+                      } else {
+                        return const CircularProgressIndicator();
+                      }
+                    },
                   ),
                   const SizedBox(
                     height: 8,

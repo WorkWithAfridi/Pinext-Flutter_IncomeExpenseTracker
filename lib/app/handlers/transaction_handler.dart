@@ -99,7 +99,7 @@ class TransactionHandler {
           "dailyExpenses": adjustedDailyExpenses.toString(),
           "monthlyExpenses": adjustedMonthlyExpenses.toString(),
         });
-        await UserHandler().getCurrentUser();
+        // await UserHandler().getCurrentUser();
       }
       // await FirebaseServices()
       //     .firebaseFirestore
