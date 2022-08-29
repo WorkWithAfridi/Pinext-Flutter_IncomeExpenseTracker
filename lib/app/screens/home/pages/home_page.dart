@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
@@ -13,6 +14,7 @@ import '../../../app_data/app_constants/domentions.dart';
 import '../../../app_data/theme_data/colors.dart';
 import '../../../bloc/homepage_cubit/homepage_cubit.dart';
 import '../../../bloc/userBloc/user_bloc.dart';
+import '../../../models/pinext_transaction_model.dart';
 import '../../../shared/widgets/pinext_card.dart';
 
 class Homepage extends StatelessWidget {
@@ -50,6 +52,12 @@ class HomepageView extends StatelessWidget {
     "Snacks": 100,
     "Hangout": 80,
   };
+
+  String year = DateTime.now().toString().substring(0, 4);
+
+  String month = DateTime.now().toString().substring(5, 7);
+
+  String date = DateTime.now().toString().substring(8, 10);
 
   @override
   Widget build(BuildContext context) {
@@ -250,9 +258,10 @@ class HomepageView extends StatelessWidget {
                               builder: (context, state) {
                                 if (state is AuthenticatedUserState) {
                                   return Text(
-                                    state.monthlyBudget,
+                                    "${state.monthlyBudget} Tk",
                                     style: regularTextStyle.copyWith(
                                       fontWeight: FontWeight.w600,
+                                      color: Colors.green,
                                     ),
                                   );
                                 } else {
@@ -302,7 +311,33 @@ class HomepageView extends StatelessWidget {
                         BlocBuilder<UserBloc, UserState>(
                           builder: (context, state) {
                             if (state is AuthenticatedUserState) {
-                              return Text(
+                              return RichText(
+                                text: TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: "Your have spent ",
+                                      style: regularTextStyle.copyWith(
+                                        color: customBlackColor.withOpacity(.6),
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text:
+                                          "${((double.parse(state.monthlyExpenses) / double.parse(state.monthlyBudget)) * 100).ceil()}%",
+                                      style: boldTextStyle.copyWith(
+                                        color: Colors.red.withOpacity(.9),
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: " of your budget!",
+                                      style: regularTextStyle.copyWith(
+                                        color: customBlackColor.withOpacity(.6),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+
+                              Text(
                                 "Your have spent ${((double.parse(state.monthlyExpenses) / double.parse(state.monthlyBudget)) * 100).ceil()}% of your budget!",
                                 style: regularTextStyle.copyWith(
                                     color: customBlackColor.withOpacity(.6)),
@@ -588,85 +623,132 @@ class HomepageView extends StatelessWidget {
                   const SizedBox(
                     height: 16,
                   ),
-                  const SizedBox(
-                    height: 16,
-                  ),
                   Text(
-                    "Top Transactions in August",
+                    "Latest transactions made in ${months[int.parse(month) - 1]}",
                     style: boldTextStyle.copyWith(
-                      fontSize: 20,
+                      fontSize: 18,
                     ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 2,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ListView.builder(
-                          itemCount: 6,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: ((context, index) {
-                            return Column(
-                              children: [
-                                const SizedBox(
-                                  height: 8,
-                                ),
-                                Row(
+                  StreamBuilder(
+                    stream: FirebaseServices()
+                        .firebaseFirestore
+                        .collection('pinext_users')
+                        .doc(FirebaseServices().getUserId())
+                        .collection('pinext_transactions')
+                        .doc(year)
+                        .collection(month)
+                        .orderBy(
+                          "transactionDate",
+                          descending: true,
+                        )
+                        .snapshots(),
+                    builder: ((context,
+                        AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                            snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      if (snapshot.data!.docs.isEmpty) {
+                        return Text(
+                          "No data found! :(",
+                          style: regularTextStyle.copyWith(
+                            color: customBlackColor.withOpacity(.4),
+                          ),
+                        );
+                      }
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 5.0),
+                            child: ListView.builder(
+                              itemCount: snapshot.data!.docs.length > 6
+                                  ? 6
+                                  : snapshot.data!.docs.length,
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemBuilder: ((context, index) {
+                                if (snapshot.data!.docs.isEmpty) {
+                                  return const Text("No data found! :(");
+                                }
+
+                                PinextTransactionModel pinextTransactionModel =
+                                    PinextTransactionModel.fromMap(
+                                  snapshot.data!.docs[index].data(),
+                                );
+                                return Column(
                                   children: [
-                                    Text(
-                                      "12/12/12",
-                                      style: regularTextStyle.copyWith(
-                                        color:
-                                            customBlackColor.withOpacity(.80),
-                                      ),
-                                    ),
                                     const SizedBox(
-                                      width: 32,
+                                      height: 8,
                                     ),
-                                    Expanded(
-                                      child: Text(
-                                        "Bought something off Ryans Shantinager Branch",
-                                        style: regularTextStyle.copyWith(
-                                          color:
-                                              customBlackColor.withOpacity(.80),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          DateFormat('dd-MM-yyyy').format(
+                                              DateTime.parse(
+                                                  pinextTransactionModel
+                                                      .transactionDate)),
+                                          style: regularTextStyle.copyWith(
+                                            color: customBlackColor
+                                                .withOpacity(.80),
+                                          ),
                                         ),
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
+                                        const SizedBox(
+                                          width: 32,
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            pinextTransactionModel.details,
+                                            style: regularTextStyle.copyWith(
+                                              color: customBlackColor
+                                                  .withOpacity(.80),
+                                            ),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 8,
+                                        ),
+                                        Container(
+                                          width: 100,
+                                          alignment: Alignment.centerRight,
+                                          child: Text(
+                                            pinextTransactionModel
+                                                        .transactionType ==
+                                                    'Expense'
+                                                ? "- ${pinextTransactionModel.amount}Tk"
+                                                : "+ ${pinextTransactionModel.amount}Tk",
+                                            style: boldTextStyle.copyWith(
+                                              color: pinextTransactionModel
+                                                          .transactionType ==
+                                                      'Expense'
+                                                  ? Colors.red
+                                                  : Colors.green,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                     const SizedBox(
-                                      width: 8,
+                                      height: 8,
                                     ),
                                     Container(
-                                      width: 100,
-                                      alignment: Alignment.centerRight,
-                                      child: Text(
-                                        "- 120000Tk",
-                                        style: boldTextStyle.copyWith(
-                                          color:
-                                              customBlackColor.withOpacity(.80),
-                                        ),
-                                      ),
-                                    ),
+                                      height: 1,
+                                      width: getWidth(context),
+                                      color: customBlackColor.withOpacity(.05),
+                                    )
                                   ],
-                                ),
-                                const SizedBox(
-                                  height: 8,
-                                ),
-                                Container(
-                                  height: 1,
-                                  width: getWidth(context),
-                                  color: customBlackColor.withOpacity(.05),
-                                )
-                              ],
-                            );
-                          }),
-                        )
-                      ],
-                    ),
+                                );
+                              }),
+                            ),
+                          )
+                        ],
+                      );
+                    }),
                   ),
                   const SizedBox(
                     height: 16,
