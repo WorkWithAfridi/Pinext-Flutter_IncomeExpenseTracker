@@ -17,7 +17,13 @@ class CardHandler {
         .set(pinextCardModel.toMap());
   }
 
-  removeCard(PinextCardModel pinextCardModel) {}
+  removeCard(PinextCardModel pinextCardModel) {
+    //Removing card
+    //Adjust netBalance
+    //
+  }
+
+  editCard(PinextCardModel pinextCardModel) {}
 
   getCard(String cardId) async {
     PinextCardModel pinextCardModel;

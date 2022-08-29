@@ -85,6 +85,8 @@ class TransactionHandler {
                 double.parse(amount);
         double adjustedNetBalance =
             double.parse(pinextUserModel.netBalance) - double.parse(amount);
+        double adjustedWeeklyExpenses =
+            double.parse(pinextUserModel.weeklyExpenses) + double.parse(amount);
         await FirebaseServices()
             .firebaseFirestore
             .collection("pinext_users")
@@ -93,6 +95,7 @@ class TransactionHandler {
           "netBalance": adjustedNetBalance.toString(),
           "dailyExpenses": adjustedDailyExpenses.toString(),
           "monthlyExpenses": adjustedMonthlyExpenses.toString(),
+          "weeklyExpenses": adjustedWeeklyExpenses.toString(),
         });
       }
 

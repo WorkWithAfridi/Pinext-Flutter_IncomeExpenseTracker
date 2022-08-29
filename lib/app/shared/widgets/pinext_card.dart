@@ -34,7 +34,7 @@ class PinextCard extends StatelessWidget {
             defaultBorder,
           ),
           border: Border.all(
-            color: isSelected ? customBlueColor : Colors.transparent,
+            color: isSelected ? Colors.red : Colors.transparent,
             width: 5,
           ),
         ),

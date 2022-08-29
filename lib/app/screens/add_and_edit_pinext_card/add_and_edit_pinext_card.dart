@@ -18,26 +18,30 @@ import '../../bloc/signin_cubit/signin_cubit_cubit.dart';
 import '../../shared/widgets/custom_button.dart';
 import '../../shared/widgets/custom_text_field.dart';
 
-class AddPinextCardScreen extends StatelessWidget {
-  const AddPinextCardScreen({Key? key}) : super(key: key);
+class AddAndEditPinextCardScreen extends StatelessWidget {
+  AddAndEditPinextCardScreen({Key? key}) : super(key: key);
+  // late bool isEdit;
+  // late PinextCardModel pinextCardModel;
+  // late bool isAdd;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => AddCardCubit(),
-      child: const AddPinextCardView(),
+      child: const AddAndEditPinextCardView(),
     );
   }
 }
 
-class AddPinextCardView extends StatefulWidget {
-  const AddPinextCardView({Key? key}) : super(key: key);
+class AddAndEditPinextCardView extends StatefulWidget {
+  const AddAndEditPinextCardView({Key? key}) : super(key: key);
 
   @override
-  State<AddPinextCardView> createState() => _AddPinextCardViewState();
+  State<AddAndEditPinextCardView> createState() =>
+      _AddAndEditPinextCardViewState();
 }
 
-class _AddPinextCardViewState extends State<AddPinextCardView> {
+class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
   late TextEditingController titleController;
   late TextEditingController descriptionController;
   late TextEditingController balanceController;

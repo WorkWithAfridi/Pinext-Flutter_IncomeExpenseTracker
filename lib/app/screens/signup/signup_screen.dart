@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/bloc/signin_cubit/signin_cubit_cubit.dart';
+import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
 import 'package:pinext/app/shared/widgets/custom_button.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
@@ -330,6 +331,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                   ),
                   BlocBuilder<SigninCubit, SigninState>(
                     builder: (context, state) {
+                      netBalance = 0;
                       for (PinextCardModel card in state.cards) {
                         netBalance += double.parse(card.balance.toString());
                       }
@@ -670,6 +672,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                   context.read<SigninCubit>().reset();
                 }
                 if (state is SigninSuccessState) {
+                  context.read<UserBloc>().add(RefreshUserStateEvent());
                   Navigator.pushNamedAndRemoveUntil(
                     context,
                     ROUTES.getHomeframeRoute,

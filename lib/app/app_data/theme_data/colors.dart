@@ -17,6 +17,10 @@ Color getColorFromString(String colorInStringFormat) {
     cardColor = Colors.purple;
   } else if (color == "Green") {
     cardColor = Colors.green;
+  } else if (color == "Light Blue") {
+    cardColor = customBlueColor;
+  } else if (color == "Dark Blue") {
+    cardColor = customBlackColor;
   } else {
     cardColor = customBlueColor;
   }
@@ -34,6 +38,10 @@ String getStringFromColor(Color colorInColorFormat) {
     color = "Purple";
   } else if (cardColor == Colors.green) {
     color = "Green";
+  } else if (cardColor == customBlueColor) {
+    color = "Light Blue";
+  } else if (cardColor == customBlackColor) {
+    color = "Dark Blue";
   } else {
     color = "none";
   }
@@ -45,4 +53,6 @@ List listOfCardColors = [
   "Red",
   "Purple",
   "Green",
+  "Light Blue",
+  "Dark Blue"
 ];

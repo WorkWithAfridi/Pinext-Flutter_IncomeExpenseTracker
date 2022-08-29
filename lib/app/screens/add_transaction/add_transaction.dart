@@ -282,7 +282,6 @@ class _AddTransactionViewState extends State<AddTransactionView> {
 
                             return GestureDetector(
                               onTap: () {
-                                log("tapped");
                                 context
                                     .read<AddTransactionsCubit>()
                                     .selectCard(pinextCardModel.cardId);

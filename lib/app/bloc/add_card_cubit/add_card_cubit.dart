@@ -62,7 +62,6 @@ class AddCardCubit extends Cubit<AddCardState> {
   }
 
   addCard(String title, String description, String balance, String color) {
-    log(title);
     if (title.isNotEmpty && description.isNotEmpty && balance.isNotEmpty) {
       emit(
         AddCardSuccessState(

@@ -1,10 +1,10 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:pinext/app/screens/add_pinext_card/add_pinext_card.dart';
 import 'package:pinext/app/screens/add_transaction/add_transaction.dart';
 import 'package:pinext/app/screens/home/homeframe.dart';
 
+import '../../screens/add_and_edit_pinext_card/add_and_edit_pinext_card.dart';
 import '../../screens/login/login_screen.dart';
 import '../../screens/signup/signup_screen.dart';
 import '../../screens/splash/splash_screen.dart';
@@ -34,7 +34,7 @@ class ROUTECONTROLLER {
         );
       case ROUTES.getAddPinextCardRoute:
         return MaterialPageRoute(
-          builder: (context) => const AddPinextCardScreen(),
+          builder: (context) => AddAndEditPinextCardScreen(),
         );
       default:
         log(settings.name.toString());

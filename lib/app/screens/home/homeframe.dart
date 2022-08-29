@@ -153,7 +153,7 @@ class PinextDrawer extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
                 IconButton(
                   onPressed: () {
@@ -164,7 +164,7 @@ class PinextDrawer extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(
-                  height: 16,
+                  height: 8,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(
@@ -219,11 +219,11 @@ class PinextDrawer extends StatelessWidget {
                   },
                   icon: const Icon(
                     Icons.logout,
-                    color: customBlueColor,
+                    color: customBlackColor,
                   ),
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
               ],
             ),
