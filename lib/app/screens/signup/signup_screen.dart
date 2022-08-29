@@ -36,7 +36,6 @@ class SignupScreenView extends StatefulWidget {
 class _SignupScreenViewState extends State<SignupScreenView> {
   List registrationPages = [];
 
-  late TextEditingController netBalanceController;
   late TextEditingController monthlyBudgetController;
   late TextEditingController budgetSpentSoFarController;
   late TextEditingController userNameController;
@@ -80,7 +79,6 @@ class _SignupScreenViewState extends State<SignupScreenView> {
     userNameController.dispose();
     emailController.dispose();
     passwordController.dispose();
-    netBalanceController.dispose();
     monthlyBudgetController.dispose();
     budgetSpentSoFarController.dispose();
     signupPageController.dispose();

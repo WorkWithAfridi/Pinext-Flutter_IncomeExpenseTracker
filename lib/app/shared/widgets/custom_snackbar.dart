@@ -1,3 +1,4 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:elegant_notification/elegant_notification.dart';
 import 'package:elegant_notification/resources/arrays.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +36,8 @@ GetCustomSnackbar({
     style: regularTextStyle,
   );
   double width = getWidth(context) - 50;
+
+  late AwesomeSnackbarContent snackbarContent;
   if (snackbarType == SnackbarType.success) {
     ElegantNotification.success(
       title: titleText,
@@ -44,6 +47,11 @@ GetCustomSnackbar({
       toastDuration: snackbarToastDuration,
       dismissible: isSnackbarDismissible,
     ).show(context);
+    // snackbarContent = AwesomeSnackbarContent(
+    //   title: title,
+    //   message: message,
+    //   contentType: ContentType.success,
+    // );
   } else if (snackbarType == SnackbarType.info) {
     ElegantNotification.info(
       title: titleText,
@@ -53,6 +61,12 @@ GetCustomSnackbar({
       toastDuration: snackbarToastDuration,
       dismissible: isSnackbarDismissible,
     ).show(context);
+
+    // snackbarContent = AwesomeSnackbarContent(
+    //   title: title,
+    //   message: message,
+    //   contentType: ContentType.help,
+    // );
   } else if (snackbarType == SnackbarType.error) {
     ElegantNotification.error(
       title: titleText,
@@ -62,5 +76,19 @@ GetCustomSnackbar({
       toastDuration: snackbarToastDuration,
       dismissible: isSnackbarDismissible,
     ).show(context);
+
+    // snackbarContent = AwesomeSnackbarContent(
+    //   title: title,
+    //   message: message,
+    //   contentType: ContentType.failure,
+    // );
   }
+  // var snackbar = SnackBar(
+  //   elevation: 0,
+  //   behavior: SnackBarBehavior.floating,
+  //   backgroundColor: Colors.transparent,
+  //   content: snackbarContent,
+  // );
+
+  // ScaffoldMessenger.of(context).showSnackBar(snackbar);
 }
