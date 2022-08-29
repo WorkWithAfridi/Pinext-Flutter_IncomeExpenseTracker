@@ -5,7 +5,7 @@ import 'package:pinext/app/screens/add_transaction/add_transaction.dart';
 import 'package:pinext/app/screens/home/homeframe.dart';
 
 import '../../screens/add_and_edit_pinext_card/add_and_edit_pinext_card.dart';
-import '../../screens/login/login_screen.dart';
+import '../../screens/signin/signin_screen.dart';
 import '../../screens/signup/signup_screen.dart';
 import '../../screens/splash/splash_screen.dart';
 
@@ -18,7 +18,7 @@ class ROUTECONTROLLER {
         );
       case ROUTES.getLoginRoute:
         return MaterialPageRoute(
-          builder: (context) => const LoginScreen(),
+          builder: (context) => const SigninScreen(),
         );
       case ROUTES.getSignupRoute:
         return MaterialPageRoute(

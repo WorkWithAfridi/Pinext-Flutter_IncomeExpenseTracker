@@ -54,7 +54,7 @@ class HomeframeView extends StatelessWidget {
           },
           icon: const Icon(
             Icons.menu,
-            color: customBlueColor,
+            color: customBlackColor,
           ),
         ),
       ),

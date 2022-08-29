@@ -14,7 +14,7 @@ import 'package:uuid/uuid.dart';
 
 import '../../app_data/app_constants/fonts.dart';
 import '../../app_data/theme_data/colors.dart';
-import '../../bloc/signin_cubit/signin_cubit_cubit.dart';
+import '../../bloc/signup_cubit/signin_cubit_cubit.dart';
 import '../../shared/widgets/custom_button.dart';
 import '../../shared/widgets/custom_text_field.dart';
 

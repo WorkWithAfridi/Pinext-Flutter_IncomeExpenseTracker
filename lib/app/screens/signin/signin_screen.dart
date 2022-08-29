@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/app_data/routing/routes.dart';
-import 'package:pinext/app/bloc/login_cubit/login_cubit.dart';
+import 'package:pinext/app/bloc/signin_cubit/login_cubit.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 import 'package:pinext/app/shared/widgets/socials_button.dart';
@@ -13,26 +13,26 @@ import '../../app_data/theme_data/colors.dart';
 import '../../shared/widgets/custom_button.dart';
 import '../../shared/widgets/custom_text_field.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class SigninScreen extends StatelessWidget {
+  const SigninScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => LoginCubit(),
-      child: const LoginScreenView(),
+      child: const SigninScreenView(),
     );
   }
 }
 
-class LoginScreenView extends StatefulWidget {
-  const LoginScreenView({Key? key}) : super(key: key);
+class SigninScreenView extends StatefulWidget {
+  const SigninScreenView({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreenView> createState() => _LoginScreenViewState();
+  State<SigninScreenView> createState() => _SigninScreenViewState();
 }
 
-class _LoginScreenViewState extends State<LoginScreenView> {
+class _SigninScreenViewState extends State<SigninScreenView> {
   late TextEditingController emailController;
   late TextEditingController passwordController;
 

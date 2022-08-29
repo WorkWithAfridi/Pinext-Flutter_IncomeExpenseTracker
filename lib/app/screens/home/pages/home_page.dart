@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -288,7 +286,7 @@ class HomepageView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          "You have saved",
+                          "You've saved",
                           style: regularTextStyle,
                         ),
                         const SizedBox(
@@ -296,7 +294,6 @@ class HomepageView extends StatelessWidget {
                         ),
                         BlocBuilder<UserBloc, UserState>(
                           builder: (context, state) {
-                            log("rebuilding at you have saved...");
                             if (state is AuthenticatedUserState) {
                               return Text(
                                 "${state.monthlySavings} Tk",
