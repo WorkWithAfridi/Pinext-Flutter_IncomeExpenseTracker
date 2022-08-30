@@ -10,6 +10,7 @@ import '../../../app_data/theme_data/colors.dart';
 import '../../../models/pinext_card_model.dart';
 import '../../../services/firebase_services.dart';
 import '../../../shared/widgets/pinext_card_minimized.dart';
+import '../../add_and_edit_pinext_card/add_and_edit_pinext_card.dart';
 
 class CardsAndBalancePage extends StatelessWidget {
   const CardsAndBalancePage({Key? key}) : super(key: key);
@@ -144,46 +145,60 @@ class CardsAndBalancePage extends StatelessWidget {
             const SizedBox(
               height: 8,
             ),
-            Container(
-              height: 100,
-              decoration: BoxDecoration(
-                color: greyColor,
-                borderRadius: BorderRadius.circular(
-                  defaultBorder,
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AddAndEditPinextCardScreen(
+                      onAddCardButtonClick: (PinextCardModel card) {
+                        // context.read<SigninCubit>().addCard(card);
+                      },
+                    ),
+                  ),
+                );
+              },
+              child: Container(
+                height: 100,
+                decoration: BoxDecoration(
+                  color: greyColor,
+                  borderRadius: BorderRadius.circular(
+                    defaultBorder,
+                  ),
                 ),
-              ),
-              alignment: Alignment.center,
-              width: getWidth(context),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    height: 25,
-                    width: 25,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(
-                        25,
+                alignment: Alignment.center,
+                width: getWidth(context),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 25,
+                      width: 25,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(
+                          25,
+                        ),
+                        border: Border.all(
+                          color: customBlackColor.withOpacity(.4),
+                        ),
                       ),
-                      border: Border.all(
+                      child: Icon(
+                        Icons.add,
+                        size: 16,
                         color: customBlackColor.withOpacity(.4),
                       ),
                     ),
-                    child: Icon(
-                      Icons.add,
-                      size: 16,
-                      color: customBlackColor.withOpacity(.4),
+                    const SizedBox(
+                      width: 8,
                     ),
-                  ),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  Text(
-                    "Add a new card",
-                    style: boldTextStyle.copyWith(
-                      color: customBlackColor.withOpacity(.4),
+                    Text(
+                      "Add a new card",
+                      style: boldTextStyle.copyWith(
+                        color: customBlackColor.withOpacity(.4),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             const SizedBox(

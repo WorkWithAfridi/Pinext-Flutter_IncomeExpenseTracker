@@ -14,27 +14,37 @@ import 'package:uuid/uuid.dart';
 
 import '../../app_data/app_constants/fonts.dart';
 import '../../app_data/theme_data/colors.dart';
-import '../../bloc/signup_cubit/signin_cubit_cubit.dart';
 import '../../shared/widgets/custom_button.dart';
 import '../../shared/widgets/custom_text_field.dart';
 
 class AddAndEditPinextCardScreen extends StatelessWidget {
-  AddAndEditPinextCardScreen({Key? key}) : super(key: key);
+  AddAndEditPinextCardScreen({
+    Key? key,
+    required this.onAddCardButtonClick,
+  }) : super(key: key);
   // late bool isEdit;
   // late PinextCardModel pinextCardModel;
   // late bool isAdd;
+
+  Function onAddCardButtonClick;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => AddCardCubit(),
-      child: const AddAndEditPinextCardView(),
+      child: AddAndEditPinextCardView(
+        onAddCardButtonClick: onAddCardButtonClick,
+      ),
     );
   }
 }
 
 class AddAndEditPinextCardView extends StatefulWidget {
-  const AddAndEditPinextCardView({Key? key}) : super(key: key);
+  AddAndEditPinextCardView({
+    Key? key,
+    required this.onAddCardButtonClick,
+  }) : super(key: key);
+  Function onAddCardButtonClick;
 
   @override
   State<AddAndEditPinextCardView> createState() =>
@@ -266,9 +276,7 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                       color: state.color,
                       lastTransactionData: DateTime.now().toString(),
                     );
-                    context.read<SigninCubit>().addCard(
-                          newPinextCard,
-                        );
+                    widget.onAddCardButtonClick(newPinextCard);
                     Navigator.pop(context);
                     GetCustomSnackbar(
                       title: "Pinext Card added!!",

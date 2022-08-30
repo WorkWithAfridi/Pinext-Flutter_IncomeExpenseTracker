@@ -32,10 +32,10 @@ class ROUTECONTROLLER {
         return MaterialPageRoute(
           builder: (context) => const AddTransactionScreen(),
         );
-      case ROUTES.getAddPinextCardRoute:
-        return MaterialPageRoute(
-          builder: (context) => AddAndEditPinextCardScreen(),
-        );
+      // case ROUTES.getAddPinextCardRoute:
+      //   return MaterialPageRoute(
+      //     builder: (context) => AddAndEditPinextCardScreen(),
+      //   );
       default:
         log(settings.name.toString());
         throw ("Not a valid route ");
@@ -49,5 +49,5 @@ class ROUTES {
   static const getSignupRoute = '/signup';
   static const getHomeframeRoute = '/homeframe';
   static const getAddTransactionsRoute = '/homeframe/add_transactions';
-  static const getAddPinextCardRoute = '/homeframe/add_pinext_card';
+  // static const getAddPinextCardRoute = '/homeframe/add_pinext_card';
 }
