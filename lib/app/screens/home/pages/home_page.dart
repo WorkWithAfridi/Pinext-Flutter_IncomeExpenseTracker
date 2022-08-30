@@ -426,7 +426,7 @@ class HomepageView extends StatelessWidget {
                     },
                   ),
                   const SizedBox(
-                    height: 16,
+                    height: 12,
                   ),
                   const PastTransactionsModule(),
                 ],
@@ -435,6 +435,71 @@ class HomepageView extends StatelessWidget {
             const YourCardsModule(),
             const SizedBox(
               height: 16,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Balance",
+                    style: boldTextStyle.copyWith(
+                      fontSize: 20,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(
+                      defaultPadding,
+                    ),
+                    width: getWidth(context),
+                    decoration: BoxDecoration(
+                      color: greyColor,
+                      borderRadius: BorderRadius.circular(
+                        defaultBorder,
+                      ),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Your current Net. balance is",
+                          style: regularTextStyle,
+                        ),
+                        const SizedBox(
+                          height: 4,
+                        ),
+                        BlocBuilder<UserBloc, UserState>(
+                          builder: (context, state) {
+                            if (state is AuthenticatedUserState) {
+                              return Text(
+                                "${state.netBalance} Tk",
+                                style: boldTextStyle.copyWith(
+                                  fontSize: 25,
+                                ),
+                              );
+                            }
+                            return Text(
+                              "Loading...",
+                              style: boldTextStyle.copyWith(
+                                fontSize: 20,
+                              ),
+                            );
+                          },
+                        ),
+                        const SizedBox(
+                          height: 4,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                ],
+              ),
             ),
           ],
         ),
