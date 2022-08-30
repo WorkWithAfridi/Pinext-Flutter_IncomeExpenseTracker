@@ -311,12 +311,6 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                   }
                   if (state is SigninSuccessState) {
                     context.read<UserBloc>().add(RefreshUserStateEvent());
-                    GetCustomSnackbar(
-                      title: "Yaay!",
-                      message: "Your account has been created!",
-                      snackbarType: SnackbarType.success,
-                      context: context,
-                    );
                     context.read<SigninCubit>().reset();
                   }
                 },

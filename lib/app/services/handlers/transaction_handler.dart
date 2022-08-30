@@ -64,7 +64,7 @@ class TransactionHandler {
       });
 
       // //Adjusting global balances
-      PinextUserModel pinextUserModel = await UserHandler().getCurrentUser();
+      PinextUserModel pinextUserModel = UserHandler().currentUser;
       if (transactionType == "Income") {
         double adjustedMonthlySavings =
             double.parse(pinextUserModel.monthlySavings) + double.parse(amount);
