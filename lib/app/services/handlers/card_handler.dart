@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:pinext/app/API/firebase_directories.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
+import 'package:pinext/app/models/pinext_user_model.dart';
 import 'package:pinext/app/services/firebase_services.dart';
+import 'package:pinext/app/services/handlers/user_handler.dart';
 
 class CardHandler {
   CardHandler._internal();
@@ -17,10 +20,19 @@ class CardHandler {
         .set(pinextCardModel.toMap());
   }
 
-  removeCard(PinextCardModel pinextCardModel) {
-    //Removing card
-    //Adjust netBalance
-    //
+  removeCard(PinextCardModel pinextCardModel) async {
+    PinextUserModel user = await UserHandler().getCurrentUser();
+    double adjustedNetBalance = double.parse(user.netBalance) -
+        double.parse(pinextCardModel.balance.toString());
+    await UserHandler().updateNetBalance(adjustedNetBalance.toString());
+    await FirebaseServices()
+        .firebaseFirestore
+        .collection(USERS_DIRECTORY)
+        .doc(FirebaseServices().getUserId())
+        .collection(CARDS_DIRECTORY)
+        .doc(pinextCardModel.cardId)
+        .delete();
+    return;
   }
 
   editCard(PinextCardModel pinextCardModel) {}

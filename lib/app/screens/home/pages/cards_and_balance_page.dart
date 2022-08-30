@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pinext/app/bloc/cards_and_balances_cubit/cards_and_balances_cubit.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 
 import '../../../app_data/app_constants/constants.dart';
@@ -16,6 +17,18 @@ import '../../add_and_edit_pinext_card/add_and_edit_pinext_card.dart';
 
 class CardsAndBalancePage extends StatelessWidget {
   const CardsAndBalancePage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => CardsAndBalancesCubit(),
+      child: const CardsAndBalanceView(),
+    );
+  }
+}
+
+class CardsAndBalanceView extends StatelessWidget {
+  const CardsAndBalanceView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -106,39 +119,51 @@ class CardsAndBalancePage extends StatelessWidget {
             const SizedBox(
               height: 4,
             ),
-            StreamBuilder(
-              stream: FirebaseServices()
-                  .firebaseFirestore
-                  .collection("pinext_users")
-                  .doc(FirebaseServices().getUserId())
-                  .collection("pinext_cards")
-                  .snapshots(),
-              builder: ((context,
-                  AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-                log("rebuilding cards page");
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
+            BlocListener<CardsAndBalancesCubit, CardsAndBalancesState>(
+              listener: (context, state) {
+                if (state is CardsAndBalancesSuccessfullyRemovedCardState) {
+                  context.read<UserBloc>().add(RefreshUserStateEvent());
                 }
-                return ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: snapshot.data!.docs.length,
-                  itemBuilder: ((context, index) {
-                    PinextCardModel pinextCardModel = PinextCardModel.fromMap(
-                      snapshot.data!.docs[index].data(),
+              },
+              child: StreamBuilder(
+                stream: FirebaseServices()
+                    .firebaseFirestore
+                    .collection("pinext_users")
+                    .doc(FirebaseServices().getUserId())
+                    .collection("pinext_cards")
+                    .snapshots(),
+                builder: ((context,
+                    AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                        snapshot) {
+                  log("rebuilding cards page");
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
                     );
+                  }
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: snapshot.data!.docs.length,
+                    itemBuilder: ((context, index) {
+                      PinextCardModel pinextCardModel = PinextCardModel.fromMap(
+                        snapshot.data!.docs[index].data(),
+                      );
 
-                    String color = pinextCardModel.color;
-                    late Color cardColor = getColorFromString(color);
-                    return PinextCardMinimized(
-                      pinextCardModel: pinextCardModel,
-                      onDeleteButtonClick: () {},
-                    );
-                  }),
-                );
-              }),
+                      String color = pinextCardModel.color;
+                      late Color cardColor = getColorFromString(color);
+                      return PinextCardMinimized(
+                        pinextCardModel: pinextCardModel,
+                        onDeleteButtonClick: () {
+                          context
+                              .read<CardsAndBalancesCubit>()
+                              .removeCard(pinextCardModel);
+                        },
+                      );
+                    }),
+                  );
+                }),
+              ),
             ),
             const SizedBox(
               height: 16,

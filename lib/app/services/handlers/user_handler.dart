@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:pinext/app/API/firebase_directories.dart';
 import 'package:pinext/app/models/pinext_user_model.dart';
 import 'package:pinext/app/services/firebase_services.dart';
 
@@ -108,6 +109,17 @@ class UserHandler {
         'dailyExpenses': "0",
       });
     }
+    return;
+  }
+
+  Future updateNetBalance(String adjustedNetBalance) async {
+    await FirebaseServices()
+        .firebaseFirestore
+        .collection(USERS_DIRECTORY)
+        .doc(FirebaseServices().getUserId())
+        .update({
+      "netBalance": adjustedNetBalance,
+    });
     return;
   }
 }
