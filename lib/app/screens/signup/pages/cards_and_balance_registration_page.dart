@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/screens/add_and_edit_pinext_card/add_and_edit_pinext_card.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
+import 'package:pinext/app/shared/widgets/pinext_card_minimized.dart';
 
 import '../../../app_data/app_constants/constants.dart';
 import '../../../app_data/app_constants/domentions.dart';
@@ -179,7 +180,6 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
             ),
             BlocBuilder<SigninCubit, SigninState>(
               builder: (context, state) {
-                log(state.cards.length.toString());
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -191,169 +191,21 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                             ),
                           )
                         : const SizedBox.shrink(),
-                    ListView.builder(
-                      itemCount: state.cards.length,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: ((context, index) {
-                        PinextCardModel pinextCardModel = state.cards[index];
-                        return Card(
-                          elevation: 0,
-                          shadowColor: greyColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(
-                              defaultBorder,
-                            ),
-                          ),
-                          child: Container(
-                            height: 100,
-                            decoration: BoxDecoration(
-                              color: greyColor,
-                              borderRadius: BorderRadius.circular(
-                                defaultBorder,
-                              ),
-                            ),
-                            width: getWidth(context),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(15),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          pinextCardModel.title,
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 18,
-                                            color: customBlackColor,
-                                          ),
-                                        ),
-                                        Container(
-                                          width: double.maxFinite,
-                                          height: .5,
-                                          color:
-                                              customBlackColor.withOpacity(.2),
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "Current balance",
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.normal,
-                                                fontSize: 10,
-                                                color: customBlackColor
-                                                    .withOpacity(.4),
-                                              ),
-                                            ),
-                                            Text(
-                                              pinextCardModel.balance
-                                                  .toString(),
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 20,
-                                                color: customBlackColor,
-                                              ),
-                                            ),
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                Row(
-                                  children: [
-                                    Container(
-                                      width: .5,
-                                      height: getHeight(context),
-                                      color: customBlackColor.withOpacity(.2),
-                                    ),
-                                    const SizedBox(
-                                      width: 8,
-                                    ),
-                                    RotatedBox(
-                                      quarterTurns: 3,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            "Last transaction",
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.normal,
-                                              fontSize: 10,
-                                              color: customBlackColor
-                                                  .withOpacity(.4),
-                                            ),
-                                          ),
-                                          const Text(
-                                            "12/12/12",
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 15,
-                                              color: customBlackColor,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 8,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Container(
-                                          width: .5,
-                                          height: getHeight(context),
-                                          color:
-                                              customBlackColor.withOpacity(.2),
-                                        ),
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            IconButton(
-                                              onPressed: () {},
-                                              icon: const Icon(
-                                                Icons.edit,
-                                                color: customBlackColor,
-                                              ),
-                                            ),
-                                            Container(
-                                              width: 55,
-                                              height: .5,
-                                              color: customBlackColor
-                                                  .withOpacity(.2),
-                                            ),
-                                            IconButton(
-                                              onPressed: () {
-                                                context
-                                                    .read<SigninCubit>()
-                                                    .removeCard(index);
-                                              },
-                                              icon: const Icon(
-                                                Icons.delete,
-                                                color: customBlackColor,
-                                              ),
-                                            )
-                                          ],
-                                        )
-                                      ],
-                                    )
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                        );
-                      }),
+                    MediaQuery.removePadding(
+                      context: context,
+                      removeBottom: true,
+                      child: ListView.builder(
+                        itemCount: state.cards.length,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: ((context, index) {
+                          log('creating list');
+                          PinextCardModel pinextCardModel = state.cards[index];
+                          return PinextCardMinimized(
+                            pinextCardModel: pinextCardModel,
+                          );
+                        }),
+                      ),
                     ),
                   ],
                 );
