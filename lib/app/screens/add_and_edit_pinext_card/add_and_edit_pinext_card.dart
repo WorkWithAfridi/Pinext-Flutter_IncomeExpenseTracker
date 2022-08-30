@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
 import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/bloc/add_card_cubit/add_card_cubit.dart';
+import 'package:pinext/app/bloc/cards_and_balances_cubit/cards_and_balances_cubit.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 import 'package:pinext/app/shared/widgets/pinext_card.dart';
@@ -14,26 +15,27 @@ import 'package:uuid/uuid.dart';
 
 import '../../app_data/app_constants/fonts.dart';
 import '../../app_data/theme_data/colors.dart';
+import '../../bloc/signup_cubit/signin_cubit_cubit.dart';
 import '../../shared/widgets/custom_button.dart';
 import '../../shared/widgets/custom_text_field.dart';
 
 class AddAndEditPinextCardScreen extends StatelessWidget {
   AddAndEditPinextCardScreen({
     Key? key,
-    required this.onAddCardButtonClick,
+    this.addCardForSignUpProcess = false,
   }) : super(key: key);
-  // late bool isEdit;
-  // late PinextCardModel pinextCardModel;
-  // late bool isAdd;
-
-  Function onAddCardButtonClick;
+  bool addCardForSignUpProcess;
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AddCardCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => AddCardCubit(),
+        ),
+      ],
       child: AddAndEditPinextCardView(
-        onAddCardButtonClick: onAddCardButtonClick,
+        addCardForSignUpProcess: addCardForSignUpProcess,
       ),
     );
   }
@@ -42,9 +44,9 @@ class AddAndEditPinextCardScreen extends StatelessWidget {
 class AddAndEditPinextCardView extends StatefulWidget {
   AddAndEditPinextCardView({
     Key? key,
-    required this.onAddCardButtonClick,
+    required this.addCardForSignUpProcess,
   }) : super(key: key);
-  Function onAddCardButtonClick;
+  bool addCardForSignUpProcess;
 
   @override
   State<AddAndEditPinextCardView> createState() =>
@@ -276,7 +278,13 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                       color: state.color,
                       lastTransactionData: DateTime.now().toString(),
                     );
-                    widget.onAddCardButtonClick(newPinextCard);
+                    if (widget.addCardForSignUpProcess) {
+                      context.read<SigninCubit>().addCard(newPinextCard);
+                    } else {
+                      context
+                          .read<CardsAndBalancesCubit>()
+                          .addCard(newPinextCard);
+                    }
                     Navigator.pop(context);
                     GetCustomSnackbar(
                       title: "Pinext Card added!!",

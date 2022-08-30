@@ -3,9 +3,9 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pinext/app/API/firebase_directories.dart';
 import 'package:pinext/app/bloc/cards_and_balances_cubit/cards_and_balances_cubit.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
-import 'package:uuid/uuid.dart';
 
 import '../../../app_data/app_constants/constants.dart';
 import '../../../app_data/app_constants/domentions.dart';
@@ -96,7 +96,7 @@ class CardsAndBalanceView extends StatelessWidget {
                           ),
                         );
                       } else {
-                        return const CircularProgressIndicator();
+                        return const SizedBox.shrink();
                       }
                     },
                   ),
@@ -124,15 +124,15 @@ class CardsAndBalanceView extends StatelessWidget {
               listener: (context, state) {
                 if (state is CardsAndBalancesSuccessfullyRemovedCardState) {
                   context.read<UserBloc>().add(RefreshUserStateEvent());
+                  context.read<CardsAndBalancesCubit>().resetState();
                 }
-                context.read<CardsAndBalancesCubit>().resetState();
               },
               child: StreamBuilder(
                 stream: FirebaseServices()
                     .firebaseFirestore
-                    .collection("pinext_users")
+                    .collection(USERS_DIRECTORY)
                     .doc(FirebaseServices().getUserId())
-                    .collection("pinext_cards")
+                    .collection(CARDS_DIRECTORY)
                     .snapshots(),
                 builder: ((context,
                     AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
@@ -150,6 +150,7 @@ class CardsAndBalanceView extends StatelessWidget {
                       ),
                     );
                   }
+                  context.read<UserBloc>().add(RefreshUserStateEvent());
                   return ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
@@ -181,19 +182,6 @@ class CardsAndBalanceView extends StatelessWidget {
             const SizedBox(
               height: 8,
             ),
-            ElevatedButton(
-              onPressed: () {
-                PinextCardModel card = PinextCardModel(
-                    cardId: const Uuid().v4(),
-                    title: "title",
-                    description: "description",
-                    balance: 12000.00,
-                    color: "Dark Blue",
-                    lastTransactionData: DateTime.now().toString());
-                context.read<CardsAndBalancesCubit>().addCard(card);
-              },
-              child: const Text("Add"),
-            ),
             BlocListener<CardsAndBalancesCubit, CardsAndBalancesState>(
               listener: (context, state) {
                 if (state is CardsAndBalancesSuccessfullyAddedCardState) {
@@ -209,11 +197,7 @@ class CardsAndBalanceView extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => AddAndEditPinextCardScreen(
-                        onAddCardButtonClick: (PinextCardModel card) {
-                          context.read<CardsAndBalancesCubit>().addCard(card);
-                        },
-                      ),
+                      builder: (context) => AddAndEditPinextCardScreen(),
                     ),
                   );
                 },

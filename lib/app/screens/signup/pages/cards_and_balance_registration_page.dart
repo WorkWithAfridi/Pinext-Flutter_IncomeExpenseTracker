@@ -237,9 +237,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => AddAndEditPinextCardScreen(
-                      onAddCardButtonClick: (PinextCardModel card) {
-                        context.read<SigninCubit>().addCard(card);
-                      },
+                      addCardForSignUpProcess: true,
                     ),
                   ),
                 );

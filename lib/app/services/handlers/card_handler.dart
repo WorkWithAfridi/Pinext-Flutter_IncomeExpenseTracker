@@ -23,7 +23,7 @@ class CardHandler {
           .doc(pinextCardModel.cardId)
           .set(pinextCardModel.toMap());
     } else {
-      PinextUserModel user = await UserHandler().getCurrentUser();
+      PinextUserModel user = UserHandler().currentUser;
       double adjustedNetBalance = double.parse(user.netBalance) +
           double.parse(pinextCardModel.balance.toString());
       await FirebaseServices()

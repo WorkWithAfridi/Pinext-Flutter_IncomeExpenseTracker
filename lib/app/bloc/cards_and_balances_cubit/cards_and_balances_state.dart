@@ -8,6 +8,9 @@ abstract class CardsAndBalancesState extends Equatable {
 }
 
 class CardsAndBalancesDefaultState extends CardsAndBalancesState {}
-class CardsAndBalancesSuccessfullyRemovedCardState extends CardsAndBalancesState {}
-class CardsAndBalancesSuccessfullyAddedCardState extends CardsAndBalancesState {}
 
+class CardsAndBalancesSuccessfullyRemovedCardState
+    extends CardsAndBalancesState {}
+
+class CardsAndBalancesSuccessfullyAddedCardState extends CardsAndBalancesState {
+}
