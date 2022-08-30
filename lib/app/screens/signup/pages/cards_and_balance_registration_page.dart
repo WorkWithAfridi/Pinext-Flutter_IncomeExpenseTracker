@@ -202,6 +202,10 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                           log('creating list');
                           PinextCardModel pinextCardModel = state.cards[index];
                           return PinextCardMinimized(
+                            onDeleteButtonClick: () {
+                              log('button pressed');
+                              context.read<SigninCubit>().removeCard(index);
+                            },
                             pinextCardModel: pinextCardModel,
                           );
                         }),

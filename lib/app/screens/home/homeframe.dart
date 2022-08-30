@@ -62,6 +62,7 @@ class HomeframeView extends StatelessWidget {
       body: BlocBuilder<HomeframeCubit, HomeframeState>(
         builder: (context, state) {
           return PageView.builder(
+            physics: const BouncingScrollPhysics(),
             itemCount: homeframePages.length,
             controller: state.pageController,
             onPageChanged: ((value) {

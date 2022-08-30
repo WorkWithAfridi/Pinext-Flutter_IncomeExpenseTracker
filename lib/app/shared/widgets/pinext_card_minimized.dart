@@ -8,12 +8,15 @@ import '../../app_data/theme_data/colors.dart';
 import '../../models/pinext_card_model.dart';
 
 class PinextCardMinimized extends StatelessWidget {
-  const PinextCardMinimized({
+  PinextCardMinimized({
     Key? key,
     required this.pinextCardModel,
+    required this.onDeleteButtonClick,
   }) : super(key: key);
 
   final PinextCardModel pinextCardModel;
+
+  Function onDeleteButtonClick;
 
   @override
   Widget build(BuildContext context) {
@@ -144,7 +147,9 @@ class PinextCardMinimized extends StatelessWidget {
                           color: customBlackColor.withOpacity(.2),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            onDeleteButtonClick();
+                          },
                           icon: const Icon(
                             Icons.delete,
                             color: customBlackColor,

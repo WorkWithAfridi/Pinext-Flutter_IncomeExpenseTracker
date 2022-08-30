@@ -1,7 +1,8 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pinext/app/bloc/signup_cubit/signin_cubit_cubit.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 
 import '../../../app_data/app_constants/constants.dart';
@@ -114,6 +115,7 @@ class CardsAndBalancePage extends StatelessWidget {
                   .snapshots(),
               builder: ((context,
                   AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+                log("rebuilding cards page");
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
                     child: CircularProgressIndicator(),
@@ -131,7 +133,9 @@ class CardsAndBalancePage extends StatelessWidget {
                     String color = pinextCardModel.color;
                     late Color cardColor = getColorFromString(color);
                     return PinextCardMinimized(
-                        pinextCardModel: pinextCardModel);
+                      pinextCardModel: pinextCardModel,
+                      onDeleteButtonClick: () {},
+                    );
                   }),
                 );
               }),
