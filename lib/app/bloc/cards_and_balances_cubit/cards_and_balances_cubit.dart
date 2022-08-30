@@ -1,10 +1,10 @@
-import 'dart:developer';
-
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
 
 import '../../services/handlers/card_handler.dart';
+import '../userBloc/user_bloc.dart';
 
 part 'cards_and_balances_state.dart';
 
@@ -20,13 +20,11 @@ class CardsAndBalancesCubit extends Cubit<CardsAndBalancesState> {
     emit(CardsAndBalancesDefaultState());
   }
 
-  addCard(PinextCardModel pinextCardModel) async {
+  addCard(PinextCardModel pinextCardModel,) async {
     await CardHandler().addCard(
       pinextCardModel: pinextCardModel,
       duringSignIn: false,
     );
-    log("Done adding....");
     emit(CardsAndBalancesSuccessfullyAddedCardState());
-    log("called cards and bals");
   }
 }

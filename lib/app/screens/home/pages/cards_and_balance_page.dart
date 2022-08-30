@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/bloc/cards_and_balances_cubit/cards_and_balances_cubit.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../../app_data/app_constants/constants.dart';
 import '../../../app_data/app_constants/domentions.dart';
@@ -82,34 +83,22 @@ class CardsAndBalanceView extends StatelessWidget {
                       fontSize: 16,
                     ),
                   ),
-                  BlocListener<CardsAndBalancesCubit, CardsAndBalancesState>(
-                    listener: (context, state) {
-                      if (state
-                          is CardsAndBalancesSuccessfullyRemovedCardState) {
-                        log("CardsAndBalancesSuccessfullyRemovedCardState");
-                      }
-                      if (state is CardsAndBalancesSuccessfullyAddedCardState) {
-                        log("CardsAndBalancesSuccessfullyAddedCardState");
-                        context.read<UserBloc>().add(RefreshUserStateEvent());
+                  BlocBuilder<UserBloc, UserState>(
+                    builder: (context, state) {
+                      if (state is AuthenticatedUserState) {
+                        return FittedBox(
+                          child: Text(
+                            state.netBalance,
+                            style: boldTextStyle.copyWith(
+                              color: whiteColor,
+                              fontSize: 50,
+                            ),
+                          ),
+                        );
+                      } else {
+                        return const CircularProgressIndicator();
                       }
                     },
-                    child: BlocBuilder<UserBloc, UserState>(
-                      builder: (context, state) {
-                        if (state is AuthenticatedUserState) {
-                          return FittedBox(
-                            child: Text(
-                              state.netBalance,
-                              style: boldTextStyle.copyWith(
-                                color: whiteColor,
-                                fontSize: 50,
-                              ),
-                            ),
-                          );
-                        } else {
-                          return const CircularProgressIndicator();
-                        }
-                      },
-                    ),
                   ),
                   Text(
                     "Taka",
@@ -169,9 +158,6 @@ class CardsAndBalanceView extends StatelessWidget {
                       PinextCardModel pinextCardModel = PinextCardModel.fromMap(
                         snapshot.data!.docs[index].data(),
                       );
-
-                      String color = pinextCardModel.color;
-                      late Color cardColor = getColorFromString(color);
                       return PinextCardMinimized(
                         pinextCardModel: pinextCardModel,
                         onDeleteButtonClick: () {
@@ -195,59 +181,83 @@ class CardsAndBalanceView extends StatelessWidget {
             const SizedBox(
               height: 8,
             ),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => AddAndEditPinextCardScreen(
-                      onAddCardButtonClick: (PinextCardModel card) {
-                        context.read<CardsAndBalancesCubit>().addCard(card);
-                      },
+            ElevatedButton(
+              onPressed: () {
+                PinextCardModel card = PinextCardModel(
+                    cardId: const Uuid().v4(),
+                    title: "title",
+                    description: "description",
+                    balance: 12000.00,
+                    color: "Dark Blue",
+                    lastTransactionData: DateTime.now().toString());
+                context.read<CardsAndBalancesCubit>().addCard(card);
+              },
+              child: const Text("Add"),
+            ),
+            BlocListener<CardsAndBalancesCubit, CardsAndBalancesState>(
+              listener: (context, state) {
+                if (state is CardsAndBalancesSuccessfullyAddedCardState) {
+                  log("Card added");
+                  context.read<UserBloc>().add(RefreshUserStateEvent());
+                }
+                if (state is CardsAndBalancesSuccessfullyRemovedCardState) {
+                  log("Card removed");
+                }
+              },
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AddAndEditPinextCardScreen(
+                        onAddCardButtonClick: (PinextCardModel card) {
+                          context.read<CardsAndBalancesCubit>().addCard(card);
+                        },
+                      ),
+                    ),
+                  );
+                },
+                child: Container(
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color: greyColor,
+                    borderRadius: BorderRadius.circular(
+                      defaultBorder,
                     ),
                   ),
-                );
-              },
-              child: Container(
-                height: 100,
-                decoration: BoxDecoration(
-                  color: greyColor,
-                  borderRadius: BorderRadius.circular(
-                    defaultBorder,
-                  ),
-                ),
-                alignment: Alignment.center,
-                width: getWidth(context),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      height: 25,
-                      width: 25,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(
-                          25,
+                  alignment: Alignment.center,
+                  width: getWidth(context),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: 25,
+                        width: 25,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(
+                            25,
+                          ),
+                          border: Border.all(
+                            color: customBlackColor.withOpacity(.4),
+                          ),
                         ),
-                        border: Border.all(
+                        child: Icon(
+                          Icons.add,
+                          size: 16,
                           color: customBlackColor.withOpacity(.4),
                         ),
                       ),
-                      child: Icon(
-                        Icons.add,
-                        size: 16,
-                        color: customBlackColor.withOpacity(.4),
+                      const SizedBox(
+                        width: 8,
                       ),
-                    ),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    Text(
-                      "Add a new card",
-                      style: boldTextStyle.copyWith(
-                        color: customBlackColor.withOpacity(.4),
+                      Text(
+                        "Add a new card",
+                        style: boldTextStyle.copyWith(
+                          color: customBlackColor.withOpacity(.4),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

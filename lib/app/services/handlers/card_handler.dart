@@ -10,7 +10,7 @@ class CardHandler {
   static final CardHandler _cardServices = CardHandler._internal();
   factory CardHandler() => _cardServices;
 
-  addCard({
+  Future addCard({
     required PinextCardModel pinextCardModel,
     required bool duringSignIn,
   }) async {
@@ -34,7 +34,7 @@ class CardHandler {
         "netBalance": adjustedNetBalance.toString(),
       });
 
-      return await FirebaseServices()
+      await FirebaseServices()
           .firebaseFirestore
           .collection('pinext_users')
           .doc(FirebaseServices().getUserId())
