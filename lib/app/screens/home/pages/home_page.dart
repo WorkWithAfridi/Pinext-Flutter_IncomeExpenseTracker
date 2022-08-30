@@ -10,7 +10,6 @@ import '../../../app_data/app_constants/constants.dart';
 import '../../../app_data/app_constants/domentions.dart';
 import '../../../app_data/theme_data/colors.dart';
 import '../../../bloc/homepage_cubit/homepage_cubit.dart';
-import '../../../bloc/signup_cubit/signin_cubit_cubit.dart';
 import '../../../bloc/userBloc/user_bloc.dart';
 import '../../../models/pinext_transaction_model.dart';
 import '../../../services/date_time_services.dart';
@@ -621,32 +620,40 @@ class YourCardsModule extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(
-          height: 185,
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                const SizedBox(
-                  width: defaultPadding,
-                ),
-                StreamBuilder(
-                  stream: FirebaseServices()
-                      .firebaseFirestore
-                      .collection("pinext_users")
-                      .doc(FirebaseServices().getUserId())
-                      .collection("pinext_cards")
-                      .snapshots(),
-                  builder: ((context,
-                      AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                          snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(
-                        child: SizedBox.shrink(),
-                      );
-                    }
-                    return ListView.builder(
+        SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: [
+              const SizedBox(
+                width: defaultPadding,
+              ),
+              StreamBuilder(
+                stream: FirebaseServices()
+                    .firebaseFirestore
+                    .collection("pinext_users")
+                    .doc(FirebaseServices().getUserId())
+                    .collection("pinext_cards")
+                    .snapshots(),
+                builder: ((context,
+                    AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                        snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: SizedBox.shrink(),
+                    );
+                  }
+                  if (snapshot.data!.docs.isEmpty) {
+                    return Text(
+                      "Please add a Pinext card to view your cards details here.",
+                      style: regularTextStyle.copyWith(
+                        color: customBlackColor.withOpacity(.4),
+                      ),
+                    );
+                  }
+                  return SizedBox(
+                    height: 185,
+                    child: ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       scrollDirection: Axis.horizontal,
@@ -666,14 +673,14 @@ class YourCardsModule extends StatelessWidget {
                           cardColor: cardColor,
                         );
                       }),
-                    );
-                  }),
-                ),
-                const SizedBox(
-                  width: defaultPadding - 10,
-                ),
-              ],
-            ),
+                    ),
+                  );
+                }),
+              ),
+              const SizedBox(
+                width: defaultPadding - 10,
+              ),
+            ],
           ),
         ),
       ],
