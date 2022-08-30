@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pinext/app/bloc/signup_cubit/signin_cubit_cubit.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 
 import '../../../app_data/app_constants/constants.dart';

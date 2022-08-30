@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
 import 'package:pinext/app/services/authentication_services.dart';
 
@@ -18,7 +17,7 @@ class SigninCubit extends Cubit<SigninState> {
         );
 
   reset() {
-    emit(SigninDefaultState( state.cards, state.numberOfCardsStored));
+    emit(SigninDefaultState(const [], 0));
   }
 
   addCard(PinextCardModel card) {
@@ -52,7 +51,7 @@ class SigninCubit extends Cubit<SigninState> {
     required String monthlyBudget,
     required String budgetSpentSoFar,
   }) async {
-    emit(SigninLoadingState( pinextCards, pinextCards.length));
+    emit(SigninLoadingState(pinextCards, pinextCards.length));
     await Future.delayed(const Duration(seconds: 2));
     String result =
         await AuthenticationServices().signupUserUsingEmailAndPassword(
@@ -65,9 +64,9 @@ class SigninCubit extends Cubit<SigninState> {
       budgetSpentSoFar: budgetSpentSoFar,
     );
     if (result == "Success") {
-      emit(SigninSuccessState( pinextCards, pinextCards.length));
+      emit(SigninSuccessState(pinextCards, pinextCards.length));
     } else {
-      emit(SigninErrorState( pinextCards, pinextCards.length, result));
+      emit(SigninErrorState(pinextCards, pinextCards.length, result));
     }
   }
 }

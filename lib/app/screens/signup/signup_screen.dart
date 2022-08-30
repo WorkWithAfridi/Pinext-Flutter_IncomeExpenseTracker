@@ -76,6 +76,7 @@ class _SignupScreenViewState extends State<SignupScreenView> {
 
   @override
   Widget build(BuildContext context) {
+    context.read<SigninCubit>().reset();
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
