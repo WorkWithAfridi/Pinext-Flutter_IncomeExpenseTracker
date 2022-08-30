@@ -354,6 +354,9 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                       fontSize: 16,
                     ),
                   ),
+                  const SizedBox(
+                    height: 4,
+                  ),
                   Text(
                     "*Please add in cards to see your updated NET balance here!",
                     style: boldTextStyle.copyWith(
@@ -373,7 +376,16 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
               style: boldTextStyle,
             ),
             const SizedBox(
-              height: 8,
+              height: 4,
+            ),
+            Text(
+              "*This is the maximum amount of CASH you'll be spending in one month!",
+              style: regularTextStyle.copyWith(
+                color: customBlackColor.withOpacity(.4),
+              ),
+            ),
+            const SizedBox(
+              height: 4,
             ),
             GetCustomTextField(
               controller: monthlyBudgetController,

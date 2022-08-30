@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:pinext/app/app_data/date_time/date_time.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
 import 'package:pinext/app/models/pinext_transaction_model.dart';
 import 'package:pinext/app/models/pinext_user_model.dart';
@@ -7,6 +6,8 @@ import 'package:pinext/app/services/firebase_services.dart';
 import 'package:pinext/app/services/handlers/card_handler.dart';
 import 'package:pinext/app/services/handlers/user_handler.dart';
 import 'package:uuid/uuid.dart';
+
+import '../date_time_services.dart';
 
 class TransactionHandler {
   TransactionHandler._internal();

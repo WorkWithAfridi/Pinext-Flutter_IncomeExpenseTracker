@@ -21,6 +21,10 @@ class AuthenticatedUserState extends UserState {
   String weeklyExpenses;
   String monthlySavings;
   String accountCreatedOn;
+  String currentDate;
+  String currentMonth;
+  String currentWeekOfTheYear;
+  String currentYear;
   AuthenticatedUserState({
     required this.userId,
     required this.username,
@@ -32,7 +36,12 @@ class AuthenticatedUserState extends UserState {
     required this.weeklyExpenses,
     required this.monthlySavings,
     required this.accountCreatedOn,
+    required this.currentDate,
+    required this.currentMonth,
+    required this.currentWeekOfTheYear,
+    required this.currentYear,
   });
+
   @override
   List<Object> get props => [
         userId,
@@ -45,5 +54,9 @@ class AuthenticatedUserState extends UserState {
         weeklyExpenses,
         monthlySavings,
         accountCreatedOn,
+        currentDate,
+        currentMonth,
+        currentWeekOfTheYear,
+        currentYear,
       ];
 }

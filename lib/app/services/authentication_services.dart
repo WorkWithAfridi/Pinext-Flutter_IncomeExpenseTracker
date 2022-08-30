@@ -1,9 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:pinext/app/services/handlers/card_handler.dart';
-import 'package:pinext/app/services/handlers/user_handler.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
 import 'package:pinext/app/models/pinext_user_model.dart';
+import 'package:pinext/app/services/date_time_services.dart';
 import 'package:pinext/app/services/firebase_services.dart';
+import 'package:pinext/app/services/handlers/card_handler.dart';
+import 'package:pinext/app/services/handlers/user_handler.dart';
 
 class AuthenticationServices {
   AuthenticationServices._internal();
@@ -41,6 +42,10 @@ class AuthenticationServices {
         weeklyExpenses: '0',
         monthlySavings: '0',
         accountCreatedOn: DateTime.now().toString(),
+        currentDate: currentDate,
+        currentMonth: currentMonth,
+        currentWeekOfTheYear: currentWeekOfTheYear,
+        currentYear: currentYear,
       );
 
       //storing userData
