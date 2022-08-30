@@ -47,7 +47,7 @@ class TransactionHandler {
             pinextTransactionModel.toMap(),
           );
 
-      // Adjust card balance
+      // Adjust card balance and updating last transaction time
       PinextCardModel pinextCardModel = await CardHandler().getCard(cardId);
       double adjustedAmount = transactionType == "Income"
           ? pinextCardModel.balance + double.parse(amount)
@@ -60,6 +60,7 @@ class TransactionHandler {
           .doc(pinextTransactionModel.cardId)
           .update({
         "balance": adjustedAmount,
+        "lastTransactionData": DateTime.now().toString(),
       });
 
       // //Adjusting global balances

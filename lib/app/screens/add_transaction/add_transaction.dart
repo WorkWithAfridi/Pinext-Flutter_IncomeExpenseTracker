@@ -17,18 +17,6 @@ import '../../models/pinext_card_model.dart';
 import '../../services/firebase_services.dart';
 import '../../shared/widgets/pinext_card.dart';
 
-// class AddTransactionScreen extends StatelessWidget {
-//   const AddTransactionScreen({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return BlocProvider(
-//       create: (context) => AddTransactionsCubit(),
-//       child: const AddTransactionScreen(),
-//     );
-//   }
-// }
-
 class AddTransactionScreen extends StatelessWidget {
   const AddTransactionScreen({Key? key}) : super(key: key);
 
