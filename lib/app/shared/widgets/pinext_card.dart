@@ -33,78 +33,87 @@ class PinextCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(
             defaultBorder,
           ),
-          border: Border.all(
-            color: isSelected ? Colors.red : Colors.transparent,
-            width: 5,
-          ),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.end,
+        child: Stack(
           children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    title.toString(),
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                      color: whiteColor,
-                    ),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        title.toString(),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: whiteColor,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Current balance",
+                            style: TextStyle(
+                              fontWeight: FontWeight.normal,
+                              fontSize: 13,
+                              color: whiteColor.withOpacity(.4),
+                            ),
+                          ),
+                          Text(balance.toString(),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 25,
+                                color: whiteColor,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1),
+                        ],
+                      )
+                    ],
                   ),
-                  Column(
+                ),
+                RotatedBox(
+                  quarterTurns: 3,
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Current balance",
+                        "Last transaction",
                         style: TextStyle(
                           fontWeight: FontWeight.normal,
-                          fontSize: 13,
+                          fontSize: 10,
                           color: whiteColor.withOpacity(.4),
                         ),
                       ),
-                      Text(balance.toString(),
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 25,
-                            color: whiteColor,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1),
+                      const Text(
+                        "12/12/12",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 25,
+                          color: whiteColor,
+                        ),
+                      ),
                     ],
-                  )
-                ],
-              ),
+                  ),
+                )
+              ],
             ),
-            RotatedBox(
-              quarterTurns: 3,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Last transaction",
-                    style: TextStyle(
-                      fontWeight: FontWeight.normal,
-                      fontSize: 10,
-                      color: whiteColor.withOpacity(.4),
+            isSelected
+                ? const Center(
+                    child: Icon(
+                      Icons.done,
+                      color: Colors.amber,
+                      size: 50,
                     ),
-                  ),
-                  const Text(
-                    "12/12/12",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 25,
-                      color: whiteColor,
-                    ),
-                  ),
-                ],
-              ),
-            )
+                  )
+                : const SizedBox.shrink()
           ],
         ),
       ),
