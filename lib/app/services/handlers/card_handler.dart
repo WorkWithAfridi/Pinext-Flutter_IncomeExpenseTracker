@@ -10,14 +10,38 @@ class CardHandler {
   static final CardHandler _cardServices = CardHandler._internal();
   factory CardHandler() => _cardServices;
 
-  addCard(PinextCardModel pinextCardModel) async {
-    return await FirebaseServices()
-        .firebaseFirestore
-        .collection('pinext_users')
-        .doc(FirebaseServices().getUserId())
-        .collection('pinext_cards')
-        .doc(pinextCardModel.cardId)
-        .set(pinextCardModel.toMap());
+  addCard({
+    required PinextCardModel pinextCardModel,
+    required bool duringSignIn,
+  }) async {
+    if (duringSignIn) {
+      return await FirebaseServices()
+          .firebaseFirestore
+          .collection('pinext_users')
+          .doc(FirebaseServices().getUserId())
+          .collection('pinext_cards')
+          .doc(pinextCardModel.cardId)
+          .set(pinextCardModel.toMap());
+    } else {
+      PinextUserModel user = await UserHandler().getCurrentUser();
+      double adjustedNetBalance = double.parse(user.netBalance) +
+          double.parse(pinextCardModel.balance.toString());
+      await FirebaseServices()
+          .firebaseFirestore
+          .collection(USERS_DIRECTORY)
+          .doc(FirebaseServices().getUserId())
+          .update({
+        "netBalance": adjustedNetBalance.toString(),
+      });
+
+      return await FirebaseServices()
+          .firebaseFirestore
+          .collection('pinext_users')
+          .doc(FirebaseServices().getUserId())
+          .collection('pinext_cards')
+          .doc(pinextCardModel.cardId)
+          .set(pinextCardModel.toMap());
+    }
   }
 
   removeCard(PinextCardModel pinextCardModel) async {

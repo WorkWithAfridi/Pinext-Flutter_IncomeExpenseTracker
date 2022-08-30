@@ -112,13 +112,13 @@ class UserHandler {
     return;
   }
 
-  Future updateNetBalance(String adjustedNetBalance) async {
+  Future updateNetBalance(String amount) async {
     await FirebaseServices()
         .firebaseFirestore
         .collection(USERS_DIRECTORY)
         .doc(FirebaseServices().getUserId())
         .update({
-      "netBalance": adjustedNetBalance,
+      "netBalance": amount,
     });
     return;
   }

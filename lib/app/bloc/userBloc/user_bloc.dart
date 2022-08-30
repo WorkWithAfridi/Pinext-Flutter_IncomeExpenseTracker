@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:pinext/app/models/pinext_user_model.dart';
@@ -55,6 +57,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           currentMonth: user.currentMonth,
           currentWeekOfTheYear: user.currentWeekOfTheYear,
         ));
+        log("Refreshing user");
       } else {
         //updating user datetime
         await UserHandler().resetUserStats(user);

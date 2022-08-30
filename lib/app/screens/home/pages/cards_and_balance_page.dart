@@ -82,22 +82,34 @@ class CardsAndBalanceView extends StatelessWidget {
                       fontSize: 16,
                     ),
                   ),
-                  BlocBuilder<UserBloc, UserState>(
-                    builder: (context, state) {
-                      if (state is AuthenticatedUserState) {
-                        return FittedBox(
-                          child: Text(
-                            state.netBalance,
-                            style: boldTextStyle.copyWith(
-                              color: whiteColor,
-                              fontSize: 50,
-                            ),
-                          ),
-                        );
-                      } else {
-                        return const CircularProgressIndicator();
+                  BlocListener<CardsAndBalancesCubit, CardsAndBalancesState>(
+                    listener: (context, state) {
+                      if (state
+                          is CardsAndBalancesSuccessfullyRemovedCardState) {
+                        log("CardsAndBalancesSuccessfullyRemovedCardState");
+                      }
+                      if (state is CardsAndBalancesSuccessfullyAddedCardState) {
+                        log("CardsAndBalancesSuccessfullyAddedCardState");
+                        context.read<UserBloc>().add(RefreshUserStateEvent());
                       }
                     },
+                    child: BlocBuilder<UserBloc, UserState>(
+                      builder: (context, state) {
+                        if (state is AuthenticatedUserState) {
+                          return FittedBox(
+                            child: Text(
+                              state.netBalance,
+                              style: boldTextStyle.copyWith(
+                                color: whiteColor,
+                                fontSize: 50,
+                              ),
+                            ),
+                          );
+                        } else {
+                          return const CircularProgressIndicator();
+                        }
+                      },
+                    ),
                   ),
                   Text(
                     "Taka",
@@ -124,6 +136,7 @@ class CardsAndBalanceView extends StatelessWidget {
                 if (state is CardsAndBalancesSuccessfullyRemovedCardState) {
                   context.read<UserBloc>().add(RefreshUserStateEvent());
                 }
+                context.read<CardsAndBalancesCubit>().resetState();
               },
               child: StreamBuilder(
                 stream: FirebaseServices()
@@ -135,10 +148,17 @@ class CardsAndBalanceView extends StatelessWidget {
                 builder: ((context,
                     AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
                         snapshot) {
-                  log("rebuilding cards page");
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
                       child: CircularProgressIndicator(),
+                    );
+                  }
+                  if (snapshot.data!.docs.isEmpty) {
+                    return Text(
+                      "Please add a Pinext card to view your cards details here.",
+                      style: regularTextStyle.copyWith(
+                        color: customBlackColor.withOpacity(.4),
+                      ),
                     );
                   }
                   return ListView.builder(
@@ -182,7 +202,7 @@ class CardsAndBalanceView extends StatelessWidget {
                   MaterialPageRoute(
                     builder: (context) => AddAndEditPinextCardScreen(
                       onAddCardButtonClick: (PinextCardModel card) {
-                        // context.read<SigninCubit>().addCard(card);
+                        context.read<CardsAndBalancesCubit>().addCard(card);
                       },
                     ),
                   ),

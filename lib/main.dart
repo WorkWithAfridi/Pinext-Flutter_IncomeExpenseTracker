@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pinext/app/bloc/cards_and_balances_cubit/cards_and_balances_cubit.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 
 import 'app/app_data/routing/routes.dart';
@@ -25,6 +26,9 @@ class Pinext extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => SigninCubit(),
+        ),
+        BlocProvider(
+          create: (context) => CardsAndBalancesCubit(),
         ),
         BlocProvider(
           create: (context) => UserBloc(),

@@ -57,7 +57,10 @@ class AuthenticationServices {
 
       for (PinextCardModel pinextCard in pinextCards) {
         //storing userCards
-        await CardHandler().addCard(pinextCard);
+        await CardHandler().addCard(
+          pinextCardModel: pinextCard,
+          duringSignIn: true,
+        );
       }
       await UserHandler().getCurrentUser();
       response = "Success";
