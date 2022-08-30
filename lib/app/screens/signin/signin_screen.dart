@@ -97,57 +97,63 @@ class _SigninScreenViewState extends State<SigninScreenView> {
               const SizedBox(
                 height: 16,
               ),
-              BlocConsumer<LoginCubit, LoginState>(
+              BlocListener<UserBloc, UserState>(
                 listener: (context, state) {
-                  if (state is LoginSuccessState) {
-                    context.read<UserBloc>().add(RefreshUserStateEvent());
+                  if (state is AuthenticatedUserState) {
                     Navigator.pushNamedAndRemoveUntil(
                       context,
                       ROUTES.getHomeframeRoute,
                       (route) => false,
                     );
                   }
-                  if (state is LoginErrorState) {
-                    GetCustomSnackbar(
-                      title: "Snap",
-                      message: state.errorMessage,
-                      snackbarType: SnackbarType.error,
-                      context: context,
-                    );
-                    context.read<LoginCubit>().resetState();
-                  }
                 },
-                builder: (context, state) {
-                  return GetCustomButton(
-                    title: "Sign In",
-                    titleColor: whiteColor,
-                    buttonColor: customBlueColor,
-                    isLoading:
-                        state is LoginWithEmailAndPasswordButtonLoadingState,
-                    callBackFunction: () {
-                      if (emailController.text.isNotEmpty &&
-                          passwordController.text.isNotEmpty) {
-                        context.read<LoginCubit>().loginWithEmailAndPassword(
-                              email: emailController.text,
-                              password: passwordController.text,
-                            );
-                      } else {
-                        GetCustomSnackbar(
-                          title: "Snap",
-                          message:
-                              "We need your email and password in order to sign you in!",
-                          snackbarType: SnackbarType.info,
-                          context: context,
-                        );
-                      }
+                child: BlocConsumer<LoginCubit, LoginState>(
+                  listener: (context, state) {
+                    if (state is LoginSuccessState) {
+                      context.read<UserBloc>().add(RefreshUserStateEvent());
+                    }
+                    if (state is LoginErrorState) {
+                      GetCustomSnackbar(
+                        title: "Snap",
+                        message: state.errorMessage,
+                        snackbarType: SnackbarType.error,
+                        context: context,
+                      );
+                      context.read<LoginCubit>().resetState();
+                    }
+                  },
+                  builder: (context, state) {
+                    return GetCustomButton(
+                      title: "Sign In",
+                      titleColor: whiteColor,
+                      buttonColor: customBlueColor,
+                      isLoading:
+                          state is LoginWithEmailAndPasswordButtonLoadingState,
+                      callBackFunction: () {
+                        if (emailController.text.isNotEmpty &&
+                            passwordController.text.isNotEmpty) {
+                          context.read<LoginCubit>().loginWithEmailAndPassword(
+                                email: emailController.text,
+                                password: passwordController.text,
+                              );
+                        } else {
+                          GetCustomSnackbar(
+                            title: "Snap",
+                            message:
+                                "We need your email and password in order to sign you in!",
+                            snackbarType: SnackbarType.info,
+                            context: context,
+                          );
+                        }
 
-                      // String dateTimeNow = DateTime.now().toString();
-                      // String currentMonth =
-                      //     DateTime.now().toString().substring(5, 7);
-                      // log(currentMonth);
-                    },
-                  );
-                },
+                        // String dateTimeNow = DateTime.now().toString();
+                        // String currentMonth =
+                        //     DateTime.now().toString().substring(5, 7);
+                        // log(currentMonth);
+                      },
+                    );
+                  },
+                ),
               ),
               const SizedBox(
                 height: 16,

@@ -17,11 +17,6 @@ class SplashScreen extends StatelessWidget {
     bool userSignedIn = await AuthenticationServices().isUserSignedIn();
     if (userSignedIn) {
       context.read<UserBloc>().add(RefreshUserStateEvent());
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        ROUTES.getHomeframeRoute,
-        (route) => false,
-      );
     } else {
       Navigator.pushNamedAndRemoveUntil(
         context,
@@ -39,9 +34,20 @@ class SplashScreen extends StatelessWidget {
         height: getHeight(context),
         width: getWidth(context),
         child: Center(
-          child: Text(
-            "Pinext",
-            style: boldTextStyle.copyWith(fontSize: 50),
+          child: BlocListener<UserBloc, UserState>(
+            listener: (context, state) {
+              if (state is AuthenticatedUserState) {
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  ROUTES.getHomeframeRoute,
+                  (route) => false,
+                );
+              }
+            },
+            child: Text(
+              "Pinext",
+              style: boldTextStyle.copyWith(fontSize: 50),
+            ),
           ),
         ),
       ),

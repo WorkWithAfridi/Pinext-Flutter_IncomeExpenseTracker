@@ -665,78 +665,84 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
             const SizedBox(
               height: 16,
             ),
-            BlocConsumer<SigninCubit, SigninState>(
+            BlocListener<UserBloc, UserState>(
               listener: (context, state) {
-                if (state is SigninErrorState) {
-                  ElegantNotification.error(
-                    title: Text(
-                      "Snap, an error occurred!",
-                      style: boldTextStyle,
-                    ),
-                    description: Text(
-                      state.errorMessage,
-                      style: regularTextStyle,
-                    ),
-                    width: getWidth(context) * .9,
-                    animationDuration: const Duration(milliseconds: 200),
-                    toastDuration: const Duration(seconds: 5),
-                  ).show(context);
-                  context.read<SigninCubit>().reset();
-                }
-                if (state is SigninSuccessState) {
-                  context.read<UserBloc>().add(RefreshUserStateEvent());
+                if (state is AuthenticatedUserState) {
                   Navigator.pushNamedAndRemoveUntil(
                     context,
                     ROUTES.getHomeframeRoute,
                     (route) => false,
                   );
-                  ElegantNotification.success(
-                    title: Text(
-                      "Yaay!",
-                      style: boldTextStyle,
-                    ),
-                    description: Text(
-                      "Your account has been created!",
-                      style: regularTextStyle,
-                    ),
-                    width: getWidth(context) * .9,
-                    animationDuration: const Duration(milliseconds: 200),
-                    toastDuration: const Duration(seconds: 5),
-                  ).show(context);
-                  context.read<SigninCubit>().reset();
                 }
               },
-              builder: (context, state) {
-                return GetCustomButton(
-                  title: "Register",
-                  titleColor: whiteColor,
-                  buttonColor: customBlueColor,
-                  isLoading: state is SigninLoadingState,
-                  callBackFunction: () {
-                    if (monthlyBudgetController.text.isNotEmpty &&
-                        budgetSpentSoFarController.text.isNotEmpty &&
-                        state.cards.isNotEmpty) {
-                      context.read<SigninCubit>().signupUser(
-                            emailAddress: emailController.text,
-                            password: passwordController.text,
-                            username: userNameController.text,
-                            pinextCards: state.cards,
-                            netBalance: netBalance.floor().toString(),
-                            monthlyBudget: monthlyBudgetController.text,
-                            budgetSpentSoFar: budgetSpentSoFarController.text,
-                          );
-                    } else {
-                      GetCustomSnackbar(
-                        title: "....",
-                        message:
-                            "You need to fill up the form to create an account.",
-                        snackbarType: SnackbarType.info,
-                        context: context,
-                      );
-                    }
-                  },
-                );
-              },
+              child: BlocConsumer<SigninCubit, SigninState>(
+                listener: (context, state) {
+                  if (state is SigninErrorState) {
+                    ElegantNotification.error(
+                      title: Text(
+                        "Snap, an error occurred!",
+                        style: boldTextStyle,
+                      ),
+                      description: Text(
+                        state.errorMessage,
+                        style: regularTextStyle,
+                      ),
+                      width: getWidth(context) * .9,
+                      animationDuration: const Duration(milliseconds: 200),
+                      toastDuration: const Duration(seconds: 5),
+                    ).show(context);
+                    context.read<SigninCubit>().reset();
+                  }
+                  if (state is SigninSuccessState) {
+                    context.read<UserBloc>().add(RefreshUserStateEvent());
+                    ElegantNotification.success(
+                      title: Text(
+                        "Yaay!",
+                        style: boldTextStyle,
+                      ),
+                      description: Text(
+                        "Your account has been created!",
+                        style: regularTextStyle,
+                      ),
+                      width: getWidth(context) * .9,
+                      animationDuration: const Duration(milliseconds: 200),
+                      toastDuration: const Duration(seconds: 5),
+                    ).show(context);
+                    context.read<SigninCubit>().reset();
+                  }
+                },
+                builder: (context, state) {
+                  return GetCustomButton(
+                    title: "Register",
+                    titleColor: whiteColor,
+                    buttonColor: customBlueColor,
+                    isLoading: state is SigninLoadingState,
+                    callBackFunction: () {
+                      if (monthlyBudgetController.text.isNotEmpty &&
+                          budgetSpentSoFarController.text.isNotEmpty &&
+                          state.cards.isNotEmpty) {
+                        context.read<SigninCubit>().signupUser(
+                              emailAddress: emailController.text,
+                              password: passwordController.text,
+                              username: userNameController.text,
+                              pinextCards: state.cards,
+                              netBalance: netBalance.floor().toString(),
+                              monthlyBudget: monthlyBudgetController.text,
+                              budgetSpentSoFar: budgetSpentSoFarController.text,
+                            );
+                      } else {
+                        GetCustomSnackbar(
+                          title: "....",
+                          message:
+                              "You need to fill up the form to create an account.",
+                          snackbarType: SnackbarType.info,
+                          context: context,
+                        );
+                      }
+                    },
+                  );
+                },
+              ),
             ),
             const SizedBox(
               height: 8,

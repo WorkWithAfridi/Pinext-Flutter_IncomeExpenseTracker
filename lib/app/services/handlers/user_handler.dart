@@ -24,17 +24,46 @@ class UserHandler {
     return currentUser;
   }
 
-  Future updateUserDateTime() async {
-    await FirebaseServices()
-        .firebaseFirestore
-        .collection("pinext_users")
-        .doc(FirebaseServices().getUserId())
-        .update({
-      'currentDate': currentDate,
-      'currentMonth': currentMonth,
-      'currentWeekOfTheYear': currentWeekOfTheYear,
-      'currentYear': currentYear,
-    });
+  Future updateUserDateTime(PinextUserModel user) async {
+    if (user.currentYear != currentYear) {
+      await FirebaseServices()
+          .firebaseFirestore
+          .collection("pinext_users")
+          .doc(FirebaseServices().getUserId())
+          .update({
+        'currentDate': currentDate,
+        'currentMonth': currentMonth,
+        'currentWeekOfTheYear': currentWeekOfTheYear,
+        'currentYear': currentYear,
+      });
+    } else if (user.currentMonth != currentMonth) {
+      await FirebaseServices()
+          .firebaseFirestore
+          .collection("pinext_users")
+          .doc(FirebaseServices().getUserId())
+          .update({
+        'currentDate': currentDate,
+        'currentMonth': currentMonth,
+        'currentWeekOfTheYear': currentWeekOfTheYear,
+      });
+    } else if (user.currentWeekOfTheYear != currentWeekOfTheYear) {
+      await FirebaseServices()
+          .firebaseFirestore
+          .collection("pinext_users")
+          .doc(FirebaseServices().getUserId())
+          .update({
+        'currentDate': currentDate,
+        'currentWeekOfTheYear': currentWeekOfTheYear,
+      });
+    } else if (user.currentDate != currentDate) {
+      await FirebaseServices()
+          .firebaseFirestore
+          .collection("pinext_users")
+          .doc(FirebaseServices().getUserId())
+          .update({
+        'currentDate': currentDate,
+      });
+    }
     return;
   }
 
@@ -45,6 +74,7 @@ class UserHandler {
           .collection("pinext_users")
           .doc(FirebaseServices().getUserId())
           .update({
+        'monthlyExpenses': "0",
         'dailyExpenses': "0",
         'weeklyExpenses': "0",
         'monthlySavings': "0",
@@ -55,6 +85,7 @@ class UserHandler {
           .collection("pinext_users")
           .doc(FirebaseServices().getUserId())
           .update({
+        'monthlyExpenses': "0",
         'dailyExpenses': "0",
         'weeklyExpenses': "0",
         'monthlySavings': "0",

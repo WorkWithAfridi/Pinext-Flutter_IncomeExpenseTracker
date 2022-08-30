@@ -58,7 +58,25 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       } else {
         //updating user datetime
         await UserHandler().resetUserStats(user);
-        await UserHandler().updateUserDateTime();
+        await UserHandler().updateUserDateTime(user);
+        //now refresh user
+        user = await UserHandler().getCurrentUser();
+        emit(AuthenticatedUserState(
+          userId: user.userId,
+          username: user.username,
+          emailAddress: user.emailAddress,
+          netBalance: user.netBalance,
+          monthlyBudget: user.monthlyBudget,
+          monthlyExpenses: user.monthlyExpenses,
+          dailyExpenses: user.dailyExpenses,
+          weeklyExpenses: user.weeklyExpenses,
+          monthlySavings: user.monthlySavings,
+          accountCreatedOn: user.accountCreatedOn,
+          currentYear: user.currentYear,
+          currentDate: user.currentDate,
+          currentMonth: user.currentMonth,
+          currentWeekOfTheYear: user.currentWeekOfTheYear,
+        ));
       }
     });
     on<SignOutUserEvent>(((event, emit) {
