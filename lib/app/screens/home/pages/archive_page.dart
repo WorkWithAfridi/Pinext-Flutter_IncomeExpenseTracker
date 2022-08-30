@@ -200,14 +200,14 @@ class TransactionsList extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Showing results for",
+                              "Results for",
                               style: regularTextStyle.copyWith(
                                 color: customBlackColor.withOpacity(.4),
                                 fontSize: 12,
                               ),
                             ),
                             Text(
-                              "${months[int.parse(state.selectedMonth)]}",
+                              "Transactions in ${months[int.parse(state.selectedMonth)]}",
                               style: boldTextStyle.copyWith(
                                 fontSize: 25,
                                 color: customBlackColor,
@@ -230,14 +230,14 @@ class TransactionsList extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Showing results for",
+                            "Results for",
                             style: regularTextStyle.copyWith(
                               color: customBlackColor.withOpacity(.4),
                               fontSize: 12,
                             ),
                           ),
                           Text(
-                            "${months[int.parse(state.selectedMonth)]}",
+                            "Transactions in ${months[int.parse(state.selectedMonth)]}",
                             style: boldTextStyle.copyWith(
                               fontSize: 25,
                               color: customBlackColor,
