@@ -35,8 +35,12 @@ List homeframePages = [
   const Homepage(),
   const ArchivePage(),
   const CardsAndBalancePage(),
-  const Center(
-    child: Text("profile"),
+  Center(
+    child: Text(
+      "The app is still under development.\nStay tuned for future updates!",
+      style: regularTextStyle,
+      textAlign: TextAlign.center,
+    ),
   ),
 ];
 

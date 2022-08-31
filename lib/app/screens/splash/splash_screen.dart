@@ -6,6 +6,7 @@ import 'package:pinext/app/app_data/app_constants/constants.dart';
 import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/app_data/routing/routes.dart';
+import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/homeframe_cubit/homeframe_page_cubit.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/screens/add_transaction/add_transaction.dart';
@@ -111,13 +112,14 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: customBlueColor,
       body: SizedBox(
         height: getHeight(context),
         width: getWidth(context),
         child: Center(
           child: Text(
             "Pinext",
-            style: boldTextStyle.copyWith(fontSize: 50),
+            style: boldTextStyle.copyWith(fontSize: 50, color: whiteColor),
           ),
         ),
       ),
