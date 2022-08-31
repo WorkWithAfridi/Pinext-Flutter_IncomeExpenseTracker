@@ -1,11 +1,10 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
 import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/app_data/routing/routes.dart';
+import 'package:pinext/app/bloc/homeframe_cubit/homeframe_page_cubit.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/services/authentication_services.dart';
 import 'package:quick_actions/quick_actions.dart';
@@ -22,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
     await Future.delayed(
       const Duration(seconds: defaultDelayDuration),
     );
-    bool userSignedIn = await AuthenticationServices().isUserSignedIn();
+    userSignedIn = await AuthenticationServices().isUserSignedIn();
     if (userSignedIn) {
       context.read<UserBloc>().add(RefreshUserStateEvent());
     } else {
@@ -36,6 +35,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   String shortcut = "none";
 
+  bool userSignedIn = false;
+
   @override
   void initState() {
     super.initState();
@@ -47,20 +48,27 @@ class _SplashScreenState extends State<SplashScreen> {
     QuickActions quickActions = const QuickActions();
     quickActions.setShortcutItems(<ShortcutItem>[
       const ShortcutItem(
-        type: "Action one",
-        localizedTitle: "Action one",
+        type: "AddTransaction",
+        localizedTitle: "Add transaction",
+        icon: "money",
       ),
       const ShortcutItem(
-        type: "Action Two",
-        localizedTitle: "Action Two",
+        type: "ViewTransactions",
+        localizedTitle: "View transactions",
+        icon: "archive",
       ),
     ]);
-    quickActions.initialize((String shortcutType) {
-      if (shortcutType == "Action one") {
-        log("Action one");
+    quickActions.initialize((String shortcutType) async {
+      if (shortcutType == "AddTransaction") {
+        if (userSignedIn) {
+          Navigator.pushNamed(context, ROUTES.getAddTransactionsRoute);
+        }
       }
-      if (shortcutType == "Action Two") {
-        log("Action Two");
+      if (shortcutType == "ViewTransactions") {
+        if (userSignedIn) {
+          context.read<HomeframeCubit>().changeHomeframePage(1);
+          Navigator.pushNamed(context, ROUTES.getHomeframeRoute);
+        }
       }
     });
   }
