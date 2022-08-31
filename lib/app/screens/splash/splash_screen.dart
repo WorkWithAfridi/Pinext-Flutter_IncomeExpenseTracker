@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
@@ -6,6 +8,7 @@ import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/app_data/routing/routes.dart';
 import 'package:pinext/app/bloc/homeframe_cubit/homeframe_page_cubit.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
+import 'package:pinext/app/screens/add_transaction/add_transaction.dart';
 import 'package:pinext/app/services/authentication_services.dart';
 import 'package:quick_actions/quick_actions.dart';
 
@@ -22,25 +25,57 @@ class _SplashScreenState extends State<SplashScreen> {
       const Duration(seconds: defaultDelayDuration),
     );
     userSignedIn = await AuthenticationServices().isUserSignedIn();
-    if (userSignedIn) {
+    if (userSignedIn && mode == 'default') {
       context.read<UserBloc>().add(RefreshUserStateEvent());
-    } else {
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        ROUTES.getHomeframeRoute,
+        (route) => false,
+      );
+    } else if (!userSignedIn) {
       Navigator.pushNamedAndRemoveUntil(
         context,
         ROUTES.getLoginRoute,
         (route) => false,
       );
+    } else if (userSignedIn && mode == 'AddTransaction') {
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+            builder: (context) => AddTransactionScreen(
+                  isAQuickAction: true,
+                )),
+        (route) => false,
+      );
     }
   }
 
-  String shortcut = "none";
+  String mode = 'default';
 
   bool userSignedIn = false;
 
   @override
   void initState() {
     super.initState();
-    setUpQuickActions();
+
+    const QuickActions quickActions = QuickActions();
+    quickActions.initialize((String shortcutType) {
+      if (shortcutType.toString() == "AddTransaction") {
+        log("AddTransaction");
+        setState(() {
+          mode = "AddTransaction";
+        });
+      }
+    });
+
+    quickActions.setShortcutItems(<ShortcutItem>[
+      const ShortcutItem(
+        type: "AddTransaction",
+        localizedTitle: "Add transaction",
+        icon: "money",
+      ),
+    ]);
+
     triggerSplashScreenAnimation(context);
   }
 
@@ -80,20 +115,9 @@ class _SplashScreenState extends State<SplashScreen> {
         height: getHeight(context),
         width: getWidth(context),
         child: Center(
-          child: BlocListener<UserBloc, UserState>(
-            listener: (context, state) {
-              if (state is AuthenticatedUserState) {
-                Navigator.pushNamedAndRemoveUntil(
-                  context,
-                  ROUTES.getHomeframeRoute,
-                  (route) => false,
-                );
-              }
-            },
-            child: Text(
-              "Pinext",
-              style: boldTextStyle.copyWith(fontSize: 50),
-            ),
+          child: Text(
+            "Pinext",
+            style: boldTextStyle.copyWith(fontSize: 50),
           ),
         ),
       ),

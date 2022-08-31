@@ -30,7 +30,7 @@ class ROUTECONTROLLER {
         );
       case ROUTES.getAddTransactionsRoute:
         return MaterialPageRoute(
-          builder: (context) => const AddTransactionScreen(),
+          builder: (context) =>  AddTransactionScreen(),
         );
       // case ROUTES.getAddPinextCardRoute:
       //   return MaterialPageRoute(

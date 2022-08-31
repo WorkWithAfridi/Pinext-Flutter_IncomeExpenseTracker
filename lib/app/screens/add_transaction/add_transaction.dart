@@ -1,10 +1,11 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
+import 'package:pinext/app/app_data/routing/routes.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/add_transactions_cubit/add_transactions_cubit.dart';
 import 'package:pinext/app/shared/widgets/custom_button.dart';
@@ -18,19 +19,29 @@ import '../../services/firebase_services.dart';
 import '../../shared/widgets/pinext_card.dart';
 
 class AddTransactionScreen extends StatelessWidget {
-  const AddTransactionScreen({Key? key}) : super(key: key);
+  AddTransactionScreen({
+    Key? key,
+    this.isAQuickAction = false,
+  }) : super(key: key);
+  bool isAQuickAction;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => AddTransactionsCubit(),
-      child: const AddTransactionView(),
+      child: AddTransactionView(
+        isAQuickAction: isAQuickAction,
+      ),
     );
   }
 }
 
 class AddTransactionView extends StatefulWidget {
-  const AddTransactionView({Key? key}) : super(key: key);
+  AddTransactionView({
+    Key? key,
+    this.isAQuickAction = false,
+  }) : super(key: key);
+  bool isAQuickAction;
 
   @override
   State<AddTransactionView> createState() => _AddTransactionViewState();
@@ -60,10 +71,26 @@ class _AddTransactionViewState extends State<AddTransactionView> {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            if (widget.isAQuickAction) {
+              if (Platform.isAndroid) {
+                SystemNavigator.pop();
+              } else {
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  ROUTES.getHomeframeRoute,
+                  (route) => false,
+                );
+              }
+            } else {
+              Navigator.pop(context);
+            }
           },
           icon: Icon(
-            Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back,
+            widget.isAQuickAction
+                ? Icons.close
+                : Platform.isIOS
+                    ? Icons.arrow_back_ios
+                    : Icons.arrow_back,
           ),
         ),
         title: Text(
@@ -308,15 +335,33 @@ class _AddTransactionViewState extends State<AddTransactionView> {
               child: BlocConsumer<AddTransactionsCubit, AddTransactionsState>(
                 listener: (context, state) {
                   if (state is AddTransactionsSuccessState) {
-                    context.read<UserBloc>().add(RefreshUserStateEvent());
-                    Navigator.pop(context);
-
-                    GetCustomSnackbar(
-                      title: "Transaction added!!",
-                      message: "Your transaction data has been stored.",
-                      snackbarType: SnackbarType.success,
-                      context: context,
-                    );
+                    if (widget.isAQuickAction) {
+                      if (Platform.isAndroid) {
+                        SystemNavigator.pop();
+                      } else {
+                        context.read<UserBloc>().add(RefreshUserStateEvent());
+                        Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          ROUTES.getHomeframeRoute,
+                          (route) => false,
+                        );
+                        GetCustomSnackbar(
+                          title: "Transaction added!!",
+                          message: "Your transaction data has been stored.",
+                          snackbarType: SnackbarType.success,
+                          context: context,
+                        );
+                      }
+                    } else {
+                      context.read<UserBloc>().add(RefreshUserStateEvent());
+                      Navigator.pop(context);
+                      GetCustomSnackbar(
+                        title: "Transaction added!!",
+                        message: "Your transaction data has been stored.",
+                        snackbarType: SnackbarType.success,
+                        context: context,
+                      );
+                    }
                   }
                   if (state is AddTransactionsErrorState) {
                     GetCustomSnackbar(
