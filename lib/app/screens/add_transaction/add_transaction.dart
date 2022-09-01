@@ -87,6 +87,7 @@ class _AddTransactionViewState extends State<AddTransactionView> {
               if (Platform.isAndroid) {
                 SystemNavigator.pop();
               } else {
+                context.read<UserBloc>().add(RefreshUserStateEvent());
                 Navigator.pushNamedAndRemoveUntil(
                   context,
                   ROUTES.getHomeframeRoute,
