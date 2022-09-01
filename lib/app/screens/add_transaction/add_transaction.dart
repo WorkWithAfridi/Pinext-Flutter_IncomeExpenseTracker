@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -64,6 +65,17 @@ class _AddTransactionViewState extends State<AddTransactionView> {
     detailsController.dispose();
     super.dispose();
   }
+
+  List listOfTransactionDetailSuggestions = [
+    'donation',
+    'breakfast',
+    'lunch',
+    'dinner',
+    'date',
+    'bus fare',
+    'transportation fare',
+    'drinks',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -218,6 +230,7 @@ class _AddTransactionViewState extends State<AddTransactionView> {
                     controller: amountController,
                     hintTitle: "Enter amount...",
                     textInputType: TextInputType.number,
+                    onChanged: () {},
                   ),
                   const SizedBox(
                     height: 16,
@@ -237,6 +250,78 @@ class _AddTransactionViewState extends State<AddTransactionView> {
                     controller: detailsController,
                     hintTitle: "Enter description...",
                     numberOfLines: 3,
+                    onChanged: (String value) {
+                      context
+                          .read<AddTransactionsCubit>()
+                          .changeSelectedDescription(value);
+                    },
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Text(
+                    "Suggestions",
+                    style: boldTextStyle.copyWith(
+                      color: customBlackColor.withOpacity(
+                        .6,
+                      ),
+                    ),
+                  ),
+                  BlocBuilder<AddTransactionsCubit, AddTransactionsState>(
+                    builder: (context, state) {
+                      return Wrap(
+                        spacing: 5,
+                        runSpacing: -8,
+                        children: [
+                          ...List.generate(
+                            listOfTransactionDetailSuggestions.length,
+                            (index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  String selectedDescription =
+                                      listOfTransactionDetailSuggestions[index]
+                                          .toString();
+                                  log(selectedDescription);
+                                  log(state.selectedDescription);
+                                  if (state.selectedDescription !=
+                                      selectedDescription) {
+                                    detailsController.text =
+                                        selectedDescription;
+                                    context
+                                        .read<AddTransactionsCubit>()
+                                        .changeSelectedDescription(
+                                            selectedDescription);
+                                  } else {
+                                    context
+                                        .read<AddTransactionsCubit>()
+                                        .changeSelectedDescription("none");
+                                  }
+                                },
+                                child: Chip(
+                                  label: Text(
+                                    listOfTransactionDetailSuggestions[index]
+                                        .toString(),
+                                    style: regularTextStyle.copyWith(
+                                      color: listOfTransactionDetailSuggestions[
+                                                  index] ==
+                                              state.selectedDescription
+                                          ? whiteColor
+                                          : customBlackColor.withOpacity(.6),
+                                    ),
+                                  ),
+                                  backgroundColor:
+                                      listOfTransactionDetailSuggestions[
+                                                  index] ==
+                                              state.selectedDescription
+                                          ? customBlueColor
+                                          : greyColor,
+                                ),
+                              );
+                            },
+                          ).toList(),
+                        ],
+                      );
+                    },
                   ),
                   const SizedBox(
                     height: 16,

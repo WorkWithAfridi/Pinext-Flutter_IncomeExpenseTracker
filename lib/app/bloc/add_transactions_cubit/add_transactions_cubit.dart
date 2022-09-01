@@ -8,9 +8,9 @@ class AddTransactionsCubit extends Cubit<AddTransactionsState> {
   AddTransactionsCubit()
       : super(
           AddTransactionsDefaultState(
-            selectedTransactionMode: SelectedTransactionMode.enpense,
-            selectedCardNo: "none",
-          ),
+              selectedTransactionMode: SelectedTransactionMode.enpense,
+              selectedCardNo: "none",
+              selectedDescription: "none"),
         );
 
   changeSelectedTransactionMode(
@@ -19,6 +19,7 @@ class AddTransactionsCubit extends Cubit<AddTransactionsState> {
       AddTransactionsDefaultState(
         selectedTransactionMode: selectedTransactionMode,
         selectedCardNo: state.selectedCardNo,
+        selectedDescription: state.selectedDescription,
       ),
     );
   }
@@ -31,6 +32,7 @@ class AddTransactionsCubit extends Cubit<AddTransactionsState> {
     emit(AddTransactionsLoadingState(
       selectedTransactionMode: state.selectedTransactionMode,
       selectedCardNo: state.selectedCardNo,
+      selectedDescription: state.selectedDescription,
     ));
     await Future.delayed(const Duration(seconds: 2));
     String response = await TransactionHandler().addTransaction(
@@ -43,12 +45,14 @@ class AddTransactionsCubit extends Cubit<AddTransactionsState> {
       emit(AddTransactionsSuccessState(
         selectedTransactionMode: state.selectedTransactionMode,
         selectedCardNo: state.selectedCardNo,
+        selectedDescription: state.selectedDescription,
       ));
     } else {
       emit(AddTransactionsErrorState(
         selectedTransactionMode: state.selectedTransactionMode,
         selectedCardNo: state.selectedCardNo,
         errorMessage: response,
+        selectedDescription: state.selectedDescription,
       ));
     }
   }
@@ -57,6 +61,7 @@ class AddTransactionsCubit extends Cubit<AddTransactionsState> {
     emit(AddTransactionsDefaultState(
       selectedCardNo: selectedCardNo,
       selectedTransactionMode: state.selectedTransactionMode,
+      selectedDescription: state.selectedDescription,
     ));
   }
 
@@ -64,6 +69,15 @@ class AddTransactionsCubit extends Cubit<AddTransactionsState> {
     emit(AddTransactionsDefaultState(
       selectedTransactionMode: state.selectedTransactionMode,
       selectedCardNo: state.selectedCardNo,
+      selectedDescription: state.selectedDescription,
+    ));
+  }
+
+  changeSelectedDescription(String selectedDescription) {
+    emit(AddTransactionsDefaultState(
+      selectedTransactionMode: state.selectedTransactionMode,
+      selectedCardNo: state.selectedCardNo,
+      selectedDescription: selectedDescription,
     ));
   }
 }

@@ -17,7 +17,10 @@ class GetCustomTextField extends StatelessWidget {
     this.numberOfLines = 1,
     this.isPassword = false,
     this.textInputType = TextInputType.text,
+    required this.onChanged,
   }) : super(key: key);
+
+  Function onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +30,9 @@ class GetCustomTextField extends StatelessWidget {
       maxLines: numberOfLines,
       keyboardType: textInputType,
       textInputAction: TextInputAction.next,
+      onChanged: ((value) {
+        onChanged(value);
+      }),
       decoration: InputDecoration(
         hintText: hintTitle,
         hintStyle: regularTextStyle.copyWith(

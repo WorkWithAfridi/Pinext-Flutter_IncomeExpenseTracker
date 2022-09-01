@@ -152,6 +152,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
               controller: monthlyBudgetController,
               hintTitle: "Enter your monthly budget",
               textInputType: TextInputType.number,
+              onChanged: () {},
             ),
             const SizedBox(
               height: 8,
@@ -167,6 +168,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
               controller: budgetSpentSoFarController,
               hintTitle: "Budget spent so far...",
               textInputType: TextInputType.number,
+              onChanged: () {},
             ),
             const SizedBox(
               height: 16,

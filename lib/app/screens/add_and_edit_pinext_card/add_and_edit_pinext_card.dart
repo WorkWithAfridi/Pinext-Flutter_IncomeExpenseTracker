@@ -122,6 +122,7 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                     controller: titleController,
                     hintTitle: "Enter title",
                     textInputType: TextInputType.text,
+              onChanged: () {},
                   ),
                   const SizedBox(
                     height: 16,
@@ -142,6 +143,7 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                     hintTitle: "Enter description",
                     numberOfLines: 5,
                     textInputType: TextInputType.text,
+              onChanged: () {},
                   ),
                   const SizedBox(
                     height: 16,
@@ -161,6 +163,7 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                     controller: balanceController,
                     hintTitle: "Enter card balance",
                     textInputType: TextInputType.number,
+              onChanged: () {},
                   ),
                   const SizedBox(
                     height: 16,
