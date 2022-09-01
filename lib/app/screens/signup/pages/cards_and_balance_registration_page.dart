@@ -208,6 +208,9 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                               log('button pressed');
                               context.read<SigninCubit>().removeCard(index);
                             },
+                            onEditButtonClick: () {
+                              //TODO: Add logic
+                            },
                             pinextCardModel: pinextCardModel,
                           );
                         }),

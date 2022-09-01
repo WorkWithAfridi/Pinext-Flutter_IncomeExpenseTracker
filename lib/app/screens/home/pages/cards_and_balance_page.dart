@@ -166,6 +166,17 @@ class CardsAndBalanceView extends StatelessWidget {
                               .read<CardsAndBalancesCubit>()
                               .removeCard(pinextCardModel);
                         },
+                        onEditButtonClick: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AddAndEditPinextCardScreen(
+                                isEditCardScreen: true,
+                                pinextCardModel: pinextCardModel,
+                              ),
+                            ),
+                          );
+                        },
                       );
                     }),
                   );

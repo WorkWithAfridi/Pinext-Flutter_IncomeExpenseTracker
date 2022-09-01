@@ -14,7 +14,7 @@ enum SnackbarType {
 
 const AnimationType snackbarAnimationType = AnimationType.fromTop;
 const Duration snackbarToastDuration = Duration(
-  seconds: 1,
+  seconds: 2,
 );
 const Duration snackbarAnimationDuration = Duration(
   milliseconds: 200,

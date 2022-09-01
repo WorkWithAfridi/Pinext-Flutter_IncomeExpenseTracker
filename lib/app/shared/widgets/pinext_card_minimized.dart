@@ -12,11 +12,13 @@ class PinextCardMinimized extends StatelessWidget {
     Key? key,
     required this.pinextCardModel,
     required this.onDeleteButtonClick,
+    required this.onEditButtonClick,
   }) : super(key: key);
 
   final PinextCardModel pinextCardModel;
 
   Function onDeleteButtonClick;
+  Function onEditButtonClick;
 
   @override
   Widget build(BuildContext context) {
@@ -135,7 +137,9 @@ class PinextCardMinimized extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            onEditButtonClick();
+                          },
                           icon: const Icon(
                             Icons.edit,
                             color: customBlackColor,

@@ -47,3 +47,21 @@ class AddCardSuccessState extends AddCardState {
     required super.color,
   });
 }
+
+class EditCardErrorState extends AddCardState {
+  EditCardErrorState({
+    required super.title,
+    required super.description,
+    required super.balance,
+    required super.color,
+  });
+}
+
+class EditCardSuccessState extends AddCardState {
+  EditCardSuccessState({
+    required super.title,
+    required super.description,
+    required super.balance,
+    required super.color,
+  });
+}
