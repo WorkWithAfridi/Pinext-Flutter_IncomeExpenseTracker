@@ -14,12 +14,12 @@ enum SnackbarType {
 
 const AnimationType snackbarAnimationType = AnimationType.fromTop;
 const Duration snackbarToastDuration = Duration(
-  seconds: 2,
+  seconds: 1,
 );
 const Duration snackbarAnimationDuration = Duration(
   milliseconds: 200,
 );
-const isSnackbarDismissible = true;
+const isSnackbarDismissible = false;
 
 GetCustomSnackbar({
   required String title,
