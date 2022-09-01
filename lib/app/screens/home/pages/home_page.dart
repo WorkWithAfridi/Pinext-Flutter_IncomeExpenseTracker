@@ -314,7 +314,7 @@ class HomepageView extends StatelessWidget {
                           height: 4,
                         ),
                         Text(
-                          "in August alone!!",
+                          "in ${months[int.parse(currentMonth) - 1]} alone!!",
                           style: regularTextStyle.copyWith(
                             color: customBlackColor,
                           ),

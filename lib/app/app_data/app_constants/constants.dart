@@ -12,6 +12,7 @@ const List months = [
   "July",
   "August",
   "September",
+  "October",
   "November",
   "December",
 ];

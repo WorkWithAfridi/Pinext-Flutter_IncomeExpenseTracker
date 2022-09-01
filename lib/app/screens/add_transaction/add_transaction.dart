@@ -257,7 +257,7 @@ class _AddTransactionViewState extends State<AddTransactionView> {
                     },
                   ),
                   const SizedBox(
-                    height: 16,
+                    height: 8,
                   ),
                   Text(
                     "Suggestions",

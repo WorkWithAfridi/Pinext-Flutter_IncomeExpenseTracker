@@ -88,7 +88,7 @@ class UserHandler {
           .update({
         'monthlyExpenses': "0",
         'dailyExpenses': "0",
-        'weeklyExpenses': "0",
+        // 'weeklyExpenses': "0",
         'monthlySavings': "0",
       });
     } else if (user.currentWeekOfTheYear != currentWeekOfTheYear) {
