@@ -41,5 +41,11 @@ class PinextCardModel {
 
   String toJson() => json.encode(toMap());
 
-  factory PinextCardModel.fromJson(String source) => PinextCardModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory PinextCardModel.fromJson(String source) =>
+      PinextCardModel.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() {
+    return 'PinextCardModel(cardId: $cardId, title: $title, description: $description, balance: $balance, color: $color, lastTransactionData: $lastTransactionData)';
+  }
 }

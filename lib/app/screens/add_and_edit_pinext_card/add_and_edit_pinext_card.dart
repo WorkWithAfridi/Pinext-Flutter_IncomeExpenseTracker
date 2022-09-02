@@ -299,12 +299,26 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                     if (state is EditCardSuccessState) {
                       GetCustomSnackbar(
                         title: "Success",
-                        message: "Your card details have been updated!",
+                        message: "Your card details have been updated!!",
                         snackbarType: SnackbarType.success,
                         context: context,
                       );
+                      PinextCardModel editedCard = PinextCardModel(
+                        cardId: widget.pinextCardModel!.cardId,
+                        title: titleController.text,
+                        description: descriptionController.text,
+                        balance: double.parse(balanceController.text),
+                        color: state.color,
+                        lastTransactionData:
+                            widget.pinextCardModel!.lastTransactionData,
+                      );
+                      log(editedCard.toString());
+                      context.read<CardsAndBalancesCubit>().updateCard(
+                            editedCard,
+                          );
 
                       context.read<AddCardCubit>().reset();
+
                       // PinextCardModel newPinextCard = PinextCardModel(
                       //   cardId: const Uuid().v4().toString(),
                       //   title: state.title,

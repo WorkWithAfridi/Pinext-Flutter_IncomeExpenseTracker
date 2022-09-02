@@ -14,3 +14,6 @@ class CardsAndBalancesSuccessfullyRemovedCardState
 
 class CardsAndBalancesSuccessfullyAddedCardState extends CardsAndBalancesState {
 }
+
+class CardsAndBalancesSuccessfullyEditedCardState
+    extends CardsAndBalancesState {}

@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:pinext/app/models/pinext_card_model.dart';
 
 part 'add_card_state.dart';
 
