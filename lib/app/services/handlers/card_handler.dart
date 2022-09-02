@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pinext/app/API/firebase_directories.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
@@ -77,46 +75,54 @@ class CardHandler {
     return pinextCardModel;
   }
 
-  updateCard(PinextCardModel newVersion) async {
-    DocumentSnapshot userDocument = await FirebaseServices()
-        .firebaseFirestore
-        .collection(USERS_DIRECTORY)
-        .doc(UserHandler().currentUser.userId)
-        .collection(CARDS_DIRECTORY)
-        .doc(newVersion.cardId)
-        .get();
-    PinextCardModel currentVersion =
-        PinextCardModel.fromMap(userDocument.data() as Map<String, dynamic>);
+  Future<String> updateCard(PinextCardModel newVersion) async {
+    try {
+      DocumentSnapshot userDocument = await FirebaseServices()
+          .firebaseFirestore
+          .collection(USERS_DIRECTORY)
+          .doc(UserHandler().currentUser.userId)
+          .collection(CARDS_DIRECTORY)
+          .doc(newVersion.cardId)
+          .get();
+      PinextCardModel currentVersion =
+          PinextCardModel.fromMap(userDocument.data() as Map<String, dynamic>);
 
-    double currentNetBalance =
-        double.parse(UserHandler().currentUser.netBalance);
-    double adjustedNetBalance;
-    if (currentVersion.balance > newVersion.balance) {
-      double toBeAdjustedBalance = currentVersion.balance - newVersion.balance;
-      adjustedNetBalance = currentNetBalance - toBeAdjustedBalance;
-    } else {
-      //  (currentVersion.balance < newVersion.balance)
-      double toBeAdjustedBalance = newVersion.balance - currentVersion.balance;
-      adjustedNetBalance = currentNetBalance + toBeAdjustedBalance;
+      double currentNetBalance =
+          double.parse(UserHandler().currentUser.netBalance);
+      double adjustedNetBalance;
+      if (currentVersion.balance > newVersion.balance) {
+        double toBeAdjustedBalance =
+            currentVersion.balance - newVersion.balance;
+        adjustedNetBalance = currentNetBalance - toBeAdjustedBalance;
+      } else {
+        //  (currentVersion.balance < newVersion.balance)
+        double toBeAdjustedBalance =
+            newVersion.balance - currentVersion.balance;
+        adjustedNetBalance = currentNetBalance + toBeAdjustedBalance;
+      }
+      await UserHandler().updateNetBalance(adjustedNetBalance.toString());
+      await FirebaseServices()
+          .firebaseFirestore
+          .collection(USERS_DIRECTORY)
+          .doc(UserHandler().currentUser.userId)
+          .collection(CARDS_DIRECTORY)
+          .doc(newVersion.cardId)
+          .update(newVersion.toMap());
+
+      userDocument = await FirebaseServices()
+          .firebaseFirestore
+          .collection(USERS_DIRECTORY)
+          .doc(UserHandler().currentUser.userId)
+          .collection(CARDS_DIRECTORY)
+          .doc(newVersion.cardId)
+          .get();
+      currentVersion =
+          PinextCardModel.fromMap(userDocument.data() as Map<String, dynamic>);
+      return "Success";
+    } on FirebaseException catch (err) {
+      return err.message.toString();
+    } catch (err) {
+      return "Snap, an error occurred! Please try again later.";
     }
-    await UserHandler().updateNetBalance(adjustedNetBalance.toString());
-    await FirebaseServices()
-        .firebaseFirestore
-        .collection(USERS_DIRECTORY)
-        .doc(UserHandler().currentUser.userId)
-        .collection(CARDS_DIRECTORY)
-        .doc(newVersion.cardId)
-        .update(newVersion.toMap());
-
-    userDocument = await FirebaseServices()
-        .firebaseFirestore
-        .collection(USERS_DIRECTORY)
-        .doc(UserHandler().currentUser.userId)
-        .collection(CARDS_DIRECTORY)
-        .doc(newVersion.cardId)
-        .get();
-    currentVersion =
-        PinextCardModel.fromMap(userDocument.data() as Map<String, dynamic>);
-    return;
   }
 }

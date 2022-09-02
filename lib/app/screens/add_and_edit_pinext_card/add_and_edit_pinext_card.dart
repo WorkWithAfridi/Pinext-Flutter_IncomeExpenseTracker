@@ -282,115 +282,135 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
             const SizedBox(
               height: 16,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
-              child: BlocConsumer<AddCardCubit, AddCardState>(
-                listener: (context, state) {
-                  if (widget.isEditCardScreen) {
-                    if (state is EditCardErrorState) {
-                      GetCustomSnackbar(
-                        title: "Error",
-                        message: "Sorry! :( Couldnt update your card!",
-                        snackbarType: SnackbarType.error,
-                        context: context,
-                      );
-                      // context.read<AddCardCubit>().reset();
-                    }
-                    if (state is EditCardSuccessState) {
-                      PinextCardModel editedCard = PinextCardModel(
-                        cardId: widget.pinextCardModel!.cardId,
-                        title: titleController.text,
-                        description: descriptionController.text,
-                        balance: double.parse(balanceController.text),
-                        color: state.color,
-                        lastTransactionData:
-                            widget.pinextCardModel!.lastTransactionData,
-                      );
-                      context.read<CardsAndBalancesCubit>().updateCard(
-                            editedCard,
-                          );
-                      Navigator.pop(context);
-                      GetCustomSnackbar(
-                        title: "Success",
-                        message: "Your card details have been updated!!",
-                        snackbarType: SnackbarType.success,
-                        context: context,
-                      );
-
-                      context.read<AddCardCubit>().reset();
-                    }
-                  } else {
-                    if (state is AddCardErrorState) {
-                      ElegantNotification.error(
-                        title: Text(
-                          "ERROR :(",
-                          style: boldTextStyle,
-                        ),
-                        description: Text(
-                          "An error occurred while trying to add you card, please try again later!",
-                          style: regularTextStyle,
-                        ),
-                        width: getWidth(context) * .9,
-                        animationDuration: const Duration(milliseconds: 200),
-                        toastDuration: const Duration(seconds: 5),
-                      ).show(context);
-                      context.read<AddCardCubit>().reset();
-                    }
-                    if (state is AddCardSuccessState) {
-                      PinextCardModel newPinextCard = PinextCardModel(
-                        cardId: const Uuid().v4().toString(),
-                        title: state.title,
-                        description: state.description,
-                        balance: state.balance,
-                        color: state.color,
-                        lastTransactionData: DateTime.now().toString(),
-                      );
-                      if (widget.addCardForSignUpProcess) {
-                        context.read<SigninCubit>().addCard(newPinextCard);
-                      } else {
-                        context
-                            .read<CardsAndBalancesCubit>()
-                            .addCard(newPinextCard);
-                      }
-                      Navigator.pop(context);
-                      GetCustomSnackbar(
-                        title: "Pinext Card added!!",
-                        message: "A new card has been added to your card list.",
-                        snackbarType: SnackbarType.success,
-                        context: context,
-                      );
-                    }
-                  }
-                },
-                builder: (context, state) {
-                  return GetCustomButton(
-                    title: widget.isEditCardScreen
-                        ? "Update Pinext Card"
-                        : "Add Pinext Card",
-                    titleColor: whiteColor,
-                    buttonColor: customBlueColor,
-                    isLoading: false,
-                    callBackFunction: () {
-                      if (widget.isEditCardScreen) {
-                        context.read<AddCardCubit>().updateCardDetails(
-                              titleController.text,
-                              descriptionController.text,
-                              balanceController.text,
-                              isEditCardColor!,
-                            );
-                      } else {
-                        context.read<AddCardCubit>().addCard(
-                              titleController.text,
-                              descriptionController.text,
-                              balanceController.text,
-                              state.color,
-                            );
-                      }
-                    },
+            BlocListener<CardsAndBalancesCubit, CardsAndBalancesState>(
+              listener: (context, state) {
+                if (state is CardsAndBalancesSuccessfullyEditedCardState) {
+                  context.read<AddCardCubit>().reset();
+                  context.read<CardsAndBalancesCubit>().resetState();
+                  Navigator.pop(context);
+                  GetCustomSnackbar(
+                    title: "Success",
+                    message: "Your card details have been updated!!",
+                    snackbarType: SnackbarType.success,
+                    context: context,
                   );
-                },
+
+                  context.read<AddCardCubit>().reset();
+                  context.read<CardsAndBalancesCubit>().resetState();
+                }
+                if (state is CardsAndBalancesFailedToEditedCardState) {
+                  context.read<AddCardCubit>().reset();
+                  context.read<CardsAndBalancesCubit>().resetState();
+                  GetCustomSnackbar(
+                    title: "Error",
+                    message: "Your card details have been updated!!",
+                    snackbarType: SnackbarType.success,
+                    context: context,
+                  );
+                }
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+                child: BlocConsumer<AddCardCubit, AddCardState>(
+                  listener: (context, state) {
+                    if (widget.isEditCardScreen) {
+                      if (state is EditCardErrorState) {
+                        GetCustomSnackbar(
+                          title: "Error",
+                          message: "Sorry! :( Couldnt update your card!",
+                          snackbarType: SnackbarType.error,
+                          context: context,
+                        );
+                        // context.read<AddCardCubit>().reset();
+                      }
+                      if (state is EditCardSuccessState) {
+                        PinextCardModel editedCard = PinextCardModel(
+                          cardId: widget.pinextCardModel!.cardId,
+                          title: titleController.text,
+                          description: descriptionController.text,
+                          balance: double.parse(balanceController.text),
+                          color: state.color,
+                          lastTransactionData:
+                              widget.pinextCardModel!.lastTransactionData,
+                        );
+                        context.read<CardsAndBalancesCubit>().updateCard(
+                              editedCard,
+                            );
+                      }
+                    } else {
+                      if (state is AddCardErrorState) {
+                        ElegantNotification.error(
+                          title: Text(
+                            "ERROR :(",
+                            style: boldTextStyle,
+                          ),
+                          description: Text(
+                            "An error occurred while trying to add you card, please try again later!",
+                            style: regularTextStyle,
+                          ),
+                          width: getWidth(context) * .9,
+                          animationDuration: const Duration(milliseconds: 200),
+                          toastDuration: const Duration(seconds: 5),
+                        ).show(context);
+                        context.read<AddCardCubit>().reset();
+                      }
+                      if (state is AddCardSuccessState) {
+                        PinextCardModel newPinextCard = PinextCardModel(
+                          cardId: const Uuid().v4().toString(),
+                          title: state.title,
+                          description: state.description,
+                          balance: state.balance,
+                          color: state.color,
+                          lastTransactionData: DateTime.now().toString(),
+                        );
+                        if (widget.addCardForSignUpProcess) {
+                          context.read<SigninCubit>().addCard(newPinextCard);
+                        } else {
+                          context
+                              .read<CardsAndBalancesCubit>()
+                              .addCard(newPinextCard);
+                        }
+                        Navigator.pop(context);
+                        GetCustomSnackbar(
+                          title: "Pinext Card added!!",
+                          message:
+                              "A new card has been added to your card list.",
+                          snackbarType: SnackbarType.success,
+                          context: context,
+                        );
+                      }
+                    }
+                  },
+                  builder: (context, state) {
+                    return GetCustomButton(
+                      title: widget.isEditCardScreen
+                          ? "Update Pinext Card"
+                          : "Add Pinext Card",
+                      titleColor: whiteColor,
+                      buttonColor: customBlueColor,
+                      isLoading: state is AddCardDefaultState ? false : true,
+                      callBackFunction: () {
+                        if (widget.isEditCardScreen) {
+                          context.read<AddCardCubit>().updateCardDetails(
+                                titleController.text,
+                                descriptionController.text,
+                                balanceController.text,
+                                isEditCardColor!,
+                              );
+                        } else {
+                          context.read<AddCardCubit>().addCard(
+                                titleController.text,
+                                descriptionController.text,
+                                balanceController.text,
+                                state.color,
+                              );
+                        }
+                      },
+                    );
+                  },
+                ),
               ),
-            )
+            ),
           ],
         ),
       ),

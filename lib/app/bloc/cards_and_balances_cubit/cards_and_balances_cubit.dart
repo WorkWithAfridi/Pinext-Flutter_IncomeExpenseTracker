@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
@@ -31,8 +29,11 @@ class CardsAndBalancesCubit extends Cubit<CardsAndBalancesState> {
   }
 
   updateCard(PinextCardModel pinextCardModel) async {
-    await CardHandler().updateCard(pinextCardModel);
-
-    emit(CardsAndBalancesSuccessfullyEditedCardState());
+    String response = await CardHandler().updateCard(pinextCardModel);
+    if (response == "Success") {
+      emit(CardsAndBalancesSuccessfullyEditedCardState());
+    } else {
+      emit(CardsAndBalancesFailedToEditedCardState(errorMessage: response));
+    }
   }
 }
