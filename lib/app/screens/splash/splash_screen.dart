@@ -121,7 +121,7 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "P i n e x t",
+              "Pinext",
               style: boldTextStyle.copyWith(
                 fontSize: 50,
                 color: whiteColor,
