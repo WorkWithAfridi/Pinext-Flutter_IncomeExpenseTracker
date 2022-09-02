@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
 import 'package:pinext/app/services/firebase_services.dart';
+import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 
 import '../../../app_data/app_constants/constants.dart';
 import '../../../app_data/app_constants/domentions.dart';
@@ -69,7 +70,7 @@ class HomepageView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(
-                    height: 16,
+                    height: 8,
                   ),
                   Text(
                     "Good morning,",
@@ -771,6 +772,15 @@ class MenuFilterPill extends StatelessWidget {
       padding: const EdgeInsets.only(right: 10),
       child: GestureDetector(
         onTap: () {
+          if (filtertitle != "Overview") {
+            GetCustomSnackbar(
+              title: "Snap",
+              message:
+                  "This section is still under development and will be added at a later date!",
+              snackbarType: SnackbarType.info,
+              context: context,
+            );
+          }
           context.read<HomepageCubit>().changeMenuFilter(
                 filtertitle,
               );

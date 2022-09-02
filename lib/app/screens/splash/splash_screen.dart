@@ -116,11 +116,19 @@ class _SplashScreenState extends State<SplashScreen> {
       body: SizedBox(
         height: getHeight(context),
         width: getWidth(context),
-        child: Center(
-          child: Text(
-            "Pinext",
-            style: boldTextStyle.copyWith(fontSize: 50, color: whiteColor),
-          ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "P i n e x t",
+              style: boldTextStyle.copyWith(
+                fontSize: 50,
+                color: whiteColor,
+                height: .9,
+              ),
+            ),
+          ],
         ),
       ),
     );

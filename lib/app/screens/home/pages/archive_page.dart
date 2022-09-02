@@ -61,7 +61,7 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(
-                height: 16,
+                height: 8,
               ),
               Text(
                 "Pinext",

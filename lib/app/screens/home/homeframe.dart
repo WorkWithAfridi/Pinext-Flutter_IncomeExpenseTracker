@@ -182,6 +182,7 @@ class PinextDrawer extends StatelessWidget {
                       Text(
                         "Pinext",
                         style: regularTextStyle.copyWith(
+                          height: .9,
                           color: customBlackColor.withOpacity(.6),
                         ),
                       ),
@@ -189,6 +190,23 @@ class PinextDrawer extends StatelessWidget {
                         "Space",
                         style: boldTextStyle.copyWith(
                           fontSize: 25,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      Text(
+                        "By",
+                        style: regularTextStyle.copyWith(
+                          fontSize: 12,
+                          color: customBlackColor.withOpacity(.4),
+                        ),
+                      ),
+                      Text(
+                        "KYOTO",
+                        style: regularTextStyle.copyWith(
+                          fontSize: 14,
+                          color: customBlackColor.withOpacity(.4),
                         ),
                       ),
                       const SizedBox(

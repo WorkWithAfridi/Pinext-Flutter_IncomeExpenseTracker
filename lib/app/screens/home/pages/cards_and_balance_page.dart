@@ -44,7 +44,7 @@ class CardsAndBalanceView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(
-              height: 16,
+              height: 8,
             ),
             Text(
               "Pinext",
@@ -163,9 +163,59 @@ class CardsAndBalanceView extends StatelessWidget {
                       return PinextCardMinimized(
                         pinextCardModel: pinextCardModel,
                         onDeleteButtonClick: () {
-                          context
-                              .read<CardsAndBalancesCubit>()
-                              .removeCard(pinextCardModel);
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: Text(
+                                    'Delete card?',
+                                    style: boldTextStyle.copyWith(
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                  content: SingleChildScrollView(
+                                    child: ListBody(
+                                      children: [
+                                        Text(
+                                          "You're about to delete this card from your pinext account! Are you sure you want to do that??",
+                                          style: regularTextStyle,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.circular(defaultBorder),
+                                  ),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      child: const Text('Approve'),
+                                      onPressed: () {
+                                        context
+                                            .read<CardsAndBalancesCubit>()
+                                            .removeCard(pinextCardModel);
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                    TextButton(
+                                      child: Text(
+                                        'Cancel',
+                                        style: boldTextStyle.copyWith(
+                                          color: customBlackColor.withOpacity(
+                                            .8,
+                                          ),
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ],
+                                  actionsPadding: const EdgeInsets.symmetric(
+                                    horizontal: defaultPadding,
+                                  ),
+                                );
+                              });
                         },
                         onEditButtonClick: () {
                           Navigator.push(
