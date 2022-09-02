@@ -2,13 +2,13 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pinext/app/screens/add_and_edit_pinext_card/add_and_edit_pinext_card.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 import 'package:pinext/app/shared/widgets/pinext_card_minimized.dart';
 
 import '../../../app_data/app_constants/constants.dart';
 import '../../../app_data/app_constants/domentions.dart';
 import '../../../app_data/app_constants/fonts.dart';
+import '../../../app_data/custom_transition_page_route/custom_transition_page_route.dart';
 import '../../../app_data/routing/routes.dart';
 import '../../../app_data/theme_data/colors.dart';
 import '../../../bloc/signup_cubit/signin_cubit_cubit.dart';
@@ -16,6 +16,7 @@ import '../../../bloc/userBloc/user_bloc.dart';
 import '../../../models/pinext_card_model.dart';
 import '../../../shared/widgets/custom_button.dart';
 import '../../../shared/widgets/custom_text_field.dart';
+import '../../add_and_edit_pinext_card/add_and_edit_pinext_card.dart';
 
 class CardsAndBalancesRegistrationPage extends StatelessWidget {
   CardsAndBalancesRegistrationPage({
@@ -139,20 +140,20 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
             const SizedBox(
               height: 4,
             ),
+            GetCustomTextField(
+              controller: monthlyBudgetController,
+              hintTitle: "Enter your monthly budget",
+              textInputType: TextInputType.number,
+              onChanged: (String value) {},
+            ),
+            const SizedBox(
+              height: 4,
+            ),
             Text(
               "*This is the maximum amount of CASH you'll be spending in one month!",
               style: regularTextStyle.copyWith(
                 color: customBlackColor.withOpacity(.4),
               ),
-            ),
-            const SizedBox(
-              height: 4,
-            ),
-            GetCustomTextField(
-              controller: monthlyBudgetController,
-              hintTitle: "Enter your monthly budget",
-              textInputType: TextInputType.number,
-              onChanged: () {},
             ),
             const SizedBox(
               height: 8,
@@ -168,7 +169,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
               controller: budgetSpentSoFarController,
               hintTitle: "Budget spent so far...",
               textInputType: TextInputType.number,
-              onChanged: () {},
+              onChanged: (String value) {},
             ),
             const SizedBox(
               height: 16,
@@ -232,20 +233,13 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                // context.read<SigninCubit>().addCard(PinextCardModel(
-                //     title: "title",
-                //     description: "description",
-                //     balance: 0.00,
-                //     color: "Black",
-                //     lastTransactionData: DateTime.now().toString()));
                 Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => AddAndEditPinextCardScreen(
-                      addCardForSignUpProcess: true,
-                    ),
-                  ),
-                );
+                    context,
+                    CustomTransitionPageRoute(
+                      childWidget: AddAndEditPinextCardScreen(
+                        addCardForSignUpProcess: true,
+                      ),
+                    ));
               },
               child: Container(
                 height: 100,
@@ -288,6 +282,15 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                     ),
                   ],
                 ),
+              ),
+            ),
+            const SizedBox(
+              height: 4,
+            ),
+            Text(
+              "*You will be using these cards to keep a track on your money sources, be it either income or expenses.",
+              style: regularTextStyle.copyWith(
+                color: customBlackColor.withOpacity(.4),
               ),
             ),
             const SizedBox(

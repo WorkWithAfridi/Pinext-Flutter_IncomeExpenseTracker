@@ -1,10 +1,10 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:pinext/app/app_data/custom_transition_page_route/custom_transition_page_route.dart';
 import 'package:pinext/app/screens/add_transaction/add_transaction.dart';
 import 'package:pinext/app/screens/home/homeframe.dart';
 
-import '../../screens/add_and_edit_pinext_card/add_and_edit_pinext_card.dart';
 import '../../screens/signin/signin_screen.dart';
 import '../../screens/signup/signup_screen.dart';
 import '../../screens/splash/splash_screen.dart';
@@ -13,29 +13,26 @@ class ROUTECONTROLLER {
   static Route<dynamic> routeController(RouteSettings settings) {
     switch (settings.name) {
       case ROUTES.getSplashRoute:
-        return MaterialPageRoute(
-          builder: (context) => const SplashScreen(),
+        return CustomTransitionPageRoute(
+          childWidget: const SplashScreen(),
         );
+
       case ROUTES.getLoginRoute:
-        return MaterialPageRoute(
-          builder: (context) => const SigninScreen(),
+        return CustomTransitionPageRoute(
+          childWidget: const SigninScreen(),
         );
       case ROUTES.getSignupRoute:
-        return MaterialPageRoute(
-          builder: (context) => const SignupScreen(),
+        return CustomTransitionPageRoute(
+          childWidget: const SignupScreen(),
         );
       case ROUTES.getHomeframeRoute:
-        return MaterialPageRoute(
-          builder: (context) => const Homeframe(),
+        return CustomTransitionPageRoute(
+          childWidget: const Homeframe(),
         );
       case ROUTES.getAddTransactionsRoute:
-        return MaterialPageRoute(
-          builder: (context) =>  AddTransactionScreen(),
+        return CustomTransitionPageRoute(
+          childWidget: AddTransactionScreen(),
         );
-      // case ROUTES.getAddPinextCardRoute:
-      //   return MaterialPageRoute(
-      //     builder: (context) => AddAndEditPinextCardScreen(),
-      //   );
       default:
         log(settings.name.toString());
         throw ("Not a valid route ");

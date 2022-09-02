@@ -82,8 +82,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         ));
       }
     });
-    on<SignOutUserEvent>(((event, emit) {
-      bool isSignedOut = AuthenticationServices().signOutUser();
+    on<SignOutUserEvent>(((event, emit) async {
+      bool isSignedOut = await AuthenticationServices().signOutUser();
       if (isSignedOut) {
         emit(UnauthenticatedUserState());
       } else {

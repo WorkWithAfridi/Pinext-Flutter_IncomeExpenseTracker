@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/app_data/routing/routes.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
+import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/screens/home/pages/archive_page.dart';
 import 'package:pinext/app/screens/home/pages/cards_and_balance_page.dart';
 import 'package:pinext/app/screens/home/pages/home_page.dart';
@@ -207,6 +208,7 @@ class PinextDrawer extends StatelessWidget {
                     bool userSignedOutSuccessfully =
                         await AuthenticationServices().signOutUser();
                     if (userSignedOutSuccessfully) {
+                      context.read<UserBloc>().add(SignOutUserEvent());
                       Navigator.pushNamedAndRemoveUntil(
                         context,
                         ROUTES.getLoginRoute,

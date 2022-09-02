@@ -85,7 +85,7 @@ class _SigninScreenViewState extends State<SigninScreenView> {
               GetCustomTextField(
                 controller: emailController,
                 hintTitle: "Username or email",
-                onChanged: () {},
+                onChanged: (String value) {},
               ),
               const SizedBox(
                 height: 8,
@@ -94,7 +94,7 @@ class _SigninScreenViewState extends State<SigninScreenView> {
                 controller: passwordController,
                 hintTitle: "Password",
                 isPassword: true,
-                onChanged: () {},
+                onChanged: (String value) {},
               ),
               const SizedBox(
                 height: 16,

@@ -287,7 +287,9 @@ class HomepageView extends StatelessWidget {
                       children: [
                         Text(
                           "You've saved",
-                          style: regularTextStyle,
+                          style: regularTextStyle.copyWith(
+                            color: customBlackColor.withOpacity(.6),
+                          ),
                         ),
                         const SizedBox(
                           height: 4,
@@ -316,7 +318,7 @@ class HomepageView extends StatelessWidget {
                         Text(
                           "in ${months[int.parse(currentMonth) - 1]} alone!!",
                           style: regularTextStyle.copyWith(
-                            color: customBlackColor,
+                            color: customBlackColor.withOpacity(.6),
                           ),
                         ),
                       ],

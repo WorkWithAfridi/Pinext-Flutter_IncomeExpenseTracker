@@ -56,7 +56,7 @@ class UserRegistrationPage extends StatelessWidget {
             GetCustomTextField(
               controller: userNameController,
               hintTitle: "Enter username...",
-              onChanged: () {},
+                onChanged: (String value) {},
             ),
             const SizedBox(
               height: 8,
@@ -64,7 +64,7 @@ class UserRegistrationPage extends StatelessWidget {
             GetCustomTextField(
               controller: emailController,
               hintTitle: "Enter email address...",
-              onChanged: () {},
+                onChanged: (String value) {},
             ),
             const SizedBox(
               height: 8,
@@ -73,7 +73,7 @@ class UserRegistrationPage extends StatelessWidget {
               controller: passwordController,
               hintTitle: "Password",
               isPassword: true,
-              onChanged: () {},
+                onChanged: (String value) {},
             ),
             const SizedBox(
               height: 16,
