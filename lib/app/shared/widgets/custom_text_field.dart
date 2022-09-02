@@ -67,7 +67,7 @@ class GetCustomTextField extends StatelessWidget {
         enabledBorder: OutlineInputBorder(
           borderSide: Divider.createBorderSide(
             context,
-            color: customBlackColor.withOpacity(.2),
+            color: customBlackColor.withOpacity(.1),
             width: 2,
           ),
           borderRadius: BorderRadius.circular(
