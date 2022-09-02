@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/bloc/signup_cubit/signin_cubit_cubit.dart';
@@ -83,9 +81,7 @@ class _SignupScreenViewState extends State<SignupScreenView> {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: Icon(
-            Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back,
-          ),
+          icon: const Icon(Icons.close),
         ),
       ),
       body: BlocBuilder<SigninCubit, SigninState>(

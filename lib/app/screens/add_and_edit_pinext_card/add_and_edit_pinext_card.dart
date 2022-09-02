@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:elegant_notification/elegant_notification.dart';
 import 'package:flutter/material.dart';
@@ -102,9 +101,7 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: Icon(
-            Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back,
-          ),
+          icon: const Icon(Icons.close),
         ),
         title: Text(
           widget.isEditCardScreen

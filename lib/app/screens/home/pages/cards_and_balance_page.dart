@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/API/firebase_directories.dart';
+import 'package:pinext/app/app_data/custom_transition_page_route/custom_transition_page_route.dart';
 import 'package:pinext/app/bloc/cards_and_balances_cubit/cards_and_balances_cubit.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 
@@ -168,14 +169,13 @@ class CardsAndBalanceView extends StatelessWidget {
                         },
                         onEditButtonClick: () {
                           Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => AddAndEditPinextCardScreen(
-                                isEditCardScreen: true,
-                                pinextCardModel: pinextCardModel,
-                              ),
-                            ),
-                          );
+                              context,
+                              CustomTransitionPageRoute(
+                                childWidget: AddAndEditPinextCardScreen(
+                                  isEditCardScreen: true,
+                                  pinextCardModel: pinextCardModel,
+                                ),
+                              ));
                         },
                       );
                     }),

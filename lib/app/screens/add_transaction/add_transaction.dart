@@ -98,13 +98,7 @@ class _AddTransactionViewState extends State<AddTransactionView> {
               Navigator.pop(context);
             }
           },
-          icon: Icon(
-            widget.isAQuickAction
-                ? Icons.close
-                : Platform.isIOS
-                    ? Icons.arrow_back_ios
-                    : Icons.arrow_back,
-          ),
+          icon: const Icon(Icons.close),
         ),
         title: Text(
           "Adding a new Transaction",
