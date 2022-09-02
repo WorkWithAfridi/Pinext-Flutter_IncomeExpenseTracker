@@ -37,8 +37,8 @@ List homeframePages = [
   const CardsAndBalancePage(),
   Center(
     child: Text(
-      "The app is still under development.\nStay tuned for future updates!",
-      style: regularTextStyle,
+      "The section is still under development.\nPlease standby for future updates!",
+      style: regularTextStyle.copyWith(color: customBlackColor.withOpacity(.2)),
       textAlign: TextAlign.center,
     ),
   ),
