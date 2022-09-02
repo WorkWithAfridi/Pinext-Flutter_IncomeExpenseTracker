@@ -32,7 +32,7 @@ class CardsAndBalancesCubit extends Cubit<CardsAndBalancesState> {
 
   updateCard(PinextCardModel pinextCardModel) async {
     await CardHandler().updateCard(pinextCardModel);
-    log("here");
+
     emit(CardsAndBalancesSuccessfullyEditedCardState());
   }
 }

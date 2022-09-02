@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:pinext/app/models/pinext_card_model.dart';
 
 part 'add_card_state.dart';
 
@@ -67,19 +66,19 @@ class AddCardCubit extends Cubit<AddCardState> {
     if (title.isNotEmpty && description.isNotEmpty && balance.isNotEmpty) {
       emit(
         EditCardSuccessState(
-          title: title,
-          description: description,
+          title: title.toString(),
+          description: description.toString(),
           balance: double.parse(balance),
-          color: color,
+          color: color.toString(),
         ),
       );
     } else {
       emit(
         EditCardErrorState(
-          title: state.title,
-          description: state.description,
-          balance: state.balance,
-          color: state.color,
+          title: title.toString(),
+          description: description.toString(),
+          balance: double.parse(balance),
+          color: color.toString(),
         ),
       );
     }
@@ -89,8 +88,8 @@ class AddCardCubit extends Cubit<AddCardState> {
     if (title.isNotEmpty && description.isNotEmpty && balance.isNotEmpty) {
       emit(
         AddCardSuccessState(
-          title: title,
-          description: description,
+          title: title.toString(),
+          description: description.toString(),
           balance: double.parse(balance),
           color: color,
         ),

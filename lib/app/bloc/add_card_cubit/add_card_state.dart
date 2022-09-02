@@ -28,6 +28,13 @@ class AddCardDefaultState extends AddCardState {
     required super.balance,
     required super.color,
   });
+  @override
+  List<Object> get props => [
+        title,
+        description,
+        balance,
+        color,
+      ];
 }
 
 class AddCardErrorState extends AddCardState {
@@ -37,6 +44,13 @@ class AddCardErrorState extends AddCardState {
     required super.balance,
     required super.color,
   });
+  @override
+  List<Object> get props => [
+        title,
+        description,
+        balance,
+        color,
+      ];
 }
 
 class AddCardSuccessState extends AddCardState {
@@ -55,6 +69,13 @@ class EditCardErrorState extends AddCardState {
     required super.balance,
     required super.color,
   });
+  @override
+  List<Object> get props => [
+        title,
+        description,
+        balance,
+        color,
+      ];
 }
 
 class EditCardSuccessState extends AddCardState {
@@ -64,4 +85,11 @@ class EditCardSuccessState extends AddCardState {
     required super.balance,
     required super.color,
   });
+  @override
+  List<Object> get props => [
+        title,
+        description,
+        balance,
+        color,
+      ];
 }

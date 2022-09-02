@@ -143,7 +143,7 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                     controller: titleController,
                     hintTitle: "Enter title",
                     textInputType: TextInputType.text,
-                    onChanged: () {},
+                    onChanged: (String value) {},
                   ),
                   const SizedBox(
                     height: 16,
@@ -164,7 +164,7 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                     hintTitle: "Enter description",
                     numberOfLines: 5,
                     textInputType: TextInputType.text,
-                    onChanged: () {},
+                    onChanged: (String value) {},
                   ),
                   const SizedBox(
                     height: 16,
@@ -184,7 +184,7 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                     controller: balanceController,
                     hintTitle: "Enter card balance",
                     textInputType: TextInputType.number,
-                    onChanged: () {},
+                    onChanged: (String value) {},
                   ),
                   const SizedBox(
                     height: 16,
@@ -297,12 +297,6 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                       // context.read<AddCardCubit>().reset();
                     }
                     if (state is EditCardSuccessState) {
-                      GetCustomSnackbar(
-                        title: "Success",
-                        message: "Your card details have been updated!!",
-                        snackbarType: SnackbarType.success,
-                        context: context,
-                      );
                       PinextCardModel editedCard = PinextCardModel(
                         cardId: widget.pinextCardModel!.cardId,
                         title: titleController.text,
@@ -312,35 +306,18 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                         lastTransactionData:
                             widget.pinextCardModel!.lastTransactionData,
                       );
-                      log(editedCard.toString());
                       context.read<CardsAndBalancesCubit>().updateCard(
                             editedCard,
                           );
+                      Navigator.pop(context);
+                      GetCustomSnackbar(
+                        title: "Success",
+                        message: "Your card details have been updated!!",
+                        snackbarType: SnackbarType.success,
+                        context: context,
+                      );
 
                       context.read<AddCardCubit>().reset();
-
-                      // PinextCardModel newPinextCard = PinextCardModel(
-                      //   cardId: const Uuid().v4().toString(),
-                      //   title: state.title,
-                      //   description: state.description,
-                      //   balance: state.balance,
-                      //   color: state.color,
-                      //   lastTransactionData: DateTime.now().toString(),
-                      // );
-                      // if (widget.addCardForSignUpProcess) {
-                      //   context.read<SigninCubit>().addCard(newPinextCard);
-                      // } else {
-                      //   context
-                      //       .read<CardsAndBalancesCubit>()
-                      //       .addCard(newPinextCard);
-                      // }
-                      // Navigator.pop(context);
-                      // GetCustomSnackbar(
-                      //   title: "Pinext Card added!!",
-                      //   message: "A new card has been added to your card list.",
-                      //   snackbarType: SnackbarType.success,
-                      //   context: context,
-                      // );
                     }
                   } else {
                     if (state is AddCardErrorState) {
