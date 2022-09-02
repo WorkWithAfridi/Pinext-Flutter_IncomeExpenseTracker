@@ -207,8 +207,8 @@ class CardsAndBalanceView extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => AddAndEditPinextCardScreen(),
+                    CustomTransitionPageRoute(
+                      childWidget: AddAndEditPinextCardScreen(),
                     ),
                   );
                 },

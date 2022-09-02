@@ -145,16 +145,22 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
             ),
           ),
         ),
-        const TransactionsList()
+        TransactionsList()
       ],
     );
   }
 }
 
 class TransactionsList extends StatelessWidget {
-  const TransactionsList({
+  TransactionsList({
     Key? key,
   }) : super(key: key);
+
+  List<String> filters = [
+    "All transactions",
+    "Income",
+    "Expenses",
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -168,7 +174,7 @@ class TransactionsList extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(
-                height: 16,
+                height: 8,
               ),
               BlocBuilder<ArchiveCubit, ArchiveState>(
                 builder: (context, state) {
@@ -196,52 +202,64 @@ class TransactionsList extends StatelessWidget {
                         );
                       }
                       if (snapshot.data!.docs.isEmpty) {
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Results for",
-                              style: regularTextStyle.copyWith(
-                                color: customBlackColor.withOpacity(.4),
-                                fontSize: 12,
-                              ),
+                        return Center(
+                          child: Text(
+                            "No data found! :(",
+                            style: regularTextStyle.copyWith(
+                              color: customBlackColor.withOpacity(.2),
                             ),
-                            Text(
-                              "Transactions in ${months[int.parse(state.selectedMonth)]}",
-                              style: boldTextStyle.copyWith(
-                                fontSize: 25,
-                                color: customBlackColor,
-                                height: 1.1,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 4,
-                            ),
-                            Text(
-                              "No data found! :(",
-                              style: regularTextStyle.copyWith(
-                                color: customBlackColor.withOpacity(.4),
-                              ),
-                            ),
-                          ],
+                          ),
                         );
                       }
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            "Results for",
-                            style: regularTextStyle.copyWith(
-                              color: customBlackColor.withOpacity(.4),
-                              fontSize: 12,
-                            ),
-                          ),
-                          Text(
-                            "Transactions in ${months[int.parse(state.selectedMonth)]}",
-                            style: boldTextStyle.copyWith(
-                              fontSize: 25,
-                              color: customBlackColor,
-                              height: 1.1,
+                          SizedBox(
+                            child: Wrap(
+                              spacing: 5,
+                              runSpacing: -8,
+                              children: [
+                                ...List.generate(
+                                  filters.length,
+                                  (index) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        String selectedFilter =
+                                            filters[index].toString();
+                                        if (state.selectedFilter !=
+                                            selectedFilter) {
+                                          context
+                                              .read<ArchiveCubit>()
+                                              .changeFilter(selectedFilter);
+                                        } else {
+                                          context
+                                              .read<ArchiveCubit>()
+                                              .changeFilter(
+                                                "All transactions",
+                                              );
+                                        }
+                                      },
+                                      child: Chip(
+                                        elevation: 0,
+                                        label: Text(
+                                          filters[index].toString(),
+                                          style: regularTextStyle.copyWith(
+                                            color: filters[index] ==
+                                                    state.selectedFilter
+                                                ? whiteColor
+                                                : customBlackColor
+                                                    .withOpacity(.6),
+                                          ),
+                                        ),
+                                        backgroundColor: filters[index] ==
+                                                state.selectedFilter
+                                            ? customBlueColor
+                                            : greyColor,
+                                      ),
+                                    );
+                                  },
+                                ).toList(),
+                              ],
                             ),
                           ),
                           Padding(
@@ -255,14 +273,29 @@ class TransactionsList extends StatelessWidget {
                                 if (snapshot.data!.docs.isEmpty) {
                                   return const Text("No data found! :(");
                                 }
-
                                 PinextTransactionModel pinextTransactionModel =
                                     PinextTransactionModel.fromMap(
                                   snapshot.data!.docs[index].data(),
                                 );
-                                return TransactionDetailsCard(
-                                    pinextTransactionModel:
-                                        pinextTransactionModel);
+                                if (state.selectedFilter ==
+                                    "All transactions") {
+                                  return TransactionDetailsCard(
+                                      pinextTransactionModel:
+                                          pinextTransactionModel);
+                                } else if (state.selectedFilter == "Income" &&
+                                    pinextTransactionModel.transactionType ==
+                                        "Income") {
+                                  return TransactionDetailsCard(
+                                      pinextTransactionModel:
+                                          pinextTransactionModel);
+                                } else if (state.selectedFilter == "Expenses" &&
+                                    pinextTransactionModel.transactionType ==
+                                        "Expense") {
+                                  return TransactionDetailsCard(
+                                      pinextTransactionModel:
+                                          pinextTransactionModel);
+                                }
+                                return const SizedBox.shrink();
                               }),
                             ),
                           )

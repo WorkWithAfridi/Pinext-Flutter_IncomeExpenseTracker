@@ -12,6 +12,7 @@ class ArchiveCubit extends Cubit<ArchiveState> {
                     ) -
                     1)
                 .toString(),
+            selectedFilter: "All transactions",
           ),
         );
 
@@ -19,6 +20,16 @@ class ArchiveCubit extends Cubit<ArchiveState> {
     emit(
       ArchiveInitialState(
         selectedMonth: selectedMonth,
+        selectedFilter: "All transactions",
+      ),
+    );
+  }
+
+  changeFilter(String selectedFilter) {
+    emit(
+      ArchiveInitialState(
+        selectedMonth: state.selectedMonth,
+        selectedFilter: selectedFilter,
       ),
     );
   }
