@@ -167,7 +167,7 @@ class HomepageView extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Your budget for August",
+                              "Your budget for ${months[int.parse(currentMonth) - 1]}",
                               style: regularTextStyle,
                             ),
                             BlocBuilder<UserBloc, UserState>(
@@ -317,7 +317,7 @@ class HomepageView extends StatelessWidget {
                           height: 4,
                         ),
                         Text(
-                          "in ${months[int.parse(currentMonth) - 1]} alone!!",
+                          "in ${months[int.parse(currentMonth) - 1]}.",
                           style: regularTextStyle.copyWith(
                             color: customBlackColor.withOpacity(.6),
                           ),
