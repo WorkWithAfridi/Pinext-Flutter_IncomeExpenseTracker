@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mccounting_text/mccounting_text.dart';
 import 'package:pinext/app/API/firebase_directories.dart';
 import 'package:pinext/app/app_data/custom_transition_page_route/custom_transition_page_route.dart';
 import 'package:pinext/app/bloc/cards_and_balances_cubit/cards_and_balances_cubit.dart';
@@ -88,14 +89,29 @@ class CardsAndBalanceView extends StatelessWidget {
                     builder: (context, state) {
                       if (state is AuthenticatedUserState) {
                         return FittedBox(
-                          child: Text(
-                            state.netBalance,
+                          child: McCountingText(
+                            begin: 0,
+                            end: double.parse(state.netBalance),
+                            maxLines: 1,
+                            precision: 2,
                             style: boldTextStyle.copyWith(
                               color: whiteColor,
                               fontSize: 50,
                             ),
+                            duration: const Duration(seconds: 3),
+                            curve: Curves.fastOutSlowIn,
                           ),
                         );
+
+                        // FittedBox(
+                        //   child: Text(
+                        //     state.netBalance,
+                        //     style: boldTextStyle.copyWith(
+                        //       color: whiteColor,
+                        //       fontSize: 50,
+                        //     ),
+                        //   ),
+                        // );
                       } else {
                         return const SizedBox.shrink();
                       }

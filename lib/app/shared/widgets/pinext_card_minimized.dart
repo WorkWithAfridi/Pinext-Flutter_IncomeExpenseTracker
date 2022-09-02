@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mccounting_text/mccounting_text.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -73,14 +74,28 @@ class PinextCardMinimized extends StatelessWidget {
                             color: customBlackColor.withOpacity(.4),
                           ),
                         ),
-                        Text(
-                          pinextCardModel.balance.toString(),
-                          style: const TextStyle(
+
+                        McCountingText(
+                          begin: 0,
+                          end: double.parse(pinextCardModel.balance.toString()),
+                          maxLines: 1,
+                          precision: 2,
+                          style: boldTextStyle.copyWith(
                             fontWeight: FontWeight.bold,
                             fontSize: 20,
                             color: customBlackColor,
                           ),
+                          duration: const Duration(seconds: 3),
+                          curve: Curves.fastOutSlowIn,
                         ),
+                        // Text(
+                        //   pinextCardModel.balance.toString(),
+                        //   style: const TextStyle(
+                        //     fontWeight: FontWeight.bold,
+                        //     fontSize: 20,
+                        //     color: customBlackColor,
+                        //   ),
+                        // ),
                       ],
                     )
                   ],

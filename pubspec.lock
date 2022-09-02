@@ -282,6 +282,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.4"
+  mccounting_text:
+    dependency: "direct main"
+    description:
+      name: mccounting_text
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   meta:
     dependency: transitive
     description:
