@@ -4,8 +4,10 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_intro/flutter_intro.dart';
 import 'package:pinext/app/API/firebase_directories.dart';
 import 'package:pinext/app/app_data/appVersion.dart';
+import 'package:pinext/app/app_data/app_constants/app_labels.dart';
 import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/app_data/routing/routes.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
@@ -97,6 +99,18 @@ class _HomeframeState extends State<Homeframe> {
   void initState() {
     super.initState();
     checkForUpdate();
+    triggerIntroduction();
+  }
+
+  triggerIntroduction() async {
+    await Future.delayed(const Duration(seconds: 1)).then((_) {
+      Intro.of(context).start();
+    });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
   }
 
   @override
@@ -137,10 +151,17 @@ class HomeframeView extends StatelessWidget {
           onPressed: () {
             scaffoldKey.currentState!.openDrawer();
           },
-          icon: const Icon(
-            Icons.menu,
-            color: customBlackColor,
-          ),
+          icon: IntroStepBuilder(
+              order: 6,
+              text:
+                  "This is the App Drawer. You can access quick actions through this button!",
+              builder: (context, key) {
+                return Icon(
+                  key: key,
+                  Icons.menu,
+                  color: customBlackColor,
+                );
+              }),
         ),
       ),
       drawer: const PinextDrawer(),
@@ -157,29 +178,36 @@ class HomeframeView extends StatelessWidget {
           );
         },
       ),
-      floatingActionButton: BlocBuilder<HomeframeCubit, HomeframeState>(
-        builder: (context, state) {
-          return state.selectedIndex == 0
-              ? FloatingActionButton(
-                  onPressed: () {
-                    Navigator.pushNamed(
-                      context,
-                      ROUTES.getAddTransactionsRoute,
-                    );
-                  },
-                  backgroundColor: customBlackColor,
-                  child: const Icon(
-                    Icons.add,
-                    color: whiteColor,
-                  ),
-                )
-              : const SizedBox.shrink();
-        },
-      ),
+      floatingActionButton: IntroStepBuilder(
+          order: 1,
+          text: intro_label_one,
+          builder: (context, key) {
+            return BlocBuilder<HomeframeCubit, HomeframeState>(
+              key: key,
+              builder: (context, state) {
+                return state.selectedIndex == 0
+                    ? FloatingActionButton(
+                        onPressed: () {
+                          Navigator.pushNamed(
+                            context,
+                            ROUTES.getAddTransactionsRoute,
+                          );
+                        },
+                        backgroundColor: customBlackColor,
+                        child: const Icon(
+                          Icons.add,
+                          color: whiteColor,
+                        ),
+                      )
+                    : const SizedBox.shrink();
+              },
+            );
+          }),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
       bottomNavigationBar: BlocBuilder<HomeframeCubit, HomeframeState>(
         builder: (context, state) {
           return BottomNavigationBar(
+            key: key,
             currentIndex: state.selectedIndex,
             onTap: (value) {
               context.read<HomeframeCubit>().changeHomeframePage(value);
@@ -189,27 +217,53 @@ class HomeframeView extends StatelessWidget {
             type: BottomNavigationBarType.fixed,
             showSelectedLabels: false,
             showUnselectedLabels: false,
-            items: const [
+            items: [
               BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.home,
-                ),
+                icon: IntroStepBuilder(
+                    order: 2,
+                    text: intro_label_two,
+                    builder: (context, key) {
+                      return Icon(
+                        key: key,
+                        Icons.home,
+                      );
+                    }),
                 label: "Home",
               ),
               BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.list,
-                ),
+                icon: IntroStepBuilder(
+                    order: 3,
+                    text: intro_label_three,
+                    builder: (context, key) {
+                      return Icon(
+                        key: key,
+                        Icons.list,
+                      );
+                    }),
                 label: "Archive",
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.wallet),
+                icon: IntroStepBuilder(
+                    order: 4,
+                    text: intro_label_four,
+                    builder: (context, key) {
+                      return Icon(
+                        key: key,
+                        Icons.wallet,
+                      );
+                    }),
                 label: "Wallet",
               ),
               BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.person,
-                ),
+                icon: IntroStepBuilder(
+                    order: 5,
+                    text: intro_label_five,
+                    builder: (context, key) {
+                      return Icon(
+                        key: key,
+                        Icons.person,
+                      );
+                    }),
                 label: "User",
               ),
             ],

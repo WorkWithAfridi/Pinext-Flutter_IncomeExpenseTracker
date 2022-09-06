@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_intro/flutter_intro.dart';
 import 'package:pinext/app/app_data/custom_transition_page_route/custom_transition_page_route.dart';
 import 'package:pinext/app/screens/add_transaction/add_transaction.dart';
 import 'package:pinext/app/screens/home/homeframe.dart';
@@ -27,7 +28,12 @@ class ROUTECONTROLLER {
         );
       case ROUTES.getHomeframeRoute:
         return CustomTransitionPageRoute(
-          childWidget: const Homeframe(),
+          childWidget: Intro(
+            padding: EdgeInsets.zero,
+            borderRadius: const BorderRadius.all(Radius.circular(4)),
+            maskColor: const Color.fromRGBO(0, 0, 0, .6),
+            child: const Homeframe(),
+          ),
         );
       case ROUTES.getAddTransactionsRoute:
         return CustomTransitionPageRoute(
