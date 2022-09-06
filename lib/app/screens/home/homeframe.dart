@@ -1,12 +1,8 @@
-import 'dart:developer';
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_intro/flutter_intro.dart';
-import 'package:pinext/app/API/firebase_directories.dart';
-import 'package:pinext/app/app_data/appVersion.dart';
 import 'package:pinext/app/app_data/app_constants/app_labels.dart';
 import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/app_data/routing/routes.dart';
@@ -16,12 +12,12 @@ import 'package:pinext/app/screens/home/pages/archive_page.dart';
 import 'package:pinext/app/screens/home/pages/cards_and_balance_page.dart';
 import 'package:pinext/app/screens/home/pages/home_page.dart';
 import 'package:pinext/app/services/authentication_services.dart';
-import 'package:pinext/app/services/firebase_services.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 
 import '../../app_data/app_constants/constants.dart';
 import '../../app_data/app_constants/fonts.dart';
 import '../../bloc/homeframe_cubit/homeframe_page_cubit.dart';
+import '../../services/handlers/app_handler.dart';
 
 class Homeframe extends StatefulWidget {
   const Homeframe({Key? key}) : super(key: key);
@@ -31,74 +27,10 @@ class Homeframe extends StatefulWidget {
 }
 
 class _HomeframeState extends State<Homeframe> {
-  checkForUpdate() async {
-    Future.delayed(const Duration(seconds: 5)).then((value) async {
-      DocumentSnapshot appDataSnapShot = await FirebaseServices()
-          .firebaseFirestore
-          .collection(APPDATA_DIRECTORY)
-          .doc(APPVERSION_DIRECTORY)
-          .get();
-      String currentAvailableAppVersion =
-          (appDataSnapShot.data() as Map<String, dynamic>)["appVersion"];
-      log(currentAvailableAppVersion);
-      if (currentAvailableAppVersion != appVersion) {
-        showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                title: Text(
-                  'UPDATE',
-                  style: boldTextStyle.copyWith(
-                    fontSize: 20,
-                  ),
-                ),
-                content: SingleChildScrollView(
-                  child: ListBody(
-                    children: [
-                      Text(
-                        "A new version of the app is available. Would you like to download it now?",
-                        style: regularTextStyle,
-                      ),
-                    ],
-                  ),
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(defaultBorder),
-                ),
-                actions: <Widget>[
-                  TextButton(
-                    child: const Text('Download'),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                  TextButton(
-                    child: Text(
-                      'Dismiss',
-                      style: boldTextStyle.copyWith(
-                        color: customBlackColor.withOpacity(
-                          .8,
-                        ),
-                      ),
-                    ),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
-                actionsPadding: const EdgeInsets.symmetric(
-                  horizontal: defaultPadding,
-                ),
-              );
-            });
-      }
-    });
-  }
-
   @override
   void initState() {
     super.initState();
-    checkForUpdate();
+    AppHandler().checkForUpdate(context);
     triggerIntroduction();
   }
 
@@ -153,8 +85,7 @@ class HomeframeView extends StatelessWidget {
           },
           icon: IntroStepBuilder(
               order: 6,
-              text:
-                  intro_label_six,
+              text: intro_label_six,
               builder: (context, key) {
                 return Icon(
                   key: key,
