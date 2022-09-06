@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -30,8 +31,16 @@ class _HomeframeState extends State<Homeframe> {
   @override
   void initState() {
     super.initState();
-    AppHandler().checkForUpdate(context);
-    triggerIntroduction();
+    // AppHandler().checkForUpdate(context);
+    showIntroductions();
+  }
+
+  showIntroductions() async {
+    bool isFirstBoot = await AppHandler().checkIfFirstBoot();
+    log(isFirstBoot.toString());
+    if (isFirstBoot) {
+      triggerIntroduction();
+    }
   }
 
   triggerIntroduction() async {

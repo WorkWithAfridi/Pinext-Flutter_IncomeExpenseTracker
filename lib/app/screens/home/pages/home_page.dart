@@ -780,10 +780,11 @@ class MenuFilterPill extends StatelessWidget {
               snackbarType: SnackbarType.info,
               context: context,
             );
+          } else {
+            context.read<HomepageCubit>().changeMenuFilter(
+                  filtertitle,
+                );
           }
-          context.read<HomepageCubit>().changeMenuFilter(
-                filtertitle,
-              );
         },
         child: Container(
           height: 35,
