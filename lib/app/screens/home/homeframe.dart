@@ -154,7 +154,7 @@ class HomeframeView extends StatelessWidget {
           icon: IntroStepBuilder(
               order: 6,
               text:
-                  "This is the App Drawer. You can access quick actions through this button!",
+                  intro_label_six,
               builder: (context, key) {
                 return Icon(
                   key: key,
