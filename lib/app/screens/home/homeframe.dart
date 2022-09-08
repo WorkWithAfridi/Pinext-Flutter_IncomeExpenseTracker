@@ -273,14 +273,14 @@ class PinextDrawer extends StatelessWidget {
                       Text(
                         "By",
                         style: regularTextStyle.copyWith(
-                          fontSize: 12,
+                          fontSize: 10,
                           color: customBlackColor.withOpacity(.4),
                         ),
                       ),
                       Text(
                         "KYOTO",
                         style: regularTextStyle.copyWith(
-                          fontSize: 14,
+                          fontSize: 12,
                           color: customBlackColor.withOpacity(.4),
                         ),
                       ),
