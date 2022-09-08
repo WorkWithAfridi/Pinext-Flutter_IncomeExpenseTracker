@@ -191,7 +191,10 @@ class TransactionsList extends StatelessWidget {
                         .collection('pinext_transactions')
                         .doc(currentYear)
                         .collection(selectedMonth)
-                        .orderBy("transactionDate")
+                        .orderBy(
+                          "transactionDate",
+                          descending: true,
+                        )
                         .snapshots(),
                     builder: ((context,
                         AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
