@@ -1,6 +1,29 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.workwithafridi.pinext">
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    
+             <queries>
+                <intent>
+                    <action android:name="android.intent.action.VIEW" />
+                    <data android:scheme="https" />
+                </intent>
+                <intent>
+                    <action android:name="android.intent.action.VIEW" />
+                    <data android:scheme="http" />
+                </intent>
+                <intent>
+                    <action android:name="android.intent.action.DAIL" />
+                    <data android:scheme="tel" />
+                </intent>
+                <intent>
+                    <action android:name="android.intent.action.SENDTO" />
+                    <data android:scheme="smsto" />
+                </intent>
+                <intent>
+                    <action android:name="android.intent.action.SEND" />
+                    <data android:mimeType="*/*" />
+                </intent>
+            </queries>
    <application
         android:label="pinext"
         android:name="${applicationName}"

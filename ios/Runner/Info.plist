@@ -44,6 +44,13 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
-	<true/>
+	<true/>	
+	<array>
+		<string>https</string>
+		<string>http</string>
+		<string>tel</string>
+		<string>sms</string>
+		<string>mailto</string>
+	</array>
 </dict>
 </plist>

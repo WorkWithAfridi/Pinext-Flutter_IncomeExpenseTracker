@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_intro/flutter_intro.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pinext/app/app_data/app_constants/app_labels.dart';
 import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/app_data/routing/routes.dart';
@@ -283,10 +284,30 @@ class PinextDrawer extends StatelessWidget {
                           color: customBlackColor.withOpacity(.4),
                         ),
                       ),
-                      const SizedBox(
-                        height: 8,
-                      ),
                     ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                IconButton(
+                  onPressed: () {
+                    AppHandler().sendBugReport(context);
+                  },
+                  icon: Icon(
+                    FontAwesomeIcons.bug,
+                    size: 18,
+                    color: customBlackColor.withOpacity(.8),
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    AppHandler().openPortfolio(context);
+                  },
+                  icon: Icon(
+                    FontAwesomeIcons.userAstronaut,
+                    size: 18,
+                    color: customBlackColor.withOpacity(.8),
                   ),
                 ),
               ],
