@@ -85,6 +85,7 @@ class AppHandler {
               ],
               actionsPadding: const EdgeInsets.symmetric(
                 horizontal: defaultPadding,
+                vertical: 4,
               ),
             );
           },
@@ -119,12 +120,6 @@ class AppHandler {
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text('Send mail'),
-              onPressed: () {
-                _sendEmail(context);
-              },
-            ),
-            TextButton(
               child: Text(
                 'Dismiss',
                 style: boldTextStyle.copyWith(
@@ -137,9 +132,16 @@ class AppHandler {
                 Navigator.of(context).pop();
               },
             ),
+            TextButton(
+              child: const Text('Send mail'),
+              onPressed: () {
+                _sendEmail(context);
+              },
+            ),
           ],
           actionsPadding: const EdgeInsets.symmetric(
             horizontal: defaultPadding,
+            vertical: 4,
           ),
         );
       },
@@ -185,5 +187,53 @@ class AppHandler {
       );
       Navigator.of(context).pop();
     }
+  }
+
+  showHelpDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(
+            'Hello!!',
+            style: boldTextStyle.copyWith(
+              fontSize: 20,
+            ),
+          ),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: [
+                Text(
+                  "Welcome aboard on Pinext.\nA personal Income and Expense tracker. Where you can track your daily expenses or income and store them in a cloud based archive. You'll be able to view or update your transactions at any time and even generate reports based on your transactions directly through the app! :)",
+                  style: regularTextStyle,
+                ),
+              ],
+            ),
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(defaultBorder),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                'Dismiss',
+                style: boldTextStyle.copyWith(
+                  color: customBlackColor.withOpacity(
+                    .8,
+                  ),
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+          actionsPadding: const EdgeInsets.symmetric(
+            horizontal: defaultPadding,
+            vertical: 4,
+          ),
+        );
+      },
+    );
   }
 }

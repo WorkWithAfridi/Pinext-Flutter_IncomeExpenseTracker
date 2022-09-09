@@ -270,20 +270,30 @@ class PinextDrawer extends StatelessWidget {
                       const SizedBox(
                         height: 4,
                       ),
-                      Text(
-                        "By",
-                        style: regularTextStyle.copyWith(
-                          fontSize: 10,
-                          color: customBlackColor.withOpacity(.4),
+                      GestureDetector(
+                        onTap: () {
+                          AppHandler().openPortfolio(context);
+                        },
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              "By",
+                              style: regularTextStyle.copyWith(
+                                fontSize: 10,
+                                color: customBlackColor.withOpacity(.4),
+                              ),
+                            ),
+                            Text(
+                              "KYOTO",
+                              style: regularTextStyle.copyWith(
+                                fontSize: 12,
+                                color: customBlackColor.withOpacity(.4),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      Text(
-                        "KYOTO",
-                        style: regularTextStyle.copyWith(
-                          fontSize: 12,
-                          color: customBlackColor.withOpacity(.4),
-                        ),
-                      ),
+                      )
                     ],
                   ),
                 ),
@@ -300,14 +310,19 @@ class PinextDrawer extends StatelessWidget {
                     color: customBlackColor.withOpacity(.8),
                   ),
                 ),
-                IconButton(
-                  onPressed: () {
-                    AppHandler().openPortfolio(context);
+                const SizedBox(
+                  height: 8,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    AppHandler().showHelpDialog(context);
                   },
-                  icon: Icon(
-                    FontAwesomeIcons.userAstronaut,
-                    size: 18,
-                    color: customBlackColor.withOpacity(.8),
+                  child: Text(
+                    "?",
+                    style: regularTextStyle.copyWith(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
                   ),
                 ),
               ],

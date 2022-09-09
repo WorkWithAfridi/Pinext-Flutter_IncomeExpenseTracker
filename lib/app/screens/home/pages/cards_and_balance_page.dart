@@ -205,15 +205,6 @@ class CardsAndBalanceView extends StatelessWidget {
                                   ),
                                   actions: <Widget>[
                                     TextButton(
-                                      child: const Text('Approve'),
-                                      onPressed: () {
-                                        context
-                                            .read<CardsAndBalancesCubit>()
-                                            .removeCard(pinextCardModel);
-                                        Navigator.of(context).pop();
-                                      },
-                                    ),
-                                    TextButton(
                                       child: Text(
                                         'Cancel',
                                         style: boldTextStyle.copyWith(
@@ -226,9 +217,19 @@ class CardsAndBalanceView extends StatelessWidget {
                                         Navigator.of(context).pop();
                                       },
                                     ),
+                                    TextButton(
+                                      child: const Text('Approve'),
+                                      onPressed: () {
+                                        context
+                                            .read<CardsAndBalancesCubit>()
+                                            .removeCard(pinextCardModel);
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
                                   ],
                                   actionsPadding: const EdgeInsets.symmetric(
                                     horizontal: defaultPadding,
+                                    vertical: 4,
                                   ),
                                 );
                               });
