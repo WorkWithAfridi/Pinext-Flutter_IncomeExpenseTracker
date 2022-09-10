@@ -101,13 +101,6 @@ class FileHandler {
           .setText(
             "NET. Balance: ${UserHandler().currentUser.netBalance} TK",
           );
-      sheet
-          .getRangeByName(
-            "A${totalTransactions + offset + 5}",
-          )
-          .setText(
-            "*You have spend ${(expense / double.parse(UserHandler().currentUser.monthlyBudget).floor()).toString().substring(0, 4)}% of your budget this month.",
-          );
 
       final List<int> bytes = workbook.saveAsStream();
       workbook.dispose();
