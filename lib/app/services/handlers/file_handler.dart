@@ -78,21 +78,35 @@ class FileHandler {
             "A${totalTransactions + offset + 1}",
           )
           .setText(
-            "Total income: $income TK",
+            "Total income: +$income TK",
           );
       sheet
           .getRangeByName(
             "A${totalTransactions + offset + 2}",
           )
           .setText(
-            "Total expense: $expense TK",
+            "Total expense: -$expense TK",
           );
       sheet
           .getRangeByName(
             "A${totalTransactions + offset + 3}",
           )
           .setText(
-            "*You have spend ${double.parse(UserHandler().currentUser.monthlyBudget).floor() / expense}% of your monthly budget.",
+            "Outcome: ${income - expense} TK",
+          );
+      sheet
+          .getRangeByName(
+            "A${totalTransactions + offset + 4}",
+          )
+          .setText(
+            "NET. Balance: ${UserHandler().currentUser.netBalance} TK",
+          );
+      sheet
+          .getRangeByName(
+            "A${totalTransactions + offset + 5}",
+          )
+          .setText(
+            "*You have spend ${(expense / double.parse(UserHandler().currentUser.monthlyBudget).floor()).toString().substring(0, 4)}% of your budget this month.",
           );
 
       final List<int> bytes = workbook.saveAsStream();
