@@ -45,8 +45,11 @@ dependencies:
   intl: ^0.17.0
   lottie: ^1.4.1
   mccounting_text: ^1.0.0
+  open_file: ^3.2.1
+  path_provider: ^2.0.11
   pie_chart: ^5.3.2
   quick_actions: ^0.6.0+11
+  syncfusion_flutter_xlsio: ^20.2.48-beta
   timeago: ^3.3.0
   url_launcher: ^6.1.5
   uuid: ^3.0.6

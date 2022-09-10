@@ -7,6 +7,7 @@ import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/models/pinext_transaction_model.dart';
 import 'package:pinext/app/services/firebase_services.dart';
+import 'package:pinext/app/services/handlers/file_handler.dart';
 
 import '../../../app_data/app_constants/fonts.dart';
 import '../../../bloc/archive_cubit/archive_cubit.dart';
@@ -79,11 +80,39 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
                       fontSize: 25,
                     ),
                   ),
-                  Text(
-                    currentYear,
-                    style: boldTextStyle.copyWith(
-                      fontSize: 20,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      BlocBuilder<ArchiveCubit, ArchiveState>(
+                        builder: (context, state) {
+                          return IconButton(
+                            onPressed: () {
+                              String selectedMonth =
+                                  "0${int.parse(state.selectedMonth)}".length >
+                                          2
+                                      ? "0${int.parse(state.selectedMonth)}"
+                                          .substring(1, 3)
+                                      : "0${int.parse(state.selectedMonth)}";
+                              FileHandler().createReportForMonth(
+                                int.parse(selectedMonth),
+                                context,
+                              );
+                            },
+                            icon: const Icon(
+                              Icons.download,
+                              color: customBlackColor,
+                              size: 19,
+                            ),
+                          );
+                        },
+                      ),
+                      Text(
+                        currentYear,
+                        style: boldTextStyle.copyWith(
+                          fontSize: 20,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
