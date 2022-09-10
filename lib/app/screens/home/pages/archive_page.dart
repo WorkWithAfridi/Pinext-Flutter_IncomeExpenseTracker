@@ -7,11 +7,11 @@ import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/models/pinext_transaction_model.dart';
 import 'package:pinext/app/services/firebase_services.dart';
-import 'package:pinext/app/services/handlers/file_handler.dart';
 
 import '../../../app_data/app_constants/fonts.dart';
 import '../../../bloc/archive_cubit/archive_cubit.dart';
 import '../../../services/date_time_services.dart';
+import '../../../services/handlers/file_handler.dart';
 
 class ArchivePage extends StatelessWidget {
   const ArchivePage({Key? key}) : super(key: key);
@@ -58,66 +58,64 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
           padding: const EdgeInsets.symmetric(
             horizontal: defaultPadding,
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const SizedBox(
-                height: 8,
-              ),
-              Text(
-                "Pinext",
-                style: regularTextStyle.copyWith(
-                  color: customBlackColor.withOpacity(.6),
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Text(
+                    "Pinext",
+                    style: regularTextStyle.copyWith(
+                      color: customBlackColor.withOpacity(.6),
+                    ),
+                  ),
                   Text(
                     "Archives",
                     style: boldTextStyle.copyWith(
                       fontSize: 25,
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      BlocBuilder<ArchiveCubit, ArchiveState>(
-                        builder: (context, state) {
-                          return IconButton(
-                            onPressed: () {
-                              String selectedMonth =
-                                  "0${int.parse(state.selectedMonth)}".length >
-                                          2
-                                      ? "0${int.parse(state.selectedMonth)}"
-                                          .substring(1, 3)
-                                      : "0${int.parse(state.selectedMonth)}";
-                              FileHandler().createReportForMonth(
-                                int.parse(selectedMonth),
-                                context,
-                              );
-                            },
-                            icon: const Icon(
-                              Icons.download,
-                              color: customBlackColor,
-                              size: 19,
-                            ),
-                          );
-                        },
-                      ),
-                      Text(
-                        currentYear,
-                        style: boldTextStyle.copyWith(
-                          fontSize: 20,
-                        ),
-                      ),
-                    ],
+                  const SizedBox(
+                    height: 8,
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 8,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  BlocBuilder<ArchiveCubit, ArchiveState>(
+                    builder: (context, state) {
+                      return IconButton(
+                        onPressed: () {
+                          String selectedMonth =
+                              "0${int.parse(state.selectedMonth)}".length > 2
+                                  ? "0${int.parse(state.selectedMonth)}"
+                                      .substring(1, 3)
+                                  : "0${int.parse(state.selectedMonth)}";
+                          FileHandler().createReportForMonth(
+                            int.parse(selectedMonth),
+                            context,
+                          );
+                        },
+                        icon: const Icon(
+                          Icons.download,
+                          color: customBlueColor,
+                        ),
+                      );
+                    },
+                  ),
+                  Text(
+                    currentYear,
+                    style: boldTextStyle.copyWith(
+                      fontSize: 20,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
