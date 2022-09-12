@@ -1,0 +1,3 @@
+extension InputValidator on String {
+  
+}
