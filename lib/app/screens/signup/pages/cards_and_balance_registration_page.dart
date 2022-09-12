@@ -140,11 +140,14 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
             const SizedBox(
               height: 4,
             ),
-            GetCustomTextField(
+            CustomTextFormField(
               controller: monthlyBudgetController,
               hintTitle: "Enter your monthly budget",
               textInputType: TextInputType.number,
               onChanged: (String value) {},
+              validate: () {
+                return () {};
+              },
             ),
             const SizedBox(
               height: 4,
@@ -165,11 +168,14 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
             const SizedBox(
               height: 8,
             ),
-            GetCustomTextField(
+            CustomTextFormField(
               controller: budgetSpentSoFarController,
               hintTitle: "Budget spent so far...",
               textInputType: TextInputType.number,
               onChanged: (String value) {},
+              validate: () {
+                return () {};
+              },
             ),
             const SizedBox(
               height: 16,

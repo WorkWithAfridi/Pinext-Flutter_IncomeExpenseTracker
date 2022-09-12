@@ -22,6 +22,8 @@ class UserRegistrationPage extends StatelessWidget {
   TextEditingController passwordController;
   PageController pageController;
 
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -32,121 +34,133 @@ class UserRegistrationPage extends StatelessWidget {
         ),
         height: getHeight(context) - kToolbarHeight,
         width: getWidth(context),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Welcome",
-              style: boldTextStyle.copyWith(fontSize: 30),
-            ),
-            const SizedBox(
-              height: 4,
-            ),
-            Text(
-              "Please provide the following data\nto register a new account.",
-              style: regularTextStyle.copyWith(
-                fontSize: 14,
-                color: customBlackColor.withOpacity(.6),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Welcome",
+                style: boldTextStyle.copyWith(fontSize: 30),
               ),
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            GetCustomTextField(
-              controller: userNameController,
-              hintTitle: "Enter username...",
-                onChanged: (String value) {},
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            GetCustomTextField(
-              controller: emailController,
-              hintTitle: "Enter email address...",
-                onChanged: (String value) {},
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            GetCustomTextField(
-              controller: passwordController,
-              hintTitle: "Password",
-              isPassword: true,
-                onChanged: (String value) {},
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            GetCustomButton(
-              title: "Next",
-              titleColor: whiteColor,
-              buttonColor: customBlueColor,
-              isLoading: false,
-              callBackFunction: () {
-                if (userNameController.text.isNotEmpty &&
-                    emailController.text.isNotEmpty &&
-                    passwordController.text.isNotEmpty) {
-                  pageController.jumpToPage(
-                    1,
-                  );
-                } else {
-                  GetCustomSnackbar(
-                    title: "....",
-                    message:
-                        "You need to fill up the form to proceed to the next step!",
-                    snackbarType: SnackbarType.info,
-                    context: context,
-                  );
-                }
-              },
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            Text(
-              "Or sign up using socials",
-              style: regularTextStyle.copyWith(
-                fontSize: 14,
-                color: customBlackColor.withOpacity(.6),
+              const SizedBox(
+                height: 4,
               ),
-            ),
-            const SizedBox(
-              height: 4,
-            ),
-            SocialsButton(),
-            const SizedBox(
-              height: 16,
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: "Already have an account? ",
-                      style: regularTextStyle.copyWith(
-                        fontSize: 14,
-                        color: customBlackColor.withOpacity(.6),
-                      ),
-                    ),
-                    TextSpan(
-                      text: "Sign in",
-                      style: boldTextStyle.copyWith(
-                        fontSize: 14,
-                        color: customBlueColor,
-                      ),
-                    )
-                  ],
+              Text(
+                "Please provide the following data\nto register a new account.",
+                style: regularTextStyle.copyWith(
+                  fontSize: 14,
+                  color: customBlackColor.withOpacity(.6),
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 100,
-            )
-          ],
+              const SizedBox(
+                height: 16,
+              ),
+              CustomTextFormField(
+                controller: userNameController,
+                hintTitle: "Enter username...",
+                onChanged: (String value) {},
+                validate: () {
+                  return () {};
+                },
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              CustomTextFormField(
+                controller: emailController,
+                hintTitle: "Enter email address...",
+                onChanged: (String value) {},
+                validate: () {
+                  return () {};
+                },
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              CustomTextFormField(
+                controller: passwordController,
+                hintTitle: "Password",
+                isPassword: true,
+                onChanged: (String value) {},
+                validate: () {
+                  return () {};
+                },
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              GetCustomButton(
+                title: "Next",
+                titleColor: whiteColor,
+                buttonColor: customBlueColor,
+                isLoading: false,
+                callBackFunction: () {
+                  if (userNameController.text.isNotEmpty &&
+                      emailController.text.isNotEmpty &&
+                      passwordController.text.isNotEmpty) {
+                    pageController.jumpToPage(
+                      1,
+                    );
+                  } else {
+                    GetCustomSnackbar(
+                      title: "....",
+                      message:
+                          "You need to fill up the form to proceed to the next step!",
+                      snackbarType: SnackbarType.info,
+                      context: context,
+                    );
+                  }
+                },
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              Text(
+                "Or sign up using socials",
+                style: regularTextStyle.copyWith(
+                  fontSize: 14,
+                  color: customBlackColor.withOpacity(.6),
+                ),
+              ),
+              const SizedBox(
+                height: 4,
+              ),
+              SocialsButton(),
+              const SizedBox(
+                height: 16,
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: "Already have an account? ",
+                        style: regularTextStyle.copyWith(
+                          fontSize: 14,
+                          color: customBlackColor.withOpacity(.6),
+                        ),
+                      ),
+                      TextSpan(
+                        text: "Sign in",
+                        style: boldTextStyle.copyWith(
+                          fontSize: 14,
+                          color: customBlueColor,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 100,
+              )
+            ],
+          ),
         ),
       ),
     );

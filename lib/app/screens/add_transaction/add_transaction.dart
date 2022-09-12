@@ -221,11 +221,14 @@ class _AddTransactionViewState extends State<AddTransactionView> {
                   const SizedBox(
                     height: 8,
                   ),
-                  GetCustomTextField(
+                  CustomTextFormField(
                     controller: amountController,
                     hintTitle: "Enter amount...",
                     textInputType: TextInputType.number,
                     onChanged: () {},
+                    validate: () {
+                      return () {};
+                    },
                   ),
                   const SizedBox(
                     height: 16,
@@ -241,7 +244,7 @@ class _AddTransactionViewState extends State<AddTransactionView> {
                   const SizedBox(
                     height: 8,
                   ),
-                  GetCustomTextField(
+                  CustomTextFormField(
                     controller: detailsController,
                     hintTitle: "Enter description...",
                     numberOfLines: 3,
@@ -249,6 +252,9 @@ class _AddTransactionViewState extends State<AddTransactionView> {
                       context
                           .read<AddTransactionsCubit>()
                           .changeSelectedDescription(value);
+                    },
+                    validate: () {
+                      return () {};
                     },
                   ),
                   const SizedBox(

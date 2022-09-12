@@ -4,13 +4,13 @@ import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import '../../app_data/app_constants/constants.dart';
 import '../../app_data/theme_data/colors.dart';
 
-class GetCustomTextField extends StatelessWidget {
+class CustomTextFormField extends StatelessWidget {
   final String hintTitle;
   final TextEditingController controller;
   final bool isPassword;
   int numberOfLines;
   TextInputType textInputType;
-  GetCustomTextField({
+  CustomTextFormField({
     Key? key,
     required this.controller,
     required this.hintTitle,
@@ -18,17 +18,22 @@ class GetCustomTextField extends StatelessWidget {
     this.isPassword = false,
     this.textInputType = TextInputType.text,
     required this.onChanged,
+    required this.validate,
   }) : super(key: key);
 
   Function onChanged;
+  Function validate;
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       controller: controller,
       style: regularTextStyle,
       maxLines: numberOfLines,
       keyboardType: textInputType,
+      validator: (value) {
+        return validate();
+      },
       textInputAction: TextInputAction.next,
       onChanged: ((value) {
         onChanged(value);

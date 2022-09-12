@@ -136,11 +136,14 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                   const SizedBox(
                     height: 8,
                   ),
-                  GetCustomTextField(
+                  CustomTextFormField(
                     controller: titleController,
                     hintTitle: "Enter title",
                     textInputType: TextInputType.text,
                     onChanged: (String value) {},
+                    validate: () {
+                      return () {};
+                    },
                   ),
                   const SizedBox(
                     height: 16,
@@ -156,12 +159,15 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                   const SizedBox(
                     height: 8,
                   ),
-                  GetCustomTextField(
+                  CustomTextFormField(
                     controller: descriptionController,
                     hintTitle: "Enter description",
                     numberOfLines: 5,
                     textInputType: TextInputType.text,
                     onChanged: (String value) {},
+                    validate: () {
+                      return () {};
+                    },
                   ),
                   const SizedBox(
                     height: 16,
@@ -177,11 +183,14 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                   const SizedBox(
                     height: 8,
                   ),
-                  GetCustomTextField(
+                  CustomTextFormField(
                     controller: balanceController,
                     hintTitle: "Enter card balance",
                     textInputType: TextInputType.number,
                     onChanged: (String value) {},
+                    validate: () {
+                      return () {};
+                    },
                   ),
                   const SizedBox(
                     height: 16,
