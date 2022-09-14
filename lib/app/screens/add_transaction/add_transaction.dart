@@ -476,28 +476,26 @@ class _AddTransactionViewState extends State<AddTransactionView> {
                           state is AddTransactionsLoadingState ? true : false,
                       callBackFunction: () {
                         if (_formKey.currentState!.validate()) {
-                          log("Success");
-
-                          // if (amountController.text.isNotEmpty &&
-                          //     detailsController.text.isNotEmpty &&
-                          //     state.selectedCardNo != "none") {
-                          //   context.read<AddTransactionsCubit>().addTransaction(
-                          //         amount: amountController.text,
-                          //         details: detailsController.text,
-                          //         transctionType: state.selectedTransactionMode ==
-                          //                 SelectedTransactionMode.enpense
-                          //             ? "Expense"
-                          //             : "Income",
-                          //       );
-                          // } else {
-                          //   GetCustomSnackbar(
-                          //     title: "Error",
-                          //     message: "Please fill up the form and try again",
-                          //     snackbarType: SnackbarType.error,
-                          //     context: context,
-                          //   );
-                          // }
-
+                          if (amountController.text.isNotEmpty &&
+                              detailsController.text.isNotEmpty &&
+                              state.selectedCardNo != "none") {
+                            context.read<AddTransactionsCubit>().addTransaction(
+                                  amount: amountController.text,
+                                  details: detailsController.text,
+                                  transctionType:
+                                      state.selectedTransactionMode ==
+                                              SelectedTransactionMode.enpense
+                                          ? "Expense"
+                                          : "Income",
+                                );
+                          } else {
+                            GetCustomSnackbar(
+                              title: "Error",
+                              message: "Please fill up the form and try again",
+                              snackbarType: SnackbarType.error,
+                              context: context,
+                            );
+                          }
                         }
                       },
                     );
