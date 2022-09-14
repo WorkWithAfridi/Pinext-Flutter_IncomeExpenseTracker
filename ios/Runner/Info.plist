@@ -45,12 +45,12 @@
 	<false/>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>	
-	<array>
+	<!-- <array>
 		<string>https</string>
 		<string>http</string>
 		<string>tel</string>
 		<string>sms</string>
 		<string>mailto</string>
-	</array>
+	</array> -->
 </dict>
 </plist>
