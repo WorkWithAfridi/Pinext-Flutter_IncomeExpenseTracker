@@ -60,12 +60,14 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Column(
+                mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(
-                    height: 8,
+                    height: 4,
                   ),
                   Text(
                     "Pinext",
@@ -79,19 +81,10 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
                       fontSize: 25,
                     ),
                   ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
                   BlocBuilder<ArchiveCubit, ArchiveState>(
                     builder: (context, state) {
-                      return IconButton(
-                        onPressed: () {
+                      return GestureDetector(
+                        onTap: () {
                           String selectedMonth =
                               "0${int.parse(state.selectedMonth)}".length > 2
                                   ? "0${int.parse(state.selectedMonth)}"
@@ -102,18 +95,94 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
                             context,
                           );
                         },
-                        icon: const Icon(
-                          Icons.download,
-                          color: customBlueColor,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                              "Generate report",
+                              style: boldTextStyle.copyWith(
+                                fontSize: 16,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 2,
+                            ),
+                            const Icon(
+                              Icons.download,
+                              size: 16,
+                              color: customBlueColor,
+                            ),
+                          ],
                         ),
                       );
                     },
                   ),
-                  Text(
-                    currentYear,
-                    style: boldTextStyle.copyWith(
-                      fontSize: 20,
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      var selectedDate = DateTime.now();
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext builderContext) {
+                          return AlertDialog(
+                            title: Text(
+                              'Select year',
+                              style: boldTextStyle.copyWith(
+                                fontSize: 20,
+                              ),
+                            ),
+                            content: SizedBox(
+                              width: 300,
+                              height: 300,
+                              child: YearPicker(
+                                firstDate:
+                                    DateTime(DateTime.now().year - 100, 1),
+                                lastDate: DateTime(DateTime.now().year, 1),
+                                initialDate: DateTime.now(),
+                                selectedDate: selectedDate,
+                                onChanged: (DateTime dateTime) {
+                                  context
+                                      .read<ArchiveCubit>()
+                                      .changeYear(dateTime.year.toString());
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                    child: BlocBuilder<ArchiveCubit, ArchiveState>(
+                      builder: (context, state) {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              state.selectedYear,
+                              style: boldTextStyle.copyWith(
+                                fontSize: 20,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 8,
+                            ),
+                            const Icon(
+                              Icons.edit_calendar_rounded,
+                              color: customBlueColor,
+                              size: 20,
+                            ),
+                          ],
+                        );
+                      },
                     ),
+                  ),
+                  const SizedBox(
+                    height: 8,
                   ),
                 ],
               ),
@@ -216,7 +285,7 @@ class TransactionsList extends StatelessWidget {
                         .collection('pinext_users')
                         .doc(FirebaseServices().getUserId())
                         .collection('pinext_transactions')
-                        .doc(currentYear)
+                        .doc(state.selectedYear)
                         .collection(selectedMonth)
                         .orderBy(
                           "transactionDate",
@@ -232,11 +301,37 @@ class TransactionsList extends StatelessWidget {
                         );
                       }
                       if (snapshot.data!.docs.isEmpty) {
-                        return Center(
-                          child: Text(
-                            "No data found! :(",
-                            style: regularTextStyle.copyWith(
-                              color: customBlackColor.withOpacity(.2),
+                        return SizedBox(
+                          height: MediaQuery.of(context).size.height - 300,
+                          child: Container(
+                            // height: double.maxFinite,
+                            width: MediaQuery.of(context).size.width,
+                            color: Colors.transparent,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "404",
+                                  style: boldTextStyle.copyWith(
+                                    fontSize: 25,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 4,
+                                ),
+                                Text(
+                                  "No data found!",
+                                  style: regularTextStyle,
+                                ),
+                                const SizedBox(
+                                  height: 2,
+                                ),
+                                Text(
+                                  ":(",
+                                  style: regularTextStyle,
+                                ),
+                              ],
                             ),
                           ),
                         );

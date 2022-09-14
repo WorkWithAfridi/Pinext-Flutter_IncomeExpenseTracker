@@ -9,7 +9,7 @@ class PinextTheme {
     colorScheme: const ColorScheme(
       brightness: Brightness.light,
       primary: customBlueColor,
-      onPrimary: customBlackColor,
+      onPrimary: whiteColor,
       secondary: cyanColor,
       onSecondary: customBlackColor,
       error: Colors.red,
