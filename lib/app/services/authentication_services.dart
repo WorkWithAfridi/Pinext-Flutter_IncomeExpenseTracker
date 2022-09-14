@@ -74,9 +74,9 @@ class AuthenticationServices {
 
   Future<bool> isUserSignedIn() async {
     bool status = FirebaseServices().firebaseAuth.currentUser != null;
-    if (status) {
-      await UserHandler().getCurrentUser();
-    }
+    // if (status) {
+    //   await UserHandler().getCurrentUser();
+    // }
     return status;
   }
 

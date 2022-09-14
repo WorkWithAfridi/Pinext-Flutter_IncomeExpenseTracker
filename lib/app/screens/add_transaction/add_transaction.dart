@@ -404,6 +404,8 @@ class _AddTransactionViewState extends State<AddTransactionView> {
                                       cardColor: cardColor,
                                       isSelected: state.selectedCardNo ==
                                           pinextCardModel.cardId,
+                                      lastTransactionDate:
+                                          pinextCardModel.lastTransactionData,
                                     );
                                   },
                                 ),

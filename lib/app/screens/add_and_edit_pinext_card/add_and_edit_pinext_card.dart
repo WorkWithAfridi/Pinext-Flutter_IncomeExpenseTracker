@@ -282,8 +282,16 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                           cardColor: widget.isEditCardScreen
                               ? getColorFromString(isEditCardColor!)
                               : cardColor,
-                          title: "Example Wallet",
-                          balance: 123456.789,
+                          title: widget.isEditCardScreen
+                              ? widget.pinextCardModel!.title
+                              : "Example card",
+                          balance: widget.isEditCardScreen
+                              ? widget.pinextCardModel!.balance
+                              : 1233456,
+                          lastTransactionDate: widget.isEditCardScreen
+                              ? widget.pinextCardModel!.lastTransactionData
+                                  .toString()
+                              : DateTime.now().toString(),
                         );
                       },
                     ),

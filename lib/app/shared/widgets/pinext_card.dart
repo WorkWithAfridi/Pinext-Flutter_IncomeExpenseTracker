@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 import '../../app_data/app_constants/constants.dart';
 import '../../app_data/app_constants/domentions.dart';
@@ -11,12 +12,14 @@ class PinextCard extends StatelessWidget {
     this.cardColor = customBlueColor,
     this.title = "Test Title",
     this.balance = 0.00,
+    required this.lastTransactionDate,
   }) : super(key: key);
 
   bool isSelected;
   Color cardColor;
   double balance;
   String title;
+  String lastTransactionDate;
 
   @override
   Widget build(BuildContext context) {
@@ -92,12 +95,18 @@ class PinextCard extends StatelessWidget {
                           color: whiteColor.withOpacity(.4),
                         ),
                       ),
-                      const Text(
-                        "12/12/12",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 25,
-                          color: whiteColor,
+                      FittedBox(
+                        child: Text(
+                          timeago.format(
+                            DateTime.parse(
+                              lastTransactionDate,
+                            ),
+                          ),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 25,
+                            color: whiteColor,
+                          ),
                         ),
                       ),
                     ],

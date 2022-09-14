@@ -45,5 +45,3 @@ class Pinext extends StatelessWidget {
     );
   }
 }
-
-//iOS may not be compatable due to excel/csv/openfile plugins
