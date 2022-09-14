@@ -104,7 +104,10 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: const Icon(Icons.close),
+          icon: const Icon(
+            Icons.close,
+            color: customBlackColor,
+          ),
         ),
         title: Text(
           widget.isEditCardScreen

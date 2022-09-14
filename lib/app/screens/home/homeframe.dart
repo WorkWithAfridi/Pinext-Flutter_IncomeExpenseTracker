@@ -74,7 +74,7 @@ List homeframePages = [
   const CardsAndBalancePage(),
   Center(
     child: Text(
-      "The section is still under development.\nPlease standby for future updates!",
+      "The section is still under development.\nAnd will be updated at a later date!",
       style: regularTextStyle.copyWith(color: customBlackColor.withOpacity(.2)),
       textAlign: TextAlign.center,
     ),

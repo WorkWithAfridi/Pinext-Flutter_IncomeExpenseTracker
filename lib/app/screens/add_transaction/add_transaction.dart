@@ -101,7 +101,10 @@ class _AddTransactionViewState extends State<AddTransactionView> {
               Navigator.pop(context);
             }
           },
-          icon: const Icon(Icons.close),
+          icon: const Icon(
+            Icons.close,
+            color: customBlackColor,
+          ),
         ),
         title: Text(
           "Adding a new Transaction",

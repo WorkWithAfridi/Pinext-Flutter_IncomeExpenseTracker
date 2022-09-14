@@ -778,7 +778,7 @@ class MenuFilterPill extends StatelessWidget {
             GetCustomSnackbar(
               title: "Snap",
               message:
-                  "This section is still under development and will be added at a later date!",
+                  "The section is still under development.\nAnd will be updated at a later date!",
               snackbarType: SnackbarType.info,
               context: context,
             );
