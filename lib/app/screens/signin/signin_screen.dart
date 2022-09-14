@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
@@ -107,7 +105,7 @@ class _SigninScreenViewState extends State<SigninScreenView> {
                   isPassword: true,
                   onChanged: (String value) {},
                   validator: (value) {
-                    return InputValidation(value).isNotEmptryPassword();
+                    return InputValidation(value).isNotEmpty();
                   },
                 ),
                 const SizedBox(
@@ -147,30 +145,24 @@ class _SigninScreenViewState extends State<SigninScreenView> {
                             is LoginWithEmailAndPasswordButtonLoadingState,
                         callBackFunction: () {
                           if (_formKey.currentState!.validate()) {
-                            log("Success");
-                            // if (emailController.text.isNotEmpty &&
-                            //     passwordController.text.isNotEmpty) {
-                            //   context
-                            //       .read<LoginCubit>()
-                            //       .loginWithEmailAndPassword(
-                            //         email: emailController.text,
-                            //         password: passwordController.text,
-                            //       );
-                            // } else {
-                            //   GetCustomSnackbar(
-                            //     title: "Snap",
-                            //     message:
-                            //         "We need your email and password in order to sign you in!",
-                            //     snackbarType: SnackbarType.info,
-                            //     context: context,
-                            //   );
-                            // }
+                            if (emailController.text.isNotEmpty &&
+                                passwordController.text.isNotEmpty) {
+                              context
+                                  .read<LoginCubit>()
+                                  .loginWithEmailAndPassword(
+                                    email: emailController.text,
+                                    password: passwordController.text,
+                                  );
+                            } else {
+                              GetCustomSnackbar(
+                                title: "Snap",
+                                message:
+                                    "We need your email and password in order to sign you in!",
+                                snackbarType: SnackbarType.info,
+                                context: context,
+                              );
+                            }
                           }
-
-                          // String dateTimeNow = DateTime.now().toString();
-                          // String currentMonth =
-                          //     DateTime.now().toString().substring(5, 7);
-                          // log(currentMonth);
                         },
                       );
                     },

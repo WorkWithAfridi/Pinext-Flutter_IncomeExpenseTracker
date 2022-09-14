@@ -88,7 +88,7 @@ class UserRegistrationPage extends StatelessWidget {
                 onChanged: (String value) {},
                 validator: (value) {
                   return InputValidation(value.toString())
-                      .isNotEmptryPassword();
+                      .isNotEmpty();
                 },
               ),
               const SizedBox(

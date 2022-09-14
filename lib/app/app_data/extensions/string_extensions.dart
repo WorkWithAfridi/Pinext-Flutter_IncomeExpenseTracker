@@ -1,11 +1,12 @@
 extension InputValidation on String {
-  dynamic isCorrectPhoneNumber() {
+  dynamic isCorrectNumber() {
     if (isEmpty) {
-      return null;
+      return "*Field cannot be empty!";
     }
-    if (RegExp(r"^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$")
-        .hasMatch(this)) {
-      return "Enter valid number";
+    try {
+      double amount = double.parse(this);
+    } catch (err) {
+      return "Enter valid amount!";
     }
     return null;
   }
@@ -23,9 +24,9 @@ extension InputValidation on String {
     return null;
   }
 
-  dynamic isNotEmptryPassword() {
+  dynamic isNotEmpty() {
     if (isEmpty) {
-      return "Password cannot be empty!";
+      return "*This field cannot be empty!";
     }
     return null;
   }
