@@ -226,7 +226,7 @@ class _AddTransactionViewState extends State<AddTransactionView> {
                     hintTitle: "Enter amount...",
                     textInputType: TextInputType.number,
                     onChanged: () {},
-                    validate: () {
+                    validator: () {
                       return () {};
                     },
                   ),
@@ -253,7 +253,7 @@ class _AddTransactionViewState extends State<AddTransactionView> {
                           .read<AddTransactionsCubit>()
                           .changeSelectedDescription(value);
                     },
-                    validate: () {
+                    validator: () {
                       return () {};
                     },
                   ),

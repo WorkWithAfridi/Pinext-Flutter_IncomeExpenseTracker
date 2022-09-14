@@ -141,7 +141,7 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                     hintTitle: "Enter title",
                     textInputType: TextInputType.text,
                     onChanged: (String value) {},
-                    validate: () {
+                    validator: () {
                       return () {};
                     },
                   ),
@@ -165,7 +165,7 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                     numberOfLines: 5,
                     textInputType: TextInputType.text,
                     onChanged: (String value) {},
-                    validate: () {
+                    validator: () {
                       return () {};
                     },
                   ),
@@ -188,7 +188,7 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                     hintTitle: "Enter card balance",
                     textInputType: TextInputType.number,
                     onChanged: (String value) {},
-                    validate: () {
+                    validator: () {
                       return () {};
                     },
                   ),

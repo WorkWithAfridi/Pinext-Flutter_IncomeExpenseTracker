@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pinext/app/app_data/extensions/string_extensions.dart';
 
 import '../../../app_data/app_constants/constants.dart';
 import '../../../app_data/app_constants/domentions.dart';
@@ -61,8 +62,8 @@ class UserRegistrationPage extends StatelessWidget {
                 controller: userNameController,
                 hintTitle: "Enter username...",
                 onChanged: (String value) {},
-                validate: () {
-                  return () {};
+                validator: (value) {
+                  return InputValidation(value.toString()).isCorrectName();
                 },
               ),
               const SizedBox(
@@ -70,10 +71,11 @@ class UserRegistrationPage extends StatelessWidget {
               ),
               CustomTextFormField(
                 controller: emailController,
-                hintTitle: "Enter email address...",
+                hintTitle: "Email address...",
                 onChanged: (String value) {},
-                validate: () {
-                  return () {};
+                validator: (value) {
+                  return InputValidation(value.toString())
+                      .isCorrectEmailAddress();
                 },
               ),
               const SizedBox(
@@ -84,36 +86,38 @@ class UserRegistrationPage extends StatelessWidget {
                 hintTitle: "Password",
                 isPassword: true,
                 onChanged: (String value) {},
-                validate: () {
-                  return () {};
+                validator: (value) {
+                  return InputValidation(value.toString())
+                      .isNotEmptryPassword();
                 },
               ),
               const SizedBox(
                 height: 16,
               ),
               GetCustomButton(
-                title: "Next",
-                titleColor: whiteColor,
-                buttonColor: customBlueColor,
-                isLoading: false,
-                callBackFunction: () {
-                  if (userNameController.text.isNotEmpty &&
-                      emailController.text.isNotEmpty &&
-                      passwordController.text.isNotEmpty) {
-                    pageController.jumpToPage(
-                      1,
-                    );
-                  } else {
-                    GetCustomSnackbar(
-                      title: "....",
-                      message:
-                          "You need to fill up the form to proceed to the next step!",
-                      snackbarType: SnackbarType.info,
-                      context: context,
-                    );
-                  }
-                },
-              ),
+                  title: "Next",
+                  titleColor: whiteColor,
+                  buttonColor: customBlueColor,
+                  isLoading: false,
+                  callBackFunction: () {
+                    if (_formKey.currentState!.validate()) {
+                      if (userNameController.text.isNotEmpty &&
+                          emailController.text.isNotEmpty &&
+                          passwordController.text.isNotEmpty) {
+                        pageController.jumpToPage(
+                          1,
+                        );
+                      } else {
+                        GetCustomSnackbar(
+                          title: "....",
+                          message:
+                              "You need to fill up the form to proceed to the next step!",
+                          snackbarType: SnackbarType.info,
+                          context: context,
+                        );
+                      }
+                    }
+                  }),
               const SizedBox(
                 height: 16,
               ),

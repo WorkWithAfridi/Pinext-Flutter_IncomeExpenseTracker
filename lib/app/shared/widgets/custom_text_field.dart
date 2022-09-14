@@ -10,6 +10,7 @@ class CustomTextFormField extends StatelessWidget {
   final bool isPassword;
   int numberOfLines;
   TextInputType textInputType;
+
   CustomTextFormField({
     Key? key,
     required this.controller,
@@ -18,11 +19,11 @@ class CustomTextFormField extends StatelessWidget {
     this.isPassword = false,
     this.textInputType = TextInputType.text,
     required this.onChanged,
-    required this.validate,
+    required this.validator,
   }) : super(key: key);
 
   Function onChanged;
-  Function validate;
+  Function validator;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,7 @@ class CustomTextFormField extends StatelessWidget {
       maxLines: numberOfLines,
       keyboardType: textInputType,
       validator: (value) {
-        return validate();
+        return validator(value);
       },
       textInputAction: TextInputAction.next,
       onChanged: ((value) {
@@ -44,6 +45,9 @@ class CustomTextFormField extends StatelessWidget {
           color: customBlackColor.withOpacity(
             .5,
           ),
+        ),
+        errorStyle: regularTextStyle.copyWith(
+          color: Colors.red,
         ),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 15,

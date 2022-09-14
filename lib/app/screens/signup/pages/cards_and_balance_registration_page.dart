@@ -145,7 +145,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
               hintTitle: "Enter your monthly budget",
               textInputType: TextInputType.number,
               onChanged: (String value) {},
-              validate: () {
+              validator: () {
                 return () {};
               },
             ),
@@ -173,7 +173,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
               hintTitle: "Budget spent so far...",
               textInputType: TextInputType.number,
               onChanged: (String value) {},
-              validate: () {
+              validator: () {
                 return () {};
               },
             ),
