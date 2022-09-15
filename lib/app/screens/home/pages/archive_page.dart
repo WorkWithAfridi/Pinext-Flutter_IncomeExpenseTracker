@@ -101,7 +101,7 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
                             Text(
                               "Generate report",
                               style: boldTextStyle.copyWith(
-                                fontSize: 16,
+                                fontSize: 18,
                               ),
                             ),
                             const SizedBox(
@@ -109,13 +109,16 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
                             ),
                             const Icon(
                               Icons.download,
-                              size: 16,
+                              size: 18,
                               color: customBlueColor,
                             ),
                           ],
                         ),
                       );
                     },
+                  ),
+                  const SizedBox(
+                    height: 4,
                   ),
                 ],
               ),
@@ -165,7 +168,7 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
                             Text(
                               state.selectedYear,
                               style: boldTextStyle.copyWith(
-                                fontSize: 20,
+                                fontSize: 25,
                               ),
                             ),
                             const SizedBox(
@@ -174,7 +177,7 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
                             const Icon(
                               Icons.edit_calendar_rounded,
                               color: customBlueColor,
-                              size: 20,
+                              size: 25,
                             ),
                           ],
                         );
@@ -314,22 +317,24 @@ class TransactionsList extends StatelessWidget {
                                 Text(
                                   "404",
                                   style: boldTextStyle.copyWith(
-                                    fontSize: 25,
-                                  ),
+                                      fontSize: 25,
+                                      color: customBlackColor.withOpacity(.5)),
                                 ),
                                 const SizedBox(
                                   height: 4,
                                 ),
                                 Text(
                                   "No data found!",
-                                  style: regularTextStyle,
+                                  style: regularTextStyle.copyWith(
+                                      color: customBlackColor.withOpacity(.5)),
                                 ),
                                 const SizedBox(
                                   height: 2,
                                 ),
                                 Text(
                                   ":(",
-                                  style: regularTextStyle,
+                                  style: regularTextStyle.copyWith(
+                                      color: customBlackColor.withOpacity(.5)),
                                 ),
                               ],
                             ),
