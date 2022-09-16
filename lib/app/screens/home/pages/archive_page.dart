@@ -119,7 +119,7 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
                     },
                   ),
                   const SizedBox(
-                    height: 4,
+                    height: 6,
                   ),
                 ],
               ),
@@ -135,7 +135,7 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
                         builder: (BuildContext builderContext) {
                           return AlertDialog(
                             title: Text(
-                              'Please select a year to show records of that specific year',
+                              "Please select a year to view records from that year.",
                               style: regularTextStyle.copyWith(
                                 fontSize: 16,
                               ),
