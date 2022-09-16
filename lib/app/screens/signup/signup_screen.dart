@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/signup_cubit/signin_cubit_cubit.dart';
 import 'package:pinext/app/screens/signup/pages/cards_and_balance_registration_page.dart';
 import 'package:pinext/app/screens/signup/pages/user_registration_page.dart';
@@ -81,7 +82,10 @@ class _SignupScreenViewState extends State<SignupScreenView> {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: const Icon(Icons.close),
+          icon: const Icon(
+            Icons.close,
+            color: customBlackColor,
+          ),
         ),
       ),
       body: BlocBuilder<SigninCubit, SigninState>(

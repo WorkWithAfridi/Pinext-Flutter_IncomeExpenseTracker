@@ -741,6 +741,7 @@ class YourCardsModule extends StatelessWidget {
                           cardColor: cardColor,
                           lastTransactionDate:
                               pinextCardModel.lastTransactionData,
+                          cardDetails: pinextCardModel.description,
                         );
                       }),
                     ),

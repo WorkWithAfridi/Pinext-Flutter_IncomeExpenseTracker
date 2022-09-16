@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import '../../app_data/app_constants/constants.dart';
@@ -12,6 +13,7 @@ class PinextCard extends StatelessWidget {
     this.cardColor = customBlueColor,
     this.title = "Test Title",
     this.balance = 0.00,
+    required this.cardDetails,
     required this.lastTransactionDate,
   }) : super(key: key);
 
@@ -19,6 +21,7 @@ class PinextCard extends StatelessWidget {
   Color cardColor;
   double balance;
   String title;
+  String cardDetails;
   String lastTransactionDate;
 
   @override
@@ -58,6 +61,16 @@ class PinextCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                       ),
+                      Expanded(
+                        child: Text(
+                          cardDetails,
+                          style: regularTextStyle.copyWith(
+                            color: whiteColor.withOpacity(.4),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          maxLines: 4,
+                        ),
+                      ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -66,7 +79,7 @@ class PinextCard extends StatelessWidget {
                             style: TextStyle(
                               fontWeight: FontWeight.normal,
                               fontSize: 13,
-                              color: whiteColor.withOpacity(.4),
+                              color: whiteColor.withOpacity(.6),
                             ),
                           ),
                           Text(balance.toString(),
@@ -82,6 +95,9 @@ class PinextCard extends StatelessWidget {
                     ],
                   ),
                 ),
+                const SizedBox(
+                  width: 16,
+                ),
                 RotatedBox(
                   quarterTurns: 3,
                   child: Column(
@@ -92,16 +108,16 @@ class PinextCard extends StatelessWidget {
                         style: TextStyle(
                           fontWeight: FontWeight.normal,
                           fontSize: 10,
-                          color: whiteColor.withOpacity(.4),
+                          color: whiteColor.withOpacity(.6),
                         ),
                       ),
                       FittedBox(
                         child: Text(
-                          timeago.format(
+                          "${timeago.format(
                             DateTime.parse(
                               lastTransactionDate,
                             ),
-                          ),
+                          )} ",
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 25,

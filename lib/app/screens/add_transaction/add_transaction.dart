@@ -409,6 +409,7 @@ class _AddTransactionViewState extends State<AddTransactionView> {
                                           pinextCardModel.cardId,
                                       lastTransactionDate:
                                           pinextCardModel.lastTransactionData,
+                                      cardDetails: pinextCardModel.description,
                                     );
                                   },
                                 ),

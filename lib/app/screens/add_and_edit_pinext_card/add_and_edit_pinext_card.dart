@@ -295,6 +295,9 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                               ? widget.pinextCardModel!.lastTransactionData
                                   .toString()
                               : DateTime.now().toString(),
+                          cardDetails: widget.isEditCardScreen
+                              ? widget.pinextCardModel!.description
+                              : " ",
                         );
                       },
                     ),
