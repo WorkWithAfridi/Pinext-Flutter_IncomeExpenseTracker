@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:pinext/app/app_data/appVersion.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
-import 'package:pinext/app/app_data/theme_data/colors.dart';
-import 'package:pinext/app/services/handlers/user_handler.dart';
+
+import '../../../../app_data/appVersion.dart';
+import '../../../../app_data/theme_data/colors.dart';
+import '../../../../services/handlers/user_handler.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -19,7 +20,31 @@ class ProfilePage extends StatelessWidget {
       height: height,
       width: width,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: "Hola!\n",
+                  style: boldTextStyle.copyWith(
+                    fontSize: 35,
+                    color: customBlackColor,
+                  ),
+                ),
+                TextSpan(
+                  text: "${UserHandler().currentUser.username} 👋",
+                  style: regularTextStyle.copyWith(
+                    fontSize: 25,
+                    color: customBlackColor,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 8,
+          ),
           SizedBox(
             height: 200,
             width: width,

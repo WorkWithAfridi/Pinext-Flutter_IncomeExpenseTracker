@@ -13,7 +13,7 @@ import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/screens/home/pages/archive_page.dart';
 import 'package:pinext/app/screens/home/pages/cards_and_balance_page.dart';
 import 'package:pinext/app/screens/home/pages/home_page.dart';
-import 'package:pinext/app/screens/home/pages/profilePage/profile.dart';
+import 'package:pinext/app/screens/home/pages/profilePage/profilePage.dart';
 
 import '../../app_data/app_constants/constants.dart';
 import '../../app_data/app_constants/fonts.dart';
