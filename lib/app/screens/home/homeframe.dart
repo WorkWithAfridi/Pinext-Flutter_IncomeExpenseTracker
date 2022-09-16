@@ -13,6 +13,7 @@ import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/screens/home/pages/archive_page.dart';
 import 'package:pinext/app/screens/home/pages/cards_and_balance_page.dart';
 import 'package:pinext/app/screens/home/pages/home_page.dart';
+import 'package:pinext/app/screens/home/pages/profilePage/profile.dart';
 import 'package:pinext/app/services/authentication_services.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 
@@ -72,13 +73,14 @@ List homeframePages = [
   const Homepage(),
   const ArchivePage(),
   const CardsAndBalancePage(),
-  Center(
-    child: Text(
-      "The section is still under development.\nAnd will be updated at a later date!",
-      style: regularTextStyle.copyWith(color: customBlackColor.withOpacity(.2)),
-      textAlign: TextAlign.center,
-    ),
-  ),
+  const ProfilePage()
+  // Center(
+  //   child: Text(
+  //     "The section is still under development.\nAnd will be updated at a later date!",
+  //     style: regularTextStyle.copyWith(color: customBlackColor.withOpacity(.2)),
+  //     textAlign: TextAlign.center,
+  //   ),
+  // ),
 ];
 
 class HomeframeView extends StatelessWidget {
