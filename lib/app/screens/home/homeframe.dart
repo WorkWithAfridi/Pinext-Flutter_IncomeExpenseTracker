@@ -14,8 +14,6 @@ import 'package:pinext/app/screens/home/pages/archive_page.dart';
 import 'package:pinext/app/screens/home/pages/cards_and_balance_page.dart';
 import 'package:pinext/app/screens/home/pages/home_page.dart';
 import 'package:pinext/app/screens/home/pages/profilePage/profile.dart';
-import 'package:pinext/app/services/authentication_services.dart';
-import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 
 import '../../app_data/app_constants/constants.dart';
 import '../../app_data/app_constants/fonts.dart';
@@ -88,29 +86,29 @@ class HomeframeView extends StatelessWidget {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: scaffoldKey,
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            scaffoldKey.currentState!.openDrawer();
-          },
-          icon: IntroStepBuilder(
-              order: 6,
-              text: intro_label_six,
-              builder: (context, key) {
-                return Icon(
-                  key: key,
-                  Icons.menu,
-                  color: customBlackColor,
-                );
-              }),
-        ),
-      ),
-      drawer: const PinextDrawer(),
-      body: BlocBuilder<HomeframeCubit, HomeframeState>(
-        builder: (context, state) {
-          return PageView.builder(
+    return BlocBuilder<HomeframeCubit, HomeframeState>(
+      builder: (context, state) {
+        return Scaffold(
+          key: scaffoldKey,
+          appBar: AppBar(
+            leading: IconButton(
+              onPressed: () {
+                scaffoldKey.currentState!.openDrawer();
+              },
+              icon: IntroStepBuilder(
+                  order: 6,
+                  text: intro_label_six,
+                  builder: (context, key) {
+                    return Icon(
+                      key: key,
+                      Icons.menu,
+                      color: customBlackColor,
+                    );
+                  }),
+            ),
+          ),
+          drawer: const PinextDrawer(),
+          body: PageView.builder(
             physics: const BouncingScrollPhysics(),
             itemCount: homeframePages.length,
             controller: state.pageController,
@@ -118,23 +116,17 @@ class HomeframeView extends StatelessWidget {
               context.read<HomeframeCubit>().changeHomeframePage(value);
             }),
             itemBuilder: ((context, index) => homeframePages[index]),
-          );
-        },
-      ),
-      floatingActionButton: IntroStepBuilder(
-          order: 1,
-          text: intro_label_one,
-          builder: (context, key) {
-            return BlocBuilder<HomeframeCubit, HomeframeState>(
-              key: key,
-              builder: (context, state) {
+          ),
+          floatingActionButton: IntroStepBuilder(
+              order: 1,
+              text: intro_label_one,
+              builder: (context, key) {
                 return state.selectedIndex == 0
                     ? FloatingActionButton(
                         onPressed: () {
-                          Navigator.pushNamed(
-                            context,
-                            ROUTES.getAddTransactionsRoute,
-                          );
+                          context
+                              .read<HomeframeCubit>()
+                              .openAddTransactionsPage(context);
                         },
                         backgroundColor: customBlackColor,
                         child: const Icon(
@@ -142,14 +134,28 @@ class HomeframeView extends StatelessWidget {
                           color: whiteColor,
                         ),
                       )
-                    : const SizedBox.shrink();
-              },
-            );
-          }),
-      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
-      bottomNavigationBar: BlocBuilder<HomeframeCubit, HomeframeState>(
-        builder: (context, state) {
-          return BottomNavigationBar(
+                    : state.selectedIndex == 3
+                        ? FloatingActionButton(
+                            onPressed: () {
+                              context
+                                  .read<HomeframeCubit>()
+                                  .showAboutDialog(context);
+                            },
+                            backgroundColor: customBlackColor,
+                            child: Text(
+                              "?",
+                              style: boldTextStyle.copyWith(
+                                color: whiteColor,
+                                fontSize: 18,
+                              ),
+                            ),
+                          )
+                        : const SizedBox.shrink();
+              }),
+          floatingActionButtonLocation: state.selectedIndex == 0
+              ? FloatingActionButtonLocation.miniEndTop
+              : FloatingActionButtonLocation.endFloat,
+          bottomNavigationBar: BottomNavigationBar(
             key: key,
             currentIndex: state.selectedIndex,
             onTap: (value) {
@@ -204,15 +210,15 @@ class HomeframeView extends StatelessWidget {
                     builder: (context, key) {
                       return Icon(
                         key: key,
-                        Icons.person,
+                        Icons.person_rounded,
                       );
                     }),
                 label: "User",
               ),
             ],
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }
@@ -312,51 +318,32 @@ class PinextDrawer extends StatelessWidget {
                     color: customBlackColor.withOpacity(.8),
                   ),
                 ),
-                const SizedBox(
-                  height: 8,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    AppHandler().showHelpDialog(context);
-                  },
-                  child: Text(
-                    "?",
-                    style: regularTextStyle.copyWith(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
-                  ),
-                ),
               ],
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                IconButton(
-                  onPressed: () async {
-                    bool userSignedOutSuccessfully =
-                        await AuthenticationServices().signOutUser();
-                    if (userSignedOutSuccessfully) {
-                      context.read<UserBloc>().add(SignOutUserEvent());
+                BlocListener<UserBloc, UserState>(
+                  listener: (context, state) {
+                    if (state is UnauthenticatedUserState) {
                       Navigator.pushNamedAndRemoveUntil(
                         context,
                         ROUTES.getLoginRoute,
                         (route) => false,
                       );
-                    } else {
-                      GetCustomSnackbar(
-                        title: "Snap",
-                        message:
-                            "An error occurred while trying to sign you out! Please try closing the app and opening it again.",
-                        snackbarType: SnackbarType.info,
-                        context: context,
-                      );
                     }
                   },
-                  icon: const Icon(
-                    Icons.logout,
-                    color: customBlackColor,
+                  child: IconButton(
+                    onPressed: () async {
+                      context.read<UserBloc>().add(
+                            SignOutUserEvent(context: context),
+                          );
+                    },
+                    icon: const Icon(
+                      Icons.logout,
+                      color: customBlackColor,
+                    ),
                   ),
                 ),
                 const SizedBox(

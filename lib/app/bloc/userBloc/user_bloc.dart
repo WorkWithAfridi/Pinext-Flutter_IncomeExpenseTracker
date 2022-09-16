@@ -2,11 +2,13 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:pinext/app/models/pinext_user_model.dart';
 import 'package:pinext/app/services/authentication_services.dart';
 import 'package:pinext/app/services/date_time_services.dart';
 
 import '../../services/handlers/user_handler.dart';
+import '../../shared/widgets/custom_snackbar.dart';
 
 part 'user_event.dart';
 part 'user_state.dart';
@@ -87,7 +89,13 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       if (isSignedOut) {
         emit(UnauthenticatedUserState());
       } else {
-        // error signing out
+        GetCustomSnackbar(
+          title: "Snap",
+          message:
+              "An error occurred while trying to sign you out! Please try closing the app and opening it again.",
+          snackbarType: SnackbarType.info,
+          context: event.context,
+        );
       }
     }));
     on<UnauthenticatedUserEvent>(

@@ -4,7 +4,7 @@ import 'colors.dart';
 
 class PinextTheme {
   static ThemeData lightTheme = ThemeData.light().copyWith(
-    visualDensity: VisualDensity.comfortable,
+    visualDensity: VisualDensity.compact,
     primaryColor: customBlueColor,
     scaffoldBackgroundColor: whiteColor,
     colorScheme: const ColorScheme(

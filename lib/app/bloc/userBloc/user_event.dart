@@ -24,6 +24,11 @@ class SignInUserEvent extends UserEvent {
 
 class RefreshUserStateEvent extends UserEvent {}
 
-class SignOutUserEvent extends UserEvent {}
+class SignOutUserEvent extends UserEvent {
+  BuildContext context;
+  SignOutUserEvent({
+    required this.context,
+  });
+}
 
 class UnauthenticatedUserEvent extends UserEvent {}
