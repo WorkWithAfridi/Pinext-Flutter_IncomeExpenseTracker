@@ -325,7 +325,7 @@ class TransactionsList extends StatelessWidget {
                                   height: 4,
                                 ),
                                 Text(
-                                  "No data found!",
+                                  "No record found!",
                                   style: regularTextStyle.copyWith(
                                       color: customBlackColor.withOpacity(.5)),
                                 ),
