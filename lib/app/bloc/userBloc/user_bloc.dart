@@ -90,5 +90,10 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         // error signing out
       }
     }));
+    on<UnauthenticatedUserEvent>(
+      (event, emit) {
+        emit(UnauthenticatedUserState());
+      },
+    );
   }
 }

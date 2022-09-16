@@ -28,17 +28,8 @@ class _SplashScreenState extends State<SplashScreen> {
     userSignedIn = await AuthenticationServices().isUserSignedIn();
     if (userSignedIn && mode == 'default') {
       context.read<UserBloc>().add(RefreshUserStateEvent());
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        ROUTES.getHomeframeRoute,
-        (route) => false,
-      );
     } else if (!userSignedIn) {
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        ROUTES.getLoginRoute,
-        (route) => false,
-      );
+      context.read<UserBloc>().add(UnauthenticatedUserEvent());
     } else if (userSignedIn && mode == 'AddTransaction') {
       Navigator.pushAndRemoveUntil(
         context,
@@ -113,22 +104,39 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: customBlueColor,
-      body: SizedBox(
-        height: getHeight(context),
-        width: getWidth(context),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "Pinext",
-              style: boldTextStyle.copyWith(
-                fontSize: 50,
-                color: whiteColor,
-                height: .9,
+      body: BlocListener<UserBloc, UserState>(
+        listener: (context, state) {
+          if (state is AuthenticatedUserState) {
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              ROUTES.getHomeframeRoute,
+              (route) => false,
+            );
+          } else if (state is UnauthenticatedUserState) {
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              ROUTES.getLoginRoute,
+              (route) => false,
+            );
+          }
+        },
+        child: SizedBox(
+          height: getHeight(context),
+          width: getWidth(context),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Pinext",
+                style: boldTextStyle.copyWith(
+                  fontSize: 50,
+                  color: whiteColor,
+                  height: .9,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

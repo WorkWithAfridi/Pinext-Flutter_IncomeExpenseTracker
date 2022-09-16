@@ -25,3 +25,5 @@ class SignInUserEvent extends UserEvent {
 class RefreshUserStateEvent extends UserEvent {}
 
 class SignOutUserEvent extends UserEvent {}
+
+class UnauthenticatedUserEvent extends UserEvent {}
