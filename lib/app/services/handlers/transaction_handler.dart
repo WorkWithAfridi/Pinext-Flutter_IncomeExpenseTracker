@@ -49,7 +49,7 @@ class TransactionHandler {
 
       // Adjust card balance and updating last transaction time
       PinextCardModel pinextCardModel = await CardHandler().getCard(cardId);
-      double adjustedAmount = transactionType == "Income"
+      double adjustedAmount = (transactionType == "Income")
           ? pinextCardModel.balance + double.parse(amount)
           : pinextCardModel.balance - double.parse(amount);
       await FirebaseServices()
@@ -80,6 +80,8 @@ class TransactionHandler {
         });
         await UserHandler().getCurrentUser();
       } else {
+        double adjustedMonthlySavings =
+            double.parse(pinextUserModel.monthlySavings) - double.parse(amount);
         double adjustedDailyExpenses =
             double.parse(pinextUserModel.dailyExpenses) + double.parse(amount);
         double adjustedMonthlyExpenses =
@@ -97,6 +99,7 @@ class TransactionHandler {
           "netBalance": adjustedNetBalance.toString(),
           "dailyExpenses": adjustedDailyExpenses.toString(),
           "monthlyExpenses": adjustedMonthlyExpenses.toString(),
+          "monthlySavings": adjustedMonthlySavings.toString(),
           "weeklyExpenses": adjustedWeeklyExpenses.toString(),
         });
       }
