@@ -7,6 +7,7 @@ import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/models/pinext_transaction_model.dart';
 import 'package:pinext/app/services/firebase_services.dart';
+import 'package:pinext/app/shared/widgets/customYearPicker.dart';
 
 import '../../../app_data/app_constants/fonts.dart';
 import '../../../bloc/archive_cubit/archive_cubit.dart';
@@ -134,15 +135,15 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
                         builder: (BuildContext builderContext) {
                           return AlertDialog(
                             title: Text(
-                              'Select year',
-                              style: boldTextStyle.copyWith(
-                                fontSize: 20,
+                              'Please select a year to show records of that specific year',
+                              style: regularTextStyle.copyWith(
+                                fontSize: 16,
                               ),
                             ),
                             content: SizedBox(
                               width: 300,
                               height: 300,
-                              child: YearPicker(
+                              child: CustomYearPicker(
                                 firstDate:
                                     DateTime(DateTime.now().year - 100, 1),
                                 lastDate: DateTime(DateTime.now().year, 1),
