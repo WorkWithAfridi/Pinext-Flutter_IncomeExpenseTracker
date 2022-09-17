@@ -72,10 +72,7 @@ class HomeframeCubit extends Cubit<HomeframeState> {
               },
             ),
           ],
-          actionsPadding: const EdgeInsets.only(
-            right: 20,
-            bottom: 10,
-          ),
+          actionsPadding: dialogButtonPadding,
         );
       },
     );

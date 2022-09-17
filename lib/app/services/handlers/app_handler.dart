@@ -83,10 +83,7 @@ class AppHandler {
                   },
                 ),
               ],
-              actionsPadding: const EdgeInsets.symmetric(
-                horizontal: defaultPadding,
-                vertical: 4,
-              ),
+              actionsPadding: dialogButtonPadding,
             );
           },
         );
@@ -157,10 +154,7 @@ class AppHandler {
               },
             ),
           ],
-          actionsPadding: const EdgeInsets.only(
-            right: 20,
-            bottom: 10,
-          ),
+          actionsPadding: dialogButtonPadding,
         );
       },
     );

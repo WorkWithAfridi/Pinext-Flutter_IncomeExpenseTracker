@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 const defaultPadding = 16.00;
 const defaultBorder = 10.00;
 const defaultDelayDuration = 2;
@@ -16,3 +18,8 @@ const List months = [
   "November",
   "December",
 ];
+
+const dialogButtonPadding = EdgeInsets.only(
+  right: 20,
+  bottom: 10,
+);

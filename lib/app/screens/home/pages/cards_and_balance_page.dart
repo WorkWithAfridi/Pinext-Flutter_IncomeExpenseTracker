@@ -227,10 +227,7 @@ class CardsAndBalanceView extends StatelessWidget {
                                       },
                                     ),
                                   ],
-                                  actionsPadding: const EdgeInsets.only(
-                                    right: 20,
-                                    bottom: 10,
-                                  ),
+                                  actionsPadding: dialogButtonPadding,
                                 );
                               });
                         },
