@@ -72,9 +72,9 @@ class HomeframeCubit extends Cubit<HomeframeState> {
               },
             ),
           ],
-          actionsPadding: const EdgeInsets.symmetric(
-            horizontal: defaultPadding,
-            vertical: 4,
+          actionsPadding: const EdgeInsets.only(
+            right: 20,
+            bottom: 10,
           ),
         );
       },
