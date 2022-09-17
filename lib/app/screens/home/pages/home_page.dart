@@ -52,6 +52,20 @@ class HomepageView extends StatelessWidget {
     "Hangout": 80,
   };
 
+  String getGreetings() {
+    int currentHour = DateTime.now().hour;
+    if (currentHour > 0 && currentHour <= 5) {
+      return "Hello,";
+    } else if (currentHour > 5 && currentHour <= 11) {
+      return "Good morning,";
+    } else if (currentHour > 11 && currentHour <= 18) {
+      return "Good afternoon,";
+    } else if (currentHour > 18 && currentHour <= 24) {
+      return "Good evening,";
+    }
+    return "Hello";
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -73,7 +87,7 @@ class HomepageView extends StatelessWidget {
                     height: 8,
                   ),
                   Text(
-                    "Good morning,",
+                    getGreetings(),
                     style: regularTextStyle.copyWith(
                       color: customBlackColor.withOpacity(.6),
                     ),
