@@ -85,6 +85,9 @@ flutter:
     - family: SFPro
       fonts:
         - asset: assets/fonts/SFPro.ttf
+    - family: Cursive
+      fonts:
+        - asset: assets/fonts/SeaweedScript-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

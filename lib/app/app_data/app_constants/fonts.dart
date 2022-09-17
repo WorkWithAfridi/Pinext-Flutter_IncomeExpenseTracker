@@ -14,3 +14,9 @@ TextStyle regularTextStyle = const TextStyle(
   fontSize: 14,
   color: customBlackColor,
 );
+TextStyle cursiveTextStyle = const TextStyle(
+  fontFamily: "Cursive",
+  fontWeight: FontWeight.bold,
+  fontSize: 14,
+  color: customBlackColor,
+);

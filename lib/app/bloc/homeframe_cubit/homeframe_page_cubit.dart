@@ -48,7 +48,7 @@ class HomeframeCubit extends Cubit<HomeframeState> {
             child: ListBody(
               children: [
                 Text(
-                  "Welcome aboard on Pinext.\nA personal Income and Expense tracker. Where you can track your daily expenses or income and store them in a cloud based archive. You'll be able to view or update your transactions at any time and even generate reports based on your transactions directly through the app! :)",
+                  "Welcome to the Pinext family. A logbook of one's personal income and expenses. where you, the user can keep track of your everyday spending or income and archive it on the cloud. Further more, You can use the app to directly generate reports based on your transactions, examine or change your transactions at any moment, and more! :)",
                   style: regularTextStyle,
                 ),
               ],

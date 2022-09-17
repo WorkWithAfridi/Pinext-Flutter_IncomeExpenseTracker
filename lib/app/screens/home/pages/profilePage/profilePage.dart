@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
+import 'package:pinext/app/services/handlers/app_handler.dart';
 
 import '../../../../app_data/appVersion.dart';
 import '../../../../app_data/theme_data/colors.dart';
@@ -14,36 +15,39 @@ class ProfilePage extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Container(
-      padding: const EdgeInsets.all(
-        defaultPadding,
+      padding: const EdgeInsets.symmetric(
+        horizontal: defaultPadding,
       ),
       height: height,
       width: width,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const SizedBox(
+            height: 8,
+          ),
           RichText(
             text: TextSpan(
               children: [
                 TextSpan(
-                  text: "Hola!\n",
-                  style: boldTextStyle.copyWith(
-                    fontSize: 35,
-                    color: customBlackColor,
+                  text: "Hello,\n",
+                  style: regularTextStyle.copyWith(
+                    color: customBlackColor.withOpacity(.6),
                   ),
                 ),
                 TextSpan(
                   text: "${UserHandler().currentUser.username} 👋",
-                  style: regularTextStyle.copyWith(
-                    fontSize: 25,
-                    color: customBlackColor,
+                  style: cursiveTextStyle.copyWith(
+                    // height: .95,
+                    fontSize: 30,
+                    color: customBlackColor.withOpacity(.8),
                   ),
                 ),
               ],
             ),
           ),
           const SizedBox(
-            height: 8,
+            height: 4,
           ),
           SizedBox(
             height: 200,
@@ -70,24 +74,9 @@ class ProfilePage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Align(
-                            child: Container(
-                              height: 50,
-                              width: 50,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(
-                                  50,
-                                ),
-                                border: Border.all(
-                                  color: whiteColor,
-                                  width: 1.5,
-                                ),
-                              ),
-                              child: const Icon(
-                                Icons.settings,
-                                color: whiteColor,
-                              ),
-                            ),
+                          const Icon(
+                            Icons.settings,
+                            color: whiteColor,
                           ),
                           const SizedBox(
                             height: 4,
@@ -169,103 +158,113 @@ class ProfilePage extends StatelessWidget {
               ],
             ),
           ),
-          Container(
-            height: 80,
-            width: double.maxFinite,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(
-                defaultBorder,
+          GestureDetector(
+            onTap: () {
+              AppHandler().requestNewFuture(context);
+            },
+            child: Container(
+              height: 80,
+              width: double.maxFinite,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(
+                  defaultBorder,
+                ),
+                color: greyColor,
               ),
-              color: greyColor,
-            ),
-            alignment: Alignment.center,
-            child: Text(
-              "🔥  Request new features!",
-              style: regularTextStyle.copyWith(
-                fontSize: 16,
+              alignment: Alignment.center,
+              child: Text(
+                "🔥  Request new features!",
+                style: regularTextStyle.copyWith(
+                  fontSize: 16,
+                ),
               ),
             ),
           ),
           const SizedBox(
             height: 10,
           ),
-          Container(
-            height: 80,
-            width: double.maxFinite,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(
-                defaultBorder,
+          GestureDetector(
+            onTap: () {
+              AppHandler().writeReview(context);
+            },
+            child: Container(
+              height: 80,
+              width: double.maxFinite,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(
+                  defaultBorder,
+                ),
+                color: customBlueColor,
               ),
-              color: customBlueColor,
-            ),
-            alignment: Alignment.center,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Icon(
-                  Icons.edit,
-                  color: whiteColor,
-                ),
-                const SizedBox(
-                  width: 8,
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: "Enjoying ",
-                            style: regularTextStyle.copyWith(
-                              fontSize: 16,
-                              color: whiteColor,
+              alignment: Alignment.center,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.edit,
+                    color: whiteColor,
+                  ),
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: "Enjoying ",
+                              style: regularTextStyle.copyWith(
+                                fontSize: 16,
+                                color: whiteColor,
+                              ),
                             ),
-                          ),
-                          TextSpan(
-                            text: "Pinext?",
-                            style: boldTextStyle.copyWith(
-                              fontSize: 16,
-                              color: whiteColor,
+                            TextSpan(
+                              text: "Pinext?",
+                              style: boldTextStyle.copyWith(
+                                fontSize: 16,
+                                color: whiteColor,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: "Maybe write me a ",
-                            style: regularTextStyle.copyWith(
-                              fontSize: 16,
-                              color: whiteColor,
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: "Maybe write me a ",
+                              style: regularTextStyle.copyWith(
+                                fontSize: 16,
+                                color: whiteColor,
+                              ),
                             ),
-                          ),
-                          TextSpan(
-                            text: "review",
-                            style: boldTextStyle.copyWith(
-                              fontSize: 16,
-                              color: whiteColor,
-                              decoration: TextDecoration.underline,
-                              decorationStyle: TextDecorationStyle.wavy,
+                            TextSpan(
+                              text: "review",
+                              style: boldTextStyle.copyWith(
+                                fontSize: 16,
+                                color: whiteColor,
+                                decoration: TextDecoration.underline,
+                                decorationStyle: TextDecorationStyle.wavy,
+                              ),
                             ),
-                          ),
-                          TextSpan(
-                            text: "! :)",
-                            style: regularTextStyle.copyWith(
-                              fontSize: 16,
-                              color: whiteColor,
+                            TextSpan(
+                              text: "! :)",
+                              style: regularTextStyle.copyWith(
+                                fontSize: 16,
+                                color: whiteColor,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
           const SizedBox(
