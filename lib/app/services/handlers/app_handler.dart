@@ -94,6 +94,22 @@ class AppHandler {
     });
   }
 
+  requestNewFuture(BuildContext context) {
+    _sendEmail(
+      context,
+      "PINEXT: REQUESTING NEW FUTURE!",
+      "Enter a detailed description of the future you're requesting!",
+    );
+  }
+
+  writeReview(BuildContext context) {
+    _sendEmail(
+      context,
+      "PINEXT: REVIEW",
+      "Enter your review here! :D ",
+    );
+  }
+
   sendBugReport(BuildContext context) {
     showDialog(
       context: context,
@@ -135,7 +151,8 @@ class AppHandler {
             TextButton(
               child: const Text('Send mail'),
               onPressed: () {
-                _sendEmail(context);
+                _sendEmail(context, "PINEXT - BUG REPORT",
+                    "Please enter your description and scenario here!");
               },
             ),
           ],
@@ -148,12 +165,12 @@ class AppHandler {
     );
   }
 
-  _sendEmail(BuildContext context) async {
+  _sendEmail(BuildContext context, String subject, String body) async {
     final Uri email = Uri(
         scheme: "mailto",
         path: "khondakarafridi35@gmail.com",
         query:
-            "subject=${Uri.encodeComponent("PINEXT - BUG REPORT")}&body=${Uri.encodeComponent("Please enter your description and scenario here!")}");
+            "subject=${Uri.encodeComponent(subject)}&body=${Uri.encodeComponent(body)}");
     // final url =
     //     "mailto:<khondakarafridi35@gmail.com>?subject=${Uri.encodeFull("PINEXT - BUG REPORT")}&body=<${Uri.encodeFull("Please enter your description and scenario here!")}>";
     if (await canLaunchUrl(email)) {

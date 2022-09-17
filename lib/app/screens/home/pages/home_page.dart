@@ -83,8 +83,9 @@ class HomepageView extends StatelessWidget {
                       if (state is AuthenticatedUserState) {
                         return Text(
                           state.username,
-                          style: boldTextStyle.copyWith(
-                            fontSize: 25,
+                          style: cursiveTextStyle.copyWith(
+                            fontSize: 30,
+                            color: customBlackColor.withOpacity(.8),
                           ),
                         );
                       } else {
@@ -93,7 +94,7 @@ class HomepageView extends StatelessWidget {
                     },
                   ),
                   const SizedBox(
-                    height: 16,
+                    height: 8,
                   ),
                 ],
               ),

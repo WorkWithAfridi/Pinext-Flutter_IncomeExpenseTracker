@@ -152,7 +152,7 @@ class HomeframeView extends StatelessWidget {
                           )
                         : const SizedBox.shrink();
               }),
-          floatingActionButtonLocation: state.selectedIndex == 0
+          floatingActionButtonLocation: state.selectedIndex != 3
               ? FloatingActionButtonLocation.miniEndTop
               : FloatingActionButtonLocation.endFloat,
           bottomNavigationBar: BottomNavigationBar(
