@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/services/handlers/app_handler.dart';
 
 import '../../../../app_data/appVersion.dart';
+import '../../../../app_data/app_constants/domentions.dart';
 import '../../../../app_data/theme_data/colors.dart';
 import '../../../../services/handlers/user_handler.dart';
 
@@ -47,238 +49,120 @@ class ProfilePage extends StatelessWidget {
             ),
           ),
           const SizedBox(
-            height: 4,
+            height: 8,
           ),
-          SizedBox(
-            height: 200,
-            width: width,
-            child: Row(
-              children: [
-                Flexible(
-                  flex: 2,
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      right: 10.0,
-                      bottom: 10,
-                    ),
-                    child: Container(
-                      height: double.maxFinite,
-                      width: double.maxFinite,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(
-                          defaultBorder,
-                        ),
-                        color: customBlackColor,
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const Icon(
-                            Icons.settings,
-                            color: whiteColor,
-                          ),
-                          const SizedBox(
-                            height: 4,
-                          ),
-                          Text(
-                            "Settings",
-                            style: regularTextStyle.copyWith(
-                              color: whiteColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Flexible(
-                  flex: 4,
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      bottom: 10,
-                    ),
-                    child: Container(
-                      height: double.maxFinite,
-                      width: double.maxFinite,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(
-                          defaultBorder,
-                        ),
-                        color: customBlueColor,
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Align(
-                            child: Container(
-                              height: 60,
-                              width: 60,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(
-                                  60,
-                                ),
-                                border: Border.all(
-                                  color: whiteColor,
-                                  width: 1.5,
-                                ),
-                              ),
-                              alignment: Alignment.center,
-                              child: Text(
-                                UserHandler().currentUser.username[0],
-                                style: boldTextStyle.copyWith(
-                                  color: whiteColor,
-                                  fontSize: 20,
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 4,
-                          ),
-                          Text(
-                            UserHandler().currentUser.username,
-                            style: boldTextStyle.copyWith(
-                              color: whiteColor,
-                              fontSize: 16,
-                            ),
-                          ),
-                          Text(
-                            "(User settings)",
-                            style: regularTextStyle.copyWith(
-                              color: whiteColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          GestureDetector(
-            onTap: () {
-              AppHandler().requestNewFuture(context);
+          GetSettingsButtonWithIcon(
+            onTapFunction: () {
+              // AppHandler().requestNewFuture(context);
             },
-            child: Container(
-              height: 80,
-              width: double.maxFinite,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(
-                  defaultBorder,
-                ),
-                color: greyColor,
-              ),
-              alignment: Alignment.center,
-              child: Text(
-                "🔥  Request new futures!",
-                style: regularTextStyle.copyWith(
-                  fontSize: 16,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          GestureDetector(
-            onTap: () {
-              AppHandler().writeReview(context);
-            },
-            child: Container(
-              height: 80,
-              width: double.maxFinite,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(
-                  defaultBorder,
-                ),
-                color: customBlueColor,
-              ),
-              alignment: Alignment.center,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const Icon(
-                    Icons.edit,
-                    color: whiteColor,
-                  ),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: "Enjoying ",
-                              style: regularTextStyle.copyWith(
-                                fontSize: 16,
-                                color: whiteColor,
-                              ),
-                            ),
-                            TextSpan(
-                              text: "Pinext?",
-                              style: boldTextStyle.copyWith(
-                                fontSize: 16,
-                                color: whiteColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: "Maybe write me a ",
-                              style: regularTextStyle.copyWith(
-                                fontSize: 16,
-                                color: whiteColor,
-                              ),
-                            ),
-                            TextSpan(
-                              text: "review",
-                              style: boldTextStyle.copyWith(
-                                fontSize: 16,
-                                color: whiteColor,
-                                decoration: TextDecoration.underline,
-                                decorationStyle: TextDecorationStyle.wavy,
-                              ),
-                            ),
-                            TextSpan(
-                              text: "! :)",
-                              style: regularTextStyle.copyWith(
-                                fontSize: 16,
-                                color: whiteColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+            label: "${UserHandler().currentUser.username} - User settings",
+            icon: Icons.person,
+            iconSize: 18,
           ),
           const SizedBox(
             height: 8,
           ),
-          Text(
-            "App Version: $appVersion",
-            style: regularTextStyle.copyWith(
-              fontSize: 12,
-              color: customBlackColor.withOpacity(.3),
+          GetSettingsButtonWithIcon(
+            onTapFunction: () {
+              // AppHandler().requestNewFuture(context);
+            },
+            label: "App settings",
+            icon: Icons.settings,
+            iconSize: 18,
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          GetSettingsButtonWithIcon(
+            onTapFunction: () {
+              AppHandler().requestNewFuture(context);
+            },
+            label: "Request new future!",
+            icon: FontAwesomeIcons.fire,
+            iconSize: 16,
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          GetSettingsButtonWithIcon(
+            onTapFunction: () {
+              AppHandler().writeReview(context);
+            },
+            label: "Post review",
+            icon: Icons.edit,
+            iconSize: 18,
+          ),
+          const SizedBox(
+            height: 6,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 3,
             ),
-            textAlign: TextAlign.center,
+            child: Text(
+              "App Version: $appVersion",
+              style: regularTextStyle.copyWith(
+                fontSize: 12,
+                color: customBlackColor.withOpacity(.2),
+              ),
+              textAlign: TextAlign.center,
+            ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class GetSettingsButtonWithIcon extends StatelessWidget {
+  GetSettingsButtonWithIcon({
+    Key? key,
+    required this.icon,
+    required this.label,
+    required this.onTapFunction,
+    required this.iconSize,
+  }) : super(key: key);
+
+  IconData icon;
+  String label;
+  Function onTapFunction;
+  double iconSize;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        onTapFunction();
+      },
+      child: Container(
+        height: 50,
+        width: getWidth(context),
+        decoration: BoxDecoration(
+          color: greyColor,
+          borderRadius: BorderRadius.circular(defaultBorder),
+        ),
+        alignment: Alignment.centerLeft,
+        padding: const EdgeInsets.symmetric(
+          horizontal: defaultPadding,
+        ),
+        child: Row(
+          children: [
+            Icon(
+              icon,
+              color: customBlackColor,
+              size: iconSize,
+            ),
+            const SizedBox(
+              width: 4,
+            ),
+            Text(
+              label,
+              style: regularTextStyle.copyWith(
+                fontSize: 15,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

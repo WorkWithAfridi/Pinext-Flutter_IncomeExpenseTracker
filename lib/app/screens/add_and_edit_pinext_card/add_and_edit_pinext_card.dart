@@ -171,7 +171,8 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                       controller: descriptionController,
                       hintTitle: "Enter description",
                       numberOfLines: 5,
-                      textInputType: TextInputType.text,
+                      textInputType: TextInputType.multiline,
+                      textInputAction: TextInputAction.newline,
                       onChanged: (String value) {},
                       validator: (value) {
                         return null;

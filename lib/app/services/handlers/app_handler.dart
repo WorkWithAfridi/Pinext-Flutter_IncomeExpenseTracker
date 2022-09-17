@@ -153,6 +153,7 @@ class AppHandler {
               onPressed: () {
                 _sendEmail(context, "PINEXT - BUG REPORT",
                     "Please enter your description and scenario here!");
+                Navigator.of(context).pop();
               },
             ),
           ],
@@ -171,11 +172,8 @@ class AppHandler {
         path: "khondakarafridi35@gmail.com",
         query:
             "subject=${Uri.encodeComponent(subject)}&body=${Uri.encodeComponent(body)}");
-    // final url =
-    //     "mailto:<khondakarafridi35@gmail.com>?subject=${Uri.encodeFull("PINEXT - BUG REPORT")}&body=<${Uri.encodeFull("Please enter your description and scenario here!")}>";
     if (await canLaunchUrl(email)) {
       await launchUrl(email);
-      Navigator.of(context).pop();
     } else {
       GetCustomSnackbar(
         title: "Snap",

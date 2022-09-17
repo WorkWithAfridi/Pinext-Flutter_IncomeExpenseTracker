@@ -20,10 +20,12 @@ class CustomTextFormField extends StatelessWidget {
     this.textInputType = TextInputType.text,
     required this.onChanged,
     required this.validator,
+    this.textInputAction = TextInputAction.next
   }) : super(key: key);
 
   Function onChanged;
   Function validator;
+  TextInputAction textInputAction;
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +34,11 @@ class CustomTextFormField extends StatelessWidget {
       style: regularTextStyle,
       maxLines: numberOfLines,
       keyboardType: textInputType,
+      
       validator: (value) {
         return validator(value);
       },
-      textInputAction: TextInputAction.next,
+      textInputAction: textInputAction,
       onChanged: ((value) {
         onChanged(value);
       }),
