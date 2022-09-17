@@ -145,7 +145,7 @@ class ProfilePage extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            "(Profile)",
+                            "(User settings)",
                             style: regularTextStyle.copyWith(
                               color: whiteColor,
                             ),
@@ -173,7 +173,7 @@ class ProfilePage extends StatelessWidget {
               ),
               alignment: Alignment.center,
               child: Text(
-                "🔥  Request new features!",
+                "🔥  Request new futures!",
                 style: regularTextStyle.copyWith(
                   fontSize: 16,
                 ),
