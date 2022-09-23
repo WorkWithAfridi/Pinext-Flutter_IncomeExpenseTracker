@@ -4,7 +4,10 @@ import 'package:pinext/app/models/pinext_user_model.dart';
 import 'package:pinext/app/services/date_time_services.dart';
 import 'package:pinext/app/services/firebase_services.dart';
 import 'package:pinext/app/services/handlers/card_handler.dart';
+import 'package:pinext/app/services/handlers/goal_handler.dart';
 import 'package:pinext/app/services/handlers/user_handler.dart';
+
+import '../models/pinext_goal_model.dart';
 
 class AuthenticationServices {
   AuthenticationServices._internal();
@@ -17,6 +20,7 @@ class AuthenticationServices {
     required String password,
     required String username,
     required List<PinextCardModel> pinextCards,
+    required List<PinextGoalModel> pinextGoals,
     required String netBalance,
     required String monthlyBudget,
     required String budgetSpentSoFar,
@@ -60,6 +64,11 @@ class AuthenticationServices {
         await CardHandler().addCard(
           pinextCardModel: pinextCard,
           duringSignIn: true,
+        );
+      }
+      for (PinextGoalModel goal in pinextGoals) {
+        await GoalHandler().addGoal(
+          pinextGoalModel: goal,
         );
       }
       await UserHandler().getCurrentUser();

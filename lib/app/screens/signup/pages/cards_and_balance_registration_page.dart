@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/extensions/string_extensions.dart';
+import 'package:pinext/app/models/pinext_goal_model.dart';
+import 'package:pinext/app/screens/goals_and_milestones/goals_and_milestones.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 import 'package:pinext/app/shared/widgets/pinext_card_minimized.dart';
 
@@ -17,6 +19,7 @@ import '../../../bloc/userBloc/user_bloc.dart';
 import '../../../models/pinext_card_model.dart';
 import '../../../shared/widgets/custom_button.dart';
 import '../../../shared/widgets/custom_text_field.dart';
+import '../../../shared/widgets/pinext_goal_minimized.dart';
 import '../../add_and_edit_pinext_card/add_and_edit_pinext_card.dart';
 
 class CardsAndBalancesRegistrationPage extends StatelessWidget {
@@ -308,6 +311,121 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
               const SizedBox(
                 height: 16,
               ),
+              Text(
+                "Manage Goals",
+                style: boldTextStyle,
+              ),
+              const SizedBox(
+                height: 4,
+              ),
+              BlocBuilder<SigninCubit, SigninState>(
+                builder: (context, state) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      state.goals.isEmpty
+                          ? Text(
+                              "Please add goals and milestones to view them here!",
+                              style: regularTextStyle.copyWith(
+                                color: customBlackColor.withOpacity(.4),
+                              ),
+                            )
+                          : const SizedBox.shrink(),
+                      MediaQuery.removePadding(
+                        context: context,
+                        removeBottom: true,
+                        child: ListView.builder(
+                          itemCount: state.goals.length,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: ((context, index) {
+                            log('creating list');
+                            PinextGoalModel pinextGoalModel =
+                                state.goals[index];
+                            return PinextGoalCardMinimized(
+                              pinextGoalModel: pinextGoalModel,
+                            );
+                          }),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              Text(
+                "Add goals/ milestones",
+                style: boldTextStyle,
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    CustomTransitionPageRoute(
+                      childWidget: const GoalsAndMilestoneScreen(),
+                    ),
+                  );
+                },
+                child: Container(
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color: greyColor,
+                    borderRadius: BorderRadius.circular(
+                      defaultBorder,
+                    ),
+                  ),
+                  alignment: Alignment.center,
+                  width: getWidth(context),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: 25,
+                        width: 25,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(
+                            25,
+                          ),
+                          border: Border.all(
+                            color: customBlackColor.withOpacity(.4),
+                          ),
+                        ),
+                        child: Icon(
+                          Icons.add,
+                          size: 16,
+                          color: customBlackColor.withOpacity(.4),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      Text(
+                        "Add a goal/ milestone",
+                        style: boldTextStyle.copyWith(
+                          color: customBlackColor.withOpacity(.4),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 4,
+              ),
+              Text(
+                "*These will be your goals and milestones for the next month, year and so on. Once you save up to them, your goals will be archived and you can add new goals.",
+                style: regularTextStyle.copyWith(
+                  color: customBlackColor.withOpacity(.4),
+                ),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
               BlocListener<UserBloc, UserState>(
                 listener: (context, state) {
                   if (state is AuthenticatedUserState) {
@@ -346,14 +464,15 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                               budgetSpentSoFarController.text.isNotEmpty &&
                               state.cards.isNotEmpty) {
                             context.read<SigninCubit>().signupUser(
-                                  emailAddress: emailController.text,
-                                  password: passwordController.text,
-                                  username: userNameController.text,
-                                  pinextCards: state.cards,
-                                  netBalance: netBalance.floor().toString(),
-                                  monthlyBudget: monthlyBudgetController.text,
-                                  budgetSpentSoFar: budgetSpentSoFarController.text,
-                                );
+                              emailAddress: emailController.text,
+                              password: passwordController.text,
+                              username: userNameController.text,
+                              pinextCards: state.cards,
+                              netBalance: netBalance.floor().toString(),
+                              monthlyBudget: monthlyBudgetController.text,
+                              budgetSpentSoFar: budgetSpentSoFarController.text,
+                              pinextGoals: [],
+                            );
                           } else {
                             GetCustomSnackbar(
                               title: "....",

@@ -183,7 +183,9 @@ class HomepageView extends StatelessWidget {
                           children: [
                             Text(
                               "Your budget for ${months[int.parse(currentMonth) - 1]}",
-                              style: regularTextStyle,
+                              style: regularTextStyle.copyWith(
+                                color: customBlackColor.withOpacity(.6),
+                              ),
                             ),
                             BlocBuilder<UserBloc, UserState>(
                               builder: (context, state) {
