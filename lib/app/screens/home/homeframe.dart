@@ -32,7 +32,8 @@ class _HomeframeState extends State<Homeframe> {
   void initState() {
     super.initState();
     // AppHandler().checkForUpdate(context);
-    showIntroductions();
+    // showIntroductions();
+    //Add introKeys to children widgets
   }
 
   showIntroductions() async {
