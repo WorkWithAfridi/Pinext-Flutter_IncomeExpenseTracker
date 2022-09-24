@@ -4,8 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
+import 'package:pinext/app/models/pinext_goal_model.dart';
 import 'package:pinext/app/services/firebase_services.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
+import 'package:pinext/app/shared/widgets/pinext_goal_minimized.dart';
 
 import '../../../app_data/app_constants/constants.dart';
 import '../../../app_data/app_constants/domentions.dart';
@@ -449,6 +451,98 @@ class HomepageView extends StatelessWidget {
                     height: 12,
                   ),
                   const PastTransactionsModule(),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Goals and milestones",
+                            style: boldTextStyle.copyWith(
+                              fontSize: 20,
+                            ),
+                          ),
+                          Text(
+                            "View all",
+                            style: regularTextStyle.copyWith(
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      StreamBuilder(
+                        stream: FirebaseServices()
+                            .firebaseFirestore
+                            .collection('pinext_users')
+                            .doc(FirebaseServices().getUserId())
+                            .collection('pinext_goals')
+                            .snapshots(),
+                        builder: ((context,
+                            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                                snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                              child: SizedBox.shrink(),
+                            );
+                          }
+                          if (snapshot.data!.docs.isEmpty) {
+                            return Text(
+                              "404 - No record found!",
+                              style: regularTextStyle.copyWith(
+                                color: customBlackColor.withOpacity(.4),
+                              ),
+                            );
+                          }
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 5.0),
+                                child: ListView.builder(
+                                  itemCount: snapshot.data!.docs.length > 10
+                                      ? 10
+                                      : snapshot.data!.docs.length,
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemBuilder: ((context, index) {
+                                    if (snapshot.data!.docs.isEmpty) {
+                                      return const Text("No data found! :(");
+                                    }
+                                    if (snapshot.data!.docs.isEmpty) {
+                                      return Text(
+                                        "No data found! :(",
+                                        style: regularTextStyle.copyWith(
+                                          color:
+                                              customBlackColor.withOpacity(.4),
+                                        ),
+                                      );
+                                    }
+
+                                    PinextGoalModel pinextGoalModel =
+                                        PinextGoalModel.fromMap(
+                                      snapshot.data!.docs[index].data(),
+                                    );
+                                    return PinextGoalCardMinimized(
+                                      pinextGoalModel: pinextGoalModel,
+                                    );
+                                  }),
+                                ),
+                              )
+                            ],
+                          );
+                        }),
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),

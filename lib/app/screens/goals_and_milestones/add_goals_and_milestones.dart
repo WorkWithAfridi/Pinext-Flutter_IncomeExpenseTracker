@@ -11,23 +11,23 @@ import '../../app_data/theme_data/colors.dart';
 import '../../shared/widgets/custom_button.dart';
 import '../../shared/widgets/custom_text_field.dart';
 
-class GoalsAndMilestoneScreen extends StatelessWidget {
-  const GoalsAndMilestoneScreen({super.key});
+class AddGoalsAndMilestoneScreen extends StatelessWidget {
+  const AddGoalsAndMilestoneScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const GoalsAndMilestoneView();
+    return const AddGoalsAndMilestoneView();
   }
 }
 
-class GoalsAndMilestoneView extends StatefulWidget {
-  const GoalsAndMilestoneView({super.key});
+class AddGoalsAndMilestoneView extends StatefulWidget {
+  const AddGoalsAndMilestoneView({super.key});
 
   @override
-  State<GoalsAndMilestoneView> createState() => _GoalsAndMilestoneScreenState();
+  State<AddGoalsAndMilestoneView> createState() => _GoalsAndMilestoneScreenState();
 }
 
-class _GoalsAndMilestoneScreenState extends State<GoalsAndMilestoneView> {
+class _GoalsAndMilestoneScreenState extends State<AddGoalsAndMilestoneView> {
   late TextEditingController titleController;
 
   late TextEditingController amountController;
