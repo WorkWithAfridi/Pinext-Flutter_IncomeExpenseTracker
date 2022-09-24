@@ -463,7 +463,7 @@ class HomepageView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Goals and milestones",
+                            "Goals & milestones",
                             style: boldTextStyle.copyWith(
                               fontSize: 20,
                             ),

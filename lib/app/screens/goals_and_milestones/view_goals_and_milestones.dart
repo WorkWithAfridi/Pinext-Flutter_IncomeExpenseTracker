@@ -54,7 +54,7 @@ class ViewGoalsAndMilestoneView extends StatelessWidget {
               ),
             ),
             Text(
-              "Goals and Milestones",
+              "Goals & Milestones",
               style: boldTextStyle.copyWith(
                 fontSize: 25,
               ),

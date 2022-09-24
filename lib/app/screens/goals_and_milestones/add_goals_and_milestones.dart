@@ -132,7 +132,7 @@ class _GoalsAndMilestoneScreenState extends State<AddGoalsAndMilestoneView> {
                   ),
                 ),
                 Text(
-                  "Goals and Milestones",
+                  "Goals & Milestones",
                   style: boldTextStyle.copyWith(
                     fontSize: 25,
                   ),

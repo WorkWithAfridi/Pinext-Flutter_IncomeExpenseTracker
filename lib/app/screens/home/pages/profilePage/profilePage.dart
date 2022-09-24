@@ -93,6 +93,17 @@ class ProfilePage extends StatelessWidget {
             iconSize: 18,
           ),
           const SizedBox(
+            height: 8,
+          ),
+          GetSettingsButtonWithIcon(
+            onTapFunction: () {
+              // AppHandler().writeReview(context);
+            },
+            label: "Goals & Milestones",
+            icon: Icons.stop,
+            iconSize: 18,
+          ),
+          const SizedBox(
             height: 6,
           ),
           Padding(
