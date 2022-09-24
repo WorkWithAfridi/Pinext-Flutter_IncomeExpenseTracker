@@ -140,7 +140,7 @@ class _GoalsAndMilestoneScreenState extends State<AddGoalsAndMilestoneView> {
                   style: boldTextStyle,
                 ),
                 const SizedBox(
-                  height: 4,
+                  height: 8,
                 ),
                 CustomTextFormField(
                   controller: titleController,
@@ -172,7 +172,7 @@ class _GoalsAndMilestoneScreenState extends State<AddGoalsAndMilestoneView> {
                   style: boldTextStyle,
                 ),
                 const SizedBox(
-                  height: 4,
+                  height: 8,
                 ),
                 CustomTextFormField(
                   controller: amountController,
@@ -200,7 +200,7 @@ class _GoalsAndMilestoneScreenState extends State<AddGoalsAndMilestoneView> {
                   style: boldTextStyle,
                 ),
                 const SizedBox(
-                  height: 4,
+                  height: 8,
                 ),
                 CustomTextFormField(
                   controller: descriptionController,

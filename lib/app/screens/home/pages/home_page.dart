@@ -517,55 +517,49 @@ class HomepageView extends StatelessWidget {
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 5.0),
-                                child: ListView.builder(
-                                  itemCount: snapshot.data!.docs.length > 5
-                                      ? 5
-                                      : snapshot.data!.docs.length,
-                                  shrinkWrap: true,
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  itemBuilder: ((context, index) {
-                                    if (snapshot.data!.docs.isEmpty) {
-                                      return const Text("No data found! :(");
-                                    }
-                                    if (snapshot.data!.docs.isEmpty) {
-                                      return Text(
-                                        "No data found! :(",
-                                        style: regularTextStyle.copyWith(
-                                          color:
-                                              customBlackColor.withOpacity(.4),
-                                        ),
-                                      );
-                                    }
+                              ListView.builder(
+                                itemCount: snapshot.data!.docs.length > 5
+                                    ? 5
+                                    : snapshot.data!.docs.length,
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemBuilder: ((context, index) {
+                                  if (snapshot.data!.docs.isEmpty) {
+                                    return const Text("No data found! :(");
+                                  }
+                                  if (snapshot.data!.docs.isEmpty) {
+                                    return Text(
+                                      "No data found! :(",
+                                      style: regularTextStyle.copyWith(
+                                        color: customBlackColor.withOpacity(.4),
+                                      ),
+                                    );
+                                  }
 
-                                    PinextGoalModel pinextGoalModel =
-                                        PinextGoalModel.fromMap(
-                                      snapshot.data!.docs[index].data(),
-                                    );
-                                    return BlocBuilder<UserBloc, UserState>(
-                                      builder: (context, state) {
-                                        double completionAmount = 0;
-                                        if (state is AuthenticatedUserState) {
-                                          completionAmount = ((double.parse(
-                                                      state.netBalance) /
-                                                  double.parse(
-                                                      pinextGoalModel.amount)) *
-                                              100);
-                                        }
-                                        return completionAmount < 100
-                                            ? PinextGoalCardMinimized(
-                                                pinextGoalModel:
-                                                    pinextGoalModel,
-                                                index: index,
-                                                showCompletePercentage: true,
-                                              )
-                                            : const SizedBox.shrink();
-                                      },
-                                    );
-                                  }),
-                                ),
+                                  PinextGoalModel pinextGoalModel =
+                                      PinextGoalModel.fromMap(
+                                    snapshot.data!.docs[index].data(),
+                                  );
+                                  return BlocBuilder<UserBloc, UserState>(
+                                    builder: (context, state) {
+                                      double completionAmount = 0;
+                                      if (state is AuthenticatedUserState) {
+                                        completionAmount = ((double.parse(
+                                                    state.netBalance) /
+                                                double.parse(
+                                                    pinextGoalModel.amount)) *
+                                            100);
+                                      }
+                                      return completionAmount < 100
+                                          ? PinextGoalCardMinimized(
+                                              pinextGoalModel: pinextGoalModel,
+                                              index: index,
+                                              showCompletePercentage: true,
+                                            )
+                                          : const SizedBox.shrink();
+                                    },
+                                  );
+                                }),
                               )
                             ],
                           );
