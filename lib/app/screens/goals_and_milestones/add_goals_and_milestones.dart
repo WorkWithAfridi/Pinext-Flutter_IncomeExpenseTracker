@@ -109,6 +109,21 @@ class _GoalsAndMilestoneScreenState extends State<AddGoalsAndMilestoneView> {
           "Adding a new goal",
           style: boldTextStyle,
         ),
+        actions: [
+          widget.editingGoal
+              ? IconButton(
+                  onPressed: () {
+                    context
+                        .read<AddGoalCubit>()
+                        .deleteGoal(widget.pinextGoalModel!);
+                  },
+                  icon: const Icon(
+                    Icons.delete,
+                    color: Colors.red,
+                    size: 18,
+                  ))
+              : const SizedBox.shrink()
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(
@@ -241,6 +256,14 @@ class _GoalsAndMilestoneScreenState extends State<AddGoalsAndMilestoneView> {
                         snackbarType: SnackbarType.success,
                         context: context,
                       );
+                    } else if (state is DeleteGoalSuccessState) {
+                      Navigator.pop(context);
+                      GetCustomSnackbar(
+                        title: "Pinext Goal Deleted",
+                        message: "Your goal has been achieved!",
+                        snackbarType: SnackbarType.success,
+                        context: context,
+                      );
                     }
                   },
                   builder: (context, state) {
@@ -288,7 +311,7 @@ class _GoalsAndMilestoneScreenState extends State<AddGoalsAndMilestoneView> {
                   },
                 ),
                 const SizedBox(
-                  height: 16,
+                  height: 8,
                 ),
                 widget.editingGoal
                     ? GetCustomButton(

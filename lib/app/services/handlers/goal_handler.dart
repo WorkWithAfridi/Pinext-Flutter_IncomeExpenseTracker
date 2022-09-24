@@ -30,4 +30,16 @@ class GoalHandler {
         .doc(pinextGoalModel.id)
         .update(pinextGoalModel.toMap());
   }
+
+  Future deleteGoal({
+    required PinextGoalModel pinextGoalModel,
+  }) async {
+    return await FirebaseServices()
+        .firebaseFirestore
+        .collection('pinext_users')
+        .doc(FirebaseServices().getUserId())
+        .collection('pinext_goals')
+        .doc(pinextGoalModel.id)
+        .delete();
+  }
 }

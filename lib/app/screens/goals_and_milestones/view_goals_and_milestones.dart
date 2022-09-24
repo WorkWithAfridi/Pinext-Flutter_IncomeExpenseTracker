@@ -40,162 +40,172 @@ class ViewGoalsAndMilestoneView extends StatelessWidget {
       backgroundColor: whiteColor,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(
-              height: 4,
-            ),
-            Text(
-              "Pinext",
-              style: regularTextStyle.copyWith(
-                color: customBlackColor.withOpacity(.6),
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 4,
               ),
-            ),
-            Text(
-              "Goals & Milestones",
-              style: boldTextStyle.copyWith(
-                fontSize: 25,
-              ),
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Text(
-              "Your current goals are",
-              style: boldTextStyle,
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            StreamBuilder(
-              stream: FirebaseServices()
-                  .firebaseFirestore
-                  .collection('pinext_users')
-                  .doc(FirebaseServices().getUserId())
-                  .collection('pinext_goals')
-                  .snapshots(),
-              builder: ((context,
-                  AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: SizedBox.shrink(),
-                  );
-                }
-                if (snapshot.data!.docs.isEmpty) {
-                  return Text(
-                    "404 - No record found!",
-                    style: regularTextStyle.copyWith(
-                      color: customBlackColor.withOpacity(.4),
-                    ),
-                  );
-                }
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ListView.builder(
-                      itemCount: snapshot.data!.docs.length > 10
-                          ? 10
-                          : snapshot.data!.docs.length,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: ((context, index) {
-                        if (snapshot.data!.docs.isEmpty) {
-                          return const Text("No data found! :(");
-                        }
-                        if (snapshot.data!.docs.isEmpty) {
-                          return Text(
-                            "No data found! :(",
-                            style: regularTextStyle.copyWith(
-                              color: customBlackColor.withOpacity(.4),
-                            ),
-                          );
-                        }
-
-                        PinextGoalModel pinextGoalModel =
-                            PinextGoalModel.fromMap(
-                          snapshot.data!.docs[index].data(),
-                        );
-                        return PinextGoalCardMinimized(
-                          pinextGoalModel: pinextGoalModel,
-                          index: index,
-                          showCompletePercentage: true,
-                        );
-                      }),
-                    )
-                  ],
-                );
-              }),
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Text(
-              "New goal?",
-              style: boldTextStyle,
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  CustomTransitionPageRoute(
-                    childWidget: AddGoalsAndMilestoneScreen(
-                      addingNewGoal: true,
-                      addingNewGoalDuringSignupProcess: false,
-                      editingGoal: false,
-                      pinextGoalModel: null,
-                    ),
-                  ),
-                );
-              },
-              child: Container(
-                height: 100,
-                decoration: BoxDecoration(
-                  color: greyColor,
-                  borderRadius: BorderRadius.circular(
-                    defaultBorder,
-                  ),
+              Text(
+                "Pinext",
+                style: regularTextStyle.copyWith(
+                  color: customBlackColor.withOpacity(.6),
                 ),
-                alignment: Alignment.center,
-                width: getWidth(context),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      height: 25,
-                      width: 25,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(
-                          25,
+              ),
+              Text(
+                "Goals & Milestones",
+                style: boldTextStyle.copyWith(
+                  fontSize: 25,
+                ),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              Text(
+                "Your current goals are",
+                style: boldTextStyle,
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              StreamBuilder(
+                stream: FirebaseServices()
+                    .firebaseFirestore
+                    .collection('pinext_users')
+                    .doc(FirebaseServices().getUserId())
+                    .collection('pinext_goals')
+                    .snapshots(),
+                builder: ((context,
+                    AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                        snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: SizedBox.shrink(),
+                    );
+                  }
+                  if (snapshot.data!.docs.isEmpty) {
+                    return Text(
+                      "404 - No record found!",
+                      style: regularTextStyle.copyWith(
+                        color: customBlackColor.withOpacity(.4),
+                      ),
+                    );
+                  }
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ListView.builder(
+                        itemCount: snapshot.data!.docs.length > 10
+                            ? 10
+                            : snapshot.data!.docs.length,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: ((context, index) {
+                          if (snapshot.data!.docs.isEmpty) {
+                            return const Text("No data found! :(");
+                          }
+                          if (snapshot.data!.docs.isEmpty) {
+                            return Text(
+                              "No data found! :(",
+                              style: regularTextStyle.copyWith(
+                                color: customBlackColor.withOpacity(.4),
+                              ),
+                            );
+                          }
+
+                          PinextGoalModel pinextGoalModel =
+                              PinextGoalModel.fromMap(
+                            snapshot.data!.docs[index].data(),
+                          );
+                          return PinextGoalCardMinimized(
+                            pinextGoalModel: pinextGoalModel,
+                            index: index,
+                            showCompletePercentage: true,
+                          );
+                        }),
+                      )
+                    ],
+                  );
+                }),
+              ),
+              Text(
+                "*Please delete your milestones, once you've achieved them! Or else they will again pop up once your balance goes below the completed milestones amount!",
+                style: regularTextStyle.copyWith(
+                  color: customBlackColor.withOpacity(.4),
+                ),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              Text(
+                "New goal?",
+                style: boldTextStyle,
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    CustomTransitionPageRoute(
+                      childWidget: AddGoalsAndMilestoneScreen(
+                        addingNewGoal: true,
+                        addingNewGoalDuringSignupProcess: false,
+                        editingGoal: false,
+                        pinextGoalModel: null,
+                      ),
+                    ),
+                  );
+                },
+                child: Container(
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color: greyColor,
+                    borderRadius: BorderRadius.circular(
+                      defaultBorder,
+                    ),
+                  ),
+                  alignment: Alignment.center,
+                  width: getWidth(context),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: 25,
+                        width: 25,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(
+                            25,
+                          ),
+                          border: Border.all(
+                            color: customBlackColor.withOpacity(.4),
+                          ),
                         ),
-                        border: Border.all(
+                        child: Icon(
+                          Icons.add,
+                          size: 16,
                           color: customBlackColor.withOpacity(.4),
                         ),
                       ),
-                      child: Icon(
-                        Icons.add,
-                        size: 16,
-                        color: customBlackColor.withOpacity(.4),
+                      const SizedBox(
+                        width: 8,
                       ),
-                    ),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    Text(
-                      "Add a goal/ milestone",
-                      style: boldTextStyle.copyWith(
-                        color: customBlackColor.withOpacity(.4),
+                      Text(
+                        "Add a goal/ milestone",
+                        style: boldTextStyle.copyWith(
+                          color: customBlackColor.withOpacity(.4),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );

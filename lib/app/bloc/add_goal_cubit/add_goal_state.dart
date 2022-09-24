@@ -16,3 +16,4 @@ class AddGoalErrorState extends AddGoalState {}
 class AddGoalSuccessState extends AddGoalState {}
 
 class UpdateGoalSuccessState extends AddGoalState {}
+class DeleteGoalSuccessState extends AddGoalState {}
