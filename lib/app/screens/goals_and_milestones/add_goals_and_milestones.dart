@@ -310,18 +310,6 @@ class _GoalsAndMilestoneScreenState extends State<AddGoalsAndMilestoneView> {
                     );
                   },
                 ),
-                const SizedBox(
-                  height: 8,
-                ),
-                widget.editingGoal
-                    ? GetCustomButton(
-                        title: "Mark as completed",
-                        titleColor: whiteColor,
-                        buttonColor: customBlueColor,
-                        isLoading: false,
-                        callBackFunction: () {},
-                      )
-                    : const SizedBox.shrink(),
               ],
             ),
           ),
