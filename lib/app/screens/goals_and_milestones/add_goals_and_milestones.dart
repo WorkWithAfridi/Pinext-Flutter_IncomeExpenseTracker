@@ -118,7 +118,7 @@ class _GoalsAndMilestoneScreenState extends State<AddGoalsAndMilestoneView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(
-                  height: 16,
+                  height: 8,
                 ),
                 Text(
                   "Pinext",
