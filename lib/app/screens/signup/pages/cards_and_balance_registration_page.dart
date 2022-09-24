@@ -344,6 +344,8 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                                 state.goals[index];
                             return PinextGoalCardMinimized(
                               pinextGoalModel: pinextGoalModel,
+                              index: index,
+                              showCompletePercentage: false,
                             );
                           }),
                         ),
@@ -367,7 +369,12 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                   Navigator.push(
                     context,
                     CustomTransitionPageRoute(
-                      childWidget: const AddGoalsAndMilestoneScreen(),
+                      childWidget: AddGoalsAndMilestoneScreen(
+                        addingNewGoal: false,
+                        addingNewGoalDuringSignupProcess: true,
+                        editingGoal: false,
+                        pinextGoalModel: null,
+                      ),
                     ),
                   );
                 },

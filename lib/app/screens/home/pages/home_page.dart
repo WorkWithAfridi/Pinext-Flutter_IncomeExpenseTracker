@@ -5,12 +5,14 @@ import 'package:intl/intl.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
 import 'package:pinext/app/models/pinext_goal_model.dart';
+import 'package:pinext/app/screens/goals_and_milestones/view_goals_and_milestones.dart';
 import 'package:pinext/app/services/firebase_services.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 import 'package:pinext/app/shared/widgets/pinext_goal_minimized.dart';
 
 import '../../../app_data/app_constants/constants.dart';
 import '../../../app_data/app_constants/domentions.dart';
+import '../../../app_data/custom_transition_page_route/custom_transition_page_route.dart';
 import '../../../app_data/theme_data/colors.dart';
 import '../../../bloc/homepage_cubit/homepage_cubit.dart';
 import '../../../bloc/userBloc/user_bloc.dart';
@@ -448,7 +450,7 @@ class HomepageView extends StatelessWidget {
                     },
                   ),
                   const SizedBox(
-                    height: 12,
+                    height: 16,
                   ),
                   const PastTransactionsModule(),
                   const SizedBox(
@@ -466,16 +468,27 @@ class HomepageView extends StatelessWidget {
                               fontSize: 20,
                             ),
                           ),
-                          Text(
-                            "View all",
-                            style: regularTextStyle.copyWith(
-                              fontSize: 14,
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                CustomTransitionPageRoute(
+                                  childWidget:
+                                      const ViewGoalsAndMilestoneScreen(),
+                                ),
+                              );
+                            },
+                            child: Text(
+                              "View all",
+                              style: regularTextStyle.copyWith(
+                                fontSize: 14,
+                              ),
                             ),
                           ),
                         ],
                       ),
                       const SizedBox(
-                        height: 4,
+                        height: 6,
                       ),
                       StreamBuilder(
                         stream: FirebaseServices()
@@ -508,8 +521,8 @@ class HomepageView extends StatelessWidget {
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 5.0),
                                 child: ListView.builder(
-                                  itemCount: snapshot.data!.docs.length > 10
-                                      ? 10
+                                  itemCount: snapshot.data!.docs.length > 5
+                                      ? 5
                                       : snapshot.data!.docs.length,
                                   shrinkWrap: true,
                                   physics: const NeverScrollableScrollPhysics(),
@@ -531,8 +544,25 @@ class HomepageView extends StatelessWidget {
                                         PinextGoalModel.fromMap(
                                       snapshot.data!.docs[index].data(),
                                     );
-                                    return PinextGoalCardMinimized(
-                                      pinextGoalModel: pinextGoalModel,
+                                    return BlocBuilder<UserBloc, UserState>(
+                                      builder: (context, state) {
+                                        double completionAmount = 0;
+                                        if (state is AuthenticatedUserState) {
+                                          completionAmount = ((double.parse(
+                                                      state.netBalance) /
+                                                  double.parse(
+                                                      pinextGoalModel.amount)) *
+                                              100);
+                                        }
+                                        return completionAmount < 100
+                                            ? PinextGoalCardMinimized(
+                                                pinextGoalModel:
+                                                    pinextGoalModel,
+                                                index: index,
+                                                showCompletePercentage: true,
+                                              )
+                                            : const SizedBox.shrink();
+                                      },
                                     );
                                   }),
                                 ),
@@ -785,7 +815,7 @@ class YourCardsModule extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(
-                height: 16,
+                height: 8,
               ),
               Text(
                 "Your Cards",
