@@ -482,6 +482,7 @@ class HomepageView extends StatelessWidget {
                               "View all",
                               style: regularTextStyle.copyWith(
                                 fontSize: 14,
+                                color: customBlackColor.withOpacity(.6),
                               ),
                             ),
                           ),

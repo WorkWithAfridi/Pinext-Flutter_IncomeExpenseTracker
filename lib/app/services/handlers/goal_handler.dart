@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:pinext/app/models/pinext_goal_model.dart';
 
 import '../firebase_services.dart';
@@ -12,7 +10,6 @@ class GoalHandler {
   Future addGoal({
     required PinextGoalModel pinextGoalModel,
   }) async {
-    log("At Goal Handler");
     return await FirebaseServices()
         .firebaseFirestore
         .collection('pinext_users')
@@ -20,5 +17,17 @@ class GoalHandler {
         .collection('pinext_goals')
         .doc(pinextGoalModel.id)
         .set(pinextGoalModel.toMap());
+  }
+
+  Future updateGoal({
+    required PinextGoalModel pinextGoalModel,
+  }) async {
+    return await FirebaseServices()
+        .firebaseFirestore
+        .collection('pinext_users')
+        .doc(FirebaseServices().getUserId())
+        .collection('pinext_goals')
+        .doc(pinextGoalModel.id)
+        .update(pinextGoalModel.toMap());
   }
 }

@@ -6,9 +6,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../app_data/app_constants/constants.dart';
 import '../../app_data/app_constants/domentions.dart';
 import '../../app_data/app_constants/fonts.dart';
+import '../../app_data/custom_transition_page_route/custom_transition_page_route.dart';
 import '../../app_data/theme_data/colors.dart';
 import '../../bloc/userBloc/user_bloc.dart';
 import '../../models/pinext_goal_model.dart';
+import '../../screens/goals_and_milestones/add_goals_and_milestones.dart';
 
 class PinextGoalCardMinimized extends StatelessWidget {
   PinextGoalCardMinimized(
@@ -57,33 +59,64 @@ class PinextGoalCardMinimized extends StatelessWidget {
                               : TextDecoration.none,
                         ),
                       ),
-                      RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: "Status: ",
-                              style: regularTextStyle.copyWith(
-                                color: customBlackColor.withOpacity(.6),
-                                decoration: completionAmount > 100
-                                    ? TextDecoration.lineThrough
-                                    : TextDecoration.none,
-                              ),
+                      Row(
+                        children: [
+                          RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: "Status: ",
+                                  style: regularTextStyle.copyWith(
+                                    color: customBlackColor.withOpacity(.6),
+                                    decoration: completionAmount > 100
+                                        ? TextDecoration.lineThrough
+                                        : TextDecoration.none,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: completionAmount < 100
+                                      ? "Ongoing"
+                                      : "Completed",
+                                  style: boldTextStyle.copyWith(
+                                    color: completionAmount < 100
+                                        ? Colors.red
+                                        : Colors.green,
+                                    decoration: completionAmount > 100
+                                        ? TextDecoration.lineThrough
+                                        : TextDecoration.none,
+                                  ),
+                                ),
+                              ],
                             ),
-                            TextSpan(
-                              text: completionAmount < 100
-                                  ? "Ongoing"
-                                  : "Completed",
-                              style: boldTextStyle.copyWith(
-                                color: completionAmount < 100
-                                    ? Colors.red
-                                    : Colors.green,
-                                decoration: completionAmount > 100
-                                    ? TextDecoration.lineThrough
-                                    : TextDecoration.none,
-                              ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                CustomTransitionPageRoute(
+                                  childWidget: AddGoalsAndMilestoneScreen(
+                                    addingNewGoal: false,
+                                    addingNewGoalDuringSignupProcess: false,
+                                    editingGoal: true,
+                                    pinextGoalModel: pinextGoalModel,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Row(
+                              children: const [
+                                SizedBox(
+                                  width: 8,
+                                ),
+                                Icon(
+                                  Icons.edit,
+                                  color: customBlueColor,
+                                  size: 16,
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          )
+                        ],
                       ),
                     ],
                   );

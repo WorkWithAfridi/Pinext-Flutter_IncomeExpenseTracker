@@ -77,6 +77,11 @@ class _GoalsAndMilestoneScreenState extends State<AddGoalsAndMilestoneView> {
     titleController = TextEditingController();
     amountController = TextEditingController();
     descriptionController = TextEditingController();
+    if (widget.editingGoal) {
+      titleController.text = widget.pinextGoalModel!.title;
+      amountController.text = widget.pinextGoalModel!.amount;
+      descriptionController.text = widget.pinextGoalModel!.description;
+    }
   }
 
   @override
@@ -228,11 +233,19 @@ class _GoalsAndMilestoneScreenState extends State<AddGoalsAndMilestoneView> {
                       );
                     } else if (state is AddGoalErrorState) {
                       log("An error occurred while trying to add a new goal!");
+                    } else if (state is UpdateGoalSuccessState) {
+                      Navigator.pop(context);
+                      GetCustomSnackbar(
+                        title: "Pinext Goal updated!!",
+                        message: "Your goal has been updated",
+                        snackbarType: SnackbarType.success,
+                        context: context,
+                      );
                     }
                   },
                   builder: (context, state) {
                     return GetCustomButton(
-                      title: "Add",
+                      title: widget.editingGoal ? "Update" : "Add",
                       titleColor: whiteColor,
                       buttonColor: customBlueColor,
                       isLoading: state is AddGoalLoadingState,
@@ -248,8 +261,7 @@ class _GoalsAndMilestoneScreenState extends State<AddGoalsAndMilestoneView> {
                             context
                                 .read<SigninCubit>()
                                 .addGoal(pinextGoalModel);
-                          }
-                          if (widget.addingNewGoal) {
+                          } else if (widget.addingNewGoal) {
                             PinextGoalModel pinextGoalModel = PinextGoalModel(
                               title: titleController.text,
                               amount: amountController.text,
@@ -259,6 +271,16 @@ class _GoalsAndMilestoneScreenState extends State<AddGoalsAndMilestoneView> {
                             context
                                 .read<AddGoalCubit>()
                                 .addGoal(pinextGoalModel);
+                          } else if (widget.editingGoal) {
+                            PinextGoalModel pinextGoalModel = PinextGoalModel(
+                              title: titleController.text,
+                              amount: amountController.text,
+                              description: descriptionController.text,
+                              id: widget.pinextGoalModel!.id,
+                            );
+                            context
+                                .read<AddGoalCubit>()
+                                .updateGoal(pinextGoalModel);
                           }
                         }
                       },
