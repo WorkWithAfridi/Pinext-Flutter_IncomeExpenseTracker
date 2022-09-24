@@ -464,15 +464,16 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                               budgetSpentSoFarController.text.isNotEmpty &&
                               state.cards.isNotEmpty) {
                             context.read<SigninCubit>().signupUser(
-                              emailAddress: emailController.text,
-                              password: passwordController.text,
-                              username: userNameController.text,
-                              pinextCards: state.cards,
-                              netBalance: netBalance.floor().toString(),
-                              monthlyBudget: monthlyBudgetController.text,
-                              budgetSpentSoFar: budgetSpentSoFarController.text,
-                              pinextGoals: [],
-                            );
+                                  emailAddress: emailController.text,
+                                  password: passwordController.text,
+                                  username: userNameController.text,
+                                  pinextCards: state.cards,
+                                  netBalance: netBalance.floor().toString(),
+                                  monthlyBudget: monthlyBudgetController.text,
+                                  budgetSpentSoFar:
+                                      budgetSpentSoFarController.text,
+                                  pinextGoals: state.goals,
+                                );
                           } else {
                             GetCustomSnackbar(
                               title: "....",

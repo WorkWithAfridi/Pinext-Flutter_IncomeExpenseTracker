@@ -569,7 +569,7 @@ class PastTransactionsModule extends StatelessWidget {
             }
             if (snapshot.data!.docs.isEmpty) {
               return Text(
-                "No data found! :(",
+                "404 - No record found!",
                 style: regularTextStyle.copyWith(
                   color: customBlackColor.withOpacity(.4),
                 ),

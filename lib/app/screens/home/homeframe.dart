@@ -98,9 +98,8 @@ class HomeframeView extends StatelessWidget {
               icon: IntroStepBuilder(
                   order: 6,
                   text: intro_label_six,
-                  builder: (context, key) {
-                    return Icon(
-                      key: key,
+                  builder: (context, introkey) {
+                    return const Icon(
                       Icons.menu,
                       color: customBlackColor,
                     );
@@ -117,41 +116,39 @@ class HomeframeView extends StatelessWidget {
             }),
             itemBuilder: ((context, index) => homeframePages[index]),
           ),
-          floatingActionButton: IntroStepBuilder(
-              order: 1,
-              text: intro_label_one,
-              builder: (context, key) {
-                return state.selectedIndex == 0
-                    ? FloatingActionButton(
-                        onPressed: () {
-                          context
-                              .read<HomeframeCubit>()
-                              .openAddTransactionsPage(context);
-                        },
-                        backgroundColor: customBlackColor,
-                        child: const Icon(
-                          Icons.add,
+          floatingActionButton: state.selectedIndex == 0
+              ? IntroStepBuilder(
+                  order: 1,
+                  text: intro_label_one,
+                  builder: (context, introkey) {
+                    return FloatingActionButton(
+                      onPressed: () {
+                        context
+                            .read<HomeframeCubit>()
+                            .openAddTransactionsPage(context);
+                      },
+                      backgroundColor: customBlackColor,
+                      child: const Icon(
+                        Icons.add,
+                        color: whiteColor,
+                      ),
+                    );
+                  })
+              : state.selectedIndex == 3
+                  ? FloatingActionButton(
+                      onPressed: () {
+                        context.read<HomeframeCubit>().showAboutDialog(context);
+                      },
+                      backgroundColor: customBlackColor,
+                      child: Text(
+                        "?",
+                        style: boldTextStyle.copyWith(
                           color: whiteColor,
+                          fontSize: 18,
                         ),
-                      )
-                    : state.selectedIndex == 3
-                        ? FloatingActionButton(
-                            onPressed: () {
-                              context
-                                  .read<HomeframeCubit>()
-                                  .showAboutDialog(context);
-                            },
-                            backgroundColor: customBlackColor,
-                            child: Text(
-                              "?",
-                              style: boldTextStyle.copyWith(
-                                color: whiteColor,
-                                fontSize: 18,
-                              ),
-                            ),
-                          )
-                        : const SizedBox.shrink();
-              }),
+                      ),
+                    )
+                  : const SizedBox.shrink(),
           floatingActionButtonLocation: state.selectedIndex != 3
               ? FloatingActionButtonLocation.miniEndTop
               : FloatingActionButtonLocation.endFloat,
@@ -171,9 +168,8 @@ class HomeframeView extends StatelessWidget {
                 icon: IntroStepBuilder(
                     order: 2,
                     text: intro_label_two,
-                    builder: (context, key) {
-                      return Icon(
-                        key: key,
+                    builder: (context, introkey) {
+                      return const Icon(
                         Icons.home,
                       );
                     }),
@@ -183,9 +179,8 @@ class HomeframeView extends StatelessWidget {
                 icon: IntroStepBuilder(
                     order: 3,
                     text: intro_label_three,
-                    builder: (context, key) {
-                      return Icon(
-                        key: key,
+                    builder: (context, introkey) {
+                      return const Icon(
                         Icons.list,
                       );
                     }),
@@ -195,9 +190,8 @@ class HomeframeView extends StatelessWidget {
                 icon: IntroStepBuilder(
                     order: 4,
                     text: intro_label_four,
-                    builder: (context, key) {
-                      return Icon(
-                        key: key,
+                    builder: (context, introkey) {
+                      return const Icon(
                         Icons.wallet,
                       );
                     }),
@@ -207,9 +201,8 @@ class HomeframeView extends StatelessWidget {
                 icon: IntroStepBuilder(
                     order: 5,
                     text: intro_label_five,
-                    builder: (context, key) {
-                      return Icon(
-                        key: key,
+                    builder: (context, introkey) {
+                      return const Icon(
                         Icons.person_rounded,
                       );
                     }),

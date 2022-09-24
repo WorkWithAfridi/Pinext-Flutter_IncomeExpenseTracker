@@ -180,7 +180,8 @@ class AppHandler {
   }
 
   openPortfolio(BuildContext context) async {
-    String url = "https://sites.google.com/view/workwithafridi";
+    // String url = "https://sites.google.com/view/workwithafridi";
+    String url = "https://drive.google.com/drive";
     // bool isiOS = Platform.isIOS;
     if (await canLaunchUrl(Uri.parse(url))) {
       await launchUrl(
