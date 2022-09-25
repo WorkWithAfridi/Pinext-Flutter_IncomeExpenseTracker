@@ -29,12 +29,12 @@ class AppHandler {
   }
 
   checkForUpdate(BuildContext context) async {
-    GetCustomSnackbar(
-      title: "App Version: $appVersion",
-      message: "Checking for updates!",
-      snackbarType: SnackbarType.info,
-      context: context,
-    );
+    // GetCustomSnackbar(
+    //   title: "App Version: $appVersion",
+    //   message: "Checking for updates!",
+    //   snackbarType: SnackbarType.info,
+    //   context: context,
+    // );
     Future.delayed(const Duration(milliseconds: 500)).then((value) async {
       DocumentSnapshot appDataSnapShot = await FirebaseServices()
           .firebaseFirestore
@@ -70,12 +70,6 @@ class AppHandler {
               ),
               actions: <Widget>[
                 TextButton(
-                  child: const Text('Download'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-                TextButton(
                   child: Text(
                     'Dismiss',
                     style: boldTextStyle.copyWith(
@@ -86,6 +80,29 @@ class AppHandler {
                   ),
                   onPressed: () {
                     Navigator.of(context).pop();
+                  },
+                ),
+                TextButton(
+                  child: const Text('Download'),
+                  onPressed: () async {
+                    // String url = "https://drive.google.com/drive/folders/1Z-fPUf9SbRhjLuHZsv87LCJxbRI3bJQT?usp=sharing";
+                    String url =
+                        "https://drive.google.com/drive/folders/1Z-fPUf9SbRhjLuHZsv87LCJxbRI3bJQT?usp=sharing";
+                    // bool isiOS = Platform.isIOS;
+                    if (await canLaunchUrl(Uri.parse(url))) {
+                      await launchUrl(
+                        Uri.parse(url),
+                      );
+                      Navigator.of(context).pop();
+                    } else {
+                      GetCustomSnackbar(
+                        title: "Snap",
+                        message: "An error occurred! Please try again later",
+                        snackbarType: SnackbarType.error,
+                        context: context,
+                      );
+                      Navigator.of(context).pop();
+                    }
                   },
                 ),
               ],
@@ -186,9 +203,7 @@ class AppHandler {
   }
 
   openPortfolio(BuildContext context) async {
-    // String url = "https://sites.google.com/view/workwithafridi";
-    String url = "https://drive.google.com/drive";
-    // bool isiOS = Platform.isIOS;
+    String url = "https://sites.google.com/view/workwithafridi";
     if (await canLaunchUrl(Uri.parse(url))) {
       await launchUrl(
         Uri.parse(url),
