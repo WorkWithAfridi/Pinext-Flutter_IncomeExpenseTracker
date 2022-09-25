@@ -204,10 +204,10 @@ class HomeframeView extends StatelessWidget {
                     text: intro_label_five,
                     builder: (context, introkey) {
                       return const Icon(
-                        Icons.person_rounded,
+                        Icons.admin_panel_settings,
                       );
                     }),
-                label: "User",
+                label: "Admin settings",
               ),
             ],
           ),

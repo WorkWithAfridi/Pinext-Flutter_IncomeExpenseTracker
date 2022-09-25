@@ -10,6 +10,7 @@ import '../../../../app_data/app_constants/domentions.dart';
 import '../../../../app_data/custom_transition_page_route/custom_transition_page_route.dart';
 import '../../../../app_data/theme_data/colors.dart';
 import '../../../../services/handlers/user_handler.dart';
+import '../../../../shared/widgets/custom_snackbar.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -55,7 +56,13 @@ class ProfilePage extends StatelessWidget {
           ),
           GetSettingsButtonWithIcon(
             onTapFunction: () {
-              // AppHandler().requestNewFuture(context);
+              GetCustomSnackbar(
+                title: "Snap",
+                message:
+                    "The section is still under development.\nAnd will be updated at a later date!",
+                snackbarType: SnackbarType.info,
+                context: context,
+              );
             },
             label: "${UserHandler().currentUser.username} - User settings",
             icon: Icons.person,
@@ -66,7 +73,13 @@ class ProfilePage extends StatelessWidget {
           ),
           GetSettingsButtonWithIcon(
             onTapFunction: () {
-              // AppHandler().requestNewFuture(context);
+              GetCustomSnackbar(
+                title: "Snap",
+                message:
+                    "The section is still under development.\nAnd will be updated at a later date!",
+                snackbarType: SnackbarType.info,
+                context: context,
+              );
             },
             label: "App settings",
             icon: Icons.settings,
