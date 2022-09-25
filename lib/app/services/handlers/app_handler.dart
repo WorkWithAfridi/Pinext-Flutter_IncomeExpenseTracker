@@ -110,6 +110,13 @@ class AppHandler {
             );
           },
         );
+      } else {
+        GetCustomSnackbar(
+          title: "App Version v$appVersion",
+          message: "You're currently on the latest build of the app! :D",
+          snackbarType: SnackbarType.info,
+          context: context,
+        );
       }
     });
   }
