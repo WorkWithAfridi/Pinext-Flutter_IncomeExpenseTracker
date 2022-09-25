@@ -18,21 +18,24 @@ A full-stack Personal Income Expense tracker made with Flutter BLoC and Firebase
 
 Download the source code and compile the apk using Flutter CLI or Android Studio. Or  just HMU at Khondakarafridi35@gmail.com :)
 
+APKs for Android can be found [here](https://drive.google.com/drive/folders/1Z-fPUf9SbRhjLuHZsv87LCJxbRI3bJQT?usp=sharing).
+
 ## Want to contribute to the project? 
 
 Just send in your pull req. and I'll for sure have a look into it. :)
 
 ## APKs
 
-** APKs to be uploaded at a later date!
+APKs can be found: [here](https://drive.google.com/drive/folders/1Z-fPUf9SbRhjLuHZsv87LCJxbRI3bJQT?usp=sharing)
 
 ## Firebase Firestore Architecture Structure
 
-- users { contains user details and stats. }
+- Users { contains user details and stats. }
     - Cards { contains card details and stats. }
     - Transactions { contains transaction details. }
         - Year
             - Month
                 - Date
+    - Goals { contains users goals and milestones. }
 
 
