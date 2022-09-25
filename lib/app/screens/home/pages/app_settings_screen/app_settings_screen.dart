@@ -150,6 +150,15 @@ class AppSettingsScreen extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
           ),
+          const SizedBox(height: 3),
+          Text(
+            "by Kyoto",
+            style: cursiveTextStyle.copyWith(
+              // height: .95,
+              fontSize: 16,
+              color: customBlackColor.withOpacity(.2),
+            ),
+          )
         ],
       ),
     );
