@@ -12,8 +12,8 @@ import '../../../../app_data/theme_data/colors.dart';
 import '../../../../services/handlers/user_handler.dart';
 import '../../../../shared/widgets/custom_snackbar.dart';
 
-class ProfilePage extends StatelessWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+class AppSettingsScreen extends StatelessWidget {
+  const AppSettingsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -73,6 +73,22 @@ class ProfilePage extends StatelessWidget {
           ),
           GetSettingsButtonWithIcon(
             onTapFunction: () {
+              Navigator.push(
+                context,
+                CustomTransitionPageRoute(
+                  childWidget: const ViewGoalsAndMilestoneScreen(),
+                ),
+              );
+            },
+            label: "Goals & Milestones",
+            icon: Icons.stop,
+            iconSize: 18,
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          GetSettingsButtonWithIcon(
+            onTapFunction: () {
               GetCustomSnackbar(
                 title: "Snap",
                 message:
@@ -105,22 +121,6 @@ class ProfilePage extends StatelessWidget {
             },
             label: "Post review",
             icon: Icons.edit,
-            iconSize: 18,
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          GetSettingsButtonWithIcon(
-            onTapFunction: () {
-              Navigator.push(
-                context,
-                CustomTransitionPageRoute(
-                  childWidget: const ViewGoalsAndMilestoneScreen(),
-                ),
-              );
-            },
-            label: "Goals & Milestones",
-            icon: Icons.stop,
             iconSize: 18,
           ),
           const SizedBox(

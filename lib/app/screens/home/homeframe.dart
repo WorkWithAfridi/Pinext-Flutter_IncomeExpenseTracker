@@ -10,10 +10,10 @@ import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/app_data/routing/routes.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
+import 'package:pinext/app/screens/home/pages/app_settings_screen/app_settings_screen.dart';
 import 'package:pinext/app/screens/home/pages/archive_page.dart';
 import 'package:pinext/app/screens/home/pages/cards_and_balance_page.dart';
 import 'package:pinext/app/screens/home/pages/home_page.dart';
-import 'package:pinext/app/screens/home/pages/profilePage/profilePage.dart';
 
 import '../../app_data/app_constants/constants.dart';
 import '../../app_data/app_constants/fonts.dart';
@@ -72,7 +72,7 @@ List homeframePages = [
   const Homepage(),
   const ArchivePage(),
   const CardsAndBalancePage(),
-  const ProfilePage()
+  const AppSettingsScreen()
   // Center(
   //   child: Text(
   //     "The section is still under development.\nAnd will be updated at a later date!",
