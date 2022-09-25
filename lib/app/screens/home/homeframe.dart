@@ -312,6 +312,19 @@ class PinextDrawer extends StatelessWidget {
                     color: customBlackColor.withOpacity(.8),
                   ),
                 ),
+                const SizedBox(
+                  height: 8,
+                ),
+                IconButton(
+                  onPressed: () {
+                    AppHandler().checkForUpdate(context);
+                  },
+                  icon: Icon(
+                    Icons.update,
+                    size: 18,
+                    color: customBlackColor.withOpacity(.8),
+                  ),
+                ),
               ],
             ),
             Column(

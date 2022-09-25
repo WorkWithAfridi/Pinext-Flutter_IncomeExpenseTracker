@@ -111,6 +111,17 @@ class ProfilePage extends StatelessWidget {
             iconSize: 18,
           ),
           const SizedBox(
+            height: 8,
+          ),
+          GetSettingsButtonWithIcon(
+            onTapFunction: () {
+              AppHandler().checkForUpdate(context);
+            },
+            label: "Check for updates",
+            icon: Icons.update,
+            iconSize: 18,
+          ),
+          const SizedBox(
             height: 6,
           ),
           Padding(

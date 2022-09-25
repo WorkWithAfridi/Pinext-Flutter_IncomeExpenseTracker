@@ -29,7 +29,13 @@ class AppHandler {
   }
 
   checkForUpdate(BuildContext context) async {
-    Future.delayed(const Duration(seconds: 5)).then((value) async {
+    GetCustomSnackbar(
+      title: "App Version: $appVersion",
+      message: "Checking for updates!",
+      snackbarType: SnackbarType.info,
+      context: context,
+    );
+    Future.delayed(const Duration(milliseconds: 500)).then((value) async {
       DocumentSnapshot appDataSnapShot = await FirebaseServices()
           .firebaseFirestore
           .collection(APPDATA_DIRECTORY)
