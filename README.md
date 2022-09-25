@@ -9,15 +9,14 @@ A full-stack Personal Income Expense tracker made with Flutter BLoC and Firebase
 * State management using BLoC.
 
 ## Demo video and in-app screenshots
-## To be updated soon...
 
-<!-- * [Demo Video](paste video link here)
+<!-- * [Demo Video](paste video link here) -->
 
-![Demo Image](paste image url link here) -->
+![Demo Image](https://github.com/llKYOTOll/Pinext-PersonalIncomeExpenseTrackingApp/blob/master/assets/promotional_images/Screenshot%202022-09-25%20093843.png?raw=true)
 
 ## How to install the app on your physical device
 
-Download the source code and compile the apk using Flutter CLI or Android Studio
+Download the source code and compile the apk using Flutter CLI or Android Studio. Or  just HMU at Khondakarafridi35@gmail.com :)
 
 ## Want to contribute to the project? 
 
@@ -25,7 +24,7 @@ Just send in your pull req. and I'll for sure have a look into it. :)
 
 ## APKs
 
-## APKs to be uploaded at a later date!
+** APKs to be uploaded at a later date!
 
 ## Firebase Firestore Architecture Structure
 
