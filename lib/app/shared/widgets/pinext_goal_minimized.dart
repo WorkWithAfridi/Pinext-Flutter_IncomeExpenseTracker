@@ -10,7 +10,7 @@ import '../../app_data/custom_transition_page_route/custom_transition_page_route
 import '../../app_data/theme_data/colors.dart';
 import '../../bloc/userBloc/user_bloc.dart';
 import '../../models/pinext_goal_model.dart';
-import '../../screens/goals_and_milestones/add_goals_and_milestones.dart';
+import '../../screens/goals_and_milestones/add_and_edit_goal_and_milestone_screen.dart';
 
 class PinextGoalCardMinimized extends StatelessWidget {
   PinextGoalCardMinimized(
@@ -94,7 +94,8 @@ class PinextGoalCardMinimized extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 CustomTransitionPageRoute(
-                                  childWidget: AddGoalsAndMilestoneScreen(
+                                  childWidget:
+                                      AddAndEditGoalsAndMilestoneScreen(
                                     addingNewGoal: false,
                                     addingNewGoalDuringSignupProcess: false,
                                     editingGoal: true,

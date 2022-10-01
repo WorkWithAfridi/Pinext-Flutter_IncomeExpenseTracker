@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
 import 'package:pinext/app/models/pinext_goal_model.dart';
-import 'package:pinext/app/screens/goals_and_milestones/view_goals_and_milestones.dart';
+import 'package:pinext/app/screens/goals_and_milestones/view_goals_and_milestones_screen.dart';
 import 'package:pinext/app/services/firebase_services.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 import 'package:pinext/app/shared/widgets/pinext_goal_minimized.dart';

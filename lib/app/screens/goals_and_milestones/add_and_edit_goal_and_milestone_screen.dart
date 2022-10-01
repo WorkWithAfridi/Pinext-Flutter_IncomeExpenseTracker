@@ -15,8 +15,8 @@ import '../../shared/widgets/custom_button.dart';
 import '../../shared/widgets/custom_snackbar.dart';
 import '../../shared/widgets/custom_text_field.dart';
 
-class AddGoalsAndMilestoneScreen extends StatelessWidget {
-  AddGoalsAndMilestoneScreen({
+class AddAndEditGoalsAndMilestoneScreen extends StatelessWidget {
+  AddAndEditGoalsAndMilestoneScreen({
     super.key,
     required this.addingNewGoalDuringSignupProcess,
     required this.addingNewGoal,
@@ -33,7 +33,7 @@ class AddGoalsAndMilestoneScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => AddGoalCubit(),
-      child: AddGoalsAndMilestoneView(
+      child: AddAndEditGoalsAndMilestoneView(
         addingNewGoal: addingNewGoal,
         addingNewGoalDuringSignupProcess: addingNewGoalDuringSignupProcess,
         editingGoal: editingGoal,
@@ -43,8 +43,8 @@ class AddGoalsAndMilestoneScreen extends StatelessWidget {
   }
 }
 
-class AddGoalsAndMilestoneView extends StatefulWidget {
-  AddGoalsAndMilestoneView({
+class AddAndEditGoalsAndMilestoneView extends StatefulWidget {
+  AddAndEditGoalsAndMilestoneView({
     super.key,
     required this.addingNewGoalDuringSignupProcess,
     required this.addingNewGoal,
@@ -58,11 +58,11 @@ class AddGoalsAndMilestoneView extends StatefulWidget {
   PinextGoalModel? pinextGoalModel;
 
   @override
-  State<AddGoalsAndMilestoneView> createState() =>
+  State<AddAndEditGoalsAndMilestoneView> createState() =>
       _GoalsAndMilestoneScreenState();
 }
 
-class _GoalsAndMilestoneScreenState extends State<AddGoalsAndMilestoneView> {
+class _GoalsAndMilestoneScreenState extends State<AddAndEditGoalsAndMilestoneView> {
   late TextEditingController titleController;
 
   late TextEditingController amountController;

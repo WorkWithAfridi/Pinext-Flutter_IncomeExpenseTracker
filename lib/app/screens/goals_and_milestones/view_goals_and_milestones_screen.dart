@@ -9,7 +9,7 @@ import '../../app_data/theme_data/colors.dart';
 import '../../models/pinext_goal_model.dart';
 import '../../services/firebase_services.dart';
 import '../../shared/widgets/pinext_goal_minimized.dart';
-import 'add_goals_and_milestones.dart';
+import 'add_and_edit_goal_and_milestone_screen.dart';
 
 class ViewGoalsAndMilestoneScreen extends StatelessWidget {
   const ViewGoalsAndMilestoneScreen({super.key});
@@ -152,7 +152,7 @@ class ViewGoalsAndMilestoneView extends StatelessWidget {
                   Navigator.push(
                     context,
                     CustomTransitionPageRoute(
-                      childWidget: AddGoalsAndMilestoneScreen(
+                      childWidget: AddAndEditGoalsAndMilestoneScreen(
                         addingNewGoal: true,
                         addingNewGoalDuringSignupProcess: false,
                         editingGoal: false,

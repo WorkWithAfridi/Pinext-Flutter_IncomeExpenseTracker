@@ -501,6 +501,14 @@ class TransactionDetailsCard extends StatelessWidget {
                 ),
               ),
             ),
+            const SizedBox(
+              width: 8,
+            ),
+            const Icon(
+              Icons.edit,
+              color: customBlueColor,
+              size: 16,
+            )
           ],
         ),
         const SizedBox(
