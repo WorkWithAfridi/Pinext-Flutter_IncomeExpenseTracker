@@ -501,14 +501,27 @@ class TransactionDetailsCard extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(
-              width: 8,
-            ),
-            const Icon(
-              Icons.edit,
-              color: customBlueColor,
-              size: 16,
-            )
+            // const SizedBox(
+            //   width: 8,
+            // ),
+            // GestureDetector(
+            //   onTap: () {
+            //     Navigator.push(
+            //       context,
+            //       CustomTransitionPageRoute(
+            //           childWidget: AddAndEditTransactionScreen(
+            //         isEdit: true,
+            //         isAQuickAction: false,
+            //         pinextTransactionModel: pinextTransactionModel,
+            //       )),
+            //     );
+            //   },
+            //   child: const Icon(
+            //     Icons.edit,
+            //     color: customBlueColor,
+            //     size: 16,
+            //   ),
+            // )
           ],
         ),
         const SizedBox(

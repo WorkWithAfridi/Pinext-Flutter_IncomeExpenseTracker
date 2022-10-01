@@ -10,6 +10,7 @@ import 'package:pinext/app/app_data/extensions/string_extensions.dart';
 import 'package:pinext/app/app_data/routing/routes.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/add_transactions_cubit/add_transactions_cubit.dart';
+import 'package:pinext/app/models/pinext_transaction_model.dart';
 import 'package:pinext/app/shared/widgets/custom_button.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 import 'package:pinext/app/shared/widgets/custom_text_field.dart';
@@ -24,8 +25,13 @@ class AddAndEditTransactionScreen extends StatelessWidget {
   AddAndEditTransactionScreen({
     Key? key,
     this.isAQuickAction = false,
+    this.isEdit = false,
+    this.pinextTransactionModel,
   }) : super(key: key);
+
   bool isAQuickAction;
+  bool isEdit;
+  PinextTransactionModel? pinextTransactionModel;
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +39,8 @@ class AddAndEditTransactionScreen extends StatelessWidget {
       create: (context) => AddTransactionsCubit(),
       child: AddAndEditTransactionView(
         isAQuickAction: isAQuickAction,
+        isEdit: isEdit,
+        pinextTransactionModel: pinextTransactionModel,
       ),
     );
   }
@@ -41,9 +49,13 @@ class AddAndEditTransactionScreen extends StatelessWidget {
 class AddAndEditTransactionView extends StatefulWidget {
   AddAndEditTransactionView({
     Key? key,
-    this.isAQuickAction = false,
+    required this.isAQuickAction,
+    required this.isEdit,
+    required this.pinextTransactionModel,
   }) : super(key: key);
   bool isAQuickAction;
+  bool isEdit;
+  PinextTransactionModel? pinextTransactionModel;
 
   @override
   State<AddAndEditTransactionView> createState() =>
@@ -58,6 +70,23 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
   void initState() {
     amountController = TextEditingController();
     detailsController = TextEditingController();
+    if (widget.isEdit) {
+      amountController.text = widget.pinextTransactionModel!.amount;
+      detailsController.text = widget.pinextTransactionModel!.details;
+      if (widget.pinextTransactionModel!.transactionType == 'Income') {
+        context
+            .read<AddTransactionsCubit>()
+            .changeSelectedTransactionMode(SelectedTransactionMode.income);
+      } else {
+        context
+            .read<AddTransactionsCubit>()
+            .changeSelectedTransactionMode(SelectedTransactionMode.enpense);
+      }
+
+      context
+          .read<AddTransactionsCubit>()
+          .selectCard(widget.pinextTransactionModel!.cardId);
+    }
     super.initState();
   }
 
@@ -108,7 +137,7 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
           ),
         ),
         title: Text(
-          "Adding a new Transaction",
+          widget.isEdit ? "Editing transaction" : "Adding a new Transaction",
           style: regularTextStyle,
         ),
       ),
@@ -476,7 +505,9 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
                   },
                   builder: (context, state) {
                     return GetCustomButton(
-                      title: "Add Transaction",
+                      title: widget.isEdit
+                          ? "Update Transaction"
+                          : "Add Transaction",
                       titleColor: whiteColor,
                       buttonColor: customBlueColor,
                       isLoading:
@@ -486,15 +517,20 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
                           if (amountController.text.isNotEmpty &&
                               detailsController.text.isNotEmpty &&
                               state.selectedCardNo != "none") {
-                            context.read<AddTransactionsCubit>().addTransaction(
-                                  amount: amountController.text,
-                                  details: detailsController.text,
-                                  transctionType:
-                                      state.selectedTransactionMode ==
-                                              SelectedTransactionMode.enpense
-                                          ? "Expense"
-                                          : "Income",
-                                );
+                            if (widget.isEdit) {
+                            } else {
+                              context
+                                  .read<AddTransactionsCubit>()
+                                  .addTransaction(
+                                    amount: amountController.text,
+                                    details: detailsController.text,
+                                    transctionType:
+                                        state.selectedTransactionMode ==
+                                                SelectedTransactionMode.enpense
+                                            ? "Expense"
+                                            : "Income",
+                                  );
+                            }
                           } else {
                             GetCustomSnackbar(
                               title: "Error",
