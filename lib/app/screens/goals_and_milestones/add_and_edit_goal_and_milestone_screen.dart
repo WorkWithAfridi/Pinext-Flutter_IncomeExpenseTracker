@@ -59,10 +59,10 @@ class AddAndEditGoalsAndMilestoneView extends StatefulWidget {
 
   @override
   State<AddAndEditGoalsAndMilestoneView> createState() =>
-      _GoalsAndMilestoneScreenState();
+      _AddAndEditGoalsAndMilestoneState();
 }
 
-class _GoalsAndMilestoneScreenState extends State<AddAndEditGoalsAndMilestoneView> {
+class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMilestoneView> {
   late TextEditingController titleController;
 
   late TextEditingController amountController;

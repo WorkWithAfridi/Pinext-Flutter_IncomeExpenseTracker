@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_intro/flutter_intro.dart';
 import 'package:pinext/app/app_data/custom_transition_page_route/custom_transition_page_route.dart';
-import 'package:pinext/app/screens/add_transaction/add_transaction.dart';
+import 'package:pinext/app/screens/add_and_edit_transaction/add_and_edit_transaction.dart';
 import 'package:pinext/app/screens/home/homeframe.dart';
 
 import '../../screens/signin/signin_screen.dart';
@@ -37,7 +37,7 @@ class ROUTECONTROLLER {
         );
       case ROUTES.getAddTransactionsRoute:
         return CustomTransitionPageRoute(
-          childWidget: AddTransactionScreen(),
+          childWidget: AddAndEditTransactionScreen(),
         );
       default:
         log(settings.name.toString());

@@ -20,8 +20,8 @@ import '../../models/pinext_card_model.dart';
 import '../../services/firebase_services.dart';
 import '../../shared/widgets/pinext_card.dart';
 
-class AddTransactionScreen extends StatelessWidget {
-  AddTransactionScreen({
+class AddAndEditTransactionScreen extends StatelessWidget {
+  AddAndEditTransactionScreen({
     Key? key,
     this.isAQuickAction = false,
   }) : super(key: key);
@@ -31,25 +31,26 @@ class AddTransactionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => AddTransactionsCubit(),
-      child: AddTransactionView(
+      child: AddAndEditTransactionView(
         isAQuickAction: isAQuickAction,
       ),
     );
   }
 }
 
-class AddTransactionView extends StatefulWidget {
-  AddTransactionView({
+class AddAndEditTransactionView extends StatefulWidget {
+  AddAndEditTransactionView({
     Key? key,
     this.isAQuickAction = false,
   }) : super(key: key);
   bool isAQuickAction;
 
   @override
-  State<AddTransactionView> createState() => _AddTransactionViewState();
+  State<AddAndEditTransactionView> createState() =>
+      _AddAndEditTransactionViewState();
 }
 
-class _AddTransactionViewState extends State<AddTransactionView> {
+class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
   late TextEditingController amountController;
   late TextEditingController detailsController;
 
