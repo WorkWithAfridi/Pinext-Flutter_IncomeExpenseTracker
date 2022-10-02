@@ -1,4 +1,4 @@
-# Pinext
+# Pinext - Personal Income Expense Tracker
 
 ## A full-stack personal expense tracker using Bloc, Firebase and Flutter.
 
