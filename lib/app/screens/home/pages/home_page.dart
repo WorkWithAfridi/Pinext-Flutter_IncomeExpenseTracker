@@ -157,7 +157,8 @@ class HomepageView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(
-                    height: 16,
+                    // height: 16,
+                    height: 12,
                   ),
                   Text(
                     "Budget Estimations",
