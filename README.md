@@ -37,5 +37,6 @@ APKs can be found: [here](https://drive.google.com/drive/folders/1Z-fPUf9SbRhjLu
             - Month
                 - Date
     - Goals { contains users goals and milestones. }
+- AppData { contains app version data. }
 
 
