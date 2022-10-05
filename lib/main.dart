@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:pinext/app/bloc/cards_and_balances_cubit/cards_and_balances_cubit.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
+import 'package:pinext/app/services/date_time_services.dart';
 
 import 'app/app_data/routing/routes.dart';
 import 'app/app_data/theme_data/theme.dart';
@@ -24,6 +25,7 @@ class Pinext extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(currentWeekOfTheYear);
     return MultiBlocProvider(
       providers: [
         BlocProvider(

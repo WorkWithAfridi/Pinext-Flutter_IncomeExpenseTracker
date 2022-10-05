@@ -111,44 +111,44 @@ class HomepageView extends StatelessWidget {
                       }
                     },
                   ),
-                  const SizedBox(
-                    height: 8,
-                  ),
+                  // const SizedBox(
+                  //   height: 8,
+                  // ),
                 ],
               ),
             ),
-            SizedBox(
-              height: 40,
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    const SizedBox(
-                      width: defaultPadding,
-                    ),
-                    BlocBuilder<HomepageCubit, HomepageState>(
-                      builder: (context, state) {
-                        return ListView.builder(
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          itemCount: homepageFilters.length,
-                          itemBuilder: ((context, index) {
-                            return MenuFilterPill(
-                              filtertitle: homepageFilters[index],
-                              selectedFilter: state.selectedFilter,
-                            );
-                          }),
-                        );
-                      },
-                    ),
-                    const SizedBox(
-                      width: defaultPadding - 10,
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            // SizedBox(
+            //   height: 40,
+            //   child: SingleChildScrollView(
+            //     physics: const BouncingScrollPhysics(),
+            //     scrollDirection: Axis.horizontal,
+            //     child: Row(
+            //       children: [
+            //         const SizedBox(
+            //           width: defaultPadding,
+            //         ),
+            //         BlocBuilder<HomepageCubit, HomepageState>(
+            //           builder: (context, state) {
+            //             return ListView.builder(
+            //               shrinkWrap: true,
+            //               scrollDirection: Axis.horizontal,
+            //               itemCount: homepageFilters.length,
+            //               itemBuilder: ((context, index) {
+            //                 return MenuFilterPill(
+            //                   filtertitle: homepageFilters[index],
+            //                   selectedFilter: state.selectedFilter,
+            //                 );
+            //               }),
+            //             );
+            //           },
+            //         ),
+            //         const SizedBox(
+            //           width: defaultPadding - 10,
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
             Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: defaultPadding,
@@ -248,30 +248,44 @@ class HomepageView extends StatelessWidget {
                         BlocBuilder<UserBloc, UserState>(
                           builder: (context, state) {
                             if (state is AuthenticatedUserState) {
-                              return RichText(
-                                text: TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: "Your have spent ",
-                                      style: regularTextStyle.copyWith(
-                                        color: customBlackColor.withOpacity(.6),
-                                      ),
+                              return Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  RichText(
+                                    text: TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text: "Your have spent ",
+                                          style: regularTextStyle.copyWith(
+                                            color: customBlackColor
+                                                .withOpacity(.6),
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text:
+                                              "${((double.parse(state.monthlyExpenses) / double.parse(state.monthlyBudget)) * 100).ceil()}%",
+                                          style: boldTextStyle.copyWith(
+                                            color: Colors.red.withOpacity(.9),
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: " of your budget!",
+                                          style: regularTextStyle.copyWith(
+                                            color: customBlackColor
+                                                .withOpacity(.6),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    TextSpan(
-                                      text:
-                                          "${((double.parse(state.monthlyExpenses) / double.parse(state.monthlyBudget)) * 100).ceil()}%",
-                                      style: boldTextStyle.copyWith(
-                                        color: Colors.red.withOpacity(.9),
-                                      ),
+                                  ),
+                                  Text(
+                                    "- ${state.monthlyExpenses} TK",
+                                    style: boldTextStyle.copyWith(
+                                      color: Colors.red.withOpacity(.9),
                                     ),
-                                    TextSpan(
-                                      text: " of your budget!",
-                                      style: regularTextStyle.copyWith(
-                                        color: customBlackColor.withOpacity(.6),
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               );
                             } else {
                               return const SizedBox.shrink();

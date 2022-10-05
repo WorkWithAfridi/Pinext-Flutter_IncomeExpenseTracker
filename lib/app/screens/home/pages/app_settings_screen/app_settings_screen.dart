@@ -10,7 +10,6 @@ import '../../../../app_data/app_constants/domentions.dart';
 import '../../../../app_data/custom_transition_page_route/custom_transition_page_route.dart';
 import '../../../../app_data/theme_data/colors.dart';
 import '../../../../services/handlers/user_handler.dart';
-import '../../../../shared/widgets/custom_snackbar.dart';
 
 class AppSettingsScreen extends StatelessWidget {
   const AppSettingsScreen({Key? key}) : super(key: key);
@@ -51,23 +50,23 @@ class AppSettingsScreen extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(
-            height: 8,
-          ),
-          GetSettingsButtonWithIcon(
-            onTapFunction: () {
-              GetCustomSnackbar(
-                title: "Snap",
-                message:
-                    "The section is still under development.\nAnd will be updated at a later date!",
-                snackbarType: SnackbarType.info,
-                context: context,
-              );
-            },
-            label: "${UserHandler().currentUser.username} - User settings",
-            icon: Icons.person,
-            iconSize: 18,
-          ),
+          // const SizedBox(
+          //   height: 8,
+          // ),
+          // GetSettingsButtonWithIcon(
+          //   onTapFunction: () {
+          //     GetCustomSnackbar(
+          //       title: "Snap",
+          //       message:
+          //           "The section is still under development.\nAnd will be updated at a later date!",
+          //       snackbarType: SnackbarType.info,
+          //       context: context,
+          //     );
+          //   },
+          //   label: "${UserHandler().currentUser.username} - User settings",
+          //   icon: Icons.person,
+          //   iconSize: 18,
+          // ),
           const SizedBox(
             height: 8,
           ),
@@ -84,23 +83,23 @@ class AppSettingsScreen extends StatelessWidget {
             icon: Icons.stop,
             iconSize: 18,
           ),
-          const SizedBox(
-            height: 8,
-          ),
-          GetSettingsButtonWithIcon(
-            onTapFunction: () {
-              GetCustomSnackbar(
-                title: "Snap",
-                message:
-                    "The section is still under development.\nAnd will be updated at a later date!",
-                snackbarType: SnackbarType.info,
-                context: context,
-              );
-            },
-            label: "App settings",
-            icon: Icons.settings,
-            iconSize: 18,
-          ),
+          // const SizedBox(
+          //   height: 8,
+          // ),
+          // GetSettingsButtonWithIcon(
+          //   onTapFunction: () {
+          //     GetCustomSnackbar(
+          //       title: "Snap",
+          //       message:
+          //           "The section is still under development.\nAnd will be updated at a later date!",
+          //       snackbarType: SnackbarType.info,
+          //       context: context,
+          //     );
+          //   },
+          //   label: "App settings",
+          //   icon: Icons.settings,
+          //   iconSize: 18,
+          // ),
           const SizedBox(
             height: 8,
           ),
