@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
 import 'package:pinext/app/models/pinext_user_model.dart';
@@ -11,8 +12,7 @@ import '../models/pinext_goal_model.dart';
 
 class AuthenticationServices {
   AuthenticationServices._internal();
-  static final AuthenticationServices _authenticationServices =
-      AuthenticationServices._internal();
+  static final AuthenticationServices _authenticationServices = AuthenticationServices._internal();
   factory AuthenticationServices() => _authenticationServices;
 
   Future signupUserUsingEmailAndPassword({
@@ -27,11 +27,10 @@ class AuthenticationServices {
   }) async {
     String response;
     try {
-      UserCredential userCredential =
-          await FirebaseServices().firebaseAuth.createUserWithEmailAndPassword(
-                email: emailAddress,
-                password: password,
-              );
+      UserCredential userCredential = await FirebaseServices().firebaseAuth.createUserWithEmailAndPassword(
+            email: emailAddress,
+            password: password,
+          );
 
       var userId = userCredential.user!.uid;
 
@@ -82,7 +81,10 @@ class AuthenticationServices {
   }
 
   Future<bool> isUserSignedIn() async {
-    bool status = FirebaseServices().firebaseAuth.currentUser != null;
+    DocumentSnapshot userSnapshot =
+        await FirebaseServices().firebaseFirestore.collection("pinext_users").doc(FirebaseServices().getUserId()).get();
+
+    bool status = FirebaseServices().firebaseAuth.currentUser != null && userSnapshot.data() != null;
     // if (status) {
     //   await UserHandler().getCurrentUser();
     // }
@@ -95,11 +97,10 @@ class AuthenticationServices {
   }) async {
     String response = "Error";
     try {
-      UserCredential userCredential =
-          await FirebaseServices().firebaseAuth.signInWithEmailAndPassword(
-                email: emailAddress,
-                password: password,
-              );
+      UserCredential userCredential = await FirebaseServices().firebaseAuth.signInWithEmailAndPassword(
+            email: emailAddress,
+            password: password,
+          );
       await UserHandler().getCurrentUser();
       response = "Success";
     } on FirebaseException catch (err) {
