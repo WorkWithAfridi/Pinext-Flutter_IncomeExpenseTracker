@@ -81,14 +81,18 @@ class AuthenticationServices {
   }
 
   Future<bool> isUserSignedIn() async {
-    DocumentSnapshot userSnapshot =
-        await FirebaseServices().firebaseFirestore.collection("pinext_users").doc(FirebaseServices().getUserId()).get();
-
-    bool status = FirebaseServices().firebaseAuth.currentUser != null && userSnapshot.data() != null;
-    // if (status) {
-    //   await UserHandler().getCurrentUser();
-    // }
-    return status;
+    if (FirebaseServices().firebaseAuth.currentUser != null) {
+      DocumentSnapshot userSnapshot = await FirebaseServices()
+          .firebaseFirestore
+          .collection("pinext_users")
+          .doc(FirebaseServices().getUserId())
+          .get();
+      if (userSnapshot.data() != null) {
+        return true;
+      }
+      return false;
+    }
+    return false;
   }
 
   Future signInUser({
