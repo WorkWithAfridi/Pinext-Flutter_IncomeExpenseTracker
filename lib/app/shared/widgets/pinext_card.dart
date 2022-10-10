@@ -82,14 +82,31 @@ class PinextCard extends StatelessWidget {
                               color: whiteColor.withOpacity(.6),
                             ),
                           ),
-                          Text(balance.toString(),
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 25,
-                                color: whiteColor,
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                balance.toString(),
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 25,
+                                  color: whiteColor,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
                               ),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1),
+                              Text(
+                                " Tk",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                  color: whiteColor.withOpacity(.4),
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                              ),
+                            ],
+                          ),
                         ],
                       )
                     ],
