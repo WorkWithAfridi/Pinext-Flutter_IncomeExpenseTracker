@@ -151,7 +151,7 @@ class AppSettingsScreen extends StatelessWidget {
           ),
           const SizedBox(height: 3),
           Text(
-            "by Kyoto",
+            " by Kyoto",
             style: cursiveTextStyle.copyWith(
               // height: .95,
               fontSize: 16,
