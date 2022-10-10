@@ -56,7 +56,7 @@ class UserRegistrationPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-              height: 12,
+                height: 12,
               ),
               CustomTextFormField(
                 controller: userNameController,
@@ -74,8 +74,7 @@ class UserRegistrationPage extends StatelessWidget {
                 hintTitle: "Email address...",
                 onChanged: (String value) {},
                 validator: (value) {
-                  return InputValidation(value.toString())
-                      .isCorrectEmailAddress();
+                  return InputValidation(value.toString()).isCorrectEmailAddress();
                 },
               ),
               const SizedBox(
@@ -87,12 +86,11 @@ class UserRegistrationPage extends StatelessWidget {
                 isPassword: true,
                 onChanged: (String value) {},
                 validator: (value) {
-                  return InputValidation(value.toString())
-                      .isNotEmpty();
+                  return InputValidation(value.toString()).isNotEmpty();
                 },
               ),
               const SizedBox(
-              height: 12,
+                height: 12,
               ),
               GetCustomButton(
                   title: "Next",
@@ -110,8 +108,7 @@ class UserRegistrationPage extends StatelessWidget {
                       } else {
                         GetCustomSnackbar(
                           title: "....",
-                          message:
-                              "You need to fill up the form to proceed to the next step!",
+                          message: "You need to fill up the form to proceed to the next step!",
                           snackbarType: SnackbarType.info,
                           context: context,
                         );
@@ -119,7 +116,7 @@ class UserRegistrationPage extends StatelessWidget {
                     }
                   }),
               const SizedBox(
-              height: 12,
+                height: 12,
               ),
               Text(
                 "Or sign up using socials",
@@ -129,11 +126,11 @@ class UserRegistrationPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                height: 4,
+                height: 8,
               ),
               SocialsButton(),
               const SizedBox(
-              height: 12,
+                height: 8,
               ),
               GestureDetector(
                 onTap: () {

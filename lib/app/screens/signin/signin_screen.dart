@@ -85,15 +85,14 @@ class _SigninScreenViewState extends State<SigninScreenView> {
                   ),
                 ),
                 const SizedBox(
-              height: 12,
+                  height: 12,
                 ),
                 CustomTextFormField(
                   controller: emailController,
                   hintTitle: "Email address",
                   onChanged: (String value) {},
                   validator: (value) {
-                    return InputValidation(value.toString())
-                        .isCorrectEmailAddress();
+                    return InputValidation(value.toString()).isCorrectEmailAddress();
                   },
                 ),
                 const SizedBox(
@@ -109,7 +108,7 @@ class _SigninScreenViewState extends State<SigninScreenView> {
                   },
                 ),
                 const SizedBox(
-              height: 12,
+                  height: 12,
                 ),
                 BlocListener<UserBloc, UserState>(
                   listener: (context, state) {
@@ -141,23 +140,18 @@ class _SigninScreenViewState extends State<SigninScreenView> {
                         title: "Sign In",
                         titleColor: whiteColor,
                         buttonColor: customBlueColor,
-                        isLoading: state
-                            is LoginWithEmailAndPasswordButtonLoadingState,
+                        isLoading: state is LoginWithEmailAndPasswordButtonLoadingState,
                         callBackFunction: () {
                           if (_formKey.currentState!.validate()) {
-                            if (emailController.text.isNotEmpty &&
-                                passwordController.text.isNotEmpty) {
-                              context
-                                  .read<LoginCubit>()
-                                  .loginWithEmailAndPassword(
+                            if (emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
+                              context.read<LoginCubit>().loginWithEmailAndPassword(
                                     email: emailController.text,
                                     password: passwordController.text,
                                   );
                             } else {
                               GetCustomSnackbar(
                                 title: "Snap",
-                                message:
-                                    "We need your email and password in order to sign you in!",
+                                message: "We need your email and password in order to sign you in!",
                                 snackbarType: SnackbarType.info,
                                 context: context,
                               );
@@ -169,7 +163,7 @@ class _SigninScreenViewState extends State<SigninScreenView> {
                   ),
                 ),
                 const SizedBox(
-              height: 12,
+                  height: 12,
                 ),
                 Text(
                   "Or sign in with socials",
@@ -179,11 +173,11 @@ class _SigninScreenViewState extends State<SigninScreenView> {
                   ),
                 ),
                 const SizedBox(
-                  height: 4,
+                  height: 8,
                 ),
                 SocialsButton(),
                 const SizedBox(
-              height: 12,
+                  height: 8,
                 ),
                 GestureDetector(
                   onTap: () {
