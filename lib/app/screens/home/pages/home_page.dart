@@ -619,7 +619,7 @@ class HomepageView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          "Your current Net. balance is",
+                          "Your current NET. balance is",
                           style: regularTextStyle,
                         ),
                         const SizedBox(

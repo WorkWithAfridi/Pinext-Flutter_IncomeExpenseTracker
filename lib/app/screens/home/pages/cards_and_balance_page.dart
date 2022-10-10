@@ -79,7 +79,7 @@ class CardsAndBalanceView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "Your current Balance is",
+                    "Your NET. Balance is",
                     style: boldTextStyle.copyWith(
                       color: whiteColor.withOpacity(.6),
                       fontSize: 16,
@@ -151,9 +151,7 @@ class CardsAndBalanceView extends StatelessWidget {
                     .doc(FirebaseServices().getUserId())
                     .collection(CARDS_DIRECTORY)
                     .snapshots(),
-                builder: ((context,
-                    AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                        snapshot) {
+                builder: ((context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
                       child: CircularProgressIndicator(),
@@ -200,8 +198,7 @@ class CardsAndBalanceView extends StatelessWidget {
                                     ),
                                   ),
                                   shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.circular(defaultBorder),
+                                    borderRadius: BorderRadius.circular(defaultBorder),
                                   ),
                                   actions: <Widget>[
                                     TextButton(
@@ -220,9 +217,7 @@ class CardsAndBalanceView extends StatelessWidget {
                                     TextButton(
                                       child: const Text('Approve'),
                                       onPressed: () {
-                                        context
-                                            .read<CardsAndBalancesCubit>()
-                                            .removeCard(pinextCardModel);
+                                        context.read<CardsAndBalancesCubit>().removeCard(pinextCardModel);
                                         Navigator.of(context).pop();
                                       },
                                     ),

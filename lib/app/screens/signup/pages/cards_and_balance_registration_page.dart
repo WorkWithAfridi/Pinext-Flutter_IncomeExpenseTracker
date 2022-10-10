@@ -57,7 +57,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(
-              height: 12,
+                height: 12,
               ),
               Text(
                 "Pinext",
@@ -90,7 +90,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      "Your current NET Balance is",
+                      "Your NET. Balance is",
                       style: boldTextStyle.copyWith(
                         color: customBlackColor.withOpacity(.6),
                         fontSize: 16,
@@ -139,7 +139,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-              height: 12,
+                height: 12,
               ),
               Text(
                 "Monthly Budget",
@@ -186,7 +186,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                 },
               ),
               const SizedBox(
-              height: 12,
+                height: 12,
               ),
               Text(
                 "Manage Cards",
@@ -217,8 +217,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                           physics: const NeverScrollableScrollPhysics(),
                           itemBuilder: ((context, index) {
                             log('creating list');
-                            PinextCardModel pinextCardModel =
-                                state.cards[index];
+                            PinextCardModel pinextCardModel = state.cards[index];
                             return PinextCardMinimized(
                               onDeleteButtonClick: () {
                                 log('button pressed');
@@ -237,7 +236,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                 },
               ),
               const SizedBox(
-              height: 12,
+                height: 12,
               ),
               Text(
                 "Add a new card",
@@ -309,7 +308,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-              height: 12,
+                height: 12,
               ),
               Text(
                 "Manage Goals",
@@ -340,8 +339,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                           physics: const NeverScrollableScrollPhysics(),
                           itemBuilder: ((context, index) {
                             log('creating list');
-                            PinextGoalModel pinextGoalModel =
-                                state.goals[index];
+                            PinextGoalModel pinextGoalModel = state.goals[index];
                             return PinextGoalCardMinimized(
                               pinextGoalModel: pinextGoalModel,
                               index: index,
@@ -355,7 +353,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                 },
               ),
               const SizedBox(
-              height: 12,
+                height: 12,
               ),
               Text(
                 "Add goals/ milestones",
@@ -431,7 +429,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-              height: 12,
+                height: 12,
               ),
               BlocListener<UserBloc, UserState>(
                 listener: (context, state) {
@@ -477,15 +475,13 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                                   pinextCards: state.cards,
                                   netBalance: netBalance.floor().toString(),
                                   monthlyBudget: monthlyBudgetController.text,
-                                  budgetSpentSoFar:
-                                      budgetSpentSoFarController.text,
+                                  budgetSpentSoFar: budgetSpentSoFarController.text,
                                   pinextGoals: state.goals,
                                 );
                           } else {
                             GetCustomSnackbar(
                               title: "....",
-                              message:
-                                  "You need to fill up the form to create an account.",
+                              message: "You need to fill up the form to create an account.",
                               snackbarType: SnackbarType.info,
                               context: context,
                             );
@@ -511,7 +507,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                 },
               ),
               const SizedBox(
-              height: 12,
+                height: 12,
               ),
             ],
           ),
