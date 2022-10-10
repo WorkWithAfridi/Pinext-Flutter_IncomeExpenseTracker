@@ -131,7 +131,7 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(
-                      height: 16,
+                      height: 12,
                     ),
                     Text(
                       "Card title",
@@ -154,7 +154,7 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                       },
                     ),
                     const SizedBox(
-                      height: 16,
+                      height: 12,
                     ),
                     Text(
                       "Card description (if any)",
@@ -179,7 +179,7 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                       },
                     ),
                     const SizedBox(
-                      height: 16,
+                      height: 12,
                     ),
                     Text(
                       "Current balance",
@@ -202,7 +202,7 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                       },
                     ),
                     const SizedBox(
-                      height: 16,
+                      height: 12,
                     ),
                     Text(
                       "Select card color",
@@ -261,7 +261,7 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                 ),
               ),
               const SizedBox(
-                height: 16,
+                      height: 12,
               ),
               SizedBox(
                 width: getWidth(context),
@@ -306,7 +306,7 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                 ),
               ),
               const SizedBox(
-                height: 16,
+                      height: 12,
               ),
               BlocListener<CardsAndBalancesCubit, CardsAndBalancesState>(
                 listener: (context, state) {

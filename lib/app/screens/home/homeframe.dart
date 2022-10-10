@@ -124,9 +124,7 @@ class HomeframeView extends StatelessWidget {
                   builder: (context, introkey) {
                     return FloatingActionButton(
                       onPressed: () {
-                        context
-                            .read<HomeframeCubit>()
-                            .openAddTransactionsPage(context);
+                        context.read<HomeframeCubit>().openAddTransactionsPage(context);
                       },
                       backgroundColor: customBlackColor,
                       child: const Icon(
@@ -349,7 +347,7 @@ class PinextDrawer extends StatelessWidget {
                     },
                     icon: const Icon(
                       Icons.logout,
-                      color: customBlackColor,
+                      color: Colors.red,
                     ),
                   ),
                 ),

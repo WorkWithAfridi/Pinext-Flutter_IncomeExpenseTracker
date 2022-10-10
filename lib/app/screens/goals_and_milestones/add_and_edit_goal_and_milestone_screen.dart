@@ -153,7 +153,7 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                   ),
                 ),
                 const SizedBox(
-                  height: 16,
+                      height: 12,
                 ),
                 Text(
                   "What are your saving up for?",
@@ -185,7 +185,7 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                   ),
                 ),
                 const SizedBox(
-                  height: 16,
+                      height: 12,
                 ),
                 Text(
                   "Amount",
@@ -213,7 +213,7 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                   ),
                 ),
                 const SizedBox(
-                  height: 16,
+                      height: 12,
                 ),
                 Text(
                   "Detailed Description",
@@ -234,7 +234,7 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                   },
                 ),
                 const SizedBox(
-                  height: 16,
+                      height: 12,
                 ),
                 BlocConsumer<AddGoalCubit, AddGoalState>(
                   listener: (context, state) {

@@ -58,8 +58,7 @@ class AddAndEditTransactionView extends StatefulWidget {
   PinextTransactionModel? pinextTransactionModel;
 
   @override
-  State<AddAndEditTransactionView> createState() =>
-      _AddAndEditTransactionViewState();
+  State<AddAndEditTransactionView> createState() => _AddAndEditTransactionViewState();
 }
 
 class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
@@ -74,18 +73,12 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
       amountController.text = widget.pinextTransactionModel!.amount;
       detailsController.text = widget.pinextTransactionModel!.details;
       if (widget.pinextTransactionModel!.transactionType == 'Income') {
-        context
-            .read<AddTransactionsCubit>()
-            .changeSelectedTransactionMode(SelectedTransactionMode.income);
+        context.read<AddTransactionsCubit>().changeSelectedTransactionMode(SelectedTransactionMode.income);
       } else {
-        context
-            .read<AddTransactionsCubit>()
-            .changeSelectedTransactionMode(SelectedTransactionMode.enpense);
+        context.read<AddTransactionsCubit>().changeSelectedTransactionMode(SelectedTransactionMode.enpense);
       }
 
-      context
-          .read<AddTransactionsCubit>()
-          .selectCard(widget.pinextTransactionModel!.cardId);
+      context.read<AddTransactionsCubit>().selectCard(widget.pinextTransactionModel!.cardId);
     }
     super.initState();
   }
@@ -156,7 +149,7 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(
-                      height: 16,
+                      height: 12,
                     ),
                     Text(
                       "Transaction type",
@@ -171,8 +164,7 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
                     ),
                     SizedBox(
                         height: 40,
-                        child: BlocBuilder<AddTransactionsCubit,
-                            AddTransactionsState>(
+                        child: BlocBuilder<AddTransactionsCubit, AddTransactionsState>(
                           builder: (context, state) {
                             return Row(
                               children: [
@@ -182,8 +174,7 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
                                     onTap: () {
                                       context
                                           .read<AddTransactionsCubit>()
-                                          .changeSelectedTransactionMode(
-                                              SelectedTransactionMode.income);
+                                          .changeSelectedTransactionMode(SelectedTransactionMode.income);
                                     },
                                     child: Container(
                                       height: double.maxFinite,
@@ -191,15 +182,13 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
                                       alignment: Alignment.center,
                                       child: Text(
                                         "Income",
-                                        style: state.selectedTransactionMode ==
-                                                SelectedTransactionMode.income
+                                        style: state.selectedTransactionMode == SelectedTransactionMode.income
                                             ? boldTextStyle.copyWith(
                                                 color: customBlackColor,
                                                 fontSize: 20,
                                               )
                                             : boldTextStyle.copyWith(
-                                                color: customBlackColor
-                                                    .withOpacity(.4),
+                                                color: customBlackColor.withOpacity(.4),
                                                 fontSize: 20,
                                               ),
                                       ),
@@ -217,8 +206,7 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
                                     onTap: (() {
                                       context
                                           .read<AddTransactionsCubit>()
-                                          .changeSelectedTransactionMode(
-                                              SelectedTransactionMode.enpense);
+                                          .changeSelectedTransactionMode(SelectedTransactionMode.enpense);
                                     }),
                                     child: Container(
                                       height: double.maxFinite,
@@ -226,15 +214,13 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
                                       alignment: Alignment.center,
                                       child: Text(
                                         "Expense",
-                                        style: state.selectedTransactionMode ==
-                                                SelectedTransactionMode.enpense
+                                        style: state.selectedTransactionMode == SelectedTransactionMode.enpense
                                             ? boldTextStyle.copyWith(
                                                 color: customBlackColor,
                                                 fontSize: 20,
                                               )
                                             : boldTextStyle.copyWith(
-                                                color: customBlackColor
-                                                    .withOpacity(.4),
+                                                color: customBlackColor.withOpacity(.4),
                                                 fontSize: 20,
                                               ),
                                       ),
@@ -246,7 +232,7 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
                           },
                         )),
                     const SizedBox(
-                      height: 16,
+                      height: 12,
                     ),
                     Text(
                       "Amount",
@@ -269,7 +255,7 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
                       },
                     ),
                     const SizedBox(
-                      height: 16,
+                      height: 12,
                     ),
                     Text(
                       "Details",
@@ -287,9 +273,7 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
                       hintTitle: "Enter description...",
                       numberOfLines: 3,
                       onChanged: (String value) {
-                        context
-                            .read<AddTransactionsCubit>()
-                            .changeSelectedDescription(value);
+                        context.read<AddTransactionsCubit>().changeSelectedDescription(value);
                       },
                       validator: (value) {
                         return InputValidation(value).isNotEmpty();
@@ -317,44 +301,29 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
                               (index) {
                                 return GestureDetector(
                                   onTap: () {
-                                    String selectedDescription =
-                                        listOfTransactionDetailSuggestions[
-                                                index]
-                                            .toString();
+                                    String selectedDescription = listOfTransactionDetailSuggestions[index].toString();
                                     log(selectedDescription);
                                     log(state.selectedDescription);
-                                    if (state.selectedDescription !=
-                                        selectedDescription) {
-                                      detailsController.text =
-                                          selectedDescription;
+                                    if (state.selectedDescription != selectedDescription) {
+                                      detailsController.text = selectedDescription;
                                       context
                                           .read<AddTransactionsCubit>()
-                                          .changeSelectedDescription(
-                                              selectedDescription);
+                                          .changeSelectedDescription(selectedDescription);
                                     } else {
-                                      context
-                                          .read<AddTransactionsCubit>()
-                                          .changeSelectedDescription("none");
+                                      context.read<AddTransactionsCubit>().changeSelectedDescription("none");
                                     }
                                   },
                                   child: Chip(
                                     label: Text(
-                                      listOfTransactionDetailSuggestions[index]
-                                          .toString(),
+                                      listOfTransactionDetailSuggestions[index].toString(),
                                       style: regularTextStyle.copyWith(
-                                        color:
-                                            listOfTransactionDetailSuggestions[
-                                                        index] ==
-                                                    state.selectedDescription
-                                                ? whiteColor
-                                                : customBlackColor
-                                                    .withOpacity(.6),
+                                        color: listOfTransactionDetailSuggestions[index] == state.selectedDescription
+                                            ? whiteColor
+                                            : customBlackColor.withOpacity(.6),
                                       ),
                                     ),
                                     backgroundColor:
-                                        listOfTransactionDetailSuggestions[
-                                                    index] ==
-                                                state.selectedDescription
+                                        listOfTransactionDetailSuggestions[index] == state.selectedDescription
                                             ? customBlueColor
                                             : greyColor,
                                   ),
@@ -366,7 +335,7 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
                       },
                     ),
                     const SizedBox(
-                      height: 16,
+                      height: 12,
                     ),
                     Text(
                       "Select card",
@@ -399,11 +368,8 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
                             .doc(FirebaseServices().getUserId())
                             .collection("pinext_cards")
                             .snapshots(),
-                        builder: ((context,
-                            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                                snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
+                        builder: ((context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+                          if (snapshot.connectionState == ConnectionState.waiting) {
                             return const Center(
                               child: CircularProgressIndicator(),
                             );
@@ -414,8 +380,7 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
                             scrollDirection: Axis.horizontal,
                             itemCount: snapshot.data!.docs.length,
                             itemBuilder: ((context, index) {
-                              PinextCardModel pinextCardModel =
-                                  PinextCardModel.fromMap(
+                              PinextCardModel pinextCardModel = PinextCardModel.fromMap(
                                 snapshot.data!.docs[index].data(),
                               );
 
@@ -424,21 +389,16 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
 
                               return GestureDetector(
                                 onTap: () {
-                                  context
-                                      .read<AddTransactionsCubit>()
-                                      .selectCard(pinextCardModel.cardId);
+                                  context.read<AddTransactionsCubit>().selectCard(pinextCardModel.cardId);
                                 },
-                                child: BlocBuilder<AddTransactionsCubit,
-                                    AddTransactionsState>(
+                                child: BlocBuilder<AddTransactionsCubit, AddTransactionsState>(
                                   builder: (context, state) {
                                     return PinextCard(
                                       title: pinextCardModel.title,
                                       balance: pinextCardModel.balance,
                                       cardColor: cardColor,
-                                      isSelected: state.selectedCardNo ==
-                                          pinextCardModel.cardId,
-                                      lastTransactionDate:
-                                          pinextCardModel.lastTransactionData,
+                                      isSelected: state.selectedCardNo == pinextCardModel.cardId,
+                                      lastTransactionDate: pinextCardModel.lastTransactionData,
                                       cardDetails: pinextCardModel.description,
                                     );
                                   },
@@ -456,7 +416,7 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
                 ),
               ),
               const SizedBox(
-                height: 16,
+                height: 12,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(
@@ -505,13 +465,10 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
                   },
                   builder: (context, state) {
                     return GetCustomButton(
-                      title: widget.isEdit
-                          ? "Update Transaction"
-                          : "Add Transaction",
+                      title: widget.isEdit ? "Update Transaction" : "Add Transaction",
                       titleColor: whiteColor,
                       buttonColor: customBlueColor,
-                      isLoading:
-                          state is AddTransactionsLoadingState ? true : false,
+                      isLoading: state is AddTransactionsLoadingState ? true : false,
                       callBackFunction: () {
                         if (_formKey.currentState!.validate()) {
                           if (amountController.text.isNotEmpty &&
@@ -519,16 +476,12 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
                               state.selectedCardNo != "none") {
                             if (widget.isEdit) {
                             } else {
-                              context
-                                  .read<AddTransactionsCubit>()
-                                  .addTransaction(
+                              context.read<AddTransactionsCubit>().addTransaction(
                                     amount: amountController.text,
                                     details: detailsController.text,
-                                    transctionType:
-                                        state.selectedTransactionMode ==
-                                                SelectedTransactionMode.enpense
-                                            ? "Expense"
-                                            : "Income",
+                                    transctionType: state.selectedTransactionMode == SelectedTransactionMode.enpense
+                                        ? "Expense"
+                                        : "Income",
                                   );
                             }
                           } else {
@@ -546,7 +499,7 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
                 ),
               ),
               const SizedBox(
-                height: 16,
+                height: 12,
               ),
             ],
           ),

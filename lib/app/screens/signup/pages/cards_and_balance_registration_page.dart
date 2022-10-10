@@ -57,7 +57,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(
-                height: 16,
+              height: 12,
               ),
               Text(
                 "Pinext",
@@ -139,7 +139,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                height: 16,
+              height: 12,
               ),
               Text(
                 "Monthly Budget",
@@ -186,7 +186,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                 },
               ),
               const SizedBox(
-                height: 16,
+              height: 12,
               ),
               Text(
                 "Manage Cards",
@@ -237,7 +237,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                 },
               ),
               const SizedBox(
-                height: 16,
+              height: 12,
               ),
               Text(
                 "Add a new card",
@@ -309,7 +309,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                height: 16,
+              height: 12,
               ),
               Text(
                 "Manage Goals",
@@ -355,7 +355,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                 },
               ),
               const SizedBox(
-                height: 16,
+              height: 12,
               ),
               Text(
                 "Add goals/ milestones",
@@ -431,7 +431,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                height: 16,
+              height: 12,
               ),
               BlocListener<UserBloc, UserState>(
                 listener: (context, state) {
@@ -511,7 +511,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                 },
               ),
               const SizedBox(
-                height: 16,
+              height: 12,
               ),
             ],
           ),

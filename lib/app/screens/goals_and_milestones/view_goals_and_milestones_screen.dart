@@ -78,9 +78,7 @@ class ViewGoalsAndMilestoneView extends StatelessWidget {
                     .doc(FirebaseServices().getUserId())
                     .collection('pinext_goals')
                     .snapshots(),
-                builder: ((context,
-                    AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                        snapshot) {
+                builder: ((context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
                       child: SizedBox.shrink(),
@@ -98,9 +96,7 @@ class ViewGoalsAndMilestoneView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       ListView.builder(
-                        itemCount: snapshot.data!.docs.length > 10
-                            ? 10
-                            : snapshot.data!.docs.length,
+                        itemCount: snapshot.data!.docs.length > 10 ? 10 : snapshot.data!.docs.length,
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: ((context, index) {
@@ -116,8 +112,7 @@ class ViewGoalsAndMilestoneView extends StatelessWidget {
                             );
                           }
 
-                          PinextGoalModel pinextGoalModel =
-                              PinextGoalModel.fromMap(
+                          PinextGoalModel pinextGoalModel = PinextGoalModel.fromMap(
                             snapshot.data!.docs[index].data(),
                           );
                           return PinextGoalCardMinimized(

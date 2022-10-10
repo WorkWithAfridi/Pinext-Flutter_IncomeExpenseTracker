@@ -85,7 +85,7 @@ class _SigninScreenViewState extends State<SigninScreenView> {
                   ),
                 ),
                 const SizedBox(
-                  height: 16,
+              height: 12,
                 ),
                 CustomTextFormField(
                   controller: emailController,
@@ -109,7 +109,7 @@ class _SigninScreenViewState extends State<SigninScreenView> {
                   },
                 ),
                 const SizedBox(
-                  height: 16,
+              height: 12,
                 ),
                 BlocListener<UserBloc, UserState>(
                   listener: (context, state) {
@@ -169,7 +169,7 @@ class _SigninScreenViewState extends State<SigninScreenView> {
                   ),
                 ),
                 const SizedBox(
-                  height: 16,
+              height: 12,
                 ),
                 Text(
                   "Or sign in with socials",
@@ -183,7 +183,7 @@ class _SigninScreenViewState extends State<SigninScreenView> {
                 ),
                 SocialsButton(),
                 const SizedBox(
-                  height: 16,
+              height: 12,
                 ),
                 GestureDetector(
                   onTap: () {

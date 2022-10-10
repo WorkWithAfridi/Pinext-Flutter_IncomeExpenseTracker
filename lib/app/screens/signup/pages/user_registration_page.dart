@@ -56,7 +56,7 @@ class UserRegistrationPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                height: 16,
+              height: 12,
               ),
               CustomTextFormField(
                 controller: userNameController,
@@ -92,7 +92,7 @@ class UserRegistrationPage extends StatelessWidget {
                 },
               ),
               const SizedBox(
-                height: 16,
+              height: 12,
               ),
               GetCustomButton(
                   title: "Next",
@@ -119,7 +119,7 @@ class UserRegistrationPage extends StatelessWidget {
                     }
                   }),
               const SizedBox(
-                height: 16,
+              height: 12,
               ),
               Text(
                 "Or sign up using socials",
@@ -133,7 +133,7 @@ class UserRegistrationPage extends StatelessWidget {
               ),
               SocialsButton(),
               const SizedBox(
-                height: 16,
+              height: 12,
               ),
               GestureDetector(
                 onTap: () {

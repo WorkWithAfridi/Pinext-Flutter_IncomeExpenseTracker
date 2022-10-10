@@ -297,7 +297,7 @@ class HomepageView extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-                    height: 16,
+              height: 12,
                   ),
                   Text(
                     "Savings",
@@ -362,7 +362,7 @@ class HomepageView extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-                    height: 16,
+              height: 12,
                   ),
                   Text(
                     "Expenses",
@@ -465,11 +465,11 @@ class HomepageView extends StatelessWidget {
                     },
                   ),
                   const SizedBox(
-                    height: 16,
+              height: 12,
                   ),
                   const PastTransactionsModule(),
                   const SizedBox(
-                    height: 16,
+              height: 12,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -588,7 +588,7 @@ class HomepageView extends StatelessWidget {
             ),
             const YourCardsModule(),
             const SizedBox(
-              height: 16,
+              height: 12,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
@@ -650,7 +650,7 @@ class HomepageView extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-                    height: 16,
+              height: 12,
                   ),
                 ],
               ),

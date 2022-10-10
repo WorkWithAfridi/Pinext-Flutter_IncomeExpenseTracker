@@ -128,7 +128,7 @@ class CardsAndBalanceView extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: 16,
+              height: 12,
             ),
             Text(
               "Manage Cards",
@@ -248,7 +248,7 @@ class CardsAndBalanceView extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: 16,
+              height: 12,
             ),
             Text(
               "New Card??",
@@ -321,7 +321,7 @@ class CardsAndBalanceView extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: 16,
+              height: 12,
             ),
           ],
         ),
