@@ -64,7 +64,7 @@ class _SplashScreenState extends State<SplashScreen> {
       const ShortcutItem(
         type: "AddTransaction",
         localizedTitle: "Add transaction",
-        icon: "money",
+        icon: "@drawable/money_icon",
       ),
     ]);
 
@@ -77,12 +77,12 @@ class _SplashScreenState extends State<SplashScreen> {
       const ShortcutItem(
         type: "AddTransaction",
         localizedTitle: "Add transaction",
-        icon: "money",
+        icon: "@drawable/money_icon",
       ),
       const ShortcutItem(
         type: "ViewTransactions",
         localizedTitle: "View transactions",
-        icon: "archive",
+        icon: "@drawable/history_icon",
       ),
     ]);
     quickActions.initialize((String shortcutType) async {
