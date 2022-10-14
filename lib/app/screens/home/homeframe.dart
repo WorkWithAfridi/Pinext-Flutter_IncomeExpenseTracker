@@ -345,9 +345,9 @@ class PinextDrawer extends StatelessWidget {
                             SignOutUserEvent(context: context),
                           );
                     },
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.logout,
-                      color: Colors.red,
+                      color: Colors.redAccent[400],
                     ),
                   ),
                 ),
