@@ -60,6 +60,7 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
 
   @override
   Widget build(BuildContext context) {
+    context.read<ArchiveSearchCubit>().resetState();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

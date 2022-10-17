@@ -15,7 +15,16 @@ class ArchiveSearchCubit extends Cubit<ArchiveSearchState> {
     emit(
       ArchiveSearchDefaultState(
         isSearchActive: !state.isSearchActive,
-        searchTerm: state.searchTerm,
+        searchTerm: "",
+      ),
+    );
+  }
+
+  resetState() {
+    emit(
+      ArchiveSearchDefaultState(
+        isSearchActive: false,
+        searchTerm: "",
       ),
     );
   }
