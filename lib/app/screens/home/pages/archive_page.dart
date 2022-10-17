@@ -5,9 +5,11 @@ import 'package:intl/intl.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
 import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
+import 'package:pinext/app/bloc/archive_cubit/search_cubit/search_cubit.dart';
 import 'package:pinext/app/models/pinext_transaction_model.dart';
 import 'package:pinext/app/services/firebase_services.dart';
 import 'package:pinext/app/shared/widgets/customYearPicker.dart';
+import 'package:pinext/app/shared/widgets/custom_text_field.dart';
 
 import '../../../app_data/app_constants/fonts.dart';
 import '../../../bloc/archive_cubit/archive_cubit.dart';
@@ -19,8 +21,15 @@ class ArchivePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ArchiveCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => ArchiveCubit(),
+        ),
+        BlocProvider(
+          create: (context) => ArchiveSearchCubit(),
+        ),
+      ],
       child: const ArchiveMonthView(),
     );
   }
@@ -39,8 +48,7 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
   late ScrollController monthScrollController;
   @override
   void initState() {
-    monthScrollController =
-        ScrollController(initialScrollOffset: 30.0 * int.parse(currentMonth));
+    monthScrollController = ScrollController(initialScrollOffset: 30.0 * int.parse(currentMonth));
     super.initState();
   }
 
@@ -86,11 +94,9 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
                     builder: (context, state) {
                       return GestureDetector(
                         onTap: () {
-                          String selectedMonth =
-                              "0${int.parse(state.selectedMonth)}".length > 2
-                                  ? "0${int.parse(state.selectedMonth)}"
-                                      .substring(1, 3)
-                                  : "0${int.parse(state.selectedMonth)}";
+                          String selectedMonth = "0${int.parse(state.selectedMonth)}".length > 2
+                              ? "0${int.parse(state.selectedMonth)}".substring(1, 3)
+                              : "0${int.parse(state.selectedMonth)}";
                           FileHandler().createReportForMonth(
                             int.parse(selectedMonth),
                             context,
@@ -144,15 +150,12 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
                               width: 300,
                               height: 300,
                               child: CustomYearPicker(
-                                firstDate:
-                                    DateTime(DateTime.now().year - 100, 1),
+                                firstDate: DateTime(DateTime.now().year - 100, 1),
                                 lastDate: DateTime(DateTime.now().year, 1),
                                 initialDate: DateTime.now(),
                                 selectedDate: selectedDate,
                                 onChanged: (DateTime dateTime) {
-                                  context
-                                      .read<ArchiveCubit>()
-                                      .changeYear(dateTime.year.toString());
+                                  context.read<ArchiveCubit>().changeYear(dateTime.year.toString());
                                   Navigator.pop(context);
                                 },
                               ),
@@ -212,9 +215,7 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
                         String currentMonth = months[index];
                         return GestureDetector(
                           onTap: () {
-                            context
-                                .read<ArchiveCubit>()
-                                .changeMonth((index).toString());
+                            context.read<ArchiveCubit>().changeMonth((index).toString());
                           },
                           child: Container(
                             padding: const EdgeInsets.only(
@@ -225,12 +226,10 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
                             child: Text(
                               currentMonth,
                               style: regularTextStyle.copyWith(
-                                fontWeight: state.selectedMonth.toString() ==
-                                        (index).toString()
+                                fontWeight: state.selectedMonth.toString() == (index).toString()
                                     ? FontWeight.bold
                                     : FontWeight.normal,
-                                color: state.selectedMonth.toString() ==
-                                        (index).toString()
+                                color: state.selectedMonth.toString() == (index).toString()
                                     ? customBlackColor
                                     : customBlackColor.withOpacity(.4),
                               ),
@@ -262,6 +261,8 @@ class TransactionsList extends StatelessWidget {
     "Expenses",
   ];
 
+  TextEditingController searchController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -278,11 +279,9 @@ class TransactionsList extends StatelessWidget {
               ),
               BlocBuilder<ArchiveCubit, ArchiveState>(
                 builder: (context, state) {
-                  String selectedMonth =
-                      "0${int.parse(state.selectedMonth) + 1}".length > 2
-                          ? "0${int.parse(state.selectedMonth) + 1}"
-                              .substring(1, 3)
-                          : "0${int.parse(state.selectedMonth) + 1}";
+                  String selectedMonth = "0${int.parse(state.selectedMonth) + 1}".length > 2
+                      ? "0${int.parse(state.selectedMonth) + 1}".substring(1, 3)
+                      : "0${int.parse(state.selectedMonth) + 1}";
                   return StreamBuilder(
                     stream: FirebaseServices()
                         .firebaseFirestore
@@ -296,9 +295,7 @@ class TransactionsList extends StatelessWidget {
                           descending: true,
                         )
                         .snapshots(),
-                    builder: ((context,
-                        AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                            snapshot) {
+                    builder: ((context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const Center(
                           child: SizedBox.shrink(),
@@ -317,25 +314,21 @@ class TransactionsList extends StatelessWidget {
                               children: [
                                 Text(
                                   "404",
-                                  style: boldTextStyle.copyWith(
-                                      fontSize: 25,
-                                      color: customBlackColor.withOpacity(.5)),
+                                  style: boldTextStyle.copyWith(fontSize: 25, color: customBlackColor.withOpacity(.5)),
                                 ),
                                 const SizedBox(
                                   height: 4,
                                 ),
                                 Text(
                                   "No record found!",
-                                  style: regularTextStyle.copyWith(
-                                      color: customBlackColor.withOpacity(.5)),
+                                  style: regularTextStyle.copyWith(color: customBlackColor.withOpacity(.5)),
                                 ),
                                 const SizedBox(
                                   height: 2,
                                 ),
                                 Text(
                                   ":(",
-                                  style: regularTextStyle.copyWith(
-                                      color: customBlackColor.withOpacity(.5)),
+                                  style: regularTextStyle.copyWith(color: customBlackColor.withOpacity(.5)),
                                 ),
                               ],
                             ),
@@ -345,91 +338,148 @@ class TransactionsList extends StatelessWidget {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(
-                            child: Wrap(
-                              spacing: 5,
-                              runSpacing: -8,
-                              children: [
-                                ...List.generate(
-                                  filters.length,
-                                  (index) {
-                                    return GestureDetector(
-                                      onTap: () {
-                                        String selectedFilter =
-                                            filters[index].toString();
-                                        if (state.selectedFilter !=
-                                            selectedFilter) {
-                                          context
-                                              .read<ArchiveCubit>()
-                                              .changeFilter(selectedFilter);
-                                        } else {
-                                          context
-                                              .read<ArchiveCubit>()
-                                              .changeFilter(
-                                                "All transactions",
-                                              );
-                                        }
-                                      },
-                                      child: Chip(
-                                        elevation: 0,
-                                        label: Text(
-                                          filters[index].toString(),
-                                          style: regularTextStyle.copyWith(
-                                            color: filters[index] ==
-                                                    state.selectedFilter
-                                                ? whiteColor
-                                                : customBlackColor
-                                                    .withOpacity(.6),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Wrap(
+                                  spacing: 5,
+                                  runSpacing: -8,
+                                  children: [
+                                    ...List.generate(
+                                      filters.length,
+                                      (index) {
+                                        return GestureDetector(
+                                          onTap: () {
+                                            String selectedFilter = filters[index].toString();
+                                            if (state.selectedFilter != selectedFilter) {
+                                              context.read<ArchiveCubit>().changeFilter(selectedFilter);
+                                            } else {
+                                              context.read<ArchiveCubit>().changeFilter(
+                                                    "All transactions",
+                                                  );
+                                            }
+                                          },
+                                          child: Chip(
+                                            elevation: 0,
+                                            label: Text(
+                                              filters[index].toString(),
+                                              style: regularTextStyle.copyWith(
+                                                color: filters[index] == state.selectedFilter
+                                                    ? whiteColor
+                                                    : customBlackColor.withOpacity(.6),
+                                              ),
+                                            ),
+                                            backgroundColor:
+                                                filters[index] == state.selectedFilter ? customBlueColor : greyColor,
                                           ),
-                                        ),
-                                        backgroundColor: filters[index] ==
-                                                state.selectedFilter
-                                            ? customBlueColor
-                                            : greyColor,
-                                      ),
+                                        );
+                                      },
+                                    ).toList(),
+                                  ],
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  context.read<ArchiveSearchCubit>().toogleSearch();
+                                },
+                                child: BlocBuilder<ArchiveSearchCubit, ArchiveSearchState>(
+                                  builder: (context, state) {
+                                    return Icon(
+                                      state.isSearchActive ? Icons.close : Icons.search_rounded,
+                                      color: customBlueColor,
+                                      size: 25,
                                     );
                                   },
-                                ).toList(),
-                              ],
-                            ),
+                                ),
+                              )
+                            ],
                           ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 5.0),
-                            child: ListView.builder(
-                              itemCount: snapshot.data!.docs.length,
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemBuilder: ((context, index) {
-                                if (snapshot.data!.docs.isEmpty) {
-                                  return const Text("No data found! :(");
-                                }
-                                PinextTransactionModel pinextTransactionModel =
-                                    PinextTransactionModel.fromMap(
-                                  snapshot.data!.docs[index].data(),
+                          BlocBuilder<ArchiveSearchCubit, ArchiveSearchState>(
+                            builder: (context, state) {
+                              if (state.isSearchActive) {
+                                return Column(
+                                  children: [
+                                    const SizedBox(
+                                      height: 4,
+                                    ),
+                                    CustomTextFormField(
+                                      controller: searchController,
+                                      hintTitle: "Search term",
+                                      onChanged: (searchTerm) {
+                                        context.read<ArchiveSearchCubit>().updateSearchTerm(searchTerm);
+                                      },
+                                      validator: () {
+                                        return null;
+                                      },
+                                    ),
+                                    const SizedBox(
+                                      height: 4,
+                                    ),
+                                  ],
                                 );
-                                if (state.selectedFilter ==
-                                    "All transactions") {
-                                  return TransactionDetailsCard(
-                                      pinextTransactionModel:
-                                          pinextTransactionModel);
-                                } else if (state.selectedFilter == "Income" &&
-                                    pinextTransactionModel.transactionType ==
-                                        "Income") {
-                                  return TransactionDetailsCard(
-                                      pinextTransactionModel:
-                                          pinextTransactionModel);
-                                } else if (state.selectedFilter == "Expenses" &&
-                                    pinextTransactionModel.transactionType ==
-                                        "Expense") {
-                                  return TransactionDetailsCard(
-                                      pinextTransactionModel:
-                                          pinextTransactionModel);
-                                }
-                                return const SizedBox.shrink();
-                              }),
-                            ),
-                          )
+                              }
+                              return SizedBox.fromSize();
+                            },
+                          ),
+                          BlocBuilder<ArchiveSearchCubit, ArchiveSearchState>(
+                            builder: (context, searchState) {
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                                child: ListView.builder(
+                                  itemCount: snapshot.data!.docs.length,
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemBuilder: ((context, index) {
+                                    if (snapshot.data!.docs.isEmpty) {
+                                      return const Text("No data found! :(");
+                                    }
+                                    PinextTransactionModel pinextTransactionModel = PinextTransactionModel.fromMap(
+                                      snapshot.data!.docs[index].data(),
+                                    );
+                                    TransactionDetailsCard transactionDetailsCard =
+                                        TransactionDetailsCard(pinextTransactionModel: pinextTransactionModel);
+                                    if (state.selectedFilter == "All transactions") {
+                                      if (searchState.isSearchActive) {
+                                        if (pinextTransactionModel.details
+                                            .toLowerCase()
+                                            .contains(searchState.searchTerm.toLowerCase())) {
+                                          return transactionDetailsCard;
+                                        } else {
+                                          return const SizedBox.shrink();
+                                        }
+                                      }
+                                      return transactionDetailsCard;
+                                    } else if (state.selectedFilter == "Income" &&
+                                        pinextTransactionModel.transactionType == "Income") {
+                                      if (searchState.isSearchActive) {
+                                        if (pinextTransactionModel.details
+                                            .toLowerCase()
+                                            .contains(searchState.searchTerm.toLowerCase())) {
+                                          return transactionDetailsCard;
+                                        } else {
+                                          return const SizedBox.shrink();
+                                        }
+                                      }
+                                      return transactionDetailsCard;
+                                    } else if (state.selectedFilter == "Expenses" &&
+                                        pinextTransactionModel.transactionType == "Expense") {
+                                      if (searchState.isSearchActive) {
+                                        if (pinextTransactionModel.details
+                                            .toLowerCase()
+                                            .contains(searchState.searchTerm.toLowerCase())) {
+                                          return transactionDetailsCard;
+                                        } else {
+                                          return const SizedBox.shrink();
+                                        }
+                                      }
+                                      return transactionDetailsCard;
+                                    }
+                                    return const SizedBox.shrink();
+                                  }),
+                                ),
+                              );
+                            },
+                          ),
                         ],
                       );
                     }),
@@ -465,8 +515,7 @@ class TransactionDetailsCard extends StatelessWidget {
         Row(
           children: [
             Text(
-              DateFormat('dd-MM-yyyy').format(
-                  DateTime.parse(pinextTransactionModel.transactionDate)),
+              DateFormat('dd-MM-yyyy').format(DateTime.parse(pinextTransactionModel.transactionDate)),
               style: regularTextStyle.copyWith(
                 color: customBlackColor.withOpacity(.80),
               ),
@@ -495,9 +544,7 @@ class TransactionDetailsCard extends StatelessWidget {
                     ? "- ${pinextTransactionModel.amount}Tk"
                     : "+ ${pinextTransactionModel.amount}Tk",
                 style: boldTextStyle.copyWith(
-                  color: pinextTransactionModel.transactionType == 'Expense'
-                      ? Colors.red
-                      : Colors.green,
+                  color: pinextTransactionModel.transactionType == 'Expense' ? Colors.red : Colors.green,
                 ),
               ),
             ),
