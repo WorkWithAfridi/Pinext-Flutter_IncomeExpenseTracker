@@ -61,29 +61,9 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       }),
       decoration: InputDecoration(
         suffixIcon: widget.showClearSuffix
-            ? GestureDetector(
-                onTap: () {
-                  widget.suffixButtonAction();
-                },
-                child: Icon(
-                  Icons.clear,
-                  color: customBlackColor.withOpacity(.6),
-                  size: 16,
-                ),
-              )
+            ? clearSuffixIconButton()
             : widget.isPassword
-                ? GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        shoWPassword = !shoWPassword;
-                      });
-                    },
-                    child: Icon(
-                      shoWPassword ? Icons.visibility_off : Icons.visibility,
-                      color: customBlackColor.withOpacity(.6),
-                      size: 16,
-                    ),
-                  )
+                ? togglePasswordVisibilityIconButton()
                 : const SizedBox.shrink(),
         hintText: widget.hintTitle,
         hintStyle: regularTextStyle.copyWith(
@@ -134,5 +114,33 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       obscureText: shoWPassword,
       // obscuringCharacter: "*",
     );
+  }
+
+  GestureDetector togglePasswordVisibilityIconButton() {
+    return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      shoWPassword = !shoWPassword;
+                    });
+                  },
+                  child: Icon(
+                    shoWPassword ? Icons.visibility_off : Icons.visibility,
+                    color: customBlackColor.withOpacity(.6),
+                    size: 16,
+                  ),
+                );
+  }
+
+  GestureDetector clearSuffixIconButton() {
+    return GestureDetector(
+              onTap: () {
+                widget.suffixButtonAction();
+              },
+              child: Icon(
+                Icons.clear,
+                color: customBlackColor.withOpacity(.6),
+                size: 16,
+              ),
+            );
   }
 }
