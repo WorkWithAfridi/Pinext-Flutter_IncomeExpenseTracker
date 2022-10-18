@@ -17,6 +17,7 @@ import 'package:pinext/app/screens/home/pages/home_page.dart';
 
 import '../../app_data/app_constants/constants.dart';
 import '../../app_data/app_constants/fonts.dart';
+import '../../bloc/archive_cubit/user_statistics_cubit/user_statistics_cubit.dart';
 import '../../bloc/homeframe_cubit/homeframe_page_cubit.dart';
 import '../../services/handlers/app_handler.dart';
 
@@ -61,6 +62,9 @@ class _HomeframeState extends State<Homeframe> {
       providers: [
         BlocProvider(
           create: (context) => HomeframeCubit(),
+        ),
+        BlocProvider(
+          create: (context) => UserStatisticsCubit(),
         )
       ],
       child: HomeframeView(),

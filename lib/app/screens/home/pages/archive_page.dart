@@ -11,6 +11,7 @@ import 'package:pinext/app/shared/widgets/custom_text_field.dart';
 
 import '../../../app_data/app_constants/fonts.dart';
 import '../../../bloc/archive_cubit/archive_cubit.dart';
+import '../../../bloc/archive_cubit/user_statistics_cubit/user_statistics_cubit.dart';
 import '../../../services/date_time_services.dart';
 import '../../../services/handlers/file_handler.dart';
 import '../../../shared/widgets/transaction_details_card.dart';
@@ -60,6 +61,7 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
   @override
   Widget build(BuildContext context) {
     context.read<ArchiveSearchCubit>().resetState();
+    context.read<UserStatisticsCubit>().resetState();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -156,6 +158,8 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
                                 selectedDate: selectedDate,
                                 onChanged: (DateTime dateTime) {
                                   context.read<ArchiveCubit>().changeYear(dateTime.year.toString());
+                                  context.read<UserStatisticsCubit>().resetState();
+
                                   Navigator.pop(context);
                                 },
                               ),
@@ -216,6 +220,7 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
                         return GestureDetector(
                           onTap: () {
                             context.read<ArchiveCubit>().changeMonth((index).toString());
+                            context.read<UserStatisticsCubit>().resetState();
                           },
                           child: Container(
                             padding: const EdgeInsets.only(
@@ -273,9 +278,20 @@ class TransactionsList extends StatelessWidget {
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               const SizedBox(
-                height: 8,
+                height: 10,
+              ),
+              Text(
+                "Transactions",
+                style: boldTextStyle.copyWith(
+                  fontSize: 18,
+                ),
+              ),
+              const SizedBox(
+                height: 4,
               ),
               BlocBuilder<ArchiveCubit, ArchiveState>(
                 builder: (context, state) {
@@ -358,6 +374,8 @@ class TransactionsList extends StatelessWidget {
                                                     "All transactions",
                                                   );
                                             }
+
+                                            context.read<UserStatisticsCubit>().resetState();
                                           },
                                           child: Chip(
                                             elevation: 0,
@@ -381,6 +399,7 @@ class TransactionsList extends StatelessWidget {
                               GestureDetector(
                                 onTap: () {
                                   context.read<ArchiveSearchCubit>().toogleSearch();
+                                  context.read<UserStatisticsCubit>().resetState();
                                 },
                                 child: BlocBuilder<ArchiveSearchCubit, ArchiveSearchState>(
                                   builder: (context, state) {
@@ -443,6 +462,10 @@ class TransactionsList extends StatelessWidget {
                                     );
                                     TransactionDetailsCard transactionDetailsCard =
                                         TransactionDetailsCard(pinextTransactionModel: pinextTransactionModel);
+                                    context.read<UserStatisticsCubit>().updateStatistics(
+                                          amount: double.parse(pinextTransactionModel.amount),
+                                          isExpense: pinextTransactionModel.transactionType == "Expense",
+                                        );
                                     if (state.selectedFilter == "All transactions") {
                                       if (searchState.isSearchActive) {
                                         if (pinextTransactionModel.details
@@ -485,6 +508,94 @@ class TransactionsList extends StatelessWidget {
                               );
                             },
                           ),
+                          BlocBuilder<ArchiveSearchCubit, ArchiveSearchState>(
+                            builder: (context, archiveSearchState) {
+                              return BlocBuilder<UserStatisticsCubit, UserStatisticsState>(
+                                builder: (context, state) {
+                                  return archiveSearchState.isSearchActive
+                                      ? const SizedBox.shrink()
+                                      : Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          children: [
+                                            const SizedBox(
+                                              height: 12,
+                                            ),
+                                            Text(
+                                              "Statistics",
+                                              style: boldTextStyle.copyWith(
+                                                fontSize: 18,
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 8,
+                                            ),
+                                            RichText(
+                                              text: TextSpan(
+                                                children: [
+                                                  TextSpan(
+                                                    text: "Total Expenses: ",
+                                                    style: boldTextStyle.copyWith(
+                                                      color: customBlackColor.withOpacity(.80),
+                                                    ),
+                                                  ),
+                                                  TextSpan(
+                                                    text: "${state.totalExpenses}/Tk.",
+                                                    style: regularTextStyle.copyWith(
+                                                      color: Colors.redAccent[400],
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 4,
+                                            ),
+                                            RichText(
+                                              text: TextSpan(
+                                                children: [
+                                                  TextSpan(
+                                                    text: "Total Savings: ",
+                                                    style: boldTextStyle.copyWith(
+                                                      color: customBlackColor.withOpacity(.80),
+                                                    ),
+                                                  ),
+                                                  TextSpan(
+                                                    text: "${state.totalSavings}/Tk.",
+                                                    style: regularTextStyle.copyWith(
+                                                      color: Colors.green,
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 4,
+                                            ),
+                                            RichText(
+                                              text: TextSpan(
+                                                children: [
+                                                  TextSpan(
+                                                    text: "Outcome: ",
+                                                    style: boldTextStyle.copyWith(
+                                                      color: customBlackColor.withOpacity(.80),
+                                                    ),
+                                                  ),
+                                                  TextSpan(
+                                                    text: "${state.outcome}/Tk.",
+                                                    style: regularTextStyle.copyWith(
+                                                      color: customBlueColor,
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                },
+                              );
+                            },
+                          )
                         ],
                       );
                     }),
@@ -492,7 +603,7 @@ class TransactionsList extends StatelessWidget {
                 },
               ),
               const SizedBox(
-                height: 12,
+                height: 24,
               ),
             ],
           ),

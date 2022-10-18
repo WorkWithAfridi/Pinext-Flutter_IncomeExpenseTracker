@@ -241,6 +241,7 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
 
   Column SelectTransactionTypeCard() {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           "Transaction type",
