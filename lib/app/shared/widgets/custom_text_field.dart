@@ -126,7 +126,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       child: Padding(
         padding: const EdgeInsets.only(right: 8.0),
         child: Icon(
-          shoWPassword ? Icons.visibility_off : Icons.visibility,
+          shoWPassword ? Icons.visibility : Icons.visibility_off,
           color: customBlackColor.withOpacity(.6),
           size: 16,
         ),

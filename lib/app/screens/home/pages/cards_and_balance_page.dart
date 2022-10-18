@@ -150,6 +150,10 @@ class CardsAndBalanceView extends StatelessWidget {
                     .collection(USERS_DIRECTORY)
                     .doc(FirebaseServices().getUserId())
                     .collection(CARDS_DIRECTORY)
+                    .orderBy(
+                      'lastTransactionData',
+                      descending: true,
+                    )
                     .snapshots(),
                 builder: ((context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {

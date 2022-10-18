@@ -770,6 +770,10 @@ class YourCardsModule extends StatelessWidget {
                     .collection("pinext_users")
                     .doc(FirebaseServices().getUserId())
                     .collection("pinext_cards")
+                    .orderBy(
+                      'lastTransactionData',
+                      descending: true,
+                    )
                     .snapshots(),
                 builder: ((context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
