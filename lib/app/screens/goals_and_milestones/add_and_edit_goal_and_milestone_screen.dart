@@ -58,8 +58,7 @@ class AddAndEditGoalsAndMilestoneView extends StatefulWidget {
   PinextGoalModel? pinextGoalModel;
 
   @override
-  State<AddAndEditGoalsAndMilestoneView> createState() =>
-      _AddAndEditGoalsAndMilestoneState();
+  State<AddAndEditGoalsAndMilestoneView> createState() => _AddAndEditGoalsAndMilestoneState();
 }
 
 class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMilestoneView> {
@@ -113,9 +112,7 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
           widget.editingGoal
               ? IconButton(
                   onPressed: () {
-                    context
-                        .read<AddGoalCubit>()
-                        .deleteGoal(widget.pinextGoalModel!);
+                    context.read<AddGoalCubit>().deleteGoal(widget.pinextGoalModel!);
                   },
                   icon: const Icon(
                     Icons.delete,
@@ -153,7 +150,7 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                   ),
                 ),
                 const SizedBox(
-                      height: 12,
+                  height: 12,
                 ),
                 Text(
                   "What are your saving up for?",
@@ -185,7 +182,7 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                   ),
                 ),
                 const SizedBox(
-                      height: 12,
+                  height: 12,
                 ),
                 Text(
                   "Amount",
@@ -213,7 +210,7 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                   ),
                 ),
                 const SizedBox(
-                      height: 12,
+                  height: 12,
                 ),
                 Text(
                   "Detailed Description",
@@ -225,8 +222,8 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                 CustomTextFormField(
                   controller: descriptionController,
                   numberOfLines: 5,
-                  hintTitle: "Ex: 400,000Tk",
-                  textInputType: TextInputType.number,
+                  hintTitle: "Ex: Buying a new bike",
+                  textInputType: TextInputType.text,
                   onChanged: (String value) {},
                   validator: (value) {
                     // return InputValidation(value).isCorrectNumber();
@@ -234,7 +231,7 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                   },
                 ),
                 const SizedBox(
-                      height: 12,
+                  height: 12,
                 ),
                 BlocConsumer<AddGoalCubit, AddGoalState>(
                   listener: (context, state) {
@@ -281,9 +278,7 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                               description: descriptionController.text,
                               id: const Uuid().v4().toString(),
                             );
-                            context
-                                .read<SigninCubit>()
-                                .addGoal(pinextGoalModel);
+                            context.read<SigninCubit>().addGoal(pinextGoalModel);
                           } else if (widget.addingNewGoal) {
                             PinextGoalModel pinextGoalModel = PinextGoalModel(
                               title: titleController.text,
@@ -291,9 +286,7 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                               description: descriptionController.text,
                               id: const Uuid().v4().toString(),
                             );
-                            context
-                                .read<AddGoalCubit>()
-                                .addGoal(pinextGoalModel);
+                            context.read<AddGoalCubit>().addGoal(pinextGoalModel);
                           } else if (widget.editingGoal) {
                             PinextGoalModel pinextGoalModel = PinextGoalModel(
                               title: titleController.text,
@@ -301,9 +294,7 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                               description: descriptionController.text,
                               id: widget.pinextGoalModel!.id,
                             );
-                            context
-                                .read<AddGoalCubit>()
-                                .updateGoal(pinextGoalModel);
+                            context.read<AddGoalCubit>().updateGoal(pinextGoalModel);
                           }
                         }
                       },

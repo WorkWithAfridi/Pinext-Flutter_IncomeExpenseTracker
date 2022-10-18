@@ -11,20 +11,23 @@ class CustomTextFormField extends StatelessWidget {
   int numberOfLines;
   TextInputType textInputType;
 
-  CustomTextFormField({
-    Key? key,
-    required this.controller,
-    required this.hintTitle,
-    this.numberOfLines = 1,
-    this.isPassword = false,
-    this.textInputType = TextInputType.text,
-    required this.onChanged,
-    required this.validator,
-    this.textInputAction = TextInputAction.next
-  }) : super(key: key);
+  CustomTextFormField(
+      {Key? key,
+      required this.controller,
+      required this.hintTitle,
+      this.numberOfLines = 1,
+      this.isPassword = false,
+      this.textInputType = TextInputType.text,
+      required this.onChanged,
+      required this.validator,
+      this.showClearSuffix = false,
+      this.textInputAction = TextInputAction.next})
+      : super(key: key);
 
   Function onChanged;
   Function validator;
+  bool showClearSuffix;
+
   TextInputAction textInputAction;
 
   @override
@@ -34,7 +37,6 @@ class CustomTextFormField extends StatelessWidget {
       style: regularTextStyle,
       maxLines: numberOfLines,
       keyboardType: textInputType,
-      
       validator: (value) {
         return validator(value);
       },
@@ -43,6 +45,18 @@ class CustomTextFormField extends StatelessWidget {
         onChanged(value);
       }),
       decoration: InputDecoration(
+        suffixIcon: showClearSuffix
+            ? GestureDetector(
+                onTap: () {
+                  controller.clear();
+                },
+                child: Icon(
+                  Icons.clear,
+                  color: customBlackColor.withOpacity(.6),
+                  size: 16,
+                ),
+              )
+            : const SizedBox.shrink(),
         hintText: hintTitle,
         hintStyle: regularTextStyle.copyWith(
           color: customBlackColor.withOpacity(

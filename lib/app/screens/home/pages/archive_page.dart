@@ -386,7 +386,7 @@ class TransactionsList extends StatelessWidget {
                                 child: BlocBuilder<ArchiveSearchCubit, ArchiveSearchState>(
                                   builder: (context, state) {
                                     return Icon(
-                                      state.isSearchActive ? Icons.close : Icons.search_rounded,
+                                      state.isSearchActive ? Icons.search_off_rounded : Icons.search_rounded,
                                       color: customBlueColor,
                                       size: 25,
                                     );
@@ -406,6 +406,7 @@ class TransactionsList extends StatelessWidget {
                                     CustomTextFormField(
                                       controller: searchController,
                                       hintTitle: "Search term",
+                                      showClearSuffix: true,
                                       onChanged: (searchTerm) {
                                         context.read<ArchiveSearchCubit>().updateSearchTerm(searchTerm);
                                       },
