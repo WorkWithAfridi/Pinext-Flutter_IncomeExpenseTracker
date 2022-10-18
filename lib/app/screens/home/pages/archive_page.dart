@@ -603,7 +603,7 @@ class TransactionsList extends StatelessWidget {
                 },
               ),
               const SizedBox(
-                height: 24,
+                height: 12,
               ),
             ],
           ),
