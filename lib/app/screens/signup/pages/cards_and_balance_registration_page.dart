@@ -156,6 +156,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                 validator: (value) {
                   return InputValidation(value).isCorrectNumber();
                 },
+                suffixButtonAction: () {},
               ),
               const SizedBox(
                 height: 4,
@@ -184,6 +185,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                 validator: (value) {
                   return InputValidation(value).isCorrectNumber();
                 },
+                suffixButtonAction: () {},
               ),
               const SizedBox(
                 height: 12,

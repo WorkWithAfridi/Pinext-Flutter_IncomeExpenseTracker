@@ -171,6 +171,7 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                       return "Title can't be empty!";
                     }
                   },
+                suffixButtonAction: () {},
                 ),
                 const SizedBox(
                   height: 4,
@@ -199,6 +200,7 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                   validator: (value) {
                     return InputValidation(value).isCorrectNumber();
                   },
+                suffixButtonAction: () {},
                 ),
                 const SizedBox(
                   height: 4,
@@ -229,6 +231,7 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                     // return InputValidation(value).isCorrectNumber();
                     return null;
                   },
+                suffixButtonAction: () {},
                 ),
                 const SizedBox(
                   height: 12,

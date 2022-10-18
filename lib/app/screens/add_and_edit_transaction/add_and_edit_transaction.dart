@@ -175,6 +175,7 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
                       validator: (value) {
                         return InputValidation(value).isCorrectNumber();
                       },
+                      suffixButtonAction: () {},
                     ),
                     const SizedBox(
                       height: 12,
@@ -200,6 +201,7 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
                       validator: (value) {
                         return InputValidation(value).isNotEmpty();
                       },
+                      suffixButtonAction: () {},
                     ),
                     const SizedBox(
                       height: 8,

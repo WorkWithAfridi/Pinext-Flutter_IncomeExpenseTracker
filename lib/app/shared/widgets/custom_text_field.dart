@@ -4,7 +4,7 @@ import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import '../../app_data/app_constants/constants.dart';
 import '../../app_data/theme_data/colors.dart';
 
-class CustomTextFormField extends StatelessWidget {
+class CustomTextFormField extends StatefulWidget {
   final String hintTitle;
   final TextEditingController controller;
   final bool isPassword;
@@ -21,34 +21,49 @@ class CustomTextFormField extends StatelessWidget {
       required this.onChanged,
       required this.validator,
       this.showClearSuffix = false,
+      required this.suffixButtonAction,
       this.textInputAction = TextInputAction.next})
       : super(key: key);
 
   Function onChanged;
   Function validator;
+  Function suffixButtonAction;
   bool showClearSuffix;
 
   TextInputAction textInputAction;
 
   @override
+  State<CustomTextFormField> createState() => _CustomTextFormFieldState();
+}
+
+class _CustomTextFormFieldState extends State<CustomTextFormField> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    shoWPassword = widget.isPassword;
+  }
+
+  late bool shoWPassword;
+  @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: controller,
+      controller: widget.controller,
       style: regularTextStyle,
-      maxLines: numberOfLines,
-      keyboardType: textInputType,
+      maxLines: widget.numberOfLines,
+      keyboardType: widget.textInputType,
       validator: (value) {
-        return validator(value);
+        return widget.validator(value);
       },
-      textInputAction: textInputAction,
+      textInputAction: widget.textInputAction,
       onChanged: ((value) {
-        onChanged(value);
+        widget.onChanged(value);
       }),
       decoration: InputDecoration(
-        suffixIcon: showClearSuffix
+        suffixIcon: widget.showClearSuffix
             ? GestureDetector(
                 onTap: () {
-                  controller.clear();
+                  widget.suffixButtonAction();
                 },
                 child: Icon(
                   Icons.clear,
@@ -56,8 +71,21 @@ class CustomTextFormField extends StatelessWidget {
                   size: 16,
                 ),
               )
-            : const SizedBox.shrink(),
-        hintText: hintTitle,
+            : widget.isPassword
+                ? GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        shoWPassword = !shoWPassword;
+                      });
+                    },
+                    child: Icon(
+                      shoWPassword ? Icons.visibility_off : Icons.visibility,
+                      color: customBlackColor.withOpacity(.6),
+                      size: 16,
+                    ),
+                  )
+                : const SizedBox.shrink(),
+        hintText: widget.hintTitle,
         hintStyle: regularTextStyle.copyWith(
           color: customBlackColor.withOpacity(
             .5,
@@ -103,8 +131,8 @@ class CustomTextFormField extends StatelessWidget {
         fillColor: greyColor,
         filled: true,
       ),
-      obscureText: isPassword,
-      obscuringCharacter: "*",
+      obscureText: shoWPassword,
+      // obscuringCharacter: "*",
     );
   }
 }

@@ -152,6 +152,7 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                       validator: (value) {
                         return InputValidation(value).isNotEmpty();
                       },
+                suffixButtonAction: () {},
                     ),
                     const SizedBox(
                       height: 12,
@@ -177,6 +178,7 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                       validator: (value) {
                         return null;
                       },
+                suffixButtonAction: () {},
                     ),
                     const SizedBox(
                       height: 12,
@@ -200,6 +202,7 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                       validator: (value) {
                         return InputValidation(value).isCorrectNumber();
                       },
+                suffixButtonAction: () {},
                     ),
                     const SizedBox(
                       height: 12,

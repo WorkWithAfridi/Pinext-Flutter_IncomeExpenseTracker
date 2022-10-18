@@ -65,6 +65,7 @@ class UserRegistrationPage extends StatelessWidget {
                 validator: (value) {
                   return InputValidation(value.toString()).isCorrectName();
                 },
+                suffixButtonAction: () {},
               ),
               const SizedBox(
                 height: 8,
@@ -76,6 +77,7 @@ class UserRegistrationPage extends StatelessWidget {
                 validator: (value) {
                   return InputValidation(value.toString()).isCorrectEmailAddress();
                 },
+                suffixButtonAction: () {},
               ),
               const SizedBox(
                 height: 8,
@@ -88,6 +90,7 @@ class UserRegistrationPage extends StatelessWidget {
                 validator: (value) {
                   return InputValidation(value.toString()).isNotEmpty();
                 },
+                suffixButtonAction: () {},
               ),
               const SizedBox(
                 height: 12,

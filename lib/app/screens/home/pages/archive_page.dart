@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
-import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/archive_cubit/search_cubit/search_cubit.dart';
 import 'package:pinext/app/models/pinext_transaction_model.dart';
@@ -12,12 +10,10 @@ import 'package:pinext/app/shared/widgets/customYearPicker.dart';
 import 'package:pinext/app/shared/widgets/custom_text_field.dart';
 
 import '../../../app_data/app_constants/fonts.dart';
-import '../../../app_data/custom_transition_page_route/custom_transition_page_route.dart';
 import '../../../bloc/archive_cubit/archive_cubit.dart';
 import '../../../services/date_time_services.dart';
 import '../../../services/handlers/file_handler.dart';
 import '../../../shared/widgets/transaction_details_card.dart';
-import '../../add_and_edit_transaction/add_and_edit_transaction.dart';
 
 class ArchivePage extends StatelessWidget {
   const ArchivePage({Key? key}) : super(key: key);
@@ -415,6 +411,10 @@ class TransactionsList extends StatelessWidget {
                                       },
                                       validator: () {
                                         return null;
+                                      },
+                                      suffixButtonAction: () {
+                                        searchController.clear();
+                                        context.read<ArchiveSearchCubit>().updateSearchTerm("");
                                       },
                                     ),
                                     const SizedBox(

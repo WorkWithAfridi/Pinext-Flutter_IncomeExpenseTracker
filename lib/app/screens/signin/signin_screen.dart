@@ -94,6 +94,7 @@ class _SigninScreenViewState extends State<SigninScreenView> {
                   validator: (value) {
                     return InputValidation(value.toString()).isCorrectEmailAddress();
                   },
+                  suffixButtonAction: () {},
                 ),
                 const SizedBox(
                   height: 8,
@@ -106,6 +107,7 @@ class _SigninScreenViewState extends State<SigninScreenView> {
                   validator: (value) {
                     return InputValidation(value).isNotEmpty();
                   },
+                  suffixButtonAction: () {},
                 ),
                 const SizedBox(
                   height: 12,
