@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
 import 'package:pinext/app/models/pinext_goal_model.dart';
@@ -19,6 +18,7 @@ import '../../../bloc/userBloc/user_bloc.dart';
 import '../../../models/pinext_transaction_model.dart';
 import '../../../services/date_time_services.dart';
 import '../../../shared/widgets/pinext_card.dart';
+import '../../../shared/widgets/transaction_details_card.dart';
 
 class Homepage extends StatelessWidget {
   const Homepage({Key? key}) : super(key: key);
@@ -41,13 +41,7 @@ class HomepageView extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  final List homepageFilters = [
-    'Overview',
-    'Daily',
-    'Weekly',
-    'Monthly',
-    'Yearly'
-  ];
+  final List homepageFilters = ['Overview', 'Daily', 'Weekly', 'Monthly', 'Yearly'];
 
   Map<String, double> demoData = {
     "Office fare": 50,
@@ -228,10 +222,7 @@ class HomepageView extends StatelessWidget {
                                       return Container(
                                         height: 5,
                                         width: constraints.maxWidth *
-                                            (double.parse(
-                                                    state.monthlyExpenses) /
-                                                double.parse(
-                                                    state.monthlyBudget)),
+                                            (double.parse(state.monthlyExpenses) / double.parse(state.monthlyBudget)),
                                         color: customBlueColor,
                                       );
                                     }),
@@ -250,8 +241,7 @@ class HomepageView extends StatelessWidget {
                           builder: (context, state) {
                             if (state is AuthenticatedUserState) {
                               return Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   RichText(
                                     text: TextSpan(
@@ -259,8 +249,7 @@ class HomepageView extends StatelessWidget {
                                         TextSpan(
                                           text: "Your have spent ",
                                           style: regularTextStyle.copyWith(
-                                            color: customBlackColor
-                                                .withOpacity(.6),
+                                            color: customBlackColor.withOpacity(.6),
                                           ),
                                         ),
                                         TextSpan(
@@ -273,8 +262,7 @@ class HomepageView extends StatelessWidget {
                                         TextSpan(
                                           text: " of your budget!",
                                           style: regularTextStyle.copyWith(
-                                            color: customBlackColor
-                                                .withOpacity(.6),
+                                            color: customBlackColor.withOpacity(.6),
                                           ),
                                         ),
                                       ],
@@ -297,7 +285,7 @@ class HomepageView extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-              height: 12,
+                    height: 12,
                   ),
                   Text(
                     "Savings",
@@ -362,7 +350,7 @@ class HomepageView extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-              height: 12,
+                    height: 12,
                   ),
                   Text(
                     "Expenses",
@@ -465,11 +453,11 @@ class HomepageView extends StatelessWidget {
                     },
                   ),
                   const SizedBox(
-              height: 12,
+                    height: 12,
                   ),
                   const PastTransactionsModule(),
                   const SizedBox(
-              height: 12,
+                    height: 12,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -488,8 +476,7 @@ class HomepageView extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 CustomTransitionPageRoute(
-                                  childWidget:
-                                      const ViewGoalsAndMilestoneScreen(),
+                                  childWidget: const ViewGoalsAndMilestoneScreen(),
                                 ),
                               );
                             },
@@ -513,11 +500,8 @@ class HomepageView extends StatelessWidget {
                             .doc(FirebaseServices().getUserId())
                             .collection('pinext_goals')
                             .snapshots(),
-                        builder: ((context,
-                            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                                snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
+                        builder: ((context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+                          if (snapshot.connectionState == ConnectionState.waiting) {
                             return const Center(
                               child: SizedBox.shrink(),
                             );
@@ -534,9 +518,7 @@ class HomepageView extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               ListView.builder(
-                                itemCount: snapshot.data!.docs.length > 5
-                                    ? 5
-                                    : snapshot.data!.docs.length,
+                                itemCount: snapshot.data!.docs.length > 5 ? 5 : snapshot.data!.docs.length,
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
                                 itemBuilder: ((context, index) {
@@ -552,19 +534,16 @@ class HomepageView extends StatelessWidget {
                                     );
                                   }
 
-                                  PinextGoalModel pinextGoalModel =
-                                      PinextGoalModel.fromMap(
+                                  PinextGoalModel pinextGoalModel = PinextGoalModel.fromMap(
                                     snapshot.data!.docs[index].data(),
                                   );
                                   return BlocBuilder<UserBloc, UserState>(
                                     builder: (context, state) {
                                       double completionAmount = 0;
                                       if (state is AuthenticatedUserState) {
-                                        completionAmount = ((double.parse(
-                                                    state.netBalance) /
-                                                double.parse(
-                                                    pinextGoalModel.amount)) *
-                                            100);
+                                        completionAmount =
+                                            ((double.parse(state.netBalance) / double.parse(pinextGoalModel.amount)) *
+                                                100);
                                       }
                                       return completionAmount < 100
                                           ? PinextGoalCardMinimized(
@@ -650,7 +629,7 @@ class HomepageView extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-              height: 12,
+                    height: 12,
                   ),
                 ],
               ),
@@ -694,8 +673,7 @@ class PastTransactionsModule extends StatelessWidget {
                 descending: true,
               )
               .snapshots(),
-          builder: ((context,
-              AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+          builder: ((context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
                 child: SizedBox.shrink(),
@@ -715,9 +693,7 @@ class PastTransactionsModule extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5.0),
                   child: ListView.builder(
-                    itemCount: snapshot.data!.docs.length > 10
-                        ? 10
-                        : snapshot.data!.docs.length,
+                    itemCount: snapshot.data!.docs.length > 10 ? 10 : snapshot.data!.docs.length,
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: ((context, index) {
@@ -733,69 +709,10 @@ class PastTransactionsModule extends StatelessWidget {
                         );
                       }
 
-                      PinextTransactionModel pinextTransactionModel =
-                          PinextTransactionModel.fromMap(
+                      PinextTransactionModel pinextTransactionModel = PinextTransactionModel.fromMap(
                         snapshot.data!.docs[index].data(),
                       );
-                      return Column(
-                        children: [
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                DateFormat('dd-MM-yyyy').format(DateTime.parse(
-                                    pinextTransactionModel.transactionDate)),
-                                style: regularTextStyle.copyWith(
-                                  color: customBlackColor.withOpacity(.80),
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 32,
-                              ),
-                              Expanded(
-                                child: Text(
-                                  pinextTransactionModel.details,
-                                  style: regularTextStyle.copyWith(
-                                    color: customBlackColor.withOpacity(.80),
-                                  ),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 8,
-                              ),
-                              Container(
-                                width: 100,
-                                alignment: Alignment.centerRight,
-                                child: Text(
-                                  pinextTransactionModel.transactionType ==
-                                          'Expense'
-                                      ? "- ${pinextTransactionModel.amount}Tk"
-                                      : "+ ${pinextTransactionModel.amount}Tk",
-                                  style: boldTextStyle.copyWith(
-                                    color: pinextTransactionModel
-                                                .transactionType ==
-                                            'Expense'
-                                        ? Colors.red
-                                        : Colors.green,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          Container(
-                            height: 1,
-                            width: getWidth(context),
-                            color: customBlackColor.withOpacity(.05),
-                          )
-                        ],
-                      );
+                      return TransactionDetailsCard(pinextTransactionModel: pinextTransactionModel);
                     }),
                   ),
                 )
@@ -854,9 +771,7 @@ class YourCardsModule extends StatelessWidget {
                     .doc(FirebaseServices().getUserId())
                     .collection("pinext_cards")
                     .snapshots(),
-                builder: ((context,
-                    AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                        snapshot) {
+                builder: ((context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
                       child: SizedBox.shrink(),
@@ -878,8 +793,7 @@ class YourCardsModule extends StatelessWidget {
                       scrollDirection: Axis.horizontal,
                       itemCount: snapshot.data!.docs.length,
                       itemBuilder: ((context, index) {
-                        PinextCardModel pinextCardModel =
-                            PinextCardModel.fromMap(
+                        PinextCardModel pinextCardModel = PinextCardModel.fromMap(
                           snapshot.data!.docs[index].data(),
                         );
 
@@ -890,8 +804,7 @@ class YourCardsModule extends StatelessWidget {
                           title: pinextCardModel.title,
                           balance: pinextCardModel.balance,
                           cardColor: cardColor,
-                          lastTransactionDate:
-                              pinextCardModel.lastTransactionData,
+                          lastTransactionDate: pinextCardModel.lastTransactionData,
                           cardDetails: pinextCardModel.description,
                         );
                       }),
@@ -929,8 +842,7 @@ class MenuFilterPill extends StatelessWidget {
           if (filtertitle != "Overview") {
             GetCustomSnackbar(
               title: "Snap",
-              message:
-                  "The section is still under development.\nAnd will be updated at a later date!",
+              message: "The section is still under development.\nAnd will be updated at a later date!",
               snackbarType: SnackbarType.info,
               context: context,
             );
@@ -956,9 +868,7 @@ class MenuFilterPill extends StatelessWidget {
           child: Text(
             filtertitle,
             style: boldTextStyle.copyWith(
-              color: selectedFilter == filtertitle
-                  ? whiteColor
-                  : customBlackColor.withOpacity(.4),
+              color: selectedFilter == filtertitle ? whiteColor : customBlackColor.withOpacity(.4),
             ),
           ),
         ),

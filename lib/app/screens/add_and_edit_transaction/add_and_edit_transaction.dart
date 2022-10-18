@@ -152,104 +152,7 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
                     const SizedBox(
                       height: 12,
                     ),
-                    Text(
-                      "Transaction type",
-                      style: boldTextStyle.copyWith(
-                        color: customBlackColor.withOpacity(
-                          .6,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    SizedBox(
-                        height: 40,
-                        child: BlocBuilder<AddTransactionsCubit, AddTransactionsState>(
-                          builder: (context, state) {
-                            return Row(
-                              children: [
-                                Flexible(
-                                  flex: 1,
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      context
-                                          .read<AddTransactionsCubit>()
-                                          .changeSelectedTransactionMode(SelectedTransactionMode.income);
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(right: 10),
-                                      child: Container(
-                                        height: double.maxFinite,
-                                        width: double.maxFinite,
-                                        alignment: Alignment.center,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(defaultBorder),
-                                          color: state.selectedTransactionMode == SelectedTransactionMode.income
-                                              ? greyColor
-                                              : Colors.transparent,
-                                        ),
-                                        child: Text(
-                                          "Income",
-                                          style: state.selectedTransactionMode == SelectedTransactionMode.income
-                                              ? boldTextStyle.copyWith(
-                                                  color: Colors.greenAccent[400],
-                                                  fontSize: 20,
-                                                )
-                                              : boldTextStyle.copyWith(
-                                                  color: customBlackColor.withOpacity(.4),
-                                                  fontSize: 20,
-                                                ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  width: .5,
-                                  height: double.maxFinite,
-                                  color: customBlackColor.withOpacity(.2),
-                                ),
-                                Flexible(
-                                  flex: 1,
-                                  child: GestureDetector(
-                                    onTap: (() {
-                                      context
-                                          .read<AddTransactionsCubit>()
-                                          .changeSelectedTransactionMode(SelectedTransactionMode.enpense);
-                                    }),
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(left: 10),
-                                      child: Container(
-                                        height: double.maxFinite,
-                                        width: double.maxFinite,
-                                        alignment: Alignment.center,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(defaultBorder),
-                                          color: state.selectedTransactionMode == SelectedTransactionMode.enpense
-                                              ? greyColor
-                                              : Colors.transparent,
-                                        ),
-                                        child: Text(
-                                          "Expense",
-                                          style: state.selectedTransactionMode == SelectedTransactionMode.enpense
-                                              ? boldTextStyle.copyWith(
-                                                  color: Colors.redAccent[400],
-                                                  fontSize: 20,
-                                                )
-                                              : boldTextStyle.copyWith(
-                                                  color: customBlackColor.withOpacity(.4),
-                                                  fontSize: 20,
-                                                ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            );
-                          },
-                        )),
+                    SelectTransactionTypeCard(),
                     const SizedBox(
                       height: 12,
                     ),
@@ -301,58 +204,7 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
                     const SizedBox(
                       height: 8,
                     ),
-                    Text(
-                      "Suggestions",
-                      style: boldTextStyle.copyWith(
-                        color: customBlackColor.withOpacity(
-                          .6,
-                        ),
-                      ),
-                    ),
-                    BlocBuilder<AddTransactionsCubit, AddTransactionsState>(
-                      builder: (context, state) {
-                        return Wrap(
-                          spacing: 5,
-                          runSpacing: -8,
-                          children: [
-                            ...List.generate(
-                              listOfTransactionDetailSuggestions.length,
-                              (index) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    String selectedDescription = listOfTransactionDetailSuggestions[index].toString();
-                                    log(selectedDescription);
-                                    log(state.selectedDescription);
-                                    if (state.selectedDescription != selectedDescription) {
-                                      detailsController.text = selectedDescription;
-                                      context
-                                          .read<AddTransactionsCubit>()
-                                          .changeSelectedDescription(selectedDescription);
-                                    } else {
-                                      context.read<AddTransactionsCubit>().changeSelectedDescription("none");
-                                    }
-                                  },
-                                  child: Chip(
-                                    label: Text(
-                                      listOfTransactionDetailSuggestions[index].toString(),
-                                      style: regularTextStyle.copyWith(
-                                        color: listOfTransactionDetailSuggestions[index] == state.selectedDescription
-                                            ? whiteColor
-                                            : customBlackColor.withOpacity(.6),
-                                      ),
-                                    ),
-                                    backgroundColor:
-                                        listOfTransactionDetailSuggestions[index] == state.selectedDescription
-                                            ? customBlueColor
-                                            : greyColor,
-                                  ),
-                                );
-                              },
-                            ).toList(),
-                          ],
-                        );
-                      },
-                    ),
+                    GetSuggestionsList(),
                     const SizedBox(
                       height: 12,
                     ),
@@ -370,11 +222,11 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
                   ],
                 ),
               ),
-              showPinextCardList(),
+              ShowPinextCardList(),
               const SizedBox(
                 height: 12,
               ),
-              addOrEditTransaction(),
+              AddOrEditTransactionButton(),
               const SizedBox(
                 height: 12,
               ),
@@ -385,7 +237,169 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
     );
   }
 
-  SizedBox showPinextCardList() {
+  Column SelectTransactionTypeCard() {
+    return Column(
+      children: [
+        Text(
+          "Transaction type",
+          style: boldTextStyle.copyWith(
+            color: customBlackColor.withOpacity(
+              .6,
+            ),
+          ),
+        ),
+        const SizedBox(
+          height: 8,
+        ),
+        SizedBox(
+            height: 40,
+            child: BlocBuilder<AddTransactionsCubit, AddTransactionsState>(
+              builder: (context, state) {
+                return Row(
+                  children: [
+                    Flexible(
+                      flex: 1,
+                      child: GestureDetector(
+                        onTap: () {
+                          context
+                              .read<AddTransactionsCubit>()
+                              .changeSelectedTransactionMode(SelectedTransactionMode.income);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 10),
+                          child: Container(
+                            height: double.maxFinite,
+                            width: double.maxFinite,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(defaultBorder),
+                              color: state.selectedTransactionMode == SelectedTransactionMode.income
+                                  ? greyColor
+                                  : Colors.transparent,
+                            ),
+                            child: Text(
+                              "Income",
+                              style: state.selectedTransactionMode == SelectedTransactionMode.income
+                                  ? boldTextStyle.copyWith(
+                                      color: Colors.greenAccent[400],
+                                      fontSize: 20,
+                                    )
+                                  : boldTextStyle.copyWith(
+                                      color: customBlackColor.withOpacity(.4),
+                                      fontSize: 20,
+                                    ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: .5,
+                      height: double.maxFinite,
+                      color: customBlackColor.withOpacity(.2),
+                    ),
+                    Flexible(
+                      flex: 1,
+                      child: GestureDetector(
+                        onTap: (() {
+                          context
+                              .read<AddTransactionsCubit>()
+                              .changeSelectedTransactionMode(SelectedTransactionMode.enpense);
+                        }),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Container(
+                            height: double.maxFinite,
+                            width: double.maxFinite,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(defaultBorder),
+                              color: state.selectedTransactionMode == SelectedTransactionMode.enpense
+                                  ? greyColor
+                                  : Colors.transparent,
+                            ),
+                            child: Text(
+                              "Expense",
+                              style: state.selectedTransactionMode == SelectedTransactionMode.enpense
+                                  ? boldTextStyle.copyWith(
+                                      color: Colors.redAccent[400],
+                                      fontSize: 20,
+                                    )
+                                  : boldTextStyle.copyWith(
+                                      color: customBlackColor.withOpacity(.4),
+                                      fontSize: 20,
+                                    ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            )),
+      ],
+    );
+  }
+
+  Column GetSuggestionsList() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Suggestions",
+          style: boldTextStyle.copyWith(
+            color: customBlackColor.withOpacity(
+              .6,
+            ),
+          ),
+        ),
+        BlocBuilder<AddTransactionsCubit, AddTransactionsState>(
+          builder: (context, state) {
+            return Wrap(
+              spacing: 5,
+              runSpacing: -8,
+              children: [
+                ...List.generate(
+                  listOfTransactionDetailSuggestions.length,
+                  (index) {
+                    return GestureDetector(
+                      onTap: () {
+                        String selectedDescription = listOfTransactionDetailSuggestions[index].toString();
+                        log(selectedDescription);
+                        log(state.selectedDescription);
+                        if (state.selectedDescription != selectedDescription) {
+                          detailsController.text = selectedDescription;
+                          context.read<AddTransactionsCubit>().changeSelectedDescription(selectedDescription);
+                        } else {
+                          context.read<AddTransactionsCubit>().changeSelectedDescription("none");
+                        }
+                      },
+                      child: Chip(
+                        label: Text(
+                          listOfTransactionDetailSuggestions[index].toString(),
+                          style: regularTextStyle.copyWith(
+                            color: listOfTransactionDetailSuggestions[index] == state.selectedDescription
+                                ? whiteColor
+                                : customBlackColor.withOpacity(.6),
+                          ),
+                        ),
+                        backgroundColor: listOfTransactionDetailSuggestions[index] == state.selectedDescription
+                            ? customBlueColor
+                            : greyColor,
+                      ),
+                    );
+                  },
+                ).toList(),
+              ],
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  SizedBox ShowPinextCardList() {
     return SizedBox(
       height: 185,
       child: SingleChildScrollView(
@@ -452,7 +466,7 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
     );
   }
 
-  Padding addOrEditTransaction() {
+  Padding AddOrEditTransactionButton() {
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: defaultPadding,
@@ -510,6 +524,12 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
                     detailsController.text.isNotEmpty &&
                     state.selectedCardNo != "none") {
                   if (widget.isEdit) {
+                    GetCustomSnackbar(
+                      title: "Hello",
+                      message: "This function has not yet been deployed! :)",
+                      snackbarType: SnackbarType.info,
+                      context: context,
+                    );
                   } else {
                     if (widget.isAQuickAction) {
                       UserHandler().getCurrentUser();
