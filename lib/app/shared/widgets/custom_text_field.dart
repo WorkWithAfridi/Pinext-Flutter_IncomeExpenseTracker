@@ -118,29 +118,35 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
 
   GestureDetector togglePasswordVisibilityIconButton() {
     return GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      shoWPassword = !shoWPassword;
-                    });
-                  },
-                  child: Icon(
-                    shoWPassword ? Icons.visibility_off : Icons.visibility,
-                    color: customBlackColor.withOpacity(.6),
-                    size: 16,
-                  ),
-                );
+      onTap: () {
+        setState(() {
+          shoWPassword = !shoWPassword;
+        });
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(right: 8.0),
+        child: Icon(
+          shoWPassword ? Icons.visibility_off : Icons.visibility,
+          color: customBlackColor.withOpacity(.6),
+          size: 16,
+        ),
+      ),
+    );
   }
 
   GestureDetector clearSuffixIconButton() {
     return GestureDetector(
-              onTap: () {
-                widget.suffixButtonAction();
-              },
-              child: Icon(
-                Icons.clear,
-                color: customBlackColor.withOpacity(.6),
-                size: 16,
-              ),
-            );
+      onTap: () {
+        widget.suffixButtonAction();
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(right: 8.0),
+        child: Icon(
+          Icons.clear,
+          color: customBlackColor.withOpacity(.6),
+          size: 16,
+        ),
+      ),
+    );
   }
 }
