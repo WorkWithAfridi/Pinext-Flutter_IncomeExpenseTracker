@@ -75,18 +75,24 @@ class PinextCardMinimized extends StatelessWidget {
                           ),
                         ),
 
-                        McCountingText(
-                          begin: 0,
-                          end: double.parse(pinextCardModel.balance.toString()),
-                          maxLines: 1,
-                          precision: 2,
-                          style: boldTextStyle.copyWith(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            color: customBlackColor,
-                          ),
-                          duration: const Duration(seconds: 3),
-                          curve: Curves.fastOutSlowIn,
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            McCountingText(
+                              begin: 0,
+                              end: double.parse(pinextCardModel.balance.toString()),
+                              maxLines: 1,
+                              precision: 2,
+                              style: boldTextStyle.copyWith(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color: customBlackColor,
+                              ),
+                              duration: const Duration(seconds: 3),
+                              curve: Curves.fastOutSlowIn,
+                            ),
+                            const Text('/Tk'),
+                          ],
                         ),
                         // Text(
                         //   pinextCardModel.balance.toString(),
