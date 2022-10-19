@@ -282,7 +282,7 @@ class TransactionsList extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               const SizedBox(
-                height: 10,
+                height: 8,
               ),
               Text(
                 "Transactions",
@@ -291,7 +291,7 @@ class TransactionsList extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                height: 4,
+                height: 2,
               ),
               BlocBuilder<ArchiveCubit, ArchiveState>(
                 builder: (context, state) {
@@ -519,7 +519,7 @@ class TransactionsList extends StatelessWidget {
                                           mainAxisAlignment: MainAxisAlignment.start,
                                           children: [
                                             const SizedBox(
-                                              height: 12,
+                                              height: 8,
                                             ),
                                             Text(
                                               "Statistics",
@@ -528,20 +528,20 @@ class TransactionsList extends StatelessWidget {
                                               ),
                                             ),
                                             const SizedBox(
-                                              height: 8,
+                                              height: 6,
                                             ),
                                             RichText(
                                               text: TextSpan(
                                                 children: [
                                                   TextSpan(
                                                     text: "Total Expenses: ",
-                                                    style: boldTextStyle.copyWith(
+                                                    style: regularTextStyle.copyWith(
                                                       color: customBlackColor.withOpacity(.80),
                                                     ),
                                                   ),
                                                   TextSpan(
-                                                    text: "${state.totalExpenses}/Tk.",
-                                                    style: regularTextStyle.copyWith(
+                                                    text: "-${state.totalExpenses}Tk.",
+                                                    style: boldTextStyle.copyWith(
                                                       color: Colors.redAccent[400],
                                                     ),
                                                   )
@@ -556,13 +556,13 @@ class TransactionsList extends StatelessWidget {
                                                 children: [
                                                   TextSpan(
                                                     text: "Total Savings: ",
-                                                    style: boldTextStyle.copyWith(
+                                                    style: regularTextStyle.copyWith(
                                                       color: customBlackColor.withOpacity(.80),
                                                     ),
                                                   ),
                                                   TextSpan(
-                                                    text: "${state.totalSavings}/Tk.",
-                                                    style: regularTextStyle.copyWith(
+                                                    text: "+${state.totalSavings}Tk.",
+                                                    style: boldTextStyle.copyWith(
                                                       color: Colors.green,
                                                     ),
                                                   )
@@ -577,13 +577,13 @@ class TransactionsList extends StatelessWidget {
                                                 children: [
                                                   TextSpan(
                                                     text: "Outcome: ",
-                                                    style: boldTextStyle.copyWith(
+                                                    style: regularTextStyle.copyWith(
                                                       color: customBlackColor.withOpacity(.80),
                                                     ),
                                                   ),
                                                   TextSpan(
-                                                    text: "${state.outcome}/Tk.",
-                                                    style: regularTextStyle.copyWith(
+                                                    text: "${state.outcome}Tk.",
+                                                    style: boldTextStyle.copyWith(
                                                       color: customBlueColor,
                                                     ),
                                                   )
@@ -603,7 +603,7 @@ class TransactionsList extends StatelessWidget {
                 },
               ),
               const SizedBox(
-                height: 12,
+                height: 16,
               ),
             ],
           ),
