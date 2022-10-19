@@ -9,6 +9,7 @@ import 'package:pinext/app/services/firebase_services.dart';
 import 'package:pinext/app/shared/widgets/customYearPicker.dart';
 import 'package:pinext/app/shared/widgets/custom_text_field.dart';
 
+import '../../../app_data/app_constants/domentions.dart';
 import '../../../app_data/app_constants/fonts.dart';
 import '../../../bloc/archive_cubit/archive_cubit.dart';
 import '../../../bloc/archive_cubit/user_statistics_cubit/user_statistics_cubit.dart';
@@ -519,7 +520,7 @@ class TransactionsList extends StatelessWidget {
                                           mainAxisAlignment: MainAxisAlignment.start,
                                           children: [
                                             const SizedBox(
-                                              height: 8,
+                                              height: 12,
                                             ),
                                             Text(
                                               "Statistics",
@@ -530,65 +531,70 @@ class TransactionsList extends StatelessWidget {
                                             const SizedBox(
                                               height: 6,
                                             ),
-                                            RichText(
-                                              text: TextSpan(
-                                                children: [
-                                                  TextSpan(
-                                                    text: "Total Expenses: ",
-                                                    style: regularTextStyle.copyWith(
-                                                      color: customBlackColor.withOpacity(.80),
-                                                    ),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Text(
+                                                  "Total Expenses: ",
+                                                  style: regularTextStyle.copyWith(
+                                                    color: customBlackColor.withOpacity(.80),
                                                   ),
-                                                  TextSpan(
-                                                    text: "-${state.totalExpenses}Tk.",
-                                                    style: boldTextStyle.copyWith(
-                                                      color: Colors.redAccent[400],
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
+                                                ),
+                                                Text(
+                                                  "-${state.totalExpenses}Tk.",
+                                                  style: boldTextStyle.copyWith(
+                                                    color: Colors.redAccent[400],
+                                                  ),
+                                                )
+                                              ],
                                             ),
                                             const SizedBox(
                                               height: 4,
                                             ),
-                                            RichText(
-                                              text: TextSpan(
-                                                children: [
-                                                  TextSpan(
-                                                    text: "Total Savings: ",
-                                                    style: regularTextStyle.copyWith(
-                                                      color: customBlackColor.withOpacity(.80),
-                                                    ),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Text(
+                                                  "Total Savings: ",
+                                                  style: regularTextStyle.copyWith(
+                                                    color: customBlackColor.withOpacity(.80),
                                                   ),
-                                                  TextSpan(
-                                                    text: "+${state.totalSavings}Tk.",
-                                                    style: boldTextStyle.copyWith(
-                                                      color: Colors.green,
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
+                                                ),
+                                                Text(
+                                                  "+${state.totalSavings}Tk.",
+                                                  style: boldTextStyle.copyWith(
+                                                    color: Colors.green,
+                                                  ),
+                                                )
+                                              ],
                                             ),
                                             const SizedBox(
                                               height: 4,
                                             ),
-                                            RichText(
-                                              text: TextSpan(
-                                                children: [
-                                                  TextSpan(
-                                                    text: "Outcome: ",
-                                                    style: regularTextStyle.copyWith(
-                                                      color: customBlackColor.withOpacity(.80),
-                                                    ),
+                                            Container(
+                                              height: 1,
+                                              width: getWidth(context),
+                                              color: customBlackColor.withOpacity(.05),
+                                            ),
+                                            const SizedBox(
+                                              height: 4,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Text(
+                                                  "Outcome: ",
+                                                  style: regularTextStyle.copyWith(
+                                                    color: customBlackColor.withOpacity(.80),
                                                   ),
-                                                  TextSpan(
-                                                    text: "${state.outcome}Tk.",
-                                                    style: boldTextStyle.copyWith(
-                                                      color: customBlueColor,
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
+                                                ),
+                                                Text(
+                                                  "${state.outcome}Tk.",
+                                                  style: boldTextStyle.copyWith(
+                                                    color: customBlueColor,
+                                                  ),
+                                                )
+                                              ],
                                             ),
                                           ],
                                         );
