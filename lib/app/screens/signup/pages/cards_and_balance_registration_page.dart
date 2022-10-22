@@ -326,7 +326,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                     children: [
                       state.goals.isEmpty
                           ? Text(
-                              "Please add goals and milestones to view them here!",
+                              "Add goals and milestones to view them here! You dont necessarily need them, for the registration process.",
                               style: regularTextStyle.copyWith(
                                 color: customBlackColor.withOpacity(.4),
                               ),
@@ -425,7 +425,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                 height: 4,
               ),
               Text(
-                "*These will be your goals and milestones for the next month, year and so on. Once you save up to them, your goals will be archived and you can add new goals.",
+                "*These will be your goals and milestones for the coming months, years and so on. Once you save up to them, your goals will be archived and you can add new goals.",
                 style: regularTextStyle.copyWith(
                   color: customBlackColor.withOpacity(.4),
                 ),
