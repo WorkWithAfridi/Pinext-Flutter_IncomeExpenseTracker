@@ -30,7 +30,6 @@ dependencies:
   awesome_snackbar_content: ^0.0.8
   bloc: ^8.1.0
   cloud_firestore: ^3.4.6
-  connectivity_plus: ^3.0.2
   cupertino_icons: ^1.0.2
   elegant_notification: ^1.6.1
   equatable: ^2.0.5
