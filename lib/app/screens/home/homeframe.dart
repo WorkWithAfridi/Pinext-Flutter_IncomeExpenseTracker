@@ -19,7 +19,9 @@ import '../../app_data/app_constants/constants.dart';
 import '../../app_data/app_constants/fonts.dart';
 import '../../bloc/archive_cubit/user_statistics_cubit/user_statistics_cubit.dart';
 import '../../bloc/homeframe_cubit/homeframe_page_cubit.dart';
+import '../../bloc/network_cubit/network_cubit.dart';
 import '../../services/handlers/app_handler.dart';
+import '../no_internet_connection/no_internet_connection_screen.dart';
 
 class Homeframe extends StatefulWidget {
   const Homeframe({Key? key}) : super(key: key);
@@ -86,135 +88,152 @@ List homeframePages = [
   // ),
 ];
 
+void showNoInternetConnectionWarning(BuildContext context) {
+  Navigator.pushAndRemoveUntil(
+    context,
+    MaterialPageRoute(
+      builder: (context) => const NoInternetConnectionScreen(),
+    ),
+    (route) => false,
+  );
+}
+
 class HomeframeView extends StatelessWidget {
   HomeframeView({Key? key}) : super(key: key);
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeframeCubit, HomeframeState>(
-      builder: (context, state) {
-        return Scaffold(
-          key: scaffoldKey,
-          appBar: AppBar(
-            leading: IconButton(
-              onPressed: () {
-                scaffoldKey.currentState!.openDrawer();
-              },
-              icon: IntroStepBuilder(
-                  order: 6,
-                  text: intro_label_six,
-                  builder: (context, introkey) {
-                    return const Icon(
-                      Icons.menu,
-                      color: customBlackColor,
-                    );
-                  }),
-            ),
-          ),
-          drawer: const PinextDrawer(),
-          body: PageView.builder(
-            physics: const BouncingScrollPhysics(),
-            itemCount: homeframePages.length,
-            controller: state.pageController,
-            onPageChanged: ((value) {
-              context.read<HomeframeCubit>().changeHomeframePage(value);
-            }),
-            itemBuilder: ((context, index) => homeframePages[index]),
-          ),
-          floatingActionButton: state.selectedIndex == 0
-              ? IntroStepBuilder(
-                  order: 1,
-                  text: intro_label_one,
-                  builder: (context, introkey) {
-                    return FloatingActionButton(
-                      onPressed: () {
-                        context.read<HomeframeCubit>().openAddTransactionsPage(context);
-                      },
-                      backgroundColor: customBlackColor,
-                      child: const Icon(
-                        Icons.add,
-                        color: whiteColor,
-                      ),
-                    );
-                  })
-              : state.selectedIndex == 3
-                  ? FloatingActionButton(
-                      onPressed: () {
-                        context.read<HomeframeCubit>().showAboutDialog(context);
-                      },
-                      backgroundColor: customBlackColor,
-                      child: Text(
-                        "?",
-                        style: boldTextStyle.copyWith(
-                          color: whiteColor,
-                          fontSize: 18,
-                        ),
-                      ),
-                    )
-                  : const SizedBox.shrink(),
-          floatingActionButtonLocation: state.selectedIndex != 3
-              ? FloatingActionButtonLocation.miniEndTop
-              : FloatingActionButtonLocation.endFloat,
-          bottomNavigationBar: BottomNavigationBar(
-            key: key,
-            currentIndex: state.selectedIndex,
-            onTap: (value) {
-              context.read<HomeframeCubit>().changeHomeframePage(value);
-            },
-            selectedItemColor: customBlueColor,
-            unselectedItemColor: customBlackColor.withOpacity(.4),
-            type: BottomNavigationBarType.fixed,
-            showSelectedLabels: false,
-            showUnselectedLabels: false,
-            items: [
-              BottomNavigationBarItem(
-                icon: IntroStepBuilder(
-                    order: 2,
-                    text: intro_label_two,
-                    builder: (context, introkey) {
-                      return const Icon(
-                        Icons.home,
-                      );
-                    }),
-                label: "Home",
-              ),
-              BottomNavigationBarItem(
-                icon: IntroStepBuilder(
-                    order: 3,
-                    text: intro_label_three,
-                    builder: (context, introkey) {
-                      return const Icon(
-                        Icons.list,
-                      );
-                    }),
-                label: "Archive",
-              ),
-              BottomNavigationBarItem(
-                icon: IntroStepBuilder(
-                    order: 4,
-                    text: intro_label_four,
-                    builder: (context, introkey) {
-                      return const Icon(
-                        Icons.wallet,
-                      );
-                    }),
-                label: "Wallet",
-              ),
-              BottomNavigationBarItem(
-                icon: IntroStepBuilder(
-                    order: 5,
-                    text: intro_label_five,
-                    builder: (context, introkey) {
-                      return const Icon(
-                        Icons.admin_panel_settings,
-                      );
-                    }),
-                label: "Admin settings",
-              ),
-            ],
-          ),
-        );
+    return BlocListener<NetworkCubit, NetworkState>(
+      listener: (context, state) {
+        if (state is NetworkDisconnected) {
+          showNoInternetConnectionWarning(context);
+        }
       },
+      child: BlocBuilder<HomeframeCubit, HomeframeState>(
+        builder: (context, state) {
+          return Scaffold(
+            key: scaffoldKey,
+            appBar: AppBar(
+              leading: IconButton(
+                onPressed: () {
+                  scaffoldKey.currentState!.openDrawer();
+                },
+                icon: IntroStepBuilder(
+                    order: 6,
+                    text: intro_label_six,
+                    builder: (context, introkey) {
+                      return const Icon(
+                        Icons.menu,
+                        color: customBlackColor,
+                      );
+                    }),
+              ),
+            ),
+            drawer: const PinextDrawer(),
+            body: PageView.builder(
+              physics: const BouncingScrollPhysics(),
+              itemCount: homeframePages.length,
+              controller: state.pageController,
+              onPageChanged: ((value) {
+                context.read<HomeframeCubit>().changeHomeframePage(value);
+              }),
+              itemBuilder: ((context, index) => homeframePages[index]),
+            ),
+            floatingActionButton: state.selectedIndex == 0
+                ? IntroStepBuilder(
+                    order: 1,
+                    text: intro_label_one,
+                    builder: (context, introkey) {
+                      return FloatingActionButton(
+                        onPressed: () {
+                          context.read<HomeframeCubit>().openAddTransactionsPage(context);
+                        },
+                        backgroundColor: customBlackColor,
+                        child: const Icon(
+                          Icons.add,
+                          color: whiteColor,
+                        ),
+                      );
+                    })
+                : state.selectedIndex == 3
+                    ? FloatingActionButton(
+                        onPressed: () {
+                          context.read<HomeframeCubit>().showAboutDialog(context);
+                        },
+                        backgroundColor: customBlackColor,
+                        child: Text(
+                          "?",
+                          style: boldTextStyle.copyWith(
+                            color: whiteColor,
+                            fontSize: 18,
+                          ),
+                        ),
+                      )
+                    : const SizedBox.shrink(),
+            floatingActionButtonLocation: state.selectedIndex != 3
+                ? FloatingActionButtonLocation.miniEndTop
+                : FloatingActionButtonLocation.endFloat,
+            bottomNavigationBar: BottomNavigationBar(
+              key: key,
+              currentIndex: state.selectedIndex,
+              onTap: (value) {
+                context.read<HomeframeCubit>().changeHomeframePage(value);
+              },
+              selectedItemColor: customBlueColor,
+              unselectedItemColor: customBlackColor.withOpacity(.4),
+              type: BottomNavigationBarType.fixed,
+              showSelectedLabels: false,
+              showUnselectedLabels: false,
+              items: [
+                BottomNavigationBarItem(
+                  icon: IntroStepBuilder(
+                      order: 2,
+                      text: intro_label_two,
+                      builder: (context, introkey) {
+                        return const Icon(
+                          Icons.home,
+                        );
+                      }),
+                  label: "Home",
+                ),
+                BottomNavigationBarItem(
+                  icon: IntroStepBuilder(
+                      order: 3,
+                      text: intro_label_three,
+                      builder: (context, introkey) {
+                        return const Icon(
+                          Icons.list,
+                        );
+                      }),
+                  label: "Archive",
+                ),
+                BottomNavigationBarItem(
+                  icon: IntroStepBuilder(
+                      order: 4,
+                      text: intro_label_four,
+                      builder: (context, introkey) {
+                        return const Icon(
+                          Icons.wallet,
+                        );
+                      }),
+                  label: "Wallet",
+                ),
+                BottomNavigationBarItem(
+                  icon: IntroStepBuilder(
+                      order: 5,
+                      text: intro_label_five,
+                      builder: (context, introkey) {
+                        return const Icon(
+                          Icons.admin_panel_settings,
+                        );
+                      }),
+                  label: "Admin settings",
+                ),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }

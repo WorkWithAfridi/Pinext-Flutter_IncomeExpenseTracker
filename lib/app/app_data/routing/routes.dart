@@ -5,6 +5,7 @@ import 'package:flutter_intro/flutter_intro.dart';
 import 'package:pinext/app/app_data/custom_transition_page_route/custom_transition_page_route.dart';
 import 'package:pinext/app/screens/add_and_edit_transaction/add_and_edit_transaction.dart';
 import 'package:pinext/app/screens/home/homeframe.dart';
+import 'package:pinext/app/screens/no_internet_connection/no_internet_connection_screen.dart';
 
 import '../../screens/signin/signin_screen.dart';
 import '../../screens/signup/signup_screen.dart';
