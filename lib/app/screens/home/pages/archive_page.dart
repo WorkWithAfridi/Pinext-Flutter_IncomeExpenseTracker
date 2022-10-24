@@ -49,7 +49,7 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
   late ScrollController monthScrollController;
   @override
   void initState() {
-    monthScrollController = ScrollController(initialScrollOffset: 30.0 * int.parse(currentMonth));
+    monthScrollController = ScrollController(initialScrollOffset: 40.0 * int.parse(currentMonth));
     super.initState();
   }
 
@@ -221,32 +221,44 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
                             context.read<UserStatisticsCubit>().resetState();
                           },
                           child: Padding(
-                            padding: EdgeInsets.only(right: currentMonth == "December" ? defaultPadding : 0),
-                            child: state.selectedMonth.toString() == (index).toString()
-                                ? Chip(
-                                    label: Text(
-                                      currentMonth,
-                                      style: regularTextStyle.copyWith(fontWeight: FontWeight.w600, color: whiteColor),
-                                    ),
-                                    backgroundColor: customBlueColor,
-                                  )
-                                : Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 8,
-                                      vertical: 8,
-                                    ),
-                                    decoration: const BoxDecoration(
-                                      color: Colors.transparent,
-                                    ),
-                                    child: Text(
-                                      currentMonth,
-                                      style: regularTextStyle.copyWith(
-                                        fontWeight: FontWeight.normal,
-                                        color: customBlackColor.withOpacity(.4),
+                              padding: EdgeInsets.only(right: currentMonth == "December" ? defaultPadding : 8),
+                              child: state.selectedMonth.toString() == (index).toString()
+                                  ? Chip(
+                                      label: Text(
+                                        currentMonth,
+                                        style:
+                                            regularTextStyle.copyWith(fontWeight: FontWeight.w600, color: whiteColor),
                                       ),
-                                    ),
-                                  ),
-                          ),
+                                      backgroundColor: customBlueColor,
+                                    )
+                                  : Chip(
+                                      elevation: 0,
+                                      label: Text(
+                                        currentMonth,
+                                        style: regularTextStyle.copyWith(
+                                          fontWeight: FontWeight.normal,
+                                          color: customBlackColor.withOpacity(.6),
+                                        ),
+                                      ),
+                                      backgroundColor: greyColor,
+                                    )
+                              // Container(
+                              //   padding: const EdgeInsets.symmetric(
+                              //     horizontal: 8,
+                              //     vertical: 8,
+                              //   ),
+                              //   decoration: const BoxDecoration(
+                              //     color: Colors.transparent,
+                              //   ),
+                              //   child: Text(
+                              //     currentMonth,
+                              //     style: regularTextStyle.copyWith(
+                              //       fontWeight: FontWeight.normal,
+                              //       color: customBlackColor.withOpacity(.4),
+                              //     ),
+                              //   ),
+                              // ),
+                              ),
                         );
                       }),
                     ],
