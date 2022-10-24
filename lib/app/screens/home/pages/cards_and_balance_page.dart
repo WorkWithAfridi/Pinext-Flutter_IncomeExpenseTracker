@@ -44,9 +44,6 @@ class CardsAndBalanceView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(
-              height: 8,
-            ),
             Text(
               "Pinext",
               style: regularTextStyle.copyWith(

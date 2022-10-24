@@ -46,9 +46,6 @@ class ViewGoalsAndMilestoneView extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(
-                height: 4,
-              ),
               Text(
                 "Pinext",
                 style: regularTextStyle.copyWith(

@@ -134,9 +134,6 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(
-                  height: 8,
-                ),
                 Text(
                   "Pinext",
                   style: regularTextStyle.copyWith(

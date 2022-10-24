@@ -59,8 +59,7 @@ class AddAndEditPinextCardView extends StatefulWidget {
   PinextCardModel? pinextCardModel;
 
   @override
-  State<AddAndEditPinextCardView> createState() =>
-      _AddAndEditPinextCardViewState();
+  State<AddAndEditPinextCardView> createState() => _AddAndEditPinextCardViewState();
 }
 
 class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
@@ -75,8 +74,7 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
     balanceController = TextEditingController();
     if (widget.isEditCardScreen) {
       titleController.text = widget.pinextCardModel!.title.toString();
-      descriptionController.text =
-          widget.pinextCardModel!.description.toString();
+      descriptionController.text = widget.pinextCardModel!.description.toString();
       balanceController.text = widget.pinextCardModel!.balance.toString();
       isEditCardColor = widget.pinextCardModel!.color;
     }
@@ -110,9 +108,7 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
           ),
         ),
         title: Text(
-          widget.isEditCardScreen
-              ? "Editing Pinext card"
-              : "Adding a new Pinext card",
+          widget.isEditCardScreen ? "Editing Pinext card" : "Adding a new Pinext card",
           style: regularTextStyle,
         ),
       ),
@@ -130,9 +126,6 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(
-                      height: 12,
-                    ),
                     Text(
                       "Card title",
                       style: boldTextStyle.copyWith(
@@ -152,7 +145,7 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                       validator: (value) {
                         return InputValidation(value).isNotEmpty();
                       },
-                suffixButtonAction: () {},
+                      suffixButtonAction: () {},
                     ),
                     const SizedBox(
                       height: 12,
@@ -178,7 +171,7 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                       validator: (value) {
                         return null;
                       },
-                suffixButtonAction: () {},
+                      suffixButtonAction: () {},
                     ),
                     const SizedBox(
                       height: 12,
@@ -202,7 +195,7 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                       validator: (value) {
                         return InputValidation(value).isCorrectNumber();
                       },
-                suffixButtonAction: () {},
+                      suffixButtonAction: () {},
                     ),
                     const SizedBox(
                       height: 12,
@@ -264,7 +257,7 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                 ),
               ),
               const SizedBox(
-                      height: 12,
+                height: 12,
               ),
               SizedBox(
                 width: getWidth(context),
@@ -286,22 +279,13 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                         String color = state.color;
                         late Color cardColor = getColorFromString(color);
                         return PinextCard(
-                          cardColor: widget.isEditCardScreen
-                              ? getColorFromString(isEditCardColor!)
-                              : cardColor,
-                          title: widget.isEditCardScreen
-                              ? widget.pinextCardModel!.title
-                              : "Example card",
-                          balance: widget.isEditCardScreen
-                              ? widget.pinextCardModel!.balance
-                              : 1233456,
+                          cardColor: widget.isEditCardScreen ? getColorFromString(isEditCardColor!) : cardColor,
+                          title: widget.isEditCardScreen ? widget.pinextCardModel!.title : "Example card",
+                          balance: widget.isEditCardScreen ? widget.pinextCardModel!.balance : 1233456,
                           lastTransactionDate: widget.isEditCardScreen
-                              ? widget.pinextCardModel!.lastTransactionData
-                                  .toString()
+                              ? widget.pinextCardModel!.lastTransactionData.toString()
                               : DateTime.now().toString(),
-                          cardDetails: widget.isEditCardScreen
-                              ? widget.pinextCardModel!.description
-                              : " ",
+                          cardDetails: widget.isEditCardScreen ? widget.pinextCardModel!.description : " ",
                         );
                       },
                     ),
@@ -309,7 +293,7 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                 ),
               ),
               const SizedBox(
-                      height: 12,
+                height: 12,
               ),
               BlocListener<CardsAndBalancesCubit, CardsAndBalancesState>(
                 listener: (context, state) {
@@ -339,8 +323,7 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                   }
                 },
                 child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: defaultPadding),
+                  padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
                   child: BlocConsumer<AddCardCubit, AddCardState>(
                     listener: (context, state) {
                       if (widget.isEditCardScreen) {
@@ -360,8 +343,7 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                             description: descriptionController.text,
                             balance: double.parse(balanceController.text),
                             color: state.color,
-                            lastTransactionData:
-                                widget.pinextCardModel!.lastTransactionData,
+                            lastTransactionData: widget.pinextCardModel!.lastTransactionData,
                           );
                           context.read<CardsAndBalancesCubit>().updateCard(
                                 editedCard,
@@ -379,8 +361,7 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                               style: regularTextStyle,
                             ),
                             width: getWidth(context) * .9,
-                            animationDuration:
-                                const Duration(milliseconds: 200),
+                            animationDuration: const Duration(milliseconds: 200),
                             toastDuration: const Duration(seconds: 5),
                           ).show(context);
                           context.read<AddCardCubit>().reset();
@@ -397,15 +378,12 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                           if (widget.addCardForSignUpProcess) {
                             context.read<SigninCubit>().addCard(newPinextCard);
                           } else {
-                            context
-                                .read<CardsAndBalancesCubit>()
-                                .addCard(newPinextCard);
+                            context.read<CardsAndBalancesCubit>().addCard(newPinextCard);
                           }
                           Navigator.pop(context);
                           GetCustomSnackbar(
                             title: "Pinext Card added!!",
-                            message:
-                                "A new card has been added to your card list.",
+                            message: "A new card has been added to your card list.",
                             snackbarType: SnackbarType.success,
                             context: context,
                           );
@@ -414,9 +392,7 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                     },
                     builder: (context, state) {
                       return GetCustomButton(
-                        title: widget.isEditCardScreen
-                            ? "Update Pinext Card"
-                            : "Add Pinext Card",
+                        title: widget.isEditCardScreen ? "Update Pinext Card" : "Add Pinext Card",
                         titleColor: whiteColor,
                         buttonColor: customBlueColor,
                         isLoading: state is AddCardDefaultState ? false : true,

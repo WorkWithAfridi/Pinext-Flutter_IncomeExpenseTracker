@@ -149,9 +149,6 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(
-                      height: 12,
-                    ),
                     SelectTransactionTypeCard(),
                     const SizedBox(
                       height: 12,

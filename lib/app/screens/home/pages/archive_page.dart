@@ -78,9 +78,6 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(
-                    height: 4,
-                  ),
                   Text(
                     "Pinext",
                     style: regularTextStyle.copyWith(
@@ -223,23 +220,32 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
                             context.read<ArchiveCubit>().changeMonth((index).toString());
                             context.read<UserStatisticsCubit>().resetState();
                           },
-                          child: Container(
-                            padding: const EdgeInsets.only(
-                              right: 20,
-                              top: 8,
-                              bottom: 8,
-                            ),
-                            child: Text(
-                              currentMonth,
-                              style: regularTextStyle.copyWith(
-                                fontWeight: state.selectedMonth.toString() == (index).toString()
-                                    ? FontWeight.bold
-                                    : FontWeight.normal,
-                                color: state.selectedMonth.toString() == (index).toString()
-                                    ? customBlackColor
-                                    : customBlackColor.withOpacity(.4),
-                              ),
-                            ),
+                          child: Padding(
+                            padding: EdgeInsets.only(right: currentMonth == "December" ? defaultPadding : 0),
+                            child: state.selectedMonth.toString() == (index).toString()
+                                ? Chip(
+                                    label: Text(
+                                      currentMonth,
+                                      style: regularTextStyle.copyWith(fontWeight: FontWeight.w600, color: whiteColor),
+                                    ),
+                                    backgroundColor: customBlueColor,
+                                  )
+                                : Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 8,
+                                      vertical: 8,
+                                    ),
+                                    decoration: const BoxDecoration(
+                                      color: Colors.transparent,
+                                    ),
+                                    child: Text(
+                                      currentMonth,
+                                      style: regularTextStyle.copyWith(
+                                        fontWeight: FontWeight.normal,
+                                        color: customBlackColor.withOpacity(.4),
+                                      ),
+                                    ),
+                                  ),
                           ),
                         );
                       }),

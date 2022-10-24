@@ -81,9 +81,6 @@ class HomepageView extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(
-                    height: 8,
-                  ),
                   Text(
                     getGreetings(),
                     style: regularTextStyle.copyWith(
@@ -223,7 +220,21 @@ class HomepageView extends StatelessWidget {
                                         height: 5,
                                         width: constraints.maxWidth *
                                             (double.parse(state.monthlyExpenses) / double.parse(state.monthlyBudget)),
-                                        color: customBlueColor,
+                                        decoration: BoxDecoration(
+                                            color: ((double.parse(state.monthlyExpenses) /
+                                                                double.parse(state.monthlyBudget)) *
+                                                            100)
+                                                        .ceil() >
+                                                    100
+                                                ? Colors.redAccent[400]
+                                                : ((double.parse(state.monthlyExpenses) /
+                                                                    double.parse(state.monthlyBudget)) *
+                                                                100)
+                                                            .ceil() >
+                                                        50
+                                                    ? Colors.yellowAccent[800]
+                                                    : customBlueColor,
+                                            borderRadius: BorderRadius.circular(defaultBorder)),
                                       );
                                     }),
                                   );
