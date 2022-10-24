@@ -4,8 +4,8 @@ import '../firebase_services.dart';
 
 class GoalHandler {
   GoalHandler._internal();
-  static final GoalHandler _cardServices = GoalHandler._internal();
-  factory GoalHandler() => _cardServices;
+  static final GoalHandler _goalHandler = GoalHandler._internal();
+  factory GoalHandler() => _goalHandler;
 
   Future addGoal({
     required PinextGoalModel pinextGoalModel,
