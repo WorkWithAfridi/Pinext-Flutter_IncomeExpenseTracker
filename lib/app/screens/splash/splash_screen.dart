@@ -103,7 +103,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: customBlackColor,
+      backgroundColor: customBlueColor,
       body: BlocListener<UserBloc, UserState>(
         listener: (context, state) {
           if (state is AuthenticatedUserState) {
@@ -127,46 +127,54 @@ class _SplashScreenState extends State<SplashScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Flexible(
-                    flex: 1,
-                    child: Container(
-                      alignment: Alignment.centerRight,
-                      width: double.maxFinite,
-                      child: Text(
-                        "Pin",
-                        style: boldTextStyle.copyWith(
-                          fontSize: 50,
-                          color: whiteColor,
-                          height: .9,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Flexible(
-                    flex: 1,
-                    child: Container(
-                      height: MediaQuery.of(context).size.height,
-                      width: double.maxFinite,
-                      decoration: const BoxDecoration(
-                        // borderRadius: BorderRadius.circular(defaultBorder),
-                        color: whiteColor,
-                      ),
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "ext",
-                        style: boldTextStyle.copyWith(
-                          fontSize: 50,
-                          color: customBlackColor,
-                          height: .9,
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              )
+              Text(
+                "Pinext",
+                style: boldTextStyle.copyWith(
+                  fontSize: 50,
+                  color: whiteColor,
+                  height: .9,
+                ),
+              ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     Flexible(
+              //       flex: 1,
+              //       child: Container(
+              //         alignment: Alignment.centerRight,
+              //         width: double.maxFinite,
+              //         child: Text(
+              //           "Pin",
+              //           style: boldTextStyle.copyWith(
+              //             fontSize: 50,
+              //             color: whiteColor,
+              //             height: .9,
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //     Flexible(
+              //       flex: 1,
+              //       child: Container(
+              //         height: MediaQuery.of(context).size.height,
+              //         width: double.maxFinite,
+              //         decoration: const BoxDecoration(
+              //           // borderRadius: BorderRadius.circular(defaultBorder),
+              //           color: whiteColor,
+              //         ),
+              //         alignment: Alignment.centerLeft,
+              //         child: Text(
+              //           "ext",
+              //           style: boldTextStyle.copyWith(
+              //             fontSize: 50,
+              //             color: customBlackColor,
+              //             height: .9,
+              //           ),
+              //         ),
+              //       ),
+              //     )
+              //   ],
+              // )
             ],
           ),
         ),
