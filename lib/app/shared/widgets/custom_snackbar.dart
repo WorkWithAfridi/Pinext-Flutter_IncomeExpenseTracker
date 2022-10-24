@@ -19,7 +19,7 @@ const Duration snackbarToastDuration = Duration(
 const Duration snackbarAnimationDuration = Duration(
   milliseconds: 200,
 );
-const isSnackbarDismissible = false;
+const isSnackbarDismissible = true;
 
 GetCustomSnackbar({
   required String title,

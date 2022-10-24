@@ -279,6 +279,7 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                               id: const Uuid().v4().toString(),
                             );
                             context.read<SigninCubit>().addGoal(pinextGoalModel);
+                            Navigator.pop(context);
                           } else if (widget.addingNewGoal) {
                             PinextGoalModel pinextGoalModel = PinextGoalModel(
                               title: titleController.text,
@@ -287,6 +288,7 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                               id: const Uuid().v4().toString(),
                             );
                             context.read<AddGoalCubit>().addGoal(pinextGoalModel);
+                            Navigator.pop(context);
                           } else if (widget.editingGoal) {
                             PinextGoalModel pinextGoalModel = PinextGoalModel(
                               title: titleController.text,
