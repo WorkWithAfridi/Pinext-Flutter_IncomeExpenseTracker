@@ -213,14 +213,23 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
                     const SizedBox(
                       height: 12,
                     ),
-                    Text(
-                      "Select card",
-                      style: boldTextStyle.copyWith(
-                        color: customBlackColor.withOpacity(
-                          .6,
-                        ),
-                      ),
-                    ),
+                    widget.isEdit
+                        ? Text(
+                            "Card",
+                            style: boldTextStyle.copyWith(
+                              color: customBlackColor.withOpacity(
+                                .6,
+                              ),
+                            ),
+                          )
+                        : Text(
+                            "Select card",
+                            style: boldTextStyle.copyWith(
+                              color: customBlackColor.withOpacity(
+                                .6,
+                              ),
+                            ),
+                          ),
                     const SizedBox(
                       height: 8,
                     ),
