@@ -131,7 +131,7 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
           ),
         ),
         title: Text(
-          widget.isEdit ? "Editing transaction" : "Adding a new Transaction",
+          widget.isEdit ? "Transaction details" : "Adding a new Transaction",
           style: regularTextStyle,
         ),
       ),
@@ -200,10 +200,16 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
                       },
                       suffixButtonAction: () {},
                     ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    GetSuggestionsList(),
+                    widget.isEdit
+                        ? const SizedBox.shrink()
+                        : Column(
+                            children: [
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              GetSuggestionsList(),
+                            ],
+                          ),
                     const SizedBox(
                       height: 12,
                     ),
@@ -225,7 +231,7 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
               const SizedBox(
                 height: 12,
               ),
-              AddOrEditTransactionButton(),
+              widget.isEdit ? const SizedBox.shrink() : AddOrEditTransactionButton(),
               const SizedBox(
                 height: 12,
               ),
@@ -261,9 +267,11 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
                       flex: 1,
                       child: GestureDetector(
                         onTap: () {
-                          context
-                              .read<AddTransactionsCubit>()
-                              .changeSelectedTransactionMode(SelectedTransactionMode.income);
+                          if (!widget.isEdit) {
+                            context
+                                .read<AddTransactionsCubit>()
+                                .changeSelectedTransactionMode(SelectedTransactionMode.income);
+                          }
                         },
                         child: Padding(
                           padding: const EdgeInsets.only(right: 10),
@@ -442,18 +450,31 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
 
                     return GestureDetector(
                       onTap: () {
-                        context.read<AddTransactionsCubit>().selectCard(pinextCardModel.cardId);
+                        if (!widget.isEdit) {
+                          context.read<AddTransactionsCubit>().selectCard(pinextCardModel.cardId);
+                        }
                       },
                       child: BlocBuilder<AddTransactionsCubit, AddTransactionsState>(
                         builder: (context, state) {
-                          return PinextCard(
-                            title: pinextCardModel.title,
-                            balance: pinextCardModel.balance,
-                            cardColor: cardColor,
-                            isSelected: state.selectedCardNo == pinextCardModel.cardId,
-                            lastTransactionDate: pinextCardModel.lastTransactionData,
-                            cardDetails: pinextCardModel.description,
-                          );
+                          return widget.isEdit
+                              ? state.selectedCardNo == pinextCardModel.cardId
+                                  ? PinextCard(
+                                      title: pinextCardModel.title,
+                                      balance: pinextCardModel.balance,
+                                      cardColor: cardColor,
+                                      isSelected: state.selectedCardNo == pinextCardModel.cardId,
+                                      lastTransactionDate: pinextCardModel.lastTransactionData,
+                                      cardDetails: pinextCardModel.description,
+                                    )
+                                  : const SizedBox.shrink()
+                              : PinextCard(
+                                  title: pinextCardModel.title,
+                                  balance: pinextCardModel.balance,
+                                  cardColor: cardColor,
+                                  isSelected: state.selectedCardNo == pinextCardModel.cardId,
+                                  lastTransactionDate: pinextCardModel.lastTransactionData,
+                                  cardDetails: pinextCardModel.description,
+                                );
                         },
                       ),
                     );
