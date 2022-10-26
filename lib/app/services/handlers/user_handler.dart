@@ -14,54 +14,60 @@ class UserHandler {
 
   late PinextUserModel currentUser;
   Future<PinextUserModel> getCurrentUser() async {
-    DocumentSnapshot userSnapshot = await FirebaseServices()
+    DocumentSnapshot userSnapshot =
+        await FirebaseServices().firebaseFirestore.collection("pinext_users").doc(FirebaseServices().getUserId()).get();
+    currentUser = PinextUserModel.fromMap(userSnapshot.data() as Map<String, dynamic>);
+    log(currentUser.toString());
+    updateUserDataMonthlyStats(currentUser);
+    return currentUser;
+  }
+
+  Future updateUserDataMonthlyStats(PinextUserModel user) async {
+    await FirebaseServices()
         .firebaseFirestore
         .collection("pinext_users")
         .doc(FirebaseServices().getUserId())
-        .get();
-    currentUser =
-        PinextUserModel.fromMap(userSnapshot.data() as Map<String, dynamic>);
-    log(currentUser.toString());
-    return currentUser;
+        .collection("pinext_user_monthly_stats")
+        .doc(user.currentYear)
+        .collection("savings")
+        .doc(user.currentMonth)
+        .set({
+      "amount": user.monthlySavings,
+    });
+    await FirebaseServices()
+        .firebaseFirestore
+        .collection("pinext_users")
+        .doc(FirebaseServices().getUserId())
+        .collection("pinext_user_monthly_stats")
+        .doc(user.currentYear)
+        .collection("expenses")
+        .doc(user.currentMonth)
+        .set({
+      "amount": user.monthlyExpenses,
+    });
   }
 
   Future updateUserDateTime(PinextUserModel user) async {
     if (user.currentYear != currentYear) {
-      await FirebaseServices()
-          .firebaseFirestore
-          .collection("pinext_users")
-          .doc(FirebaseServices().getUserId())
-          .update({
+      await FirebaseServices().firebaseFirestore.collection("pinext_users").doc(FirebaseServices().getUserId()).update({
         'currentDate': currentDate,
         'currentMonth': currentMonth,
         'currentWeekOfTheYear': currentWeekOfTheYear,
         'currentYear': currentYear,
       });
     } else if (user.currentMonth != currentMonth) {
-      await FirebaseServices()
-          .firebaseFirestore
-          .collection("pinext_users")
-          .doc(FirebaseServices().getUserId())
-          .update({
+      await FirebaseServices().firebaseFirestore.collection("pinext_users").doc(FirebaseServices().getUserId()).update({
         'currentDate': currentDate,
         'currentMonth': currentMonth,
         'currentWeekOfTheYear': currentWeekOfTheYear,
       });
     } else if (user.currentWeekOfTheYear != currentWeekOfTheYear) {
-      await FirebaseServices()
-          .firebaseFirestore
-          .collection("pinext_users")
-          .doc(FirebaseServices().getUserId())
-          .update({
+      await FirebaseServices().firebaseFirestore.collection("pinext_users").doc(FirebaseServices().getUserId()).update({
         'currentDate': currentDate,
         'currentWeekOfTheYear': currentWeekOfTheYear,
       });
     } else if (user.currentDate != currentDate) {
-      await FirebaseServices()
-          .firebaseFirestore
-          .collection("pinext_users")
-          .doc(FirebaseServices().getUserId())
-          .update({
+      await FirebaseServices().firebaseFirestore.collection("pinext_users").doc(FirebaseServices().getUserId()).update({
         'currentDate': currentDate,
       });
     }
@@ -70,42 +76,26 @@ class UserHandler {
 
   Future resetUserStats(PinextUserModel user) async {
     if (user.currentYear != currentYear) {
-      await FirebaseServices()
-          .firebaseFirestore
-          .collection("pinext_users")
-          .doc(FirebaseServices().getUserId())
-          .update({
+      await FirebaseServices().firebaseFirestore.collection("pinext_users").doc(FirebaseServices().getUserId()).update({
         'monthlyExpenses': "0",
         'dailyExpenses': "0",
         'weeklyExpenses': "0",
         'monthlySavings': "0",
       });
     } else if (user.currentMonth != currentMonth) {
-      await FirebaseServices()
-          .firebaseFirestore
-          .collection("pinext_users")
-          .doc(FirebaseServices().getUserId())
-          .update({
+      await FirebaseServices().firebaseFirestore.collection("pinext_users").doc(FirebaseServices().getUserId()).update({
         'monthlyExpenses': "0",
         'dailyExpenses': "0",
         // 'weeklyExpenses': "0",
         'monthlySavings': "0",
       });
     } else if (user.currentWeekOfTheYear != currentWeekOfTheYear) {
-      await FirebaseServices()
-          .firebaseFirestore
-          .collection("pinext_users")
-          .doc(FirebaseServices().getUserId())
-          .update({
+      await FirebaseServices().firebaseFirestore.collection("pinext_users").doc(FirebaseServices().getUserId()).update({
         'dailyExpenses': "0",
         'weeklyExpenses': "0",
       });
     } else if (user.currentDate != currentDate) {
-      await FirebaseServices()
-          .firebaseFirestore
-          .collection("pinext_users")
-          .doc(FirebaseServices().getUserId())
-          .update({
+      await FirebaseServices().firebaseFirestore.collection("pinext_users").doc(FirebaseServices().getUserId()).update({
         'dailyExpenses': "0",
       });
     }
@@ -113,11 +103,7 @@ class UserHandler {
   }
 
   Future updateNetBalance(String amount) async {
-    await FirebaseServices()
-        .firebaseFirestore
-        .collection(USERS_DIRECTORY)
-        .doc(FirebaseServices().getUserId())
-        .update({
+    await FirebaseServices().firebaseFirestore.collection(USERS_DIRECTORY).doc(FirebaseServices().getUserId()).update({
       "netBalance": amount,
     });
     return;

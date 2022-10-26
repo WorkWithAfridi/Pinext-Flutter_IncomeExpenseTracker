@@ -39,6 +39,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     });
     on<RefreshUserStateEvent>((event, emit) async {
       PinextUserModel user = await UserHandler().getCurrentUser();
+
+      
       if (user.currentDate == currentDate &&
           user.currentMonth == currentMonth &&
           user.currentYear == currentYear &&
