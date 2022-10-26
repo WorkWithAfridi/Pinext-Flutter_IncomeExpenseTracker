@@ -469,25 +469,19 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
                       },
                       child: BlocBuilder<AddTransactionsCubit, AddTransactionsState>(
                         builder: (context, state) {
+                          Widget pinextCardWidget = PinextCard(
+                            title: pinextCardModel.title,
+                            balance: pinextCardModel.balance,
+                            cardColor: cardColor,
+                            isSelected: state.selectedCardNo == pinextCardModel.cardId,
+                            lastTransactionDate: pinextCardModel.lastTransactionData,
+                            cardDetails: pinextCardModel.description,
+                          );
                           return widget.isViewOnly
                               ? state.selectedCardNo == pinextCardModel.cardId
-                                  ? PinextCard(
-                                      title: pinextCardModel.title,
-                                      balance: pinextCardModel.balance,
-                                      cardColor: cardColor,
-                                      isSelected: state.selectedCardNo == pinextCardModel.cardId,
-                                      lastTransactionDate: pinextCardModel.lastTransactionData,
-                                      cardDetails: pinextCardModel.description,
-                                    )
+                                  ? pinextCardWidget
                                   : const SizedBox.shrink()
-                              : PinextCard(
-                                  title: pinextCardModel.title,
-                                  balance: pinextCardModel.balance,
-                                  cardColor: cardColor,
-                                  isSelected: state.selectedCardNo == pinextCardModel.cardId,
-                                  lastTransactionDate: pinextCardModel.lastTransactionData,
-                                  cardDetails: pinextCardModel.description,
-                                );
+                              : pinextCardWidget;
                         },
                       ),
                     );
