@@ -9,7 +9,7 @@ import 'package:pinext/app/app_data/routing/routes.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/homeframe_cubit/homeframe_page_cubit.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
-import 'package:pinext/app/screens/add_and_edit_transaction/add_and_edit_transaction.dart';
+import 'package:pinext/app/screens/add_and_view_transaction/add_and_view_transaction.dart';
 import 'package:pinext/app/services/authentication_services.dart';
 import 'package:quick_actions/quick_actions.dart';
 
@@ -34,9 +34,10 @@ class _SplashScreenState extends State<SplashScreen> {
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
-            builder: (context) => AddAndEditTransactionScreen(
-                  isAQuickAction: true,
-                )),
+          builder: (context) => AddAndViewTransactionScreen(
+            isAQuickAction: true,
+          ),
+        ),
         (route) => false,
       );
     }

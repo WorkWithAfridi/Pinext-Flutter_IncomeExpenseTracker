@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -7,7 +6,7 @@ import '../../app_data/app_constants/fonts.dart';
 import '../../app_data/custom_transition_page_route/custom_transition_page_route.dart';
 import '../../app_data/theme_data/colors.dart';
 import '../../models/pinext_transaction_model.dart';
-import '../../screens/add_and_edit_transaction/add_and_edit_transaction.dart';
+import '../../screens/add_and_view_transaction/add_and_view_transaction.dart';
 
 class TransactionDetailsCard extends StatelessWidget {
   const TransactionDetailsCard({
@@ -24,8 +23,8 @@ class TransactionDetailsCard extends StatelessWidget {
         Navigator.push(
           context,
           CustomTransitionPageRoute(
-              childWidget: AddAndEditTransactionScreen(
-            isEdit: true,
+              childWidget: AddAndViewTransactionScreen(
+            isViewOnly: true,
             isAQuickAction: false,
             pinextTransactionModel: pinextTransactionModel,
           )),

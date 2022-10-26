@@ -22,47 +22,47 @@ import '../../models/pinext_card_model.dart';
 import '../../services/firebase_services.dart';
 import '../../shared/widgets/pinext_card.dart';
 
-class AddAndEditTransactionScreen extends StatelessWidget {
-  AddAndEditTransactionScreen({
+class AddAndViewTransactionScreen extends StatelessWidget {
+  AddAndViewTransactionScreen({
     Key? key,
     this.isAQuickAction = false,
-    this.isEdit = false,
+    this.isViewOnly = false,
     this.pinextTransactionModel,
   }) : super(key: key);
 
   bool isAQuickAction;
-  bool isEdit;
+  bool isViewOnly;
   PinextTransactionModel? pinextTransactionModel;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => AddTransactionsCubit(),
-      child: AddAndEditTransactionView(
+      child: AddAndViewTransactionView(
         isAQuickAction: isAQuickAction,
-        isEdit: isEdit,
+        isViewOnly: isViewOnly,
         pinextTransactionModel: pinextTransactionModel,
       ),
     );
   }
 }
 
-class AddAndEditTransactionView extends StatefulWidget {
-  AddAndEditTransactionView({
+class AddAndViewTransactionView extends StatefulWidget {
+  AddAndViewTransactionView({
     Key? key,
     required this.isAQuickAction,
-    required this.isEdit,
+    required this.isViewOnly,
     required this.pinextTransactionModel,
   }) : super(key: key);
   bool isAQuickAction;
-  bool isEdit;
+  bool isViewOnly;
   PinextTransactionModel? pinextTransactionModel;
 
   @override
-  State<AddAndEditTransactionView> createState() => _AddAndEditTransactionViewState();
+  State<AddAndViewTransactionView> createState() => _AddAndViewTransactionViewState();
 }
 
-class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
+class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
   late TextEditingController amountController;
   late TextEditingController detailsController;
 
@@ -70,7 +70,7 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
   void initState() {
     amountController = TextEditingController();
     detailsController = TextEditingController();
-    if (widget.isEdit) {
+    if (widget.isViewOnly) {
       amountController.text = widget.pinextTransactionModel!.amount;
       detailsController.text = widget.pinextTransactionModel!.details;
       if (widget.pinextTransactionModel!.transactionType == 'Income') {
@@ -131,7 +131,7 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
           ),
         ),
         title: Text(
-          widget.isEdit ? "Transaction details" : "Adding a new Transaction",
+          widget.isViewOnly ? "Transaction details" : "Adding a new Transaction",
           style: regularTextStyle,
         ),
       ),
@@ -165,6 +165,7 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
                       height: 8,
                     ),
                     CustomTextFormField(
+                      isEnabled: !widget.isViewOnly,
                       controller: amountController,
                       hintTitle: "Enter amount...",
                       textInputType: TextInputType.number,
@@ -189,6 +190,7 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
                       height: 8,
                     ),
                     CustomTextFormField(
+                      isEnabled: !widget.isViewOnly,
                       controller: detailsController,
                       hintTitle: "Enter description...",
                       numberOfLines: 3,
@@ -200,7 +202,7 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
                       },
                       suffixButtonAction: () {},
                     ),
-                    widget.isEdit
+                    widget.isViewOnly
                         ? const SizedBox.shrink()
                         : Column(
                             children: [
@@ -213,7 +215,7 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
                     const SizedBox(
                       height: 12,
                     ),
-                    widget.isEdit
+                    widget.isViewOnly
                         ? Text(
                             "Card",
                             style: boldTextStyle.copyWith(
@@ -240,7 +242,7 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
               const SizedBox(
                 height: 12,
               ),
-              widget.isEdit ? const SizedBox.shrink() : AddOrEditTransactionButton(),
+              widget.isViewOnly ? const SizedBox.shrink() : AddTransactionButton(),
               const SizedBox(
                 height: 12,
               ),
@@ -276,7 +278,7 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
                       flex: 1,
                       child: GestureDetector(
                         onTap: () {
-                          if (!widget.isEdit) {
+                          if (!widget.isViewOnly) {
                             context
                                 .read<AddTransactionsCubit>()
                                 .changeSelectedTransactionMode(SelectedTransactionMode.income);
@@ -319,9 +321,11 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
                       flex: 1,
                       child: GestureDetector(
                         onTap: (() {
-                          context
-                              .read<AddTransactionsCubit>()
-                              .changeSelectedTransactionMode(SelectedTransactionMode.enpense);
+                          if (!widget.isViewOnly) {
+                            context
+                                .read<AddTransactionsCubit>()
+                                .changeSelectedTransactionMode(SelectedTransactionMode.enpense);
+                          }
                         }),
                         child: Padding(
                           padding: const EdgeInsets.only(left: 10),
@@ -459,13 +463,13 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
 
                     return GestureDetector(
                       onTap: () {
-                        if (!widget.isEdit) {
+                        if (!widget.isViewOnly) {
                           context.read<AddTransactionsCubit>().selectCard(pinextCardModel.cardId);
                         }
                       },
                       child: BlocBuilder<AddTransactionsCubit, AddTransactionsState>(
                         builder: (context, state) {
-                          return widget.isEdit
+                          return widget.isViewOnly
                               ? state.selectedCardNo == pinextCardModel.cardId
                                   ? PinextCard(
                                       title: pinextCardModel.title,
@@ -500,7 +504,7 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
     );
   }
 
-  Padding AddOrEditTransactionButton() {
+  Padding AddTransactionButton() {
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: defaultPadding,
@@ -548,7 +552,7 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
         },
         builder: (context, state) {
           return GetCustomButton(
-            title: widget.isEdit ? "Update Transaction" : "Add Transaction",
+            title: widget.isViewOnly ? "Update Transaction" : "Add Transaction",
             titleColor: whiteColor,
             buttonColor: customBlueColor,
             isLoading: state is AddTransactionsLoadingState ? true : false,
@@ -557,7 +561,7 @@ class _AddAndEditTransactionViewState extends State<AddAndEditTransactionView> {
                 if (amountController.text.isNotEmpty &&
                     detailsController.text.isNotEmpty &&
                     state.selectedCardNo != "none") {
-                  if (widget.isEdit) {
+                  if (widget.isViewOnly) {
                     GetCustomSnackbar(
                       title: "Hello",
                       message: "This function has not yet been deployed! :)",

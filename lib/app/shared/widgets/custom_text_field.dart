@@ -22,13 +22,15 @@ class CustomTextFormField extends StatefulWidget {
       required this.validator,
       this.showClearSuffix = false,
       required this.suffixButtonAction,
-      this.textInputAction = TextInputAction.next})
+      this.isEnabled = true,
+      this.textInputAction = TextInputAction.next,})
       : super(key: key);
 
   Function onChanged;
   Function validator;
   Function suffixButtonAction;
   bool showClearSuffix;
+  bool isEnabled;
 
   TextInputAction textInputAction;
 
@@ -48,6 +50,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      enabled: widget.isEnabled,
       controller: widget.controller,
       style: regularTextStyle,
       maxLines: widget.numberOfLines,
