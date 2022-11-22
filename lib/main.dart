@@ -24,7 +24,7 @@ class Pinext extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("Running in master branch!");
+    // print("Running in master branch!");
     return MultiBlocProvider(
       providers: [
         BlocProvider(
