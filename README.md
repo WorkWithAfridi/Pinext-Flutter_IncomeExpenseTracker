@@ -4,10 +4,6 @@
 
 A full-stack Personal Income Expense tracker made with Flutter BLoC and Firebase, where users can sign in using email and password and can upload their money source as Cards and track their daily, weekly, monthly and yearly income and expenses. Users can also download a report of their expenses directly from the app as a pdf file or .csv file.
 
-* User Authentication using Firebase Authentication.
-* Backend using Firebase Cloud Firestore.
-* State management using BLoC.
-
 ## Promotional Images
 
 ![Demo Image](https://github.com/llKYOTOll/Pinext-PersonalIncomeExpenseTrackingApp/blob/master/assets/promotional_images/Screenshot%202022-09-25%20093843.png?raw=true)
@@ -16,7 +12,8 @@ A full-stack Personal Income Expense tracker made with Flutter BLoC and Firebase
 
 - Framework: Flutter
 - Statemanagement: BLoC
-- Database: Firebase
+- Database: Cloud Firebase
+- User authentication: Firebase Authentication using Gmail and password
 
 ## Firebase Firestore Architecture Structure
 
