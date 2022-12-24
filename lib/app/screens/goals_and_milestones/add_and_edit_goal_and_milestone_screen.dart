@@ -112,7 +112,66 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
           widget.editingGoal
               ? IconButton(
                   onPressed: () {
-                    context.read<AddGoalCubit>().deleteGoal(widget.pinextGoalModel!);
+                    showDialog(
+                      context: context,
+                      builder: ((dialogContext) {
+                        return AlertDialog(
+                          title: Text(
+                            "Alert",
+                            style: boldTextStyle.copyWith(
+                              color: customBlackColor,
+                              fontSize: 16,
+                            ),
+                          ),
+                          content: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Are you sure you want to delete this goal/ milestone?",
+                                style: regularTextStyle.copyWith(
+                                  color: customBlackColor,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 4,
+                              ),
+                              Text(
+                                "*This action is irreversible!",
+                                style: regularTextStyle.copyWith(
+                                  color: customBlackColor.withOpacity(.6),
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ],
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, 'Cancel'),
+                              child: Text(
+                                "Cancel",
+                                style: regularTextStyle.copyWith(
+                                  color: Colors.red,
+                                ),
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                context.read<AddGoalCubit>().deleteGoal(widget.pinextGoalModel!);
+                                Navigator.pop(dialogContext);
+                              },
+                              child: Text(
+                                "Yes",
+                                style: regularTextStyle.copyWith(
+                                  color: customBlackColor,
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      }),
+                    );
                   },
                   icon: const Icon(
                     Icons.delete,
