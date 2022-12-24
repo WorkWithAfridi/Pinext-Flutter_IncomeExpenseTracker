@@ -33,161 +33,165 @@ class PinextCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(right: 10),
-      child: GestureDetector(
-        onTap: () {
-          if (cardModel != null) {
-            Navigator.push(
-              context,
-              CustomTransitionPageRoute(
-                childWidget: AddAndEditPinextCardScreen(
-                  isEditCardScreen: true,
-                  pinextCardModel: cardModel,
-                ),
-              ),
-            );
-          }
-        },
-        child: Container(
-          padding: const EdgeInsets.all(
-            15,
-          ),
-          height: 180,
-          width: getWidth(context) * .8,
-          decoration: BoxDecoration(
-            color: cardColor,
-            borderRadius: BorderRadius.circular(
-              defaultBorder,
-            ),
-          ),
-          child: Stack(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          title.toString(),
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            color: whiteColor,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                        ),
-                        Expanded(
-                          child: Text(
-                            cardDetails,
-                            style: regularTextStyle.copyWith(
-                              color: whiteColor.withOpacity(.4),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            maxLines: 4,
-                          ),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Current balance",
-                              style: TextStyle(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 13,
-                                color: whiteColor.withOpacity(.6),
-                              ),
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Text(
-                                  balance.toString(),
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 25,
-                                    color: whiteColor,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                ),
-                                Text(
-                                  "/",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 25,
-                                    color: whiteColor.withOpacity(.4),
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                ),
-                                Text(
-                                  "Tk",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 15,
-                                    color: whiteColor.withOpacity(.4),
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                ),
-                              ],
-                            ),
-                          ],
-                        )
-                      ],
+      child: cardModel == null
+          ? _getCard(context)
+          : GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  CustomTransitionPageRoute(
+                    childWidget: AddAndEditPinextCardScreen(
+                      isEditCardScreen: true,
+                      pinextCardModel: cardModel,
                     ),
                   ),
-                  const SizedBox(
-                    width: 16,
-                  ),
-                  RotatedBox(
-                    quarterTurns: 3,
-                    child: Column(
+                );
+              },
+              child: _getCard(context),
+            ),
+    );
+  }
+
+  Container _getCard(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(
+        15,
+      ),
+      height: 180,
+      width: getWidth(context) * .8,
+      decoration: BoxDecoration(
+        color: cardColor,
+        borderRadius: BorderRadius.circular(
+          defaultBorder,
+        ),
+      ),
+      child: Stack(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      title.toString(),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        color: whiteColor,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                    Expanded(
+                      child: Text(
+                        cardDetails,
+                        style: regularTextStyle.copyWith(
+                          color: whiteColor.withOpacity(.4),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        maxLines: 4,
+                      ),
+                    ),
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Last transaction",
+                          "Current balance",
                           style: TextStyle(
                             fontWeight: FontWeight.normal,
-                            fontSize: 10,
+                            fontSize: 13,
                             color: whiteColor.withOpacity(.6),
                           ),
                         ),
-                        FittedBox(
-                          child: Text(
-                            "${timeago.format(
-                              DateTime.parse(
-                                lastTransactionDate,
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                              balance.toString(),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 25,
+                                color: whiteColor,
                               ),
-                            )} ",
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 25,
-                              color: whiteColor,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
                             ),
-                          ),
+                            Text(
+                              "/",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 25,
+                                color: whiteColor.withOpacity(.4),
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
+                            Text(
+                              "Tk",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 15,
+                                color: whiteColor.withOpacity(.4),
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
+                          ],
                         ),
                       ],
-                    ),
-                  )
-                ],
-              ),
-              isSelected
-                  ? const Center(
-                      child: Icon(
-                        Icons.done,
-                        color: Colors.amber,
-                        size: 50,
-                      ),
                     )
-                  : const SizedBox.shrink()
+                  ],
+                ),
+              ),
+              const SizedBox(
+                width: 16,
+              ),
+              RotatedBox(
+                quarterTurns: 3,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Last transaction",
+                      style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 10,
+                        color: whiteColor.withOpacity(.6),
+                      ),
+                    ),
+                    FittedBox(
+                      child: Text(
+                        "${timeago.format(
+                          DateTime.parse(
+                            lastTransactionDate,
+                          ),
+                        )} ",
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 25,
+                          color: whiteColor,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
             ],
           ),
-        ),
+          isSelected
+              ? const Center(
+                  child: Icon(
+                    Icons.done,
+                    color: Colors.amber,
+                    size: 50,
+                  ),
+                )
+              : const SizedBox.shrink()
+        ],
       ),
     );
   }
