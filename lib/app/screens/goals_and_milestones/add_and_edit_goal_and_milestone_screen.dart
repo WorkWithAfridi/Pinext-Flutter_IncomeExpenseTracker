@@ -113,65 +113,53 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
               ? IconButton(
                   onPressed: () {
                     showDialog(
-                      context: context,
-                      builder: ((dialogContext) {
-                        return AlertDialog(
-                          title: Text(
-                            "Alert",
-                            style: boldTextStyle.copyWith(
-                              color: customBlackColor,
-                              fontSize: 16,
+                        context: context,
+                        builder: (dialogContext) {
+                          return AlertDialog(
+                            title: Text(
+                              'Delete milestone?',
+                              style: boldTextStyle.copyWith(
+                                fontSize: 20,
+                              ),
                             ),
-                          ),
-                          content: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Are you sure you want to delete this goal/ milestone?",
-                                style: regularTextStyle.copyWith(
-                                  color: customBlackColor,
-                                  fontSize: 14,
-                                ),
+                            content: SingleChildScrollView(
+                              child: ListBody(
+                                children: [
+                                  Text(
+                                    "You're about to delete this milestone from your pinext account! Are you sure you want to do that??",
+                                    style: regularTextStyle,
+                                  ),
+                                ],
                               ),
-                              const SizedBox(
-                                height: 4,
-                              ),
-                              Text(
-                                "*This action is irreversible!",
-                                style: regularTextStyle.copyWith(
-                                  color: customBlackColor.withOpacity(.6),
-                                  fontSize: 12,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(defaultBorder),
+                            ),
+                            actions: <Widget>[
+                              TextButton(
+                                child: Text(
+                                  'Cancel',
+                                  style: boldTextStyle.copyWith(
+                                    color: customBlackColor.withOpacity(
+                                      .8,
+                                    ),
+                                  ),
                                 ),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                              TextButton(
+                                child: const Text('Approve'),
+                                onPressed: () {
+                                  context.read<AddGoalCubit>().deleteGoal(widget.pinextGoalModel!);
+                                  Navigator.pop(dialogContext);
+                                },
                               ),
                             ],
-                          ),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () => Navigator.pop(context, 'Cancel'),
-                              child: Text(
-                                "Cancel",
-                                style: regularTextStyle.copyWith(
-                                  color: Colors.red,
-                                ),
-                              ),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                context.read<AddGoalCubit>().deleteGoal(widget.pinextGoalModel!);
-                                Navigator.pop(dialogContext);
-                              },
-                              child: Text(
-                                "Yes",
-                                style: regularTextStyle.copyWith(
-                                  color: customBlackColor,
-                                ),
-                              ),
-                            ),
-                          ],
-                        );
-                      }),
-                    );
+                            actionsPadding: dialogButtonPadding,
+                          );
+                        });
                   },
                   icon: const Icon(
                     Icons.delete,
