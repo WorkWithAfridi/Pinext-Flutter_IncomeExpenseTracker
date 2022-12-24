@@ -476,6 +476,7 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
                             isSelected: state.selectedCardNo == pinextCardModel.cardId,
                             lastTransactionDate: pinextCardModel.lastTransactionData,
                             cardDetails: pinextCardModel.description,
+                            cardModel: pinextCardModel,
                           );
                           return widget.isViewOnly
                               ? state.selectedCardNo == pinextCardModel.cardId
