@@ -72,17 +72,21 @@ class _TransactionDetailsCardState extends State<TransactionDetailsCard> {
                       Flexible(
                         flex: 2,
                         child: FutureBuilder(
-                          initialData: "",
-                          future: getCardTitle(),
+                          future: getCardDetails(),
                           builder: ((context, snapshot) {
-                            return Text(
-                              snapshot.data.toString(),
-                              style: regularTextStyle.copyWith(
-                                color: customBlackColor.withOpacity(.80),
-                              ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            );
+                            if (snapshot.hasData) {
+                              PinextCardModel cardDetails = snapshot.data as PinextCardModel;
+                              return Text(
+                                cardDetails.title,
+                                style: boldTextStyle.copyWith(
+                                  color: getColorFromString(cardDetails.color),
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              );
+                            } else {
+                              return const SizedBox.shrink();
+                            }
                           }),
                         ),
                       ),
@@ -173,8 +177,8 @@ class _TransactionDetailsCardState extends State<TransactionDetailsCard> {
     return PinextCardModel.fromMap(cardData.data() as Map<String, dynamic>);
   }
 
-  Future<String> getCardTitle() async {
-    PinextCardModel card = await getCardDetails();
-    return card.title;
-  }
+  // Future<String> getCardTitle() async {
+  //   PinextCardModel card = await getCardDetails();
+  //   return card.title;
+  // }
 }
