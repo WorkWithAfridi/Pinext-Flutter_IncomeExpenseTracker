@@ -204,6 +204,15 @@ class AuthenticationServices {
   }
 
   resetPassword({required String email}) async {
-    FirebaseServices().firebaseAuth.sendPasswordResetEmail(email: "khondakarafridi007@gmail.com");
+    String response = "Error";
+    try {
+      await FirebaseServices().firebaseAuth.sendPasswordResetEmail(email: "khondakarafridi007@gmail.com");
+      response = "Success";
+    } on FirebaseException catch (err) {
+      response = err.message.toString();
+    } catch (err) {
+      response = "Error";
+    }
+    return response;
   }
 }

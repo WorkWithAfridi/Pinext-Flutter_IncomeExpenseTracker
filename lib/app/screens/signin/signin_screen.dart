@@ -5,6 +5,7 @@ import 'package:pinext/app/app_data/extensions/string_extensions.dart';
 import 'package:pinext/app/app_data/routing/routes.dart';
 import 'package:pinext/app/bloc/signin_cubit/login_cubit.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
+import 'package:pinext/app/services/authentication_services.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 import 'package:pinext/app/shared/widgets/socials_button.dart';
 
@@ -175,10 +176,27 @@ class _SigninScreenViewState extends State<SigninScreenView> {
                                 ),
                                 TextButton(
                                   child: const Text('Confirm'),
-                                  onPressed: () {
+                                  onPressed: () async {
                                     if (emailFormKey.currentState!.validate()) {
                                       if (resetEmailController.text.isNotEmpty) {
-                                        // context.read<AddGoalCubit>().deleteGoal(widget.pinextGoalModel!);
+                                        String response = await AuthenticationServices()
+                                            .resetPassword(email: resetEmailController.text);
+                                        Navigator.pop(dialogContext);
+                                        if (response == "Success") {
+                                          GetCustomSnackbar(
+                                            title: "We sent you a code",
+                                            message: "Please check your email to reset your password.",
+                                            snackbarType: SnackbarType.info,
+                                            context: context,
+                                          );
+                                        } else {
+                                          GetCustomSnackbar(
+                                            title: "Snap",
+                                            message: response,
+                                            snackbarType: SnackbarType.info,
+                                            context: context,
+                                          );
+                                        }
                                       } else {
                                         GetCustomSnackbar(
                                           title: "Snap",
@@ -188,8 +206,6 @@ class _SigninScreenViewState extends State<SigninScreenView> {
                                         );
                                       }
                                     }
-                                    // context.read<AddGoalCubit>().deleteGoal(widget.pinextGoalModel!);
-                                    // Navigator.pop(dialogContext);
                                   },
                                 ),
                               ],
