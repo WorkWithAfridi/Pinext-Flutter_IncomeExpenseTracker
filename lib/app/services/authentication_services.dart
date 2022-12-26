@@ -180,7 +180,7 @@ class AuthenticationServices {
   }) async {
     String response = "Error";
     try {
-      UserCredential userCredential = await FirebaseServices().firebaseAuth.signInWithEmailAndPassword(
+      await FirebaseServices().firebaseAuth.signInWithEmailAndPassword(
             email: emailAddress,
             password: password,
           );

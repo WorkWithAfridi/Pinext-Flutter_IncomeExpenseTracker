@@ -4,8 +4,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pinext/app/bloc/signin_cubit/login_cubit.dart';
 import 'package:pinext/app/shared/widgets/custom_button.dart';
 
-import '../../app_data/app_constants/constants.dart';
-
 class SocialsButton extends StatelessWidget {
   SocialsButton({Key? key}) : super(key: key);
   List socialButtons = [
@@ -45,25 +43,17 @@ class SocialsButton extends StatelessWidget {
             icon = Icons.help;
             backgroundColor = Colors.pink;
           }
-          return Card(
-            elevation: 1,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(
-                defaultBorder,
-              ),
-            ),
-            child: GetCustomButton(
-              title: "Signin with Google",
-              titleColor: Colors.black,
-              buttonColor: Colors.white,
-              callBackFunction: () {
-                if (social == "google") {
-                  context.read<LoginCubit>().loginWithGoogle();
-                }
-              },
-              icon: icon,
-              iconColor: Colors.black,
-            ),
+          return GetCustomButton(
+            title: "Signin with Google",
+            titleColor: Colors.white,
+            buttonColor: Colors.black,
+            callBackFunction: () {
+              if (social == "google") {
+                context.read<LoginCubit>().loginWithGoogle();
+              }
+            },
+            icon: icon,
+            iconColor: Colors.white,
           );
         },
       ),
