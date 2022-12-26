@@ -202,4 +202,8 @@ class AuthenticationServices {
     }
     return true;
   }
+
+  resetPassword({required String email}) async {
+    FirebaseServices().firebaseAuth.sendPasswordResetEmail(email: "khondakarafridi007@gmail.com");
+  }
 }

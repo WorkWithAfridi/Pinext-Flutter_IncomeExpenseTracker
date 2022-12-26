@@ -110,7 +110,104 @@ class _SigninScreenViewState extends State<SigninScreenView> {
                   suffixButtonAction: () {},
                 ),
                 const SizedBox(
-                  height: 12,
+                  height: 8,
+                ),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: GestureDetector(
+                    onTap: () {
+                      TextEditingController resetEmailController = TextEditingController();
+                      final emailFormKey = GlobalKey<FormState>();
+                      showDialog(
+                          context: context,
+                          builder: (dialogContext) {
+                            return AlertDialog(
+                              title: Text(
+                                'Find your Pinext account',
+                                style: boldTextStyle.copyWith(
+                                  fontSize: 16,
+                                  color: customBlackColor.withOpacity(.85),
+                                ),
+                              ),
+                              content: SingleChildScrollView(
+                                child: ListBody(
+                                  children: [
+                                    Text(
+                                      "Enter the email associated with your account to change your password. :)",
+                                      style: regularTextStyle.copyWith(
+                                        color: customBlackColor.withOpacity(.5),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 12,
+                                    ),
+                                    Form(
+                                      key: emailFormKey,
+                                      child: CustomTextFormField(
+                                        controller: resetEmailController,
+                                        hintTitle: "Email",
+                                        onChanged: (value) {},
+                                        validator: (value) {
+                                          return InputValidation(value).isCorrectEmailAddress();
+                                        },
+                                        suffixButtonAction: () {},
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(defaultBorder),
+                              ),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: Text(
+                                    'Cancel',
+                                    style: boldTextStyle.copyWith(
+                                      color: customBlackColor.withOpacity(
+                                        .8,
+                                      ),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                                TextButton(
+                                  child: const Text('Confirm'),
+                                  onPressed: () {
+                                    if (emailFormKey.currentState!.validate()) {
+                                      if (resetEmailController.text.isNotEmpty) {
+                                        // context.read<AddGoalCubit>().deleteGoal(widget.pinextGoalModel!);
+                                      } else {
+                                        GetCustomSnackbar(
+                                          title: "Snap",
+                                          message: "We need your email in order to reset your password!",
+                                          snackbarType: SnackbarType.info,
+                                          context: context,
+                                        );
+                                      }
+                                    }
+                                    // context.read<AddGoalCubit>().deleteGoal(widget.pinextGoalModel!);
+                                    // Navigator.pop(dialogContext);
+                                  },
+                                ),
+                              ],
+                              actionsPadding: dialogButtonPadding,
+                            );
+                          });
+                    },
+                    child: Text(
+                      "Forgot password?",
+                      style: boldTextStyle.copyWith(
+                        fontSize: 14,
+                        color: customBlueColor,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 8,
                 ),
                 BlocListener<UserBloc, UserState>(
                   listener: (context, state) {
