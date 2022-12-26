@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pinext/app/bloc/signin_cubit/login_cubit.dart';
+import 'package:pinext/app/shared/widgets/custom_button.dart';
 
-import '../../app_data/theme_data/colors.dart';
+import '../../app_data/app_constants/constants.dart';
 
 class SocialsButton extends StatelessWidget {
   SocialsButton({Key? key}) : super(key: key);
@@ -16,11 +17,12 @@ class SocialsButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: radius,
+    return MediaQuery.removePadding(
+      context: context,
+      removeTop: true,
       child: ListView.builder(
         shrinkWrap: true,
-        scrollDirection: Axis.horizontal,
+        scrollDirection: Axis.vertical,
         physics: const NeverScrollableScrollPhysics(),
         itemCount: socialButtons.length,
         itemBuilder: (context, index) {
@@ -43,27 +45,24 @@ class SocialsButton extends StatelessWidget {
             icon = Icons.help;
             backgroundColor = Colors.pink;
           }
-          return Padding(
-            padding: const EdgeInsets.only(right: 4),
-            child: GestureDetector(
-              onTap: () async {
+          return Card(
+            elevation: 1,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(
+                defaultBorder,
+              ),
+            ),
+            child: GetCustomButton(
+              title: "Signin with Google",
+              titleColor: Colors.black,
+              buttonColor: Colors.white,
+              callBackFunction: () {
                 if (social == "google") {
                   context.read<LoginCubit>().loginWithGoogle();
                 }
               },
-              child: Container(
-                height: radius,
-                width: radius,
-                decoration: BoxDecoration(
-                  color: backgroundColor,
-                  borderRadius: BorderRadius.circular(radius),
-                ),
-                alignment: Alignment.center,
-                child: Icon(
-                  icon,
-                  color: greyColor,
-                ),
-              ),
+              icon: icon,
+              iconColor: Colors.black,
             ),
           );
         },
