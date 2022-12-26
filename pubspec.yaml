@@ -43,6 +43,7 @@ dependencies:
   flutter_intro: ^3.0.2
   font_awesome_flutter: ^10.2.1
   get_storage: ^2.0.3
+  google_sign_in: ^5.4.2
   intl: ^0.17.0
   lottie: ^1.4.1
   mccounting_text: ^1.0.0

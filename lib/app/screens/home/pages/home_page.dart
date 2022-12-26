@@ -218,18 +218,25 @@ class HomepageView extends StatelessWidget {
                                     builder: ((context, constraints) {
                                       return Container(
                                         height: 5,
-                                        width: constraints.maxWidth *
-                                            (double.parse(state.monthlyExpenses) / double.parse(state.monthlyBudget)),
+                                        width: state.monthlyBudget == "000"
+                                            ? 0
+                                            : constraints.maxWidth *
+                                                (double.parse(state.monthlyExpenses) /
+                                                    double.parse(state.monthlyBudget)),
                                         decoration: BoxDecoration(
-                                            color: ((double.parse(state.monthlyExpenses) /
-                                                                double.parse(state.monthlyBudget)) *
-                                                            100)
+                                            color: (state.monthlyBudget == "000"
+                                                            ? 0
+                                                            : (double.parse(state.monthlyExpenses) /
+                                                                    double.parse(state.monthlyBudget)) *
+                                                                100)
                                                         .ceil() >
                                                     100
                                                 ? Colors.redAccent[400]
-                                                : ((double.parse(state.monthlyExpenses) /
-                                                                    double.parse(state.monthlyBudget)) *
-                                                                100)
+                                                : (state.monthlyBudget == "000"
+                                                                ? 0
+                                                                : (double.parse(state.monthlyExpenses) /
+                                                                        double.parse(state.monthlyBudget)) *
+                                                                    100)
                                                             .ceil() >
                                                         50
                                                     ? Colors.yellowAccent[800]

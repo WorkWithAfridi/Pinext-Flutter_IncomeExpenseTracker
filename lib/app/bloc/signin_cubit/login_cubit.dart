@@ -19,8 +19,7 @@ class LoginCubit extends Cubit<LoginState> {
     emit(LoginDefaultState());
   }
 
-  loginWithEmailAndPassword(
-      {required String email, required String password}) async {
+  loginWithEmailAndPassword({required String email, required String password}) async {
     emit(
       LoginWithEmailAndPasswordButtonLoadingState(),
     );
@@ -29,8 +28,30 @@ class LoginCubit extends Cubit<LoginState> {
         seconds: defaultDelayDuration,
       ),
     );
-    String response = await AuthenticationServices()
-        .signInUser(emailAddress: email, password: password);
+    String response = await AuthenticationServices().signInUser(emailAddress: email, password: password);
+    if (response == "Success") {
+      emit(
+        LoginSuccessState(),
+      );
+    } else {
+      emit(
+        LoginErrorState(
+          errorMessage: response,
+        ),
+      );
+    }
+  }
+
+  loginWithGoogle() async {
+    emit(
+      LoginWithEmailAndPasswordButtonLoadingState(),
+    );
+    await Future.delayed(
+      const Duration(
+        seconds: defaultDelayDuration,
+      ),
+    );
+    String response = await AuthenticationServices().googleSignin();
     if (response == "Success") {
       emit(
         LoginSuccessState(),

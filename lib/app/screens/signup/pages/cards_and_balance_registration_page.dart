@@ -464,9 +464,9 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                       isLoading: state is SigninLoadingState,
                       callBackFunction: () {
                         if (_formKey.currentState!.validate()) {
-                          if (monthlyBudgetController.text.isNotEmpty &&
-                              budgetSpentSoFarController.text.isNotEmpty &&
-                              state.cards.isNotEmpty) {
+                          if (monthlyBudgetController.text.isNotEmpty && budgetSpentSoFarController.text.isNotEmpty
+                              // &&  state.cards.isNotEmpty
+                              ) {
                             context.read<SigninCubit>().signupUser(
                                   emailAddress: emailController.text,
                                   password: passwordController.text,

@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1049606352114-gredieclm5h89v0auuntk69tpavc7ckg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.workwithafridi.pinext",
+            "certificate_hash": "c7aabd57348b927d8719e36a8df22bbf82456058"
+          }
+        },
+        {
           "client_id": "1049606352114-aklmtn42no719jt0rlvvv8o7fqa98k13.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,6 +37,13 @@
             {
               "client_id": "1049606352114-aklmtn42no719jt0rlvvv8o7fqa98k13.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "1049606352114-pm6ss9hlua6ka2tf5af354mnhtg30bg0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.workwithafridi.pinext"
+              }
             }
           ]
         }

@@ -118,20 +118,20 @@ class UserRegistrationPage extends StatelessWidget {
                       }
                     }
                   }),
-              const SizedBox(
-                height: 12,
-              ),
-              Text(
-                "Or sign up using socials",
-                style: regularTextStyle.copyWith(
-                  fontSize: 14,
-                  color: customBlackColor.withOpacity(.6),
-                ),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              SocialsButton(),
+              // const SizedBox(
+              //   height: 12,
+              // ),
+              // Text(
+              //   "Or sign up using socials",
+              //   style: regularTextStyle.copyWith(
+              //     fontSize: 14,
+              //     color: customBlackColor.withOpacity(.6),
+              //   ),
+              // ),
+              // const SizedBox(
+              //   height: 8,
+              // ),
+              // SocialsButton(),
               const SizedBox(
                 height: 8,
               ),

@@ -85,6 +85,8 @@ class SigninCubit extends Cubit<SigninState> {
     );
   }
 
+  
+
   signupUser({
     required String emailAddress,
     required String password,

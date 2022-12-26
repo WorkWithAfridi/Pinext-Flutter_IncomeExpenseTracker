@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pinext/app/bloc/signin_cubit/login_cubit.dart';
 
 import '../../app_data/theme_data/colors.dart';
 
 class SocialsButton extends StatelessWidget {
   SocialsButton({Key? key}) : super(key: key);
   List socialButtons = [
-    "appleId",
-    "facebook",
+    // "appleId",
+    // "facebook",
     "google",
   ];
   var radius = 50.00;
@@ -43,17 +45,24 @@ class SocialsButton extends StatelessWidget {
           }
           return Padding(
             padding: const EdgeInsets.only(right: 4),
-            child: Container(
-              height: radius,
-              width: radius,
-              decoration: BoxDecoration(
-                color: backgroundColor,
-                borderRadius: BorderRadius.circular(radius),
-              ),
-              alignment: Alignment.center,
-              child: Icon(
-                icon,
-                color: greyColor,
+            child: GestureDetector(
+              onTap: () async {
+                if (social == "google") {
+                  context.read<LoginCubit>().loginWithGoogle();
+                }
+              },
+              child: Container(
+                height: radius,
+                width: radius,
+                decoration: BoxDecoration(
+                  color: backgroundColor,
+                  borderRadius: BorderRadius.circular(radius),
+                ),
+                alignment: Alignment.center,
+                child: Icon(
+                  icon,
+                  color: greyColor,
+                ),
               ),
             ),
           );
