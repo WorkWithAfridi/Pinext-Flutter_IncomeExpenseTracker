@@ -105,7 +105,7 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
           ),
         ),
         title: Text(
-          "Adding a new goal",
+          widget.editingGoal ? "Adding a new goal" : "",
           style: boldTextStyle,
         ),
         actions: [
