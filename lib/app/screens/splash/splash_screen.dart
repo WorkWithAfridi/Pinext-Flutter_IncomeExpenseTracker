@@ -136,46 +136,6 @@ class _SplashScreenState extends State<SplashScreen> {
                   height: .9,
                 ),
               ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //     Flexible(
-              //       flex: 1,
-              //       child: Container(
-              //         alignment: Alignment.centerRight,
-              //         width: double.maxFinite,
-              //         child: Text(
-              //           "Pin",
-              //           style: boldTextStyle.copyWith(
-              //             fontSize: 50,
-              //             color: whiteColor,
-              //             height: .9,
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //     Flexible(
-              //       flex: 1,
-              //       child: Container(
-              //         height: MediaQuery.of(context).size.height,
-              //         width: double.maxFinite,
-              //         decoration: const BoxDecoration(
-              //           // borderRadius: BorderRadius.circular(defaultBorder),
-              //           color: whiteColor,
-              //         ),
-              //         alignment: Alignment.centerLeft,
-              //         child: Text(
-              //           "ext",
-              //           style: boldTextStyle.copyWith(
-              //             fontSize: 50,
-              //             color: customBlackColor,
-              //             height: .9,
-              //           ),
-              //         ),
-              //       ),
-              //     )
-              //   ],
-              // )
             ],
           ),
         ),
