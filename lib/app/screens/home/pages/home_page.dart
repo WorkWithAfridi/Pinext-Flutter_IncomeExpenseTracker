@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
 import 'package:pinext/app/models/pinext_goal_model.dart';
+import 'package:pinext/app/screens/edit_budget_screen.dart';
 import 'package:pinext/app/screens/goals_and_milestones/view_goals_and_milestones_screen.dart';
 import 'package:pinext/app/services/firebase_services.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
@@ -175,6 +176,7 @@ class HomepageView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
@@ -185,17 +187,46 @@ class HomepageView extends StatelessWidget {
                             ),
                             BlocBuilder<UserBloc, UserState>(
                               builder: (context, state) {
-                                if (state is AuthenticatedUserState) {
-                                  return Text(
-                                    "${state.monthlyBudget} Tk",
-                                    style: regularTextStyle.copyWith(
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.green,
+                                return GestureDetector(
+                                  onTap: () {
+                                    if (state is AuthenticatedUserState) {
+                                      Navigator.push(
+                                        context,
+                                        CustomTransitionPageRoute(
+                                          childWidget: EditbudgetScreen(
+                                            monthlyBudget: state.monthlyBudget,
+                                            amountSpentSoFar: state.monthlyExpenses,
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                  child: Container(
+                                    color: Colors.transparent,
+                                    child: Row(
+                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                      children: [
+                                        state is AuthenticatedUserState
+                                            ? Text(
+                                                "${state.monthlyBudget} Tk",
+                                                style: regularTextStyle.copyWith(
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Colors.green,
+                                                ),
+                                              )
+                                            : const SizedBox.shrink(),
+                                        const SizedBox(
+                                          width: 8,
+                                        ),
+                                        const Icon(
+                                          Icons.edit,
+                                          color: customBlackColor,
+                                          size: 16,
+                                        ),
+                                      ],
                                     ),
-                                  );
-                                } else {
-                                  return const SizedBox.shrink();
-                                }
+                                  ),
+                                );
                               },
                             ),
                           ],
