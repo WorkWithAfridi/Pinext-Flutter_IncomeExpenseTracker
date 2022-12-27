@@ -43,9 +43,7 @@ class LoginCubit extends Cubit<LoginState> {
   }
 
   loginWithGoogle() async {
-    emit(
-      LoginWithEmailAndPasswordButtonLoadingState(),
-    );
+    emit(LoginWithGoogleButtonLoadingState());
     await Future.delayed(
       const Duration(
         seconds: defaultDelayDuration,

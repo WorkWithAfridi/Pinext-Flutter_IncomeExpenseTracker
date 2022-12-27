@@ -18,42 +18,47 @@ class SocialsButton extends StatelessWidget {
     return MediaQuery.removePadding(
       context: context,
       removeTop: true,
-      child: ListView.builder(
-        shrinkWrap: true,
-        scrollDirection: Axis.vertical,
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: socialButtons.length,
-        itemBuilder: (context, index) {
-          // "appleId",
-          // "facebook",
-          // "google",
-          String social = socialButtons[index];
-          IconData icon;
-          Color backgroundColor;
-          if (social == "appleId") {
-            icon = Icons.apple;
-            backgroundColor = Colors.black;
-          } else if (social == "facebook") {
-            icon = Icons.facebook;
-            backgroundColor = Colors.blue[900]!;
-          } else if (social == "google") {
-            icon = FontAwesomeIcons.google;
-            backgroundColor = Colors.orange[900]!;
-          } else {
-            icon = Icons.help;
-            backgroundColor = Colors.pink;
-          }
-          return GetCustomButton(
-            title: "Signin with Google",
-            titleColor: Colors.white,
-            buttonColor: Colors.black,
-            callBackFunction: () {
-              if (social == "google") {
-                context.read<LoginCubit>().loginWithGoogle();
+      child: BlocBuilder<LoginCubit, LoginState>(
+        builder: (context, state) {
+          return ListView.builder(
+            shrinkWrap: true,
+            scrollDirection: Axis.vertical,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: socialButtons.length,
+            itemBuilder: (context, index) {
+              // "appleId",
+              // "facebook",
+              // "google",
+              String social = socialButtons[index];
+              IconData icon;
+              Color backgroundColor;
+              if (social == "appleId") {
+                icon = Icons.apple;
+                backgroundColor = Colors.black;
+              } else if (social == "facebook") {
+                icon = Icons.facebook;
+                backgroundColor = Colors.blue[900]!;
+              } else if (social == "google") {
+                icon = FontAwesomeIcons.google;
+                backgroundColor = Colors.orange[900]!;
+              } else {
+                icon = Icons.help;
+                backgroundColor = Colors.pink;
               }
+              return GetCustomButton(
+                title: "Signin with Google",
+                titleColor: Colors.white,
+                isLoading: state is LoginWithGoogleButtonLoadingState,
+                buttonColor: Colors.black,
+                callBackFunction: () {
+                  if (social == "google") {
+                    context.read<LoginCubit>().loginWithGoogle();
+                  }
+                },
+                icon: icon,
+                iconColor: Colors.white,
+              );
             },
-            icon: icon,
-            iconColor: Colors.white,
           );
         },
       ),
