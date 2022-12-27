@@ -182,6 +182,25 @@ class PinextCard extends StatelessWidget {
               )
             ],
           ),
+          cardModel != null
+              ? Center(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(
+                        25,
+                      ),
+                      border: Border.all(
+                        color: Colors.white.withOpacity(.2),
+                      ),
+                    ),
+                    padding: const EdgeInsets.all(10),
+                    child: Icon(
+                      Icons.edit_note_rounded,
+                      color: Colors.white.withOpacity(.2),
+                    ),
+                  ),
+                )
+              : const SizedBox.shrink(),
           isSelected
               ? const Center(
                   child: Icon(
