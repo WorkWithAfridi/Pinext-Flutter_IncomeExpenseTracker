@@ -140,7 +140,7 @@ class _SigninScreenViewState extends State<SigninScreenView> {
                                       ),
                                     ),
                                     const SizedBox(
-                                      height: 12,
+                                      height: 8,
                                     ),
                                     Form(
                                       key: emailFormKey,
@@ -175,7 +175,7 @@ class _SigninScreenViewState extends State<SigninScreenView> {
                                   },
                                 ),
                                 TextButton(
-                                  child: const Text('Confirm'),
+                                  child: const Text('Reset password'),
                                   onPressed: () async {
                                     if (emailFormKey.currentState!.validate()) {
                                       if (resetEmailController.text.isNotEmpty) {
