@@ -147,542 +147,36 @@ class HomepageView extends StatelessWidget {
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
+                children: const [
+                  SizedBox(
                     // height: 16,
                     height: 12,
                   ),
-                  Text(
-                    "Budget Estimations",
-                    style: boldTextStyle.copyWith(
-                      fontSize: 20,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(
-                      defaultPadding,
-                    ),
-                    width: getWidth(context),
-                    decoration: BoxDecoration(
-                      color: greyColor,
-                      borderRadius: BorderRadius.circular(
-                        defaultBorder,
-                      ),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Your budget for ${months[int.parse(currentMonth) - 1]}",
-                              style: regularTextStyle.copyWith(
-                                color: customBlackColor.withOpacity(.6),
-                              ),
-                            ),
-                            BlocBuilder<UserBloc, UserState>(
-                              builder: (context, state) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    if (state is AuthenticatedUserState) {
-                                      Navigator.push(
-                                        context,
-                                        CustomTransitionPageRoute(
-                                          childWidget: EditbudgetScreen(
-                                            monthlyBudget: state.monthlyBudget,
-                                            amountSpentSoFar: state.monthlyExpenses,
-                                          ),
-                                        ),
-                                      );
-                                    }
-                                  },
-                                  child: Container(
-                                    color: Colors.transparent,
-                                    child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.end,
-                                      children: [
-                                        state is AuthenticatedUserState
-                                            ? Text(
-                                                "${state.monthlyBudget} Tk",
-                                                style: regularTextStyle.copyWith(
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Colors.green,
-                                                ),
-                                              )
-                                            : const SizedBox.shrink(),
-                                        const SizedBox(
-                                          width: 8,
-                                        ),
-                                        const Icon(
-                                          Icons.edit,
-                                          color: customBlackColor,
-                                          size: 16,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        Stack(
-                          alignment: Alignment.topLeft,
-                          children: [
-                            Container(
-                              height: 5,
-                              width: getWidth(context),
-                              color: customBlueColor.withOpacity(.2),
-                            ),
-                            BlocBuilder<UserBloc, UserState>(
-                              builder: (context, state) {
-                                if (state is AuthenticatedUserState) {
-                                  return LayoutBuilder(
-                                    builder: ((context, constraints) {
-                                      return Container(
-                                        height: 5,
-                                        width: state.monthlyBudget == "000"
-                                            ? 0
-                                            : constraints.maxWidth *
-                                                (double.parse(state.monthlyExpenses) /
-                                                    double.parse(state.monthlyBudget)),
-                                        decoration: BoxDecoration(
-                                            color: (state.monthlyBudget == "000"
-                                                            ? 0
-                                                            : (double.parse(state.monthlyExpenses) /
-                                                                    double.parse(state.monthlyBudget)) *
-                                                                100)
-                                                        .ceil() >
-                                                    100
-                                                ? Colors.redAccent[400]
-                                                : (state.monthlyBudget == "000"
-                                                                ? 0
-                                                                : (double.parse(state.monthlyExpenses) /
-                                                                        double.parse(state.monthlyBudget)) *
-                                                                    100)
-                                                            .ceil() >
-                                                        50
-                                                    ? Colors.yellowAccent[800]
-                                                    : customBlueColor,
-                                            borderRadius: BorderRadius.circular(defaultBorder)),
-                                      );
-                                    }),
-                                  );
-                                } else {
-                                  return const SizedBox.shrink();
-                                }
-                              },
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        BlocBuilder<UserBloc, UserState>(
-                          builder: (context, state) {
-                            if (state is AuthenticatedUserState) {
-                              return Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  RichText(
-                                    text: TextSpan(
-                                      children: [
-                                        TextSpan(
-                                          text: "Your have spent ",
-                                          style: regularTextStyle.copyWith(
-                                            color: customBlackColor.withOpacity(.6),
-                                          ),
-                                        ),
-                                        TextSpan(
-                                          text:
-                                              "${((double.parse(state.monthlyExpenses) / double.parse(state.monthlyBudget)) * 100).ceil()}%",
-                                          style: boldTextStyle.copyWith(
-                                            color: Colors.red.withOpacity(.9),
-                                          ),
-                                        ),
-                                        TextSpan(
-                                          text: " of your budget!",
-                                          style: regularTextStyle.copyWith(
-                                            color: customBlackColor.withOpacity(.6),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Text(
-                                    "- ${state.monthlyExpenses} TK",
-                                    style: boldTextStyle.copyWith(
-                                      color: Colors.red.withOpacity(.9),
-                                    ),
-                                  ),
-                                ],
-                              );
-                            } else {
-                              return const SizedBox.shrink();
-                            }
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
+                  _GetBudgetEstimationsWidget(),
+                  SizedBox(
                     height: 12,
                   ),
-                  Text(
-                    "Savings",
-                    style: boldTextStyle.copyWith(
-                      fontSize: 20,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(
-                      defaultPadding,
-                    ),
-                    width: getWidth(context),
-                    decoration: BoxDecoration(
-                      color: greyColor,
-                      borderRadius: BorderRadius.circular(
-                        defaultBorder,
-                      ),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          "You've saved",
-                          style: regularTextStyle.copyWith(
-                            color: customBlackColor.withOpacity(.6),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 4,
-                        ),
-                        BlocBuilder<UserBloc, UserState>(
-                          builder: (context, state) {
-                            if (state is AuthenticatedUserState) {
-                              return Text(
-                                "${state.monthlySavings} Tk",
-                                style: boldTextStyle.copyWith(
-                                  fontSize: 20,
-                                ),
-                              );
-                            }
-                            return Text(
-                              "Loading...",
-                              style: boldTextStyle.copyWith(
-                                fontSize: 20,
-                              ),
-                            );
-                          },
-                        ),
-                        const SizedBox(
-                          height: 4,
-                        ),
-                        Text(
-                          "in ${months[int.parse(currentMonth) - 1]}.",
-                          style: regularTextStyle.copyWith(
-                            color: customBlackColor.withOpacity(.6),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
+                  _GetSavingsForThisMonthWidget(),
+                  SizedBox(
                     height: 12,
                   ),
-                  Text(
-                    "Expenses",
-                    style: boldTextStyle.copyWith(
-                      fontSize: 20,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  BlocBuilder<UserBloc, UserState>(
-                    builder: (context, state) {
-                      if (state is AuthenticatedUserState) {
-                        return Row(
-                          children: [
-                            Flexible(
-                              flex: 1,
-                              child: Container(
-                                height: 100,
-                                padding: const EdgeInsets.all(
-                                  defaultPadding,
-                                ),
-                                width: double.maxFinite,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(
-                                    defaultBorder,
-                                  ),
-                                  color: customBlackColor,
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    FittedBox(
-                                      child: Text(
-                                        "- ${state.dailyExpenses}",
-                                        style: boldTextStyle.copyWith(
-                                          fontSize: 25,
-                                          color: whiteColor,
-                                        ),
-                                      ),
-                                    ),
-                                    Text(
-                                      "Today",
-                                      style: boldTextStyle.copyWith(
-                                        fontWeight: FontWeight.w600,
-                                        color: whiteColor.withOpacity(.8),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 8,
-                            ),
-                            Flexible(
-                              flex: 2,
-                              child: Container(
-                                height: 100,
-                                padding: const EdgeInsets.all(
-                                  defaultPadding,
-                                ),
-                                width: double.maxFinite,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(
-                                    defaultBorder,
-                                  ),
-                                  color: customBlueColor,
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    FittedBox(
-                                      child: Text(
-                                        "- ${state.weeklyExpenses}",
-                                        style: boldTextStyle.copyWith(
-                                          fontSize: 25,
-                                          color: whiteColor.withOpacity(.8),
-                                        ),
-                                      ),
-                                    ),
-                                    Text(
-                                      "This week",
-                                      style: boldTextStyle.copyWith(
-                                        fontWeight: FontWeight.w600,
-                                        color: whiteColor,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        );
-                      } else {
-                        return const SizedBox.shrink();
-                      }
-                    },
-                  ),
-                  const SizedBox(
+                  _GetExpensesWidget(),
+                  SizedBox(
                     height: 12,
                   ),
-                  const PastTransactionsModule(),
-                  const SizedBox(
+                  _GetPastTransactionsWidget(),
+                  SizedBox(
                     height: 12,
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Goals & milestones",
-                            style: boldTextStyle.copyWith(
-                              fontSize: 20,
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                CustomTransitionPageRoute(
-                                  childWidget: const ViewGoalsAndMilestoneScreen(),
-                                ),
-                              );
-                            },
-                            child: Text(
-                              "View all",
-                              style: regularTextStyle.copyWith(
-                                fontSize: 14,
-                                color: customBlackColor.withOpacity(.6),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 6,
-                      ),
-                      StreamBuilder(
-                        stream: FirebaseServices()
-                            .firebaseFirestore
-                            .collection('pinext_users')
-                            .doc(FirebaseServices().getUserId())
-                            .collection('pinext_goals')
-                            .snapshots(),
-                        builder: ((context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-                          if (snapshot.connectionState == ConnectionState.waiting) {
-                            return const Center(
-                              child: SizedBox.shrink(),
-                            );
-                          }
-                          if (snapshot.data!.docs.isEmpty) {
-                            return Text(
-                              "404 - No record found!",
-                              style: regularTextStyle.copyWith(
-                                color: customBlackColor.withOpacity(.4),
-                              ),
-                            );
-                          }
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              ListView.builder(
-                                itemCount: snapshot.data!.docs.length > 5 ? 5 : snapshot.data!.docs.length,
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemBuilder: ((context, index) {
-                                  if (snapshot.data!.docs.isEmpty) {
-                                    return const Text("No data found! :(");
-                                  }
-                                  if (snapshot.data!.docs.isEmpty) {
-                                    return Text(
-                                      "No data found! :(",
-                                      style: regularTextStyle.copyWith(
-                                        color: customBlackColor.withOpacity(.4),
-                                      ),
-                                    );
-                                  }
-
-                                  PinextGoalModel pinextGoalModel = PinextGoalModel.fromMap(
-                                    snapshot.data!.docs[index].data(),
-                                  );
-                                  return BlocBuilder<UserBloc, UserState>(
-                                    builder: (context, state) {
-                                      double completionAmount = 0;
-                                      if (state is AuthenticatedUserState) {
-                                        completionAmount =
-                                            ((double.parse(state.netBalance) / double.parse(pinextGoalModel.amount)) *
-                                                100);
-                                      }
-                                      return completionAmount < 100
-                                          ? PinextGoalCardMinimized(
-                                              pinextGoalModel: pinextGoalModel,
-                                              index: index,
-                                              showCompletePercentage: true,
-                                            )
-                                          : const SizedBox.shrink();
-                                    },
-                                  );
-                                }),
-                              )
-                            ],
-                          );
-                        }),
-                      ),
-                    ],
-                  )
+                  _GetGoalsAndMilestonesWidget()
                 ],
               ),
             ),
-            const YourCardsModule(),
+            const _GetYourCardsWidget(),
             const SizedBox(
               height: 12,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Balance",
-                    style: boldTextStyle.copyWith(
-                      fontSize: 20,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(
-                      defaultPadding,
-                    ),
-                    width: getWidth(context),
-                    decoration: BoxDecoration(
-                      color: greyColor,
-                      borderRadius: BorderRadius.circular(
-                        defaultBorder,
-                      ),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Your current NET. balance is",
-                          style: regularTextStyle,
-                        ),
-                        const SizedBox(
-                          height: 4,
-                        ),
-                        BlocBuilder<UserBloc, UserState>(
-                          builder: (context, state) {
-                            if (state is AuthenticatedUserState) {
-                              return Text(
-                                "${state.netBalance} Tk",
-                                style: boldTextStyle.copyWith(
-                                  fontSize: 25,
-                                ),
-                              );
-                            }
-                            return Text(
-                              "Loading...",
-                              style: boldTextStyle.copyWith(
-                                fontSize: 20,
-                              ),
-                            );
-                          },
-                        ),
-                        const SizedBox(
-                          height: 4,
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 12,
-                  ),
-                ],
-              ),
-            ),
+            const _GetBalanceWidget(),
           ],
         ),
       ),
@@ -690,8 +184,582 @@ class HomepageView extends StatelessWidget {
   }
 }
 
-class PastTransactionsModule extends StatelessWidget {
-  const PastTransactionsModule({
+class _GetBalanceWidget extends StatelessWidget {
+  const _GetBalanceWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Balance",
+            style: boldTextStyle.copyWith(
+              fontSize: 20,
+            ),
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          Container(
+            padding: const EdgeInsets.all(
+              defaultPadding,
+            ),
+            width: getWidth(context),
+            decoration: BoxDecoration(
+              color: greyColor,
+              borderRadius: BorderRadius.circular(
+                defaultBorder,
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  "Your current NET. balance is",
+                  style: regularTextStyle,
+                ),
+                const SizedBox(
+                  height: 4,
+                ),
+                BlocBuilder<UserBloc, UserState>(
+                  builder: (context, state) {
+                    if (state is AuthenticatedUserState) {
+                      return Text(
+                        "${state.netBalance} Tk",
+                        style: boldTextStyle.copyWith(
+                          fontSize: 25,
+                        ),
+                      );
+                    }
+                    return Text(
+                      "Loading...",
+                      style: boldTextStyle.copyWith(
+                        fontSize: 20,
+                      ),
+                    );
+                  },
+                ),
+                const SizedBox(
+                  height: 4,
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 12,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _GetGoalsAndMilestonesWidget extends StatelessWidget {
+  const _GetGoalsAndMilestonesWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "Goals & milestones",
+              style: boldTextStyle.copyWith(
+                fontSize: 20,
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  CustomTransitionPageRoute(
+                    childWidget: const ViewGoalsAndMilestoneScreen(),
+                  ),
+                );
+              },
+              child: Text(
+                "View all",
+                style: regularTextStyle.copyWith(
+                  fontSize: 14,
+                  color: customBlackColor.withOpacity(.6),
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 6,
+        ),
+        StreamBuilder(
+          stream: FirebaseServices()
+              .firebaseFirestore
+              .collection('pinext_users')
+              .doc(FirebaseServices().getUserId())
+              .collection('pinext_goals')
+              .snapshots(),
+          builder: ((context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: SizedBox.shrink(),
+              );
+            }
+            if (snapshot.data!.docs.isEmpty) {
+              return Text(
+                "404 - No record found!",
+                style: regularTextStyle.copyWith(
+                  color: customBlackColor.withOpacity(.4),
+                ),
+              );
+            }
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ListView.builder(
+                  itemCount: snapshot.data!.docs.length > 5 ? 5 : snapshot.data!.docs.length,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: ((context, index) {
+                    if (snapshot.data!.docs.isEmpty) {
+                      return const Text("No data found! :(");
+                    }
+                    if (snapshot.data!.docs.isEmpty) {
+                      return Text(
+                        "No data found! :(",
+                        style: regularTextStyle.copyWith(
+                          color: customBlackColor.withOpacity(.4),
+                        ),
+                      );
+                    }
+
+                    PinextGoalModel pinextGoalModel = PinextGoalModel.fromMap(
+                      snapshot.data!.docs[index].data(),
+                    );
+                    return BlocBuilder<UserBloc, UserState>(
+                      builder: (context, state) {
+                        double completionAmount = 0;
+                        if (state is AuthenticatedUserState) {
+                          completionAmount =
+                              ((double.parse(state.netBalance) / double.parse(pinextGoalModel.amount)) * 100);
+                        }
+                        return completionAmount < 100
+                            ? PinextGoalCardMinimized(
+                                pinextGoalModel: pinextGoalModel,
+                                index: index,
+                                showCompletePercentage: true,
+                              )
+                            : const SizedBox.shrink();
+                      },
+                    );
+                  }),
+                )
+              ],
+            );
+          }),
+        ),
+      ],
+    );
+  }
+}
+
+class _GetExpensesWidget extends StatelessWidget {
+  const _GetExpensesWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Expenses",
+          style: boldTextStyle.copyWith(
+            fontSize: 20,
+          ),
+        ),
+        const SizedBox(
+          height: 8,
+        ),
+        BlocBuilder<UserBloc, UserState>(
+          builder: (context, state) {
+            if (state is AuthenticatedUserState) {
+              return Row(
+                children: [
+                  Flexible(
+                    flex: 1,
+                    child: Container(
+                      height: 100,
+                      padding: const EdgeInsets.all(
+                        defaultPadding,
+                      ),
+                      width: double.maxFinite,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(
+                          defaultBorder,
+                        ),
+                        color: customBlackColor,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          FittedBox(
+                            child: Text(
+                              "- ${state.dailyExpenses}",
+                              style: boldTextStyle.copyWith(
+                                fontSize: 25,
+                                color: whiteColor,
+                              ),
+                            ),
+                          ),
+                          Text(
+                            "Today",
+                            style: boldTextStyle.copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: whiteColor.withOpacity(.8),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  Flexible(
+                    flex: 2,
+                    child: Container(
+                      height: 100,
+                      padding: const EdgeInsets.all(
+                        defaultPadding,
+                      ),
+                      width: double.maxFinite,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(
+                          defaultBorder,
+                        ),
+                        color: customBlueColor,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          FittedBox(
+                            child: Text(
+                              "- ${state.weeklyExpenses}",
+                              style: boldTextStyle.copyWith(
+                                fontSize: 25,
+                                color: whiteColor.withOpacity(.8),
+                              ),
+                            ),
+                          ),
+                          Text(
+                            "This week",
+                            style: boldTextStyle.copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: whiteColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            } else {
+              return const SizedBox.shrink();
+            }
+          },
+        ),
+      ],
+    );
+  }
+}
+
+class _GetSavingsForThisMonthWidget extends StatelessWidget {
+  const _GetSavingsForThisMonthWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Savings",
+          style: boldTextStyle.copyWith(
+            fontSize: 20,
+          ),
+        ),
+        const SizedBox(
+          height: 8,
+        ),
+        Container(
+          padding: const EdgeInsets.all(
+            defaultPadding,
+          ),
+          width: getWidth(context),
+          decoration: BoxDecoration(
+            color: greyColor,
+            borderRadius: BorderRadius.circular(
+              defaultBorder,
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                "You've saved",
+                style: regularTextStyle.copyWith(
+                  color: customBlackColor.withOpacity(.6),
+                ),
+              ),
+              const SizedBox(
+                height: 4,
+              ),
+              BlocBuilder<UserBloc, UserState>(
+                builder: (context, state) {
+                  if (state is AuthenticatedUserState) {
+                    return Text(
+                      "${state.monthlySavings} Tk",
+                      style: boldTextStyle.copyWith(
+                        fontSize: 20,
+                      ),
+                    );
+                  }
+                  return Text(
+                    "Loading...",
+                    style: boldTextStyle.copyWith(
+                      fontSize: 20,
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(
+                height: 4,
+              ),
+              Text(
+                "in ${months[int.parse(currentMonth) - 1]}.",
+                style: regularTextStyle.copyWith(
+                  color: customBlackColor.withOpacity(.6),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _GetBudgetEstimationsWidget extends StatelessWidget {
+  const _GetBudgetEstimationsWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Budget Estimations",
+          style: boldTextStyle.copyWith(
+            fontSize: 20,
+          ),
+        ),
+        const SizedBox(
+          height: 8,
+        ),
+        Container(
+          padding: const EdgeInsets.all(
+            defaultPadding,
+          ),
+          width: getWidth(context),
+          decoration: BoxDecoration(
+            color: greyColor,
+            borderRadius: BorderRadius.circular(
+              defaultBorder,
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Your budget for ${months[int.parse(currentMonth) - 1]}",
+                    style: regularTextStyle.copyWith(
+                      color: customBlackColor.withOpacity(.6),
+                    ),
+                  ),
+                  BlocBuilder<UserBloc, UserState>(
+                    builder: (context, state) {
+                      return GestureDetector(
+                        onTap: () {
+                          if (state is AuthenticatedUserState) {
+                            Navigator.push(
+                              context,
+                              CustomTransitionPageRoute(
+                                childWidget: EditbudgetScreen(
+                                  monthlyBudget: state.monthlyBudget,
+                                  amountSpentSoFar: state.monthlyExpenses,
+                                ),
+                              ),
+                            );
+                          }
+                        },
+                        child: Container(
+                          color: Colors.transparent,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              state is AuthenticatedUserState
+                                  ? Text(
+                                      "${state.monthlyBudget} Tk",
+                                      style: regularTextStyle.copyWith(
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.green,
+                                      ),
+                                    )
+                                  : const SizedBox.shrink(),
+                              const SizedBox(
+                                width: 8,
+                              ),
+                              const Icon(
+                                Icons.edit,
+                                color: customBlackColor,
+                                size: 16,
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              Stack(
+                alignment: Alignment.topLeft,
+                children: [
+                  Container(
+                    height: 5,
+                    width: getWidth(context),
+                    color: customBlueColor.withOpacity(.2),
+                  ),
+                  BlocBuilder<UserBloc, UserState>(
+                    builder: (context, state) {
+                      if (state is AuthenticatedUserState) {
+                        return LayoutBuilder(
+                          builder: ((context, constraints) {
+                            return Container(
+                              height: 5,
+                              width: state.monthlyBudget == "000"
+                                  ? 0
+                                  : constraints.maxWidth *
+                                      (double.parse(state.monthlyExpenses) / double.parse(state.monthlyBudget)),
+                              decoration: BoxDecoration(
+                                  color: (state.monthlyBudget == "000"
+                                                  ? 0
+                                                  : (double.parse(state.monthlyExpenses) /
+                                                          double.parse(state.monthlyBudget)) *
+                                                      100)
+                                              .ceil() >
+                                          100
+                                      ? Colors.redAccent[400]
+                                      : (state.monthlyBudget == "000"
+                                                      ? 0
+                                                      : (double.parse(state.monthlyExpenses) /
+                                                              double.parse(state.monthlyBudget)) *
+                                                          100)
+                                                  .ceil() >
+                                              50
+                                          ? Colors.yellowAccent[800]
+                                          : customBlueColor,
+                                  borderRadius: BorderRadius.circular(defaultBorder)),
+                            );
+                          }),
+                        );
+                      } else {
+                        return const SizedBox.shrink();
+                      }
+                    },
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              BlocBuilder<UserBloc, UserState>(
+                builder: (context, state) {
+                  if (state is AuthenticatedUserState) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: "Your have spent ",
+                                style: regularTextStyle.copyWith(
+                                  color: customBlackColor.withOpacity(.6),
+                                ),
+                              ),
+                              TextSpan(
+                                text:
+                                    "${((double.parse(state.monthlyExpenses) / double.parse(state.monthlyBudget)) * 100).ceil()}%",
+                                style: boldTextStyle.copyWith(
+                                  color: Colors.red.withOpacity(.9),
+                                ),
+                              ),
+                              TextSpan(
+                                text: " of your budget!",
+                                style: regularTextStyle.copyWith(
+                                  color: customBlackColor.withOpacity(.6),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Text(
+                          "- ${state.monthlyExpenses} TK",
+                          style: boldTextStyle.copyWith(
+                            color: Colors.red.withOpacity(.9),
+                          ),
+                        ),
+                      ],
+                    );
+                  } else {
+                    return const SizedBox.shrink();
+                  }
+                },
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _GetPastTransactionsWidget extends StatelessWidget {
+  const _GetPastTransactionsWidget({
     Key? key,
   }) : super(key: key);
 
@@ -774,8 +842,8 @@ class PastTransactionsModule extends StatelessWidget {
   }
 }
 
-class YourCardsModule extends StatelessWidget {
-  const YourCardsModule({
+class _GetYourCardsWidget extends StatelessWidget {
+  const _GetYourCardsWidget({
     Key? key,
   }) : super(key: key);
 

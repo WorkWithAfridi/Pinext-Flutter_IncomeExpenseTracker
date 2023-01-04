@@ -263,7 +263,9 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
                   ),
                 ],
               ),
-              ShowPinextCardList(),
+              _GetCardListWidget(
+                isViewOnly: widget.isViewOnly,
+              ),
               const SizedBox(
                 height: 12,
               ),
@@ -495,85 +497,6 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
     );
   }
 
-  SizedBox ShowPinextCardList() {
-    return SizedBox(
-      height: 185,
-      child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          children: [
-            const SizedBox(
-              width: defaultPadding,
-            ),
-            StreamBuilder(
-              stream: FirebaseServices()
-                  .firebaseFirestore
-                  .collection("pinext_users")
-                  .doc(FirebaseServices().getUserId())
-                  .collection("pinext_cards")
-                  .orderBy(
-                    'lastTransactionData',
-                    descending: true,
-                  )
-                  .snapshots(),
-              builder: ((context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                return ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  scrollDirection: Axis.horizontal,
-                  itemCount: snapshot.data!.docs.length,
-                  itemBuilder: ((context, index) {
-                    PinextCardModel pinextCardModel = PinextCardModel.fromMap(
-                      snapshot.data!.docs[index].data(),
-                    );
-
-                    String color = pinextCardModel.color;
-                    late Color cardColor = getColorFromString(color);
-
-                    return GestureDetector(
-                      onTap: () {
-                        if (!widget.isViewOnly) {
-                          context.read<AddTransactionsCubit>().selectCard(pinextCardModel.cardId);
-                        }
-                      },
-                      child: BlocBuilder<AddTransactionsCubit, AddTransactionsState>(
-                        builder: (context, state) {
-                          Widget pinextCardWidget = PinextCard(
-                            title: pinextCardModel.title,
-                            balance: pinextCardModel.balance,
-                            cardColor: cardColor,
-                            isSelected: state.selectedCardNo == pinextCardModel.cardId,
-                            lastTransactionDate: pinextCardModel.lastTransactionData,
-                            cardDetails: pinextCardModel.description,
-                            // cardModel: pinextCardModel,
-                          );
-                          return widget.isViewOnly
-                              ? state.selectedCardNo == pinextCardModel.cardId
-                                  ? pinextCardWidget
-                                  : const SizedBox.shrink()
-                              : pinextCardWidget;
-                        },
-                      ),
-                    );
-                  }),
-                );
-              }),
-            ),
-            const SizedBox(
-              width: defaultPadding - 10,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   Padding AddTransactionButton() {
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -670,6 +593,95 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
             },
           );
         },
+      ),
+    );
+  }
+}
+
+class _GetCardListWidget extends StatelessWidget {
+  _GetCardListWidget({
+    Key? key,
+    required this.isViewOnly,
+  }) : super(key: key);
+
+  bool isViewOnly;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 185,
+      child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            const SizedBox(
+              width: defaultPadding,
+            ),
+            StreamBuilder(
+              stream: FirebaseServices()
+                  .firebaseFirestore
+                  .collection("pinext_users")
+                  .doc(FirebaseServices().getUserId())
+                  .collection("pinext_cards")
+                  .orderBy(
+                    'lastTransactionData',
+                    descending: true,
+                  )
+                  .snapshots(),
+              builder: ((context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                return ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: ((context, index) {
+                    PinextCardModel pinextCardModel = PinextCardModel.fromMap(
+                      snapshot.data!.docs[index].data(),
+                    );
+
+                    String color = pinextCardModel.color;
+                    late Color cardColor = getColorFromString(color);
+
+                    return GestureDetector(
+                      onTap: () {
+                        if (isViewOnly) {
+                          context.read<AddTransactionsCubit>().selectCard(pinextCardModel.cardId);
+                        }
+                      },
+                      child: BlocBuilder<AddTransactionsCubit, AddTransactionsState>(
+                        builder: (context, state) {
+                          Widget pinextCardWidget = PinextCard(
+                            title: pinextCardModel.title,
+                            balance: pinextCardModel.balance,
+                            cardColor: cardColor,
+                            isSelected: state.selectedCardNo == pinextCardModel.cardId,
+                            lastTransactionDate: pinextCardModel.lastTransactionData,
+                            cardDetails: pinextCardModel.description,
+                            // cardModel: pinextCardModel,
+                          );
+                          return isViewOnly
+                              ? state.selectedCardNo == pinextCardModel.cardId
+                                  ? pinextCardWidget
+                                  : const SizedBox.shrink()
+                              : pinextCardWidget;
+                        },
+                      ),
+                    );
+                  }),
+                );
+              }),
+            ),
+            const SizedBox(
+              width: defaultPadding - 10,
+            ),
+          ],
+        ),
       ),
     );
   }
