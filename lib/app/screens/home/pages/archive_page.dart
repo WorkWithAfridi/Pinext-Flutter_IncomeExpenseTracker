@@ -49,7 +49,7 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
   late ScrollController monthScrollController;
   @override
   void initState() {
-    monthScrollController = ScrollController(initialScrollOffset: 40.0 * int.parse(currentMonth));
+    monthScrollController = ScrollController(initialScrollOffset: 40.0 * (int.parse(currentMonth) - 1));
     super.initState();
   }
 
