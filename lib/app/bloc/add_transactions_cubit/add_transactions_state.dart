@@ -10,16 +10,19 @@ abstract class AddTransactionsState extends Equatable {
     required this.selectedTransactionMode,
     required this.selectedCardNo,
     required this.selectedDescription,
+    required this.countAs,
   });
   SelectedTransactionMode selectedTransactionMode;
   String selectedCardNo;
   String selectedDescription;
+  bool countAs;
 
   @override
   List<Object> get props => [
         selectedTransactionMode,
         selectedCardNo,
         selectedDescription,
+        countAs
       ];
 }
 
@@ -28,6 +31,7 @@ class AddTransactionsDefaultState extends AddTransactionsState {
     required super.selectedTransactionMode,
     required super.selectedCardNo,
     required super.selectedDescription,
+    required super.countAs,
   });
 }
 
@@ -36,6 +40,7 @@ class AddTransactionsSuccessState extends AddTransactionsState {
     required super.selectedTransactionMode,
     required super.selectedCardNo,
     required super.selectedDescription,
+    required super.countAs,
   });
 }
 
@@ -45,6 +50,7 @@ class AddTransactionsErrorState extends AddTransactionsState {
     required super.selectedTransactionMode,
     required super.selectedCardNo,
     required super.selectedDescription,
+    required super.countAs,
     required this.errorMessage,
   });
 }
@@ -54,5 +60,6 @@ class AddTransactionsLoadingState extends AddTransactionsState {
     required super.selectedTransactionMode,
     required super.selectedCardNo,
     required super.selectedDescription,
+    required super.countAs,
   });
 }

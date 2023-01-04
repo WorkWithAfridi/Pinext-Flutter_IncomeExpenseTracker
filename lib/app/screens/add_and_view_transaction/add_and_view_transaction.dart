@@ -142,101 +142,120 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: defaultPadding,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SelectTransactionTypeCard(),
-                    const SizedBox(
-                      height: 12,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: defaultPadding,
                     ),
-                    Text(
-                      "Amount",
-                      style: boldTextStyle.copyWith(
-                        color: customBlackColor.withOpacity(
-                          .6,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SelectTransactionTypeCard(),
+                        const SizedBox(
+                          height: 12,
                         ),
-                      ),
+                      ],
                     ),
-                    const SizedBox(
-                      height: 8,
+                  ),
+                  ChooseIfCountAsOrNot(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: defaultPadding,
                     ),
-                    CustomTextFormField(
-                      isEnabled: !widget.isViewOnly,
-                      controller: amountController,
-                      hintTitle: "Enter amount...",
-                      textInputType: TextInputType.number,
-                      onChanged: (String value) {},
-                      validator: (value) {
-                        return InputValidation(value).isCorrectNumber();
-                      },
-                      suffixButtonAction: () {},
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    Text(
-                      "Details",
-                      style: boldTextStyle.copyWith(
-                        color: customBlackColor.withOpacity(
-                          .6,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(
+                          height: 12,
                         ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    CustomTextFormField(
-                      isEnabled: !widget.isViewOnly,
-                      controller: detailsController,
-                      hintTitle: "Enter description...",
-                      numberOfLines: 3,
-                      onChanged: (String value) {
-                        context.read<AddTransactionsCubit>().changeSelectedDescription(value);
-                      },
-                      validator: (value) {
-                        return InputValidation(value).isNotEmpty();
-                      },
-                      suffixButtonAction: () {},
-                    ),
-                    widget.isViewOnly
-                        ? const SizedBox.shrink()
-                        : Column(
-                            children: [
-                              const SizedBox(
-                                height: 8,
-                              ),
-                              GetSuggestionsList(),
-                            ],
-                          ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    widget.isViewOnly
-                        ? Text(
-                            "Card",
-                            style: boldTextStyle.copyWith(
-                              color: customBlackColor.withOpacity(
-                                .6,
-                              ),
-                            ),
-                          )
-                        : Text(
-                            "Select card",
-                            style: boldTextStyle.copyWith(
-                              color: customBlackColor.withOpacity(
-                                .6,
-                              ),
+                        Text(
+                          "Amount",
+                          style: boldTextStyle.copyWith(
+                            color: customBlackColor.withOpacity(
+                              .6,
                             ),
                           ),
-                    const SizedBox(
-                      height: 8,
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        CustomTextFormField(
+                          isEnabled: !widget.isViewOnly,
+                          controller: amountController,
+                          hintTitle: "Enter amount...",
+                          textInputType: TextInputType.number,
+                          onChanged: (String value) {},
+                          validator: (value) {
+                            return InputValidation(value).isCorrectNumber();
+                          },
+                          suffixButtonAction: () {},
+                        ),
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        Text(
+                          "Details",
+                          style: boldTextStyle.copyWith(
+                            color: customBlackColor.withOpacity(
+                              .6,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        CustomTextFormField(
+                          isEnabled: !widget.isViewOnly,
+                          controller: detailsController,
+                          hintTitle: "Enter description...",
+                          numberOfLines: 3,
+                          onChanged: (String value) {
+                            context.read<AddTransactionsCubit>().changeSelectedDescription(value);
+                          },
+                          validator: (value) {
+                            return InputValidation(value).isNotEmpty();
+                          },
+                          suffixButtonAction: () {},
+                        ),
+                        widget.isViewOnly
+                            ? const SizedBox.shrink()
+                            : Column(
+                                children: [
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                  GetSuggestionsList(),
+                                ],
+                              ),
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        widget.isViewOnly
+                            ? Text(
+                                "Card",
+                                style: boldTextStyle.copyWith(
+                                  color: customBlackColor.withOpacity(
+                                    .6,
+                                  ),
+                                ),
+                              )
+                            : Text(
+                                "Select card",
+                                style: boldTextStyle.copyWith(
+                                  color: customBlackColor.withOpacity(
+                                    .6,
+                                  ),
+                                ),
+                              ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
               ShowPinextCardList(),
               const SizedBox(
@@ -250,6 +269,55 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
           ),
         ),
       ),
+    );
+  }
+
+  BlocBuilder<AddTransactionsCubit, AddTransactionsState> ChooseIfCountAsOrNot() {
+    return BlocBuilder<AddTransactionsCubit, AddTransactionsState>(
+      builder: (context, state) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const SizedBox(
+              width: 6,
+            ),
+            Checkbox(
+              value: state.countAs,
+              onChanged: (value) {
+                context.read<AddTransactionsCubit>().toggleCountAs(value);
+              },
+            ),
+            GestureDetector(
+                onTap: () {
+                  context.read<AddTransactionsCubit>().toggleCountAs(state.countAs);
+                },
+                child: RichText(
+                  text: TextSpan(
+                    // style: DefaultTextStyle.of(context).style,
+                    style: regularTextStyle.copyWith(
+                      color: customBlackColor.withOpacity(
+                        .6,
+                      ),
+                    ),
+
+                    children: [
+                      const TextSpan(
+                        text: 'Count as ',
+                      ),
+                      TextSpan(
+                        text: state.selectedTransactionMode == SelectedTransactionMode.income ? "INCOME" : "EXPENSE",
+                        style: boldTextStyle.copyWith(
+                          color: state.selectedTransactionMode == SelectedTransactionMode.income
+                              ? Colors.green
+                              : Colors.red,
+                        ),
+                      ),
+                    ],
+                  ),
+                )),
+          ],
+        );
+      },
     );
   }
 
@@ -297,10 +365,10 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
                                   : Colors.transparent,
                             ),
                             child: Text(
-                              "Income",
+                              "Deposit",
                               style: state.selectedTransactionMode == SelectedTransactionMode.income
                                   ? boldTextStyle.copyWith(
-                                      color: Colors.greenAccent[400],
+                                      color: customBlueColor,
                                       fontSize: 20,
                                     )
                                   : boldTextStyle.copyWith(
@@ -340,10 +408,10 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
                                   : Colors.transparent,
                             ),
                             child: Text(
-                              "Expense",
+                              "Withdrawal ",
                               style: state.selectedTransactionMode == SelectedTransactionMode.enpense
                                   ? boldTextStyle.copyWith(
-                                      color: Colors.redAccent[400],
+                                      color: customBlueColor,
                                       fontSize: 20,
                                     )
                                   : boldTextStyle.copyWith(
