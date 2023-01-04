@@ -159,7 +159,16 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
                       ],
                     ),
                   ),
-                  ChooseIfCountAsOrNot(),
+                  widget.isViewOnly
+                      ? const SizedBox.shrink()
+                      : Column(
+                          children: [
+                            ChooseIfmarkAsOrNot(),
+                            const SizedBox(
+                              height: 12,
+                            ),
+                          ],
+                        ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: defaultPadding,
@@ -167,9 +176,6 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const SizedBox(
-                          height: 12,
-                        ),
                         Text(
                           "Amount",
                           style: boldTextStyle.copyWith(
@@ -272,7 +278,7 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
     );
   }
 
-  BlocBuilder<AddTransactionsCubit, AddTransactionsState> ChooseIfCountAsOrNot() {
+  BlocBuilder<AddTransactionsCubit, AddTransactionsState> ChooseIfmarkAsOrNot() {
     return BlocBuilder<AddTransactionsCubit, AddTransactionsState>(
       builder: (context, state) {
         return Row(
@@ -282,14 +288,15 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
               width: 6,
             ),
             Checkbox(
-              value: state.countAs,
+              value: state.markAs,
+              activeColor: customBlueColor,
               onChanged: (value) {
-                context.read<AddTransactionsCubit>().toggleCountAs(value);
+                context.read<AddTransactionsCubit>().togglemarkAs(value);
               },
             ),
             GestureDetector(
                 onTap: () {
-                  context.read<AddTransactionsCubit>().toggleCountAs(state.countAs);
+                  context.read<AddTransactionsCubit>().togglemarkAs(state.markAs);
                 },
                 child: RichText(
                   text: TextSpan(
@@ -302,7 +309,7 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
 
                     children: [
                       const TextSpan(
-                        text: 'Count as ',
+                        text: 'mark as ',
                       ),
                       TextSpan(
                         text: state.selectedTransactionMode == SelectedTransactionMode.income ? "INCOME" : "EXPENSE",

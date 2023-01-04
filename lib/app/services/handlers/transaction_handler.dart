@@ -11,8 +11,7 @@ import '../date_time_services.dart';
 
 class TransactionHandler {
   TransactionHandler._internal();
-  static final TransactionHandler _transactionHandler =
-      TransactionHandler._internal();
+  static final TransactionHandler _transactionHandler = TransactionHandler._internal();
   factory TransactionHandler() => _transactionHandler;
 
   Future addTransaction({
@@ -20,6 +19,7 @@ class TransactionHandler {
     required String description,
     required String transactionType,
     required String cardId,
+    required bool markedAs,
   }) async {
     String response = "Error";
     try {
@@ -64,44 +64,38 @@ class TransactionHandler {
       });
 
       // //Adjusting global balances
-      PinextUserModel pinextUserModel = UserHandler().currentUser;
-      if (transactionType == "Income") {
-        double adjustedMonthlySavings =
-            double.parse(pinextUserModel.monthlySavings) + double.parse(amount);
-        double adjustedNetBalance =
-            double.parse(pinextUserModel.netBalance) + double.parse(amount);
-        await FirebaseServices()
-            .firebaseFirestore
-            .collection("pinext_users")
-            .doc(FirebaseServices().getUserId())
-            .update({
-          "monthlySavings": adjustedMonthlySavings.toString(),
-          "netBalance": adjustedNetBalance.toString(),
-        });
-        await UserHandler().getCurrentUser();
-      } else {
-        double adjustedMonthlySavings =
-            double.parse(pinextUserModel.monthlySavings) - double.parse(amount);
-        double adjustedDailyExpenses =
-            double.parse(pinextUserModel.dailyExpenses) + double.parse(amount);
-        double adjustedMonthlyExpenses =
-            double.parse(pinextUserModel.monthlyExpenses) +
-                double.parse(amount);
-        double adjustedNetBalance =
-            double.parse(pinextUserModel.netBalance) - double.parse(amount);
-        double adjustedWeeklyExpenses =
-            double.parse(pinextUserModel.weeklyExpenses) + double.parse(amount);
-        await FirebaseServices()
-            .firebaseFirestore
-            .collection("pinext_users")
-            .doc(FirebaseServices().getUserId())
-            .update({
-          "netBalance": adjustedNetBalance.toString(),
-          "dailyExpenses": adjustedDailyExpenses.toString(),
-          "monthlyExpenses": adjustedMonthlyExpenses.toString(),
-          "monthlySavings": adjustedMonthlySavings.toString(),
-          "weeklyExpenses": adjustedWeeklyExpenses.toString(),
-        });
+      if (markedAs) {
+        PinextUserModel pinextUserModel = UserHandler().currentUser;
+        if (transactionType == "Income") {
+          double adjustedMonthlySavings = double.parse(pinextUserModel.monthlySavings) + double.parse(amount);
+          double adjustedNetBalance = double.parse(pinextUserModel.netBalance) + double.parse(amount);
+          await FirebaseServices()
+              .firebaseFirestore
+              .collection("pinext_users")
+              .doc(FirebaseServices().getUserId())
+              .update({
+            "monthlySavings": adjustedMonthlySavings.toString(),
+            "netBalance": adjustedNetBalance.toString(),
+          });
+          await UserHandler().getCurrentUser();
+        } else {
+          double adjustedMonthlySavings = double.parse(pinextUserModel.monthlySavings) - double.parse(amount);
+          double adjustedDailyExpenses = double.parse(pinextUserModel.dailyExpenses) + double.parse(amount);
+          double adjustedMonthlyExpenses = double.parse(pinextUserModel.monthlyExpenses) + double.parse(amount);
+          double adjustedNetBalance = double.parse(pinextUserModel.netBalance) - double.parse(amount);
+          double adjustedWeeklyExpenses = double.parse(pinextUserModel.weeklyExpenses) + double.parse(amount);
+          await FirebaseServices()
+              .firebaseFirestore
+              .collection("pinext_users")
+              .doc(FirebaseServices().getUserId())
+              .update({
+            "netBalance": adjustedNetBalance.toString(),
+            "dailyExpenses": adjustedDailyExpenses.toString(),
+            "monthlyExpenses": adjustedMonthlyExpenses.toString(),
+            "monthlySavings": adjustedMonthlySavings.toString(),
+            "weeklyExpenses": adjustedWeeklyExpenses.toString(),
+          });
+        }
       }
 
       response = "Success";

@@ -11,7 +11,7 @@ class AddTransactionsCubit extends Cubit<AddTransactionsState> {
             selectedTransactionMode: SelectedTransactionMode.enpense,
             selectedCardNo: "none",
             selectedDescription: "none",
-            countAs: false,
+            markAs: true,
           ),
         );
 
@@ -21,18 +21,18 @@ class AddTransactionsCubit extends Cubit<AddTransactionsState> {
         selectedTransactionMode: selectedTransactionMode,
         selectedCardNo: state.selectedCardNo,
         selectedDescription: state.selectedDescription,
-        countAs: state.countAs,
+        markAs: state.markAs,
       ),
     );
   }
 
-  toggleCountAs(value) {
+  togglemarkAs(value) {
     emit(
       AddTransactionsDefaultState(
         selectedTransactionMode: state.selectedTransactionMode,
         selectedCardNo: state.selectedCardNo,
         selectedDescription: state.selectedDescription,
-        countAs: !state.countAs,
+        markAs: !state.markAs,
       ),
     );
   }
@@ -46,7 +46,7 @@ class AddTransactionsCubit extends Cubit<AddTransactionsState> {
       selectedTransactionMode: state.selectedTransactionMode,
       selectedCardNo: state.selectedCardNo,
       selectedDescription: state.selectedDescription,
-      countAs: state.countAs,
+      markAs: state.markAs,
     ));
     await Future.delayed(const Duration(seconds: 2));
     String response = await TransactionHandler().addTransaction(
@@ -54,13 +54,14 @@ class AddTransactionsCubit extends Cubit<AddTransactionsState> {
       description: details,
       transactionType: transctionType,
       cardId: state.selectedCardNo,
+      markedAs: state.markAs
     );
     if (response == 'Success') {
       emit(AddTransactionsSuccessState(
         selectedTransactionMode: state.selectedTransactionMode,
         selectedCardNo: state.selectedCardNo,
         selectedDescription: state.selectedDescription,
-        countAs: state.countAs,
+        markAs: state.markAs,
       ));
     } else {
       emit(AddTransactionsErrorState(
@@ -68,7 +69,7 @@ class AddTransactionsCubit extends Cubit<AddTransactionsState> {
         selectedCardNo: state.selectedCardNo,
         errorMessage: response,
         selectedDescription: state.selectedDescription,
-        countAs: state.countAs,
+        markAs: state.markAs,
       ));
     }
   }
@@ -78,7 +79,7 @@ class AddTransactionsCubit extends Cubit<AddTransactionsState> {
       selectedCardNo: selectedCardNo,
       selectedTransactionMode: state.selectedTransactionMode,
       selectedDescription: state.selectedDescription,
-      countAs: state.countAs,
+      markAs: state.markAs,
     ));
   }
 
@@ -87,7 +88,7 @@ class AddTransactionsCubit extends Cubit<AddTransactionsState> {
       selectedTransactionMode: state.selectedTransactionMode,
       selectedCardNo: state.selectedCardNo,
       selectedDescription: state.selectedDescription,
-      countAs: state.countAs,
+      markAs: state.markAs,
     ));
   }
 
@@ -96,7 +97,7 @@ class AddTransactionsCubit extends Cubit<AddTransactionsState> {
       selectedTransactionMode: state.selectedTransactionMode,
       selectedCardNo: state.selectedCardNo,
       selectedDescription: selectedDescription,
-      countAs: state.countAs,
+      markAs: state.markAs,
     ));
   }
 }
