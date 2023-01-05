@@ -13,12 +13,25 @@ import 'package:uuid/uuid.dart';
 
 import '../../API/firebase_directories.dart';
 import '../../app_data/app_constants/constants.dart';
+import '../../models/pinext_card_model.dart';
 import '../../shared/widgets/custom_snackbar.dart';
 
 class FileHandler {
   FileHandler._internal();
   static final FileHandler _fileHandler = FileHandler._internal();
   factory FileHandler() => _fileHandler;
+
+  Future<PinextCardModel> getCardDetails(String cardId) async {
+    DocumentSnapshot cardData = await FirebaseServices()
+        .firebaseFirestore
+        .collection("pinext_users")
+        .doc(UserHandler().currentUser.userId)
+        .collection("pinext_cards")
+        .doc(cardId)
+        .get();
+
+    return PinextCardModel.fromMap(cardData.data() as Map<String, dynamic>);
+  }
 
   createReportForMonth(int month, BuildContext context, String selectedYear) async {
     try {
@@ -28,9 +41,10 @@ class FileHandler {
       final Workbook workbook = Workbook();
       final Worksheet sheet = workbook.worksheets[0];
       sheet.getRangeByName('A1').setText("Date");
-      sheet.getRangeByName("B1").setText("Details");
-      sheet.getRangeByName("C1").setText("Amount");
-      sheet.getRangeByName("D1").setText("Transaction Type");
+      sheet.getRangeByName("B1").setText("Card");
+      sheet.getRangeByName("C1").setText("Details");
+      sheet.getRangeByName("D1").setText("Amount");
+      sheet.getRangeByName("E1").setText("Transaction Type");
       QuerySnapshot doc = await FirebaseServices()
           .firebaseFirestore
           .collection(USERS_DIRECTORY)
@@ -54,6 +68,8 @@ class FileHandler {
           String details = doc.docs[i]["details"];
           String amount = doc.docs[i]["amount"];
           String type = doc.docs[i]["transactionType"];
+          String cardId = doc.docs[i]["cardId"];
+          PinextCardModel card = await getCardDetails(cardId);
           if (type == "Income") {
             income += double.parse(amount);
           } else if (type == "Expense") {
@@ -62,9 +78,10 @@ class FileHandler {
           sheet.getRangeByName('A${i + offset}').setText(
                 DateFormat('dd-MM-yyyy').format(DateTime.parse(date)),
               );
-          sheet.getRangeByName("B${i + offset}").setText(details);
-          sheet.getRangeByName("C${i + offset}").setText(amount);
-          sheet.getRangeByName("D${i + offset}").setText(type);
+          sheet.getRangeByName("B${i + offset}").setText(card.title);
+          sheet.getRangeByName("C${i + offset}").setText(details);
+          sheet.getRangeByName("D${i + offset}").setText(amount);
+          sheet.getRangeByName("E${i + offset}").setText(type == "Income" ? "Deposit" : "Withdrawal");
         }
       }
       sheet
