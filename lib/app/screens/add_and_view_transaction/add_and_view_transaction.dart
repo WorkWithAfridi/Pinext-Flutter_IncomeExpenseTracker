@@ -648,15 +648,19 @@ class _GetCardListWidget extends StatelessWidget {
                     String color = pinextCardModel.color;
                     late Color cardColor = getColorFromString(color);
 
-                    return GestureDetector(
-                      onTap: () {
-                        if (isViewOnly) {
-                          context.read<AddTransactionsCubit>().selectCard(pinextCardModel.cardId);
-                        }
-                      },
-                      child: BlocBuilder<AddTransactionsCubit, AddTransactionsState>(
-                        builder: (context, state) {
-                          Widget pinextCardWidget = PinextCard(
+                    return BlocBuilder<AddTransactionsCubit, AddTransactionsState>(
+                      builder: (context, state) {
+                        Widget pinextCardWidget = GestureDetector(
+                          onTap: () {
+                            if (!isViewOnly) {
+                              if (state.selectedCardNo == pinextCardModel.cardId) {
+                                context.read<AddTransactionsCubit>().selectCard("none");
+                              } else {
+                                context.read<AddTransactionsCubit>().selectCard(pinextCardModel.cardId);
+                              }
+                            }
+                          },
+                          child: PinextCard(
                             title: pinextCardModel.title,
                             balance: pinextCardModel.balance,
                             cardColor: cardColor,
@@ -664,14 +668,14 @@ class _GetCardListWidget extends StatelessWidget {
                             lastTransactionDate: pinextCardModel.lastTransactionData,
                             cardDetails: pinextCardModel.description,
                             // cardModel: pinextCardModel,
-                          );
-                          return isViewOnly
-                              ? state.selectedCardNo == pinextCardModel.cardId
-                                  ? pinextCardWidget
-                                  : const SizedBox.shrink()
-                              : pinextCardWidget;
-                        },
-                      ),
+                          ),
+                        );
+                        return isViewOnly
+                            ? state.selectedCardNo == pinextCardModel.cardId
+                                ? pinextCardWidget
+                                : const SizedBox.shrink()
+                            : pinextCardWidget;
+                      },
                     );
                   }),
                 );
