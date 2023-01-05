@@ -14,33 +14,29 @@ import 'package:uuid/uuid.dart';
 import '../../API/firebase_directories.dart';
 import '../../app_data/app_constants/constants.dart';
 import '../../shared/widgets/custom_snackbar.dart';
-import '../date_time_services.dart';
 
 class FileHandler {
   FileHandler._internal();
   static final FileHandler _fileHandler = FileHandler._internal();
   factory FileHandler() => _fileHandler;
 
-  createReportForMonth(int month, BuildContext context) async {
+  createReportForMonth(int month, BuildContext context, String selectedYear) async {
     try {
       String selectedMonthInString = months[month];
       month = month + 1;
-      String selectedMonth =
-          "0$month".length > 2 ? "0$month".substring(1, 3) : "0$month";
+      String selectedMonth = "0$month".length > 2 ? "0$month".substring(1, 3) : "0$month";
       final Workbook workbook = Workbook();
-
       final Worksheet sheet = workbook.worksheets[0];
       sheet.getRangeByName('A1').setText("Date");
       sheet.getRangeByName("B1").setText("Details");
       sheet.getRangeByName("C1").setText("Amount");
       sheet.getRangeByName("D1").setText("Transaction Type");
-
       QuerySnapshot doc = await FirebaseServices()
           .firebaseFirestore
           .collection(USERS_DIRECTORY)
           .doc(FirebaseServices().getUserId())
           .collection(TRANSACTIONS_DIRECTORY)
-          .doc(currentYear)
+          .doc(selectedYear)
           .collection(selectedMonth)
           .orderBy(
             "transactionDate",
@@ -51,7 +47,6 @@ class FileHandler {
       double income = 0.0;
       double expense = 0.0;
       int totalTransactions = doc.docs.length;
-
       if (doc.docs.isNotEmpty) {
         for (int i = 0; i < totalTransactions; i++) {
           log(doc.docs[i]["transactionDate"]);
@@ -72,7 +67,6 @@ class FileHandler {
           sheet.getRangeByName("D${i + offset}").setText(type);
         }
       }
-
       sheet
           .getRangeByName(
             "A${totalTransactions + offset + 1}",
@@ -105,8 +99,7 @@ class FileHandler {
       final List<int> bytes = workbook.saveAsStream();
       workbook.dispose();
       final String path = (await getApplicationDocumentsDirectory()).path;
-      final String fileName =
-          "$path/report${months[month]}-${const Uuid().v4()}.xlsx";
+      final String fileName = "$path/report${months[month - 1]}-${const Uuid().v4()}.xlsx";
       final File file = File(fileName);
       await file.writeAsBytes(bytes, flush: true);
       file.create();

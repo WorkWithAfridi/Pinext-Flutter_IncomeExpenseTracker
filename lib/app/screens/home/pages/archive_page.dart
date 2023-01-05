@@ -97,10 +97,13 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
                           String selectedMonth = "0${int.parse(state.selectedMonth)}".length > 2
                               ? "0${int.parse(state.selectedMonth)}".substring(1, 3)
                               : "0${int.parse(state.selectedMonth)}";
+
                           FileHandler().createReportForMonth(
-                            int.parse(selectedMonth),
-                            context,
-                          );
+                              int.parse(
+                                selectedMonth,
+                              ),
+                              context,
+                              state.selectedYear);
                         },
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.end,
