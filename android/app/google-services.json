@@ -7,18 +7,18 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1049606352114:android:f425ec777c4e833859346b",
+        "mobilesdk_app_id": "1:1049606352114:android:e6683b50a9c0f64659346b",
         "android_client_info": {
           "package_name": "com.workwithafridi.pinext"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1049606352114-gredieclm5h89v0auuntk69tpavc7ckg.apps.googleusercontent.com",
+          "client_id": "1049606352114-h3at3qg2dhngfe16tasmj7gv1ppambgh.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.workwithafridi.pinext",
-            "certificate_hash": "c7aabd57348b927d8719e36a8df22bbf82456058"
+            "certificate_hash": "ba9ec9f953026e2ecfd9a21f61269055833890ee"
           }
         },
         {
