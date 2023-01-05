@@ -15,6 +15,7 @@ import '../../../bloc/archive_cubit/archive_cubit.dart';
 import '../../../bloc/archive_cubit/user_statistics_cubit/user_statistics_cubit.dart';
 import '../../../services/date_time_services.dart';
 import '../../../services/handlers/file_handler.dart';
+import '../../../shared/widgets/custom_snackbar.dart';
 import '../../../shared/widgets/transaction_details_card.dart';
 
 class ArchivePage extends StatelessWidget {
@@ -97,6 +98,13 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
                           String selectedMonth = "0${int.parse(state.selectedMonth)}".length > 2
                               ? "0${int.parse(state.selectedMonth)}".substring(1, 3)
                               : "0${int.parse(state.selectedMonth)}";
+
+                          GetCustomSnackbar(
+                            title: "Generating Report",
+                            message: "Your report is being generated, please be patient! :)",
+                            snackbarType: SnackbarType.info,
+                            context: context,
+                          );
 
                           FileHandler().createReportForMonth(
                               int.parse(
