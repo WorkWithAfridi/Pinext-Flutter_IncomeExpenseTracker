@@ -44,13 +44,21 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
-	<true/>	
-	<!-- <array>
-		<string>https</string>
-		<string>http</string>
-		<string>tel</string>
-		<string>sms</string>
-		<string>mailto</string>
-	</array> -->
+	<true/>
+	<key>CFBundleTypeRole</key>
+	<string>Editor</string>
+	<key>CFBundleURLSchemes</key>
+	<array>
+		<string>com.googleusercontent.apps.107731993306-6s44u18onibp6gi0ddj94si1aifshhg6</string>
+	</array>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.1049606352114-pm6ss9hlua6ka2tf5af354mnhtg30bg0</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

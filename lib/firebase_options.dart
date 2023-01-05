@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -49,9 +46,19 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyD5SRGXoR5rztuz_hWaOlvYHOYbqOfYAlo',
+    appId: '1:1049606352114:web:68b88c1f0074aafa59346b',
+    messagingSenderId: '1049606352114',
+    projectId: 'pinext-495de',
+    authDomain: 'pinext-495de.firebaseapp.com',
+    storageBucket: 'pinext-495de.appspot.com',
+    measurementId: 'G-20GXDC5NJF',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCUU9y66kC7Un8LhBAGmH14VIymL9MKpcM',
-    appId: '1:1049606352114:android:f425ec777c4e833859346b',
+    appId: '1:1049606352114:android:e6683b50a9c0f64659346b',
     messagingSenderId: '1049606352114',
     projectId: 'pinext-495de',
     storageBucket: 'pinext-495de.appspot.com',
@@ -59,10 +66,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyB75AGAVnyd5jTW0Wqll7qNbSV_Nkd-BmQ',
-    appId: '1:1049606352114:ios:2a30fd6663c6da6659346b',
+    appId: '1:1049606352114:ios:ff1c42c6cf8ce7d559346b',
     messagingSenderId: '1049606352114',
     projectId: 'pinext-495de',
     storageBucket: 'pinext-495de.appspot.com',
+    androidClientId: '1049606352114-h3at3qg2dhngfe16tasmj7gv1ppambgh.apps.googleusercontent.com',
     iosClientId: '1049606352114-pm6ss9hlua6ka2tf5af354mnhtg30bg0.apps.googleusercontent.com',
     iosBundleId: 'com.workwithafridi.pinext',
   );
