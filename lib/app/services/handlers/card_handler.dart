@@ -32,12 +32,14 @@ class CardHandler {
     PinextCardModel cardModel;
     try {
       if (userCards!.isEmpty) {
-        log("Fetching card from firebase");
-        cardModel = await getCard(cardId);
-      } else {
-        log("Fetching card from local card list");
-        cardModel = userCards!.firstWhere((element) => element.cardId == cardId);
+        // log("Fetching card from firebase");
+        // cardModel = await getCard(cardId);
+        await Future.delayed(const Duration(seconds: 1));
       }
+      //  else {
+      log("Fetching card from local card list");
+      cardModel = userCards!.firstWhere((element) => element.cardId == cardId);
+      // }
     } catch (err) {
       cardModel = PinextCardModel(
         cardId: "000",
