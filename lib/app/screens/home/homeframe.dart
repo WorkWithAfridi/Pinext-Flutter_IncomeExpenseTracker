@@ -14,6 +14,7 @@ import 'package:pinext/app/screens/home/pages/app_settings_screen/app_settings_s
 import 'package:pinext/app/screens/home/pages/archive_page.dart';
 import 'package:pinext/app/screens/home/pages/cards_and_balance_page.dart';
 import 'package:pinext/app/screens/home/pages/home_page.dart';
+import 'package:pinext/app/services/handlers/card_handler.dart';
 
 import '../../app_data/app_constants/constants.dart';
 import '../../app_data/app_constants/fonts.dart';
@@ -32,6 +33,7 @@ class _HomeframeState extends State<Homeframe> {
   @override
   void initState() {
     super.initState();
+    CardHandler().getUserCards();
     // AppHandler().checkForUpdate(context);
     // showIntroductions();
     //Add introKeys to children widgets

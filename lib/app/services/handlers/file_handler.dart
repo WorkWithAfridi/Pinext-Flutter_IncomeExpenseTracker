@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pinext/app/services/firebase_services.dart';
+import 'package:pinext/app/services/handlers/card_handler.dart';
 import 'package:pinext/app/services/handlers/user_handler.dart';
 import 'package:syncfusion_flutter_xlsio/xlsio.dart';
 import 'package:uuid/uuid.dart';
@@ -20,18 +21,6 @@ class FileHandler {
   FileHandler._internal();
   static final FileHandler _fileHandler = FileHandler._internal();
   factory FileHandler() => _fileHandler;
-
-  Future<PinextCardModel> getCardDetails(String cardId) async {
-    DocumentSnapshot cardData = await FirebaseServices()
-        .firebaseFirestore
-        .collection("pinext_users")
-        .doc(UserHandler().currentUser.userId)
-        .collection("pinext_cards")
-        .doc(cardId)
-        .get();
-
-    return PinextCardModel.fromMap(cardData.data() as Map<String, dynamic>);
-  }
 
   createReportForMonth(int month, BuildContext context, String selectedYear) async {
     try {
@@ -69,7 +58,7 @@ class FileHandler {
           String amount = doc.docs[i]["amount"];
           String type = doc.docs[i]["transactionType"];
           String cardId = doc.docs[i]["cardId"];
-          PinextCardModel card = await getCardDetails(cardId);
+          PinextCardModel card = await CardHandler().getCardData(cardId);
           if (type == "Income") {
             income += double.parse(amount);
           } else if (type == "Expense") {

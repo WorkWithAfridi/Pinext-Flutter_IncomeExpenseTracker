@@ -1,9 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
-import 'package:pinext/app/services/firebase_services.dart';
-import 'package:pinext/app/services/handlers/user_handler.dart';
+import 'package:pinext/app/services/handlers/card_handler.dart';
 
 import '../../app_data/app_constants/domentions.dart';
 import '../../app_data/app_constants/fonts.dart';
@@ -27,9 +25,7 @@ class TransactionDetailsCard extends StatefulWidget {
 class _TransactionDetailsCardState extends State<TransactionDetailsCard> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    getCardDetails();
   }
 
   @override
@@ -72,7 +68,7 @@ class _TransactionDetailsCardState extends State<TransactionDetailsCard> {
                       Flexible(
                         flex: 2,
                         child: FutureBuilder(
-                          future: getCardDetails(),
+                          future: CardHandler().getCardData(widget.pinextTransactionModel.cardId),
                           builder: ((context, snapshot) {
                             if (snapshot.hasData) {
                               PinextCardModel cardDetails = snapshot.data as PinextCardModel;
@@ -163,22 +159,4 @@ class _TransactionDetailsCardState extends State<TransactionDetailsCard> {
       ),
     );
   }
-
-  Future<PinextCardModel> getCardDetails() async {
-    String cardId = widget.pinextTransactionModel.cardId;
-    DocumentSnapshot cardData = await FirebaseServices()
-        .firebaseFirestore
-        .collection("pinext_users")
-        .doc(UserHandler().currentUser.userId)
-        .collection("pinext_cards")
-        .doc(cardId)
-        .get();
-
-    return PinextCardModel.fromMap(cardData.data() as Map<String, dynamic>);
-  }
-
-  // Future<String> getCardTitle() async {
-  //   PinextCardModel card = await getCardDetails();
-  //   return card.title;
-  // }
 }
