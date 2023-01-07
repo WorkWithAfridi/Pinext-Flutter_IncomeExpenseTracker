@@ -20,9 +20,10 @@ In other words PINEXT can be a valuable tool for individuals looking to better u
 ## Stack
 
 - Framework: Flutter
-- Statemanagement: BLoC
+- State Management: BLoC
+- Platform: Android, iOS, WEB
 - Database: Cloud Firebase
-- User authentication: Firebase Authentication using Gmail and password
+- User authentication: Firebase Authentication - Email & Password or via Google Authentication
 
 ## Firebase Firestore Architecture Structure
 
