@@ -6,13 +6,15 @@ A full-stack Personal Income Expense tracker made with Flutter BLoC and Firebase
 
 ## Promotional Images
 
-![PromoImageOne](https://github.com/WorkWithAfridi/Pinext-PersonalIncomeExpenseTrackingApp/blob/master/assets/promotional_images/promo_img_1.png?raw=true)
+<p align="center">
+<img src="https://github.com/WorkWithAfridi/Pinext-PersonalIncomeExpenseTrackingApp/blob/master/assets/promotional_images/promo_img_1.png" width="310" height="640">
+<img src="https://github.com/WorkWithAfridi/Pinext-PersonalIncomeExpenseTrackingApp/blob/master/assets/promotional_images/promo_img_2.png" width="310" height="640">
+</p>
 
-![PromoImageTwo](https://github.com/WorkWithAfridi/Pinext-PersonalIncomeExpenseTrackingApp/blob/master/assets/promotional_images/promo_img_2.png?raw=true)
-
-![PromoImageThree](https://github.com/WorkWithAfridi/Pinext-PersonalIncomeExpenseTrackingApp/blob/master/assets/promotional_images/promo_img_3.png?raw=true)
-
-![PromoImageFour](https://github.com/WorkWithAfridi/Pinext-PersonalIncomeExpenseTrackingApp/blob/master/assets/promotional_images/promo_img_4.png?raw=true)
+<p align="center">
+<img src="https://github.com/WorkWithAfridi/Pinext-PersonalIncomeExpenseTrackingApp/blob/master/assets/promotional_images/promo_img_3.png" width="310" height="640">
+<img src="https://github.com/WorkWithAfridi/Pinext-PersonalIncomeExpenseTrackingApp/blob/master/assets/promotional_images/promo_img_4.png" width="310" height="640">
+</p>
 
 ## Stack
 
