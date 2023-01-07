@@ -2,7 +2,9 @@
 
 ## A full-stack personal expense tracker using Bloc, Firebase and Flutter.
 
-A full-stack Personal Income Expense tracker made with Flutter BLoC and Firebase, where users can sign in using email and password and can upload their money source as Cards and track their daily, weekly, monthly and yearly income and expenses. Users can also download a report of their expenses directly from the app as a pdf file or .csv file.
+PINEXT is a personal income expense tracking app that allows individuals to track their income and expenses on their mobile phones. The app includes a backend system for storing and organizing financial data, as well as user authentication to ensure that only authorized users can access the information. The app also offers a range of features to help users manage their finances, such as the ability to input and categorize income and expenses, set budgets and financial goals, and receive alerts when their montly budgets are running low. It also provide useful insights and analysis, such as budgeting advice and generating reports, to help users understand their financial situation and make more informed decisions
+
+In other words PINEXT can be a valuable tool for individuals looking to better understand their financial situation and make more informed decisions about how to save and spend their money.
 
 ## Promotional Images
 
@@ -32,15 +34,3 @@ A full-stack Personal Income Expense tracker made with Flutter BLoC and Firebase
                 - Date
     - Goals { contains users goals and milestones. }
 - AppData { contains app version data. }
-
-## Want to contribute to the project? 
-
-Just send in your pull req. and I'll for sure have a look into it. :)
-
-## How to install the app on your physical device
-
-Download the source code and compile the apk using Flutter CLI or Android Studio. Or  just HMU at Khondakarafridi35@gmail.com :)
-
-## APKs for Android
-
-APKs can be found: [here](https://drive.google.com/drive/folders/1Z-fPUf9SbRhjLuHZsv87LCJxbRI3bJQT?usp=sharing)
