@@ -6,7 +6,9 @@ A full-stack Personal Income Expense tracker made with Flutter BLoC and Firebase
 
 ## Promotional Images
 
-![Demo Image](https://github.com/llKYOTOll/Pinext-PersonalIncomeExpenseTrackingApp/blob/master/assets/promotional_images/Screenshot%202022-09-25%20093843.png?raw=true)
+![PromoImageOne&Two]
+(https://github.com/WorkWithAfridi/Pinext-PersonalIncomeExpenseTrackingApp/blob/master/assets/promotional_images/promo_img_1.png?raw=true)
+(https://github.com/WorkWithAfridi/Pinext-PersonalIncomeExpenseTrackingApp/blob/master/assets/promotional_images/promo_img_2.png?raw=true)
 
 ## Stack
 
