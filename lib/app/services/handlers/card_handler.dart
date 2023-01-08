@@ -43,8 +43,8 @@ class CardHandler {
     } catch (err) {
       cardModel = PinextCardModel(
         cardId: "000",
-        title: "",
-        description: "",
+        title: "CARD DEL",
+        description: "This card has been deleted by the user and can no longer be accessed!",
         balance: 0000,
         color: "Light Blue",
         lastTransactionData: DateTime.now().toString(),
