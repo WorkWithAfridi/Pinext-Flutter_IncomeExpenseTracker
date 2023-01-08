@@ -283,47 +283,63 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
   BlocBuilder<AddTransactionsCubit, AddTransactionsState> ChooseIfmarkAsOrNot() {
     return BlocBuilder<AddTransactionsCubit, AddTransactionsState>(
       builder: (context, state) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+        return Column(
           children: [
-            const SizedBox(
-              width: 6,
-            ),
-            Checkbox(
-              value: state.markAs,
-              activeColor: customBlueColor,
-              onChanged: (value) {
-                context.read<AddTransactionsCubit>().togglemarkAs(value);
-              },
-            ),
-            GestureDetector(
-                onTap: () {
-                  context.read<AddTransactionsCubit>().togglemarkAs(state.markAs);
-                },
-                child: RichText(
-                  text: TextSpan(
-                    // style: DefaultTextStyle.of(context).style,
-                    style: regularTextStyle.copyWith(
-                      color: customBlackColor.withOpacity(
-                        .6,
-                      ),
-                    ),
-
-                    children: [
-                      const TextSpan(
-                        text: 'mark as ',
-                      ),
-                      TextSpan(
-                        text: state.selectedTransactionMode == SelectedTransactionMode.income ? "INCOME" : "EXPENSE",
-                        style: boldTextStyle.copyWith(
-                          color: state.selectedTransactionMode == SelectedTransactionMode.income
-                              ? Colors.green
-                              : Colors.red,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  width: 6,
+                ),
+                Checkbox(
+                  value: state.markAs,
+                  activeColor: customBlueColor,
+                  onChanged: (value) {
+                    context.read<AddTransactionsCubit>().togglemarkAs(value);
+                  },
+                ),
+                GestureDetector(
+                    onTap: () {
+                      context.read<AddTransactionsCubit>().togglemarkAs(state.markAs);
+                    },
+                    child: RichText(
+                      text: TextSpan(
+                        // style: DefaultTextStyle.of(context).style,
+                        style: regularTextStyle.copyWith(
+                          color: customBlackColor.withOpacity(
+                            .6,
+                          ),
                         ),
+
+                        children: [
+                          const TextSpan(
+                            text: 'mark as ',
+                          ),
+                          TextSpan(
+                            text:
+                                state.selectedTransactionMode == SelectedTransactionMode.income ? "INCOME" : "EXPENSE",
+                            style: boldTextStyle.copyWith(
+                              color: state.selectedTransactionMode == SelectedTransactionMode.income
+                                  ? Colors.green
+                                  : Colors.red,
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
+                    )),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+              child: Text(
+                "*Marking this transaction as an ${state.selectedTransactionMode == SelectedTransactionMode.income ? "income" : "expense"} will contribute the transaction amount towards your monthly, weekly & daily ${state.selectedTransactionMode == SelectedTransactionMode.income ? "budget goals" : "budget"}.",
+                style: regularTextStyle.copyWith(
+                  color: customBlackColor.withOpacity(
+                    .6,
                   ),
-                )),
+                ),
+              ),
+            )
           ],
         );
       },
