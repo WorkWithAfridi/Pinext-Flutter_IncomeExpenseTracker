@@ -490,7 +490,7 @@ class _GetExpensesWidget extends StatelessWidget {
           ),
           width: getWidth(context),
           decoration: BoxDecoration(
-            color: customDarkBBlueColor,
+            color: greyColor,
             borderRadius: BorderRadius.circular(
               defaultBorder,
             ),
@@ -498,14 +498,22 @@ class _GetExpensesWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              Text(
+                "You've spent",
+                style: regularTextStyle.copyWith(
+                  color: customBlackColor.withOpacity(.6),
+                ),
+              ),
+              const SizedBox(
+                height: 4,
+              ),
               BlocBuilder<UserBloc, UserState>(
                 builder: (context, state) {
                   if (state is AuthenticatedUserState) {
                     return Text(
                       "- ${state.monthlyExpenses} Tk",
                       style: boldTextStyle.copyWith(
-                        fontSize: 25,
-                        color: whiteColor.withOpacity(.8),
+                        fontSize: 20,
                       ),
                     );
                   }
@@ -522,10 +530,9 @@ class _GetExpensesWidget extends StatelessWidget {
                 height: 4,
               ),
               Text(
-                "This month",
-                style: boldTextStyle.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: whiteColor,
+                "in ${months[int.parse(currentMonth) - 1]}.",
+                style: regularTextStyle.copyWith(
+                  color: customBlackColor.withOpacity(.6),
                 ),
               ),
             ],
