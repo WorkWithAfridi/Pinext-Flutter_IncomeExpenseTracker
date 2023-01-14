@@ -8,6 +8,7 @@ import 'package:pinext/app/API/firebase_directories.dart';
 import 'package:pinext/app/app_data/custom_transition_page_route/custom_transition_page_route.dart';
 import 'package:pinext/app/bloc/cards_and_balances_cubit/cards_and_balances_cubit.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
+import 'package:pinext/app/screens/edit_net_balance_screen.dart';
 
 import '../../../app_data/app_constants/constants.dart';
 import '../../../app_data/app_constants/domentions.dart';
@@ -79,30 +80,48 @@ class CardsAndBalanceView extends StatelessWidget {
                   BlocBuilder<UserBloc, UserState>(
                     builder: (context, state) {
                       if (state is AuthenticatedUserState) {
-                        return FittedBox(
-                          child: McCountingText(
-                            begin: 0,
-                            end: double.parse(state.netBalance),
-                            maxLines: 1,
-                            precision: 2,
-                            style: boldTextStyle.copyWith(
-                              color: whiteColor,
-                              fontSize: 50,
+                        return Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              Icons.edit,
+                              size: 20,
+                              color: customBlackColor,
                             ),
-                            duration: const Duration(seconds: 3),
-                            curve: Curves.fastOutSlowIn,
-                          ),
+                            FittedBox(
+                              child: McCountingText(
+                                begin: 0,
+                                end: double.parse(state.netBalance),
+                                maxLines: 1,
+                                precision: 2,
+                                style: boldTextStyle.copyWith(
+                                  color: whiteColor,
+                                  fontSize: 50,
+                                ),
+                                duration: const Duration(seconds: 3),
+                                curve: Curves.fastOutSlowIn,
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  CustomTransitionPageRoute(
+                                    childWidget: EditNetBalanceScreen(
+                                      netBalance: state.netBalance,
+                                    ),
+                                  ),
+                                );
+                              },
+                              icon: const Icon(
+                                Icons.edit,
+                                size: 20,
+                                color: whiteColor,
+                              ),
+                            )
+                          ],
                         );
-
-                        // FittedBox(
-                        //   child: Text(
-                        //     state.netBalance,
-                        //     style: boldTextStyle.copyWith(
-                        //       color: whiteColor,
-                        //       fontSize: 50,
-                        //     ),
-                        //   ),
-                        // );
                       } else {
                         return const SizedBox.shrink();
                       }
