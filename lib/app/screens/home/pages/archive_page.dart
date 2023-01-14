@@ -80,12 +80,6 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Pinext",
-                    style: regularTextStyle.copyWith(
-                      color: customBlackColor.withOpacity(.6),
-                    ),
-                  ),
-                  Text(
                     "Archives",
                     style: boldTextStyle.copyWith(
                       fontSize: 25,

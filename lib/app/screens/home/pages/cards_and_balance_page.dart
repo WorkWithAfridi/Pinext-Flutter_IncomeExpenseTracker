@@ -45,12 +45,6 @@ class CardsAndBalanceView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Pinext",
-              style: regularTextStyle.copyWith(
-                color: customBlackColor.withOpacity(.6),
-              ),
-            ),
-            Text(
               "Cards and Balances",
               style: boldTextStyle.copyWith(
                 fontSize: 25,
