@@ -14,6 +14,7 @@ import '../../../app_data/app_constants/constants.dart';
 import '../../../app_data/app_constants/domentions.dart';
 import '../../../app_data/custom_transition_page_route/custom_transition_page_route.dart';
 import '../../../app_data/theme_data/colors.dart';
+import '../../../bloc/homeframe_cubit/homeframe_page_cubit.dart';
 import '../../../bloc/homepage_cubit/homepage_cubit.dart';
 import '../../../bloc/userBloc/user_bloc.dart';
 import '../../../models/pinext_transaction_model.dart';
@@ -825,11 +826,28 @@ class _GetPastTransactionsWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          "Last 10 transactions",
-          style: boldTextStyle.copyWith(
-            fontSize: 20,
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "Last 10 transactions",
+              style: boldTextStyle.copyWith(
+                fontSize: 20,
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                context.read<HomeframeCubit>().changeHomeframePage(1);
+              },
+              child: Text(
+                "View all",
+                style: regularTextStyle.copyWith(
+                  fontSize: 14,
+                  color: customBlackColor.withOpacity(.6),
+                ),
+              ),
+            ),
+          ],
         ),
         const SizedBox(
           height: 4,
