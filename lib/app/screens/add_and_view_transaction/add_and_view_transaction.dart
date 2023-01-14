@@ -131,7 +131,7 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
           ),
         ),
         title: Text(
-          widget.isViewOnly ? "Transaction details" : "Adding a new Transaction",
+          widget.isViewOnly ? "Transaction details" : "Adding a new transaction",
           style: regularTextStyle,
         ),
       ),

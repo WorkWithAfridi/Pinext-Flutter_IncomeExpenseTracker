@@ -64,7 +64,7 @@ class Editbudgetview extends StatelessWidget {
           ),
         ),
         title: Text(
-          "Budget",
+          "Edit budget",
           style: regularTextStyle,
         ),
       ),

@@ -481,6 +481,56 @@ class _GetExpensesWidget extends StatelessWidget {
             }
           },
         ),
+        const SizedBox(
+          height: 8,
+        ),
+        Container(
+          padding: const EdgeInsets.all(
+            defaultPadding,
+          ),
+          width: getWidth(context),
+          decoration: BoxDecoration(
+            color: customDarkBBlueColor,
+            borderRadius: BorderRadius.circular(
+              defaultBorder,
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              BlocBuilder<UserBloc, UserState>(
+                builder: (context, state) {
+                  if (state is AuthenticatedUserState) {
+                    return Text(
+                      "- ${state.monthlyExpenses} Tk",
+                      style: boldTextStyle.copyWith(
+                        fontSize: 25,
+                        color: whiteColor.withOpacity(.8),
+                      ),
+                    );
+                  }
+                  return Text(
+                    "Loading...",
+                    style: boldTextStyle.copyWith(
+                      fontSize: 25,
+                      color: whiteColor.withOpacity(.8),
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(
+                height: 4,
+              ),
+              Text(
+                "This month",
+                style: boldTextStyle.copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: whiteColor,
+                ),
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }
