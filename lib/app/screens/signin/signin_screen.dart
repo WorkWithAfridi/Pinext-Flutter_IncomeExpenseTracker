@@ -10,7 +10,6 @@ import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 import 'package:pinext/app/shared/widgets/socials_button.dart';
 
 import '../../app_data/app_constants/constants.dart';
-import '../../app_data/app_constants/domentions.dart';
 import '../../app_data/theme_data/colors.dart';
 import '../../shared/widgets/custom_button.dart';
 import '../../shared/widgets/custom_text_field.dart';
@@ -57,14 +56,21 @@ class _SigninScreenViewState extends State<SigninScreenView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "PINEXT",
+          style: regularTextStyle.copyWith(
+            fontSize: 16,
+          ),
+        ),
+        centerTitle: true,
+      ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Container(
           padding: const EdgeInsets.symmetric(
             horizontal: defaultPadding,
           ),
-          height: getHeight(context),
-          width: getWidth(context),
           child: Form(
             key: _formKey,
             child: Column(

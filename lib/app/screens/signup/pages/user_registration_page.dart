@@ -8,7 +8,6 @@ import '../../../app_data/theme_data/colors.dart';
 import '../../../shared/widgets/custom_button.dart';
 import '../../../shared/widgets/custom_snackbar.dart';
 import '../../../shared/widgets/custom_text_field.dart';
-import '../../../shared/widgets/socials_button.dart';
 
 class UserRegistrationPage extends StatelessWidget {
   UserRegistrationPage({
@@ -33,7 +32,6 @@ class UserRegistrationPage extends StatelessWidget {
         padding: const EdgeInsets.symmetric(
           horizontal: defaultPadding,
         ),
-        height: getHeight(context) - kToolbarHeight,
         width: getWidth(context),
         child: Form(
           key: _formKey,

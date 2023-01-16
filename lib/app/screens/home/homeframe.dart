@@ -112,6 +112,13 @@ class HomeframeView extends StatelessWidget {
                     );
                   }),
             ),
+            centerTitle: true,
+            title: Text(
+              "PINEXT",
+              style: regularTextStyle.copyWith(
+                fontSize: 16,
+              ),
+            ),
           ),
           drawer: const PinextDrawer(),
           body: PageView.builder(

@@ -5,6 +5,8 @@ import 'package:pinext/app/bloc/signup_cubit/signin_cubit_cubit.dart';
 import 'package:pinext/app/screens/signup/pages/cards_and_balance_registration_page.dart';
 import 'package:pinext/app/screens/signup/pages/user_registration_page.dart';
 
+import '../../app_data/app_constants/fonts.dart';
+
 class SignupScreen extends StatelessWidget {
   const SignupScreen({Key? key}) : super(key: key);
 
@@ -86,6 +88,11 @@ class _SignupScreenViewState extends State<SignupScreenView> {
             Icons.close,
             color: customBlackColor,
           ),
+        ),
+        centerTitle: true,
+        title: Text(
+          "User registration",
+          style: regularTextStyle,
         ),
       ),
       body: BlocBuilder<SigninCubit, SigninState>(
