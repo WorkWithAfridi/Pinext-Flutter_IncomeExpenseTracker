@@ -500,7 +500,7 @@ class _GetExpensesWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                "You've spent",
+                "You've spend",
                 style: regularTextStyle.copyWith(
                   color: customBlackColor.withOpacity(.6),
                 ),
@@ -575,43 +575,124 @@ class _GetSavingsForThisMonthWidget extends StatelessWidget {
             ),
           ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
-                "You've saved",
-                style: regularTextStyle.copyWith(
-                  color: customBlackColor.withOpacity(.6),
-                ),
-              ),
-              const SizedBox(
-                height: 4,
-              ),
-              BlocBuilder<UserBloc, UserState>(
-                builder: (context, state) {
-                  if (state is AuthenticatedUserState) {
-                    return Text(
-                      "${state.monthlySavings} Tk",
-                      style: boldTextStyle.copyWith(
-                        fontSize: 20,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        "You've saved",
+                        style: regularTextStyle.copyWith(
+                          color: customBlackColor.withOpacity(.6),
+                        ),
                       ),
-                    );
-                  }
-                  return Text(
-                    "Loading...",
-                    style: boldTextStyle.copyWith(
-                      fontSize: 20,
-                    ),
-                  );
-                },
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      BlocBuilder<UserBloc, UserState>(
+                        builder: (context, state) {
+                          if (state is AuthenticatedUserState) {
+                            return Text(
+                              "${state.monthlySavings} Tk",
+                              style: boldTextStyle.copyWith(
+                                fontSize: 20,
+                              ),
+                            );
+                          }
+                          return Text(
+                            "Loading...",
+                            style: boldTextStyle.copyWith(
+                              fontSize: 20,
+                            ),
+                          );
+                        },
+                      ),
+                      // const SizedBox(
+                      //   height: 4,
+                      // ),
+                      // Text(
+                      //   "in ${months[int.parse(currentMonth) - 1]}.",
+                      //   style: regularTextStyle.copyWith(
+                      //     color: customBlackColor.withOpacity(.6),
+                      //   ),
+                      // ),
+                    ],
+                  ),
+                  Container(
+                    height: 30,
+                    color: customBlackColor,
+                    width: 0.2,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        "You've earned",
+                        style: regularTextStyle.copyWith(
+                          color: customBlackColor.withOpacity(.6),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      BlocBuilder<UserBloc, UserState>(
+                        builder: (context, state) {
+                          if (state is AuthenticatedUserState) {
+                            return Text(
+                              "${state.monthlyEarnings == "" ? "0000" : state.monthlyEarnings} Tk",
+                              style: boldTextStyle.copyWith(
+                                fontSize: 20,
+                              ),
+                            );
+                          }
+                          return Text(
+                            "Loading...",
+                            style: boldTextStyle.copyWith(
+                              fontSize: 20,
+                            ),
+                          );
+                        },
+                      ),
+                      // const SizedBox(
+                      //   height: 4,
+                      // ),
+                      // Text(
+                      //   "in ${months[int.parse(currentMonth) - 1]}.",
+                      //   style: regularTextStyle.copyWith(
+                      //     color: customBlackColor.withOpacity(.6),
+                      //   ),
+                      // ),
+                    ],
+                  ),
+                ],
               ),
               const SizedBox(
                 height: 4,
               ),
-              Text(
-                "in ${months[int.parse(currentMonth) - 1]}.",
-                style: regularTextStyle.copyWith(
-                  color: customBlackColor.withOpacity(.6),
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "in ",
+                    style: regularTextStyle.copyWith(
+                      color: customBlackColor.withOpacity(.6),
+                    ),
+                  ),
+                  Text(
+                    "${months[int.parse(currentMonth) - 1]}",
+                    style: regularTextStyle.copyWith(
+                      color: customBlackColor.withOpacity(.6),
+                    ),
+                  ),
+                  Text(
+                    ".",
+                    style: regularTextStyle.copyWith(
+                      color: customBlackColor.withOpacity(.6),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

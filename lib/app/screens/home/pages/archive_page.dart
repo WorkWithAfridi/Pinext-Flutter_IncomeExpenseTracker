@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/archive_cubit/search_cubit/search_cubit.dart';
+import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/models/pinext_transaction_model.dart';
 import 'package:pinext/app/services/firebase_services.dart';
 import 'package:pinext/app/shared/widgets/customYearPicker.dart';
@@ -558,7 +559,7 @@ class TransactionsList extends StatelessWidget {
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
                                                 Text(
-                                                  "Total Expenses: ",
+                                                  "Total expenses: ",
                                                   style: regularTextStyle.copyWith(
                                                     color: customBlackColor.withOpacity(.80),
                                                   ),
@@ -578,7 +579,7 @@ class TransactionsList extends StatelessWidget {
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
                                                 Text(
-                                                  "Total Savings: ",
+                                                  "Total earnings: ",
                                                   style: regularTextStyle.copyWith(
                                                     color: customBlackColor.withOpacity(.80),
                                                   ),
@@ -602,22 +603,58 @@ class TransactionsList extends StatelessWidget {
                                             const SizedBox(
                                               height: 4,
                                             ),
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children: [
-                                                Text(
-                                                  "Outcome: ",
-                                                  style: regularTextStyle.copyWith(
-                                                    color: customBlackColor.withOpacity(.80),
-                                                  ),
-                                                ),
-                                                Text(
-                                                  "${state.outcome}Tk.",
-                                                  style: boldTextStyle.copyWith(
-                                                    color: customBlueColor,
-                                                  ),
-                                                )
-                                              ],
+                                            BlocBuilder<UserBloc, UserState>(
+                                              builder: (context, state) {
+                                                String totalSavings = "";
+                                                if (state is AuthenticatedUserState) {
+                                                  totalSavings = state.monthlySavings.toString();
+                                                }
+                                                return Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      "You've saved: ",
+                                                      style: regularTextStyle.copyWith(
+                                                        color: customBlackColor.withOpacity(.80),
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      "${totalSavings}Tk.",
+                                                      style: boldTextStyle.copyWith(
+                                                        color: customBlueColor,
+                                                      ),
+                                                    )
+                                                  ],
+                                                );
+                                              },
+                                            ),
+                                            const SizedBox(
+                                              height: 4,
+                                            ),
+                                            BlocBuilder<UserBloc, UserState>(
+                                              builder: (context, state) {
+                                                String netWorth = "";
+                                                if (state is AuthenticatedUserState) {
+                                                  netWorth = state.netBalance.toString();
+                                                }
+                                                return Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      "NET. balance: ",
+                                                      style: regularTextStyle.copyWith(
+                                                        color: customBlackColor.withOpacity(.80),
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      "${netWorth}Tk.",
+                                                      style: boldTextStyle.copyWith(
+                                                        color: customBlackColor,
+                                                      ),
+                                                    )
+                                                  ],
+                                                );
+                                              },
                                             ),
                                           ],
                                         );

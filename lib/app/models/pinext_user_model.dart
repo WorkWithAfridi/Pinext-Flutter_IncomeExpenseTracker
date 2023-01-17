@@ -11,6 +11,7 @@ class PinextUserModel {
   String dailyExpenses;
   String weeklyExpenses;
   String monthlySavings;
+  String monthlyEarnings;
   String accountCreatedOn;
   String currentDate;
   String currentMonth;
@@ -31,6 +32,7 @@ class PinextUserModel {
     required this.currentMonth,
     required this.currentWeekOfTheYear,
     required this.currentYear,
+    required this.monthlyEarnings,
   });
 
   Map<String, dynamic> toMap() {
@@ -41,6 +43,7 @@ class PinextUserModel {
       'netBalance': netBalance,
       'monthlyBudget': monthlyBudget,
       'monthlyExpenses': monthlyExpenses,
+      'monthlyEarnings': monthlyEarnings,
       'dailyExpenses': dailyExpenses,
       'weeklyExpenses': weeklyExpenses,
       'monthlySavings': monthlySavings,
@@ -68,15 +71,17 @@ class PinextUserModel {
       currentMonth: map['currentMonth'] as String,
       currentWeekOfTheYear: map['currentWeekOfTheYear'] as String,
       currentYear: map['currentYear'] as String,
+      monthlyEarnings: map['monthlyEarnings'] ?? "0000",
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory PinextUserModel.fromJson(String source) => PinextUserModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory PinextUserModel.fromJson(String source) =>
+      PinextUserModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
-    return 'PinextUserModel(userId: $userId, username: $username, emailAddress: $emailAddress, netBalance: $netBalance, monthlyBudget: $monthlyBudget, monthlyExpenses: $monthlyExpenses, dailyExpenses: $dailyExpenses, weeklyExpenses: $weeklyExpenses, monthlySavings: $monthlySavings, accountCreatedOn: $accountCreatedOn, currentDate: $currentDate, currentMonth: $currentMonth, currentWeekOfTheYear: $currentWeekOfTheYear, currentYear: $currentYear)';
+    return 'PinextUserModel(userId: $userId, username: $username, emailAddress: $emailAddress, netBalance: $netBalance, monthlyBudget: $monthlyBudget, monthlyExpenses: $monthlyExpenses, dailyExpenses: $dailyExpenses, weeklyExpenses: $weeklyExpenses, monthlySavings: $monthlySavings, monthlyEarnings: $monthlyEarnings, accountCreatedOn: $accountCreatedOn, currentDate: $currentDate, currentMonth: $currentMonth, currentWeekOfTheYear: $currentWeekOfTheYear, currentYear: $currentYear)';
   }
 }

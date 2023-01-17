@@ -88,6 +88,10 @@ List homeframePages = [
   // ),
 ];
 
+checkIfOldUser(){
+  
+}
+
 class HomeframeView extends StatelessWidget {
   HomeframeView({Key? key}) : super(key: key);
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();

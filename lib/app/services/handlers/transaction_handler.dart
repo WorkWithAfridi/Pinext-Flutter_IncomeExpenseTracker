@@ -8,7 +8,6 @@ import 'package:pinext/app/services/handlers/user_handler.dart';
 import 'package:uuid/uuid.dart';
 
 import '../date_time_services.dart';
-
 class TransactionHandler {
   TransactionHandler._internal();
   static final TransactionHandler _transactionHandler = TransactionHandler._internal();
@@ -69,6 +68,9 @@ class TransactionHandler {
         if (transactionType == "Income") {
           double adjustedMonthlySavings = double.parse(pinextUserModel.monthlySavings) + double.parse(amount);
           double adjustedNetBalance = double.parse(pinextUserModel.netBalance) + double.parse(amount);
+          double adjustedMonthlyEarnings = pinextUserModel.monthlyEarnings == ""
+              ? 0.0
+              : double.parse(pinextUserModel.monthlyEarnings) + double.parse(amount);
           await FirebaseServices()
               .firebaseFirestore
               .collection("pinext_users")
@@ -76,6 +78,7 @@ class TransactionHandler {
               .update({
             "monthlySavings": adjustedMonthlySavings.toString(),
             "netBalance": adjustedNetBalance.toString(),
+            "monthlyEarnings": adjustedMonthlyEarnings.toString(),
           });
           await UserHandler().getCurrentUser();
         } else {

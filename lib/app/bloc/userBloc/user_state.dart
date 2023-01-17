@@ -25,6 +25,8 @@ class AuthenticatedUserState extends UserState {
   String currentMonth;
   String currentWeekOfTheYear;
   String currentYear;
+  String monthlyEarnings;
+  
   AuthenticatedUserState({
     required this.userId,
     required this.username,
@@ -40,6 +42,7 @@ class AuthenticatedUserState extends UserState {
     required this.currentMonth,
     required this.currentWeekOfTheYear,
     required this.currentYear,
+    required this.monthlyEarnings,
   });
 
   @override
@@ -58,5 +61,6 @@ class AuthenticatedUserState extends UserState {
         currentMonth,
         currentWeekOfTheYear,
         currentYear,
+        monthlyEarnings
       ];
 }
