@@ -54,7 +54,7 @@ class FileHandler {
         for (int i = 0; i < totalTransactions; i++) {
           log(doc.docs[i]["transactionDate"]);
           String date = doc.docs[i]["transactionDate"];
-          String details = doc.docs[i]["details"];
+          String details = doc.docs[i]["details"].toString().toLowerCase();
           String amount = doc.docs[i]["amount"];
           String type = doc.docs[i]["transactionType"];
           String cardId = doc.docs[i]["cardId"];

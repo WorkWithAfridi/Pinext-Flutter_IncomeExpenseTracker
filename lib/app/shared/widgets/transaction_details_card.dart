@@ -97,7 +97,7 @@ class _TransactionDetailsCardState extends State<TransactionDetailsCard> {
                       Flexible(
                         flex: 3,
                         child: Text(
-                          widget.pinextTransactionModel.details,
+                          widget.pinextTransactionModel.details.toLowerCase(),
                           style: regularTextStyle.copyWith(
                             color: customBlackColor.withOpacity(.80),
                           ),
