@@ -8,6 +8,7 @@ import 'package:pinext/app/services/handlers/user_handler.dart';
 import 'package:uuid/uuid.dart';
 
 import '../date_time_services.dart';
+
 class TransactionHandler {
   TransactionHandler._internal();
   static final TransactionHandler _transactionHandler = TransactionHandler._internal();
@@ -26,7 +27,7 @@ class TransactionHandler {
       PinextTransactionModel pinextTransactionModel = PinextTransactionModel(
         transactionType: transactionType,
         amount: amount,
-        details: description,
+        details: description.toLowerCase(),
         cardId: cardId,
         transactionDate: DateTime.now().toString(),
         transactionId: transactionId,
