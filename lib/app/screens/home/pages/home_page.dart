@@ -689,8 +689,9 @@ class _GetSavingsForThisMonthWidget extends StatelessWidget {
                 builder: (context, state) {
                   String amount = "";
                   if (state is AuthenticatedUserState) {
-                    amount =
-                        (double.parse(state.monthlyEarnings) / double.parse(state.monthlySavings)).ceil().toString();
+                    amount = ((double.parse(state.monthlySavings) / double.parse(state.monthlyEarnings)) * 100)
+                        .ceil()
+                        .toString();
                   }
                   return RichText(
                     text: TextSpan(
