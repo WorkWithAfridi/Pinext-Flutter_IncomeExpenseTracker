@@ -578,15 +578,24 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
                       context: context,
                     );
                   } else {
-                    if (widget.isAQuickAction) {
-                      UserHandler().getCurrentUser();
+                    if (state is AddTransactionsLoadingState) {
+                      GetCustomSnackbar(
+                        title: "Snap",
+                        message: "A transaction is being processed! Please be patient. :)",
+                        snackbarType: SnackbarType.error,
+                        context: context,
+                      );
+                    } else {
+                      if (widget.isAQuickAction) {
+                        UserHandler().getCurrentUser();
+                      }
+                      context.read<AddTransactionsCubit>().addTransaction(
+                            amount: amountController.text,
+                            details: detailsController.text,
+                            transctionType:
+                                state.selectedTransactionMode == SelectedTransactionMode.enpense ? "Expense" : "Income",
+                          );
                     }
-                    context.read<AddTransactionsCubit>().addTransaction(
-                          amount: amountController.text,
-                          details: detailsController.text,
-                          transctionType:
-                              state.selectedTransactionMode == SelectedTransactionMode.enpense ? "Expense" : "Income",
-                        );
                   }
                 } else {
                   if (state.selectedCardNo == "none") {

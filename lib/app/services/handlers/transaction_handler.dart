@@ -52,6 +52,10 @@ class TransactionHandler {
       double adjustedAmount = (transactionType == "Income")
           ? pinextCardModel.balance + double.parse(amount)
           : pinextCardModel.balance - double.parse(amount);
+
+      if (adjustedAmount < 0) {
+        adjustedAmount = 0;
+      }
       await FirebaseServices()
           .firebaseFirestore
           .collection("pinext_users")
