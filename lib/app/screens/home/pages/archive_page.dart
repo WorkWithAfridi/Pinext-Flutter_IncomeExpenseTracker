@@ -559,7 +559,7 @@ class TransactionsList extends StatelessWidget {
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
                                                 Text(
-                                                  "Total expenses: ",
+                                                  "Total withdrawals: ",
                                                   style: regularTextStyle.copyWith(
                                                     color: customBlackColor.withOpacity(.80),
                                                   ),
@@ -579,7 +579,7 @@ class TransactionsList extends StatelessWidget {
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
                                                 Text(
-                                                  "Total earnings: ",
+                                                  "Total diposits: ",
                                                   style: regularTextStyle.copyWith(
                                                     color: customBlackColor.withOpacity(.80),
                                                   ),

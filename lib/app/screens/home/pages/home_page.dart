@@ -683,30 +683,48 @@ class _GetSavingsForThisMonthWidget extends StatelessWidget {
                 ],
               ),
               const SizedBox(
-                height: 4,
+                height: 6,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "in ",
-                    style: regularTextStyle.copyWith(
-                      color: customBlackColor.withOpacity(.6),
+              BlocBuilder<UserBloc, UserState>(
+                builder: (context, state) {
+                  String amount = "";
+                  if (state is AuthenticatedUserState) {
+                    amount =
+                        (double.parse(state.monthlyEarnings) / double.parse(state.monthlySavings)).ceil().toString();
+                  }
+                  return RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: "You've saved",
+                          style: regularTextStyle.copyWith(
+                            color: customBlackColor.withOpacity(.6),
+                          ),
+                        ),
+                        TextSpan(
+                          text: " $amount% ",
+                          style: boldTextStyle.copyWith(color: customBlackColor),
+                        ),
+                        TextSpan(
+                          text: "of your earnings in ",
+                          style: regularTextStyle.copyWith(
+                            color: customBlackColor.withOpacity(.6),
+                          ),
+                        ),
+                        TextSpan(
+                          text: "${months[int.parse(currentMonth) - 1]}",
+                          style: boldTextStyle.copyWith(color: customBlackColor),
+                        ),
+                        TextSpan(
+                          text: ".",
+                          style: regularTextStyle.copyWith(
+                            color: customBlackColor.withOpacity(.6),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  Text(
-                    "${months[int.parse(currentMonth) - 1]}",
-                    style: regularTextStyle.copyWith(
-                      color: customBlackColor.withOpacity(.6),
-                    ),
-                  ),
-                  Text(
-                    ".",
-                    style: regularTextStyle.copyWith(
-                      color: customBlackColor.withOpacity(.6),
-                    ),
-                  ),
-                ],
+                  );
+                },
               ),
             ],
           ),
