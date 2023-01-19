@@ -5,9 +5,9 @@ import 'package:get_storage/get_storage.dart';
 import 'package:pinext/app/bloc/cards_and_balances_cubit/cards_and_balances_cubit.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 
-import 'app/app_data/routing/routes.dart';
 import 'app/app_data/theme_data/theme.dart';
 import 'app/bloc/signup_cubit/signin_cubit_cubit.dart';
+import 'app/app_data/routing/routes.dart';
 import 'firebase_options.dart';
 
 void main(List<String> args) async {

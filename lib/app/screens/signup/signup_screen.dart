@@ -91,7 +91,7 @@ class _SignupScreenViewState extends State<SignupScreenView> {
         ),
         centerTitle: true,
         title: Text(
-          "User registration",
+          "New user registration",
           style: regularTextStyle,
         ),
       ),

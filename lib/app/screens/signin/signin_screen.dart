@@ -58,7 +58,7 @@ class _SigninScreenViewState extends State<SigninScreenView> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "PINEXT",
+          "",
           style: regularTextStyle.copyWith(
             fontSize: 16,
           ),
@@ -78,7 +78,7 @@ class _SigninScreenViewState extends State<SigninScreenView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Sign In\nTo Account",
+                  "Sign In\nTo PINEXT",
                   style: boldTextStyle.copyWith(fontSize: 30),
                 ),
                 const SizedBox(
@@ -140,7 +140,7 @@ class _SigninScreenViewState extends State<SigninScreenView> {
                                 child: ListBody(
                                   children: [
                                     Text(
-                                      "Enter the email associated with your account to change your password. :)",
+                                      "Enter the email associated with your account and we'll sent you a reset link. :)",
                                       style: regularTextStyle.copyWith(
                                         color: customBlackColor.withOpacity(.5),
                                       ),
