@@ -559,7 +559,7 @@ class TransactionsList extends StatelessWidget {
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
                                                 Text(
-                                                  "Total withdrawals: ",
+                                                  "Withdrawals: ",
                                                   style: regularTextStyle.copyWith(
                                                     color: customBlackColor.withOpacity(.80),
                                                   ),
@@ -579,7 +579,7 @@ class TransactionsList extends StatelessWidget {
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
                                                 Text(
-                                                  "Total diposits: ",
+                                                  "Diposits: ",
                                                   style: regularTextStyle.copyWith(
                                                     color: customBlackColor.withOpacity(.80),
                                                   ),
@@ -599,6 +599,34 @@ class TransactionsList extends StatelessWidget {
                                               height: 1,
                                               width: getWidth(context),
                                               color: customBlackColor.withOpacity(.05),
+                                            ),
+                                            const SizedBox(
+                                              height: 4,
+                                            ),
+                                            BlocBuilder<UserBloc, UserState>(
+                                              builder: (context, state) {
+                                                String totalEarnings = "";
+                                                if (state is AuthenticatedUserState) {
+                                                  totalEarnings = state.monthlyEarnings.toString();
+                                                }
+                                                return Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      "You've earned: ",
+                                                      style: regularTextStyle.copyWith(
+                                                        color: customBlackColor.withOpacity(.80),
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      "${totalEarnings}Tk.",
+                                                      style: boldTextStyle.copyWith(
+                                                        color: customBlueColor,
+                                                      ),
+                                                    )
+                                                  ],
+                                                );
+                                              },
                                             ),
                                             const SizedBox(
                                               height: 4,
@@ -631,6 +659,14 @@ class TransactionsList extends StatelessWidget {
                                             const SizedBox(
                                               height: 4,
                                             ),
+                                            Container(
+                                              height: 1,
+                                              width: getWidth(context),
+                                              color: customBlackColor.withOpacity(.05),
+                                            ),
+                                            const SizedBox(
+                                              height: 4,
+                                            ),
                                             BlocBuilder<UserBloc, UserState>(
                                               builder: (context, state) {
                                                 String netWorth = "";
@@ -641,7 +677,7 @@ class TransactionsList extends StatelessWidget {
                                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                   children: [
                                                     Text(
-                                                      "NET. balance: ",
+                                                      "Current NET. balance: ",
                                                       style: regularTextStyle.copyWith(
                                                         color: customBlackColor.withOpacity(.80),
                                                       ),
