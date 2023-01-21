@@ -8,16 +8,14 @@ import '../../app_data/app_constants/domentions.dart';
 import '../../app_data/app_constants/fonts.dart';
 import '../../app_data/custom_transition_page_route/custom_transition_page_route.dart';
 import '../../app_data/theme_data/colors.dart';
+import '../../bloc/demoBloc/demo_bloc.dart';
 import '../../bloc/userBloc/user_bloc.dart';
 import '../../models/pinext_goal_model.dart';
 import '../../screens/goals_and_milestones/add_and_edit_goal_and_milestone_screen.dart';
 
 class PinextGoalCardMinimized extends StatelessWidget {
   PinextGoalCardMinimized(
-      {Key? key,
-      required this.pinextGoalModel,
-      required this.index,
-      required this.showCompletePercentage})
+      {Key? key, required this.pinextGoalModel, required this.index, required this.showCompletePercentage})
       : super(key: key);
 
   late PinextGoalModel pinextGoalModel;
@@ -42,21 +40,20 @@ class PinextGoalCardMinimized extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            BlocBuilder<UserBloc, UserState>(
-              builder: (context, state) {
+            Builder(
+              builder: (context) {
+                final state = context.read<UserBloc>().state;
+                final demoBlocState = context.watch<DemoBloc>().state;
                 if (state is AuthenticatedUserState) {
-                  double completionAmount = ((double.parse(state.netBalance) /
-                          double.parse(pinextGoalModel.amount)) *
-                      100);
+                  double completionAmount =
+                      ((double.parse(state.netBalance) / double.parse(pinextGoalModel.amount)) * 100);
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         "# Goal ${index + 1}",
                         style: boldTextStyle.copyWith(
-                          decoration: completionAmount > 100
-                              ? TextDecoration.lineThrough
-                              : TextDecoration.none,
+                          decoration: completionAmount > 100 ? TextDecoration.lineThrough : TextDecoration.none,
                         ),
                       ),
                       Row(
@@ -68,22 +65,16 @@ class PinextGoalCardMinimized extends StatelessWidget {
                                   text: "Status: ",
                                   style: regularTextStyle.copyWith(
                                     color: customBlackColor.withOpacity(.6),
-                                    decoration: completionAmount > 100
-                                        ? TextDecoration.lineThrough
-                                        : TextDecoration.none,
+                                    decoration:
+                                        completionAmount > 100 ? TextDecoration.lineThrough : TextDecoration.none,
                                   ),
                                 ),
                                 TextSpan(
-                                  text: completionAmount < 100
-                                      ? "Ongoing"
-                                      : "Completed",
+                                  text: completionAmount < 100 ? "Ongoing" : "Completed",
                                   style: boldTextStyle.copyWith(
-                                    color: completionAmount < 100
-                                        ? Colors.red
-                                        : Colors.green,
-                                    decoration: completionAmount > 100
-                                        ? TextDecoration.lineThrough
-                                        : TextDecoration.none,
+                                    color: completionAmount < 100 ? Colors.red : Colors.green,
+                                    decoration:
+                                        completionAmount > 100 ? TextDecoration.lineThrough : TextDecoration.none,
                                   ),
                                 ),
                               ],
@@ -91,18 +82,19 @@ class PinextGoalCardMinimized extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: () {
-                              Navigator.push(
-                                context,
-                                CustomTransitionPageRoute(
-                                  childWidget:
-                                      AddAndEditGoalsAndMilestoneScreen(
-                                    addingNewGoal: false,
-                                    addingNewGoalDuringSignupProcess: false,
-                                    editingGoal: true,
-                                    pinextGoalModel: pinextGoalModel,
+                              if (demoBlocState is DemoDisabledState) {
+                                Navigator.push(
+                                  context,
+                                  CustomTransitionPageRoute(
+                                    childWidget: AddAndEditGoalsAndMilestoneScreen(
+                                      addingNewGoal: false,
+                                      addingNewGoalDuringSignupProcess: false,
+                                      editingGoal: true,
+                                      pinextGoalModel: pinextGoalModel,
+                                    ),
                                   ),
-                                ),
-                              );
+                                );
+                              }
                             },
                             child: Row(
                               children: const [
@@ -129,13 +121,14 @@ class PinextGoalCardMinimized extends StatelessWidget {
             const SizedBox(
               height: 4,
             ),
-            BlocBuilder<UserBloc, UserState>(
-              builder: (context, state) {
+            Builder(
+              builder: (context) {
+                final state = context.read<UserBloc>().state;
+                final demoBlocState = context.watch<DemoBloc>().state;
+
                 double completionAmount = 0;
                 if (state is AuthenticatedUserState) {
-                  completionAmount = ((double.parse(state.netBalance) /
-                          double.parse(pinextGoalModel.amount)) *
-                      100);
+                  completionAmount = ((double.parse(state.netBalance) / double.parse(pinextGoalModel.amount)) * 100);
                 }
                 return RichText(
                   text: TextSpan(
@@ -144,43 +137,33 @@ class PinextGoalCardMinimized extends StatelessWidget {
                         text: "Save up ",
                         style: regularTextStyle.copyWith(
                           color: customBlackColor.withOpacity(.6),
-                          decoration: completionAmount > 100
-                              ? TextDecoration.lineThrough
-                              : TextDecoration.none,
+                          decoration: completionAmount > 100 ? TextDecoration.lineThrough : TextDecoration.none,
                         ),
                       ),
                       TextSpan(
-                        text: pinextGoalModel.amount,
+                        text: demoBlocState is DemoEnabledState ? "25000 Tk" : pinextGoalModel.amount,
                         style: boldTextStyle.copyWith(
-                          decoration: completionAmount > 100
-                              ? TextDecoration.lineThrough
-                              : TextDecoration.none,
+                          decoration: completionAmount > 100 ? TextDecoration.lineThrough : TextDecoration.none,
                         ),
                       ),
                       TextSpan(
                         text: " TK. for ",
                         style: regularTextStyle.copyWith(
                           color: customBlackColor.withOpacity(.6),
-                          decoration: completionAmount > 100
-                              ? TextDecoration.lineThrough
-                              : TextDecoration.none,
+                          decoration: completionAmount > 100 ? TextDecoration.lineThrough : TextDecoration.none,
                         ),
                       ),
                       TextSpan(
-                        text: pinextGoalModel.title,
+                        text: demoBlocState is DemoEnabledState ? "a new MacBook" : pinextGoalModel.title,
                         style: boldTextStyle.copyWith(
-                          decoration: completionAmount > 100
-                              ? TextDecoration.lineThrough
-                              : TextDecoration.none,
+                          decoration: completionAmount > 100 ? TextDecoration.lineThrough : TextDecoration.none,
                         ),
                       ),
                       TextSpan(
                         text: "!",
                         style: regularTextStyle.copyWith(
                           color: customBlackColor.withOpacity(.6),
-                          decoration: completionAmount > 100
-                              ? TextDecoration.lineThrough
-                              : TextDecoration.none,
+                          decoration: completionAmount > 100 ? TextDecoration.lineThrough : TextDecoration.none,
                         ),
                       ),
                     ],
@@ -205,17 +188,13 @@ class PinextGoalCardMinimized extends StatelessWidget {
                       return LayoutBuilder(
                         builder: ((context, constraints) {
                           log((constraints.maxWidth *
-                                  (double.parse(pinextGoalModel.amount) /
-                                      double.parse(state.netBalance)) /
+                                  (double.parse(pinextGoalModel.amount) / double.parse(state.netBalance)) /
                                   100)
                               .toString());
                           return Container(
                             height: 5,
                             width: (constraints.maxWidth *
-                                    ((double.parse(state.netBalance) /
-                                            double.parse(
-                                                pinextGoalModel.amount)) *
-                                        100)) /
+                                    ((double.parse(state.netBalance) / double.parse(pinextGoalModel.amount)) * 100)) /
                                 100,
                             color: customBlueColor,
                           );
@@ -234,9 +213,8 @@ class PinextGoalCardMinimized extends StatelessWidget {
             BlocBuilder<UserBloc, UserState>(
               builder: (context, state) {
                 if (state is AuthenticatedUserState) {
-                  double completionAmount = ((double.parse(state.netBalance) /
-                          double.parse(pinextGoalModel.amount)) *
-                      100);
+                  double completionAmount =
+                      ((double.parse(state.netBalance) / double.parse(pinextGoalModel.amount)) * 100);
                   if (completionAmount > 100) {
                     return const SizedBox.shrink();
                   } else {

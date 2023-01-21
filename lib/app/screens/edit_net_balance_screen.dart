@@ -7,6 +7,7 @@ import 'package:pinext/app/bloc/edit_net_balance_cubit/edit_net_balance_cubit.da
 import '../app_data/app_constants/domentions.dart';
 import '../app_data/app_constants/fonts.dart';
 import '../app_data/theme_data/colors.dart';
+import '../bloc/demoBloc/demo_bloc.dart';
 import '../bloc/userBloc/user_bloc.dart';
 import '../shared/widgets/custom_button.dart';
 import '../shared/widgets/custom_snackbar.dart';
@@ -99,11 +100,16 @@ class EditNetBalanceView extends StatelessWidget {
                         const SizedBox(
                           height: 4,
                         ),
-                        Text(
-                          "$netBalance Tk",
-                          style: boldTextStyle.copyWith(
-                            fontSize: 25,
-                          ),
+                        Builder(
+                          builder: (context) {
+                            final demoBlocState = context.watch<DemoBloc>().state;
+                            return Text(
+                              demoBlocState is DemoEnabledState ? "750000 Tk" : "$netBalance Tk",
+                              style: boldTextStyle.copyWith(
+                                fontSize: 25,
+                              ),
+                            );
+                          },
                         ),
                         const SizedBox(
                           height: 4,
@@ -151,25 +157,28 @@ class EditNetBalanceView extends StatelessWidget {
                       }
                     }),
                     builder: (context, state) {
+                      final demoBlocState = context.watch<DemoBloc>().state;
                       return GetCustomButton(
                         title: "Update",
                         isLoading: state is EditNetBalanceLoadingState,
                         titleColor: Colors.white,
                         buttonColor: customBlueColor,
                         callBackFunction: () {
-                          if (netBalanceController.text == netBalance) {
-                            GetCustomSnackbar(
-                              title: "!!",
-                              message: "Please update with a new amount and try again!",
-                              snackbarType: SnackbarType.error,
-                              context: context,
-                            );
-                            return;
-                          }
-                          if (_formKey.currentState!.validate()) {
-                            context.read<EditNetBalanceCubit>().updateNetBalance(
-                                  newNetBalance: netBalanceController.text,
-                                );
+                          if (demoBlocState is DemoDisabledState) {
+                            if (netBalanceController.text == netBalance) {
+                              GetCustomSnackbar(
+                                title: "!!",
+                                message: "Please update with a new amount and try again!",
+                                snackbarType: SnackbarType.error,
+                                context: context,
+                              );
+                              return;
+                            }
+                            if (_formKey.currentState!.validate()) {
+                              context.read<EditNetBalanceCubit>().updateNetBalance(
+                                    newNetBalance: netBalanceController.text,
+                                  );
+                            }
                           }
                         },
                       );

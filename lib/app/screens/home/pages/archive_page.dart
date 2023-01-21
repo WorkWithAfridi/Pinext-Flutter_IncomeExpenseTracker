@@ -14,6 +14,7 @@ import '../../../app_data/app_constants/domentions.dart';
 import '../../../app_data/app_constants/fonts.dart';
 import '../../../bloc/archive_cubit/archive_cubit.dart';
 import '../../../bloc/archive_cubit/user_statistics_cubit/user_statistics_cubit.dart';
+import '../../../bloc/demoBloc/demo_bloc.dart';
 import '../../../services/date_time_services.dart';
 import '../../../services/handlers/file_handler.dart';
 import '../../../shared/widgets/custom_snackbar.dart';
@@ -555,42 +556,57 @@ class TransactionsList extends StatelessWidget {
                                             const SizedBox(
                                               height: 6,
                                             ),
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children: [
-                                                Text(
-                                                  "Withdrawals: ",
-                                                  style: regularTextStyle.copyWith(
-                                                    color: customBlackColor.withOpacity(.80),
-                                                  ),
-                                                ),
-                                                Text(
-                                                  "-${state.totalExpenses}Tk.",
-                                                  style: boldTextStyle.copyWith(
-                                                    color: Colors.redAccent[400],
-                                                  ),
-                                                )
-                                              ],
+                                            Builder(
+                                              builder: (context) {
+                                                final demoBlocState = context.watch<DemoBloc>().state;
+                                                return Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      "Withdrawals: ",
+                                                      style: regularTextStyle.copyWith(
+                                                        color: customBlackColor.withOpacity(.80),
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      demoBlocState is DemoEnabledState
+                                                          ? "- 12345 Tk"
+                                                          : "- ${state.totalExpenses} Tk.",
+                                                      style: boldTextStyle.copyWith(
+                                                        color: Colors.redAccent[400],
+                                                      ),
+                                                    )
+                                                  ],
+                                                );
+                                              },
                                             ),
                                             const SizedBox(
                                               height: 4,
                                             ),
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children: [
-                                                Text(
-                                                  "Diposits: ",
-                                                  style: regularTextStyle.copyWith(
-                                                    color: customBlackColor.withOpacity(.80),
-                                                  ),
-                                                ),
-                                                Text(
-                                                  "+${state.totalSavings}Tk.",
-                                                  style: boldTextStyle.copyWith(
-                                                    color: Colors.green,
-                                                  ),
-                                                )
-                                              ],
+                                            Builder(
+                                              builder: (context) {
+                                                final demoBlocState = context.watch<DemoBloc>().state;
+
+                                                return Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      "Diposits: ",
+                                                      style: regularTextStyle.copyWith(
+                                                        color: customBlackColor.withOpacity(.80),
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      demoBlocState is DemoEnabledState
+                                                          ? "+ 12345 Tk"
+                                                          : "+ ${state.totalSavings} Tk.",
+                                                      style: boldTextStyle.copyWith(
+                                                        color: Colors.green,
+                                                      ),
+                                                    )
+                                                  ],
+                                                );
+                                              },
                                             ),
                                             const SizedBox(
                                               height: 4,
@@ -603,8 +619,11 @@ class TransactionsList extends StatelessWidget {
                                             const SizedBox(
                                               height: 4,
                                             ),
-                                            BlocBuilder<UserBloc, UserState>(
-                                              builder: (context, state) {
+                                            Builder(
+                                              builder: (context) {
+                                                final state = context.read<UserBloc>().state;
+                                                final demoBlocState = context.watch<DemoBloc>().state;
+
                                                 String totalEarnings = "";
                                                 if (state is AuthenticatedUserState) {
                                                   totalEarnings = state.monthlyEarnings.toString();
@@ -619,7 +638,9 @@ class TransactionsList extends StatelessWidget {
                                                       ),
                                                     ),
                                                     Text(
-                                                      "${totalEarnings}Tk.",
+                                                      demoBlocState is DemoEnabledState
+                                                          ? "100000 Tk"
+                                                          : "${totalEarnings}Tk.",
                                                       style: boldTextStyle.copyWith(
                                                         color: customBlueColor,
                                                       ),
@@ -631,8 +652,11 @@ class TransactionsList extends StatelessWidget {
                                             const SizedBox(
                                               height: 4,
                                             ),
-                                            BlocBuilder<UserBloc, UserState>(
-                                              builder: (context, state) {
+                                            Builder(
+                                              builder: (context) {
+                                                final state = context.read<UserBloc>().state;
+                                                final demoBlocState = context.watch<DemoBloc>().state;
+
                                                 String totalSavings = "";
                                                 if (state is AuthenticatedUserState) {
                                                   totalSavings = state.monthlySavings.toString();
@@ -647,7 +671,9 @@ class TransactionsList extends StatelessWidget {
                                                       ),
                                                     ),
                                                     Text(
-                                                      "${totalSavings}Tk.",
+                                                      demoBlocState is DemoEnabledState
+                                                          ? "75000 Tk"
+                                                          : "${totalSavings}Tk.",
                                                       style: boldTextStyle.copyWith(
                                                         color: customBlueColor,
                                                       ),
@@ -667,8 +693,10 @@ class TransactionsList extends StatelessWidget {
                                             const SizedBox(
                                               height: 4,
                                             ),
-                                            BlocBuilder<UserBloc, UserState>(
-                                              builder: (context, state) {
+                                            Builder(
+                                              builder: (context) {
+                                                final state = context.read<UserBloc>().state;
+                                                final demoBlocState = context.watch<DemoBloc>().state;
                                                 String netWorth = "";
                                                 if (state is AuthenticatedUserState) {
                                                   netWorth = state.netBalance.toString();
@@ -683,7 +711,9 @@ class TransactionsList extends StatelessWidget {
                                                       ),
                                                     ),
                                                     Text(
-                                                      "${netWorth}Tk.",
+                                                      demoBlocState is DemoEnabledState
+                                                          ? "750000 Tk"
+                                                          : "${netWorth}Tk.",
                                                       style: boldTextStyle.copyWith(
                                                         color: customBlackColor,
                                                       ),

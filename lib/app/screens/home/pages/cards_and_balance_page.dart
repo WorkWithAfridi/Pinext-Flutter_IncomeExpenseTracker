@@ -14,6 +14,7 @@ import '../../../app_data/app_constants/constants.dart';
 import '../../../app_data/app_constants/domentions.dart';
 import '../../../app_data/app_constants/fonts.dart';
 import '../../../app_data/theme_data/colors.dart';
+import '../../../bloc/demoBloc/demo_bloc.dart';
 import '../../../models/pinext_card_model.dart';
 import '../../../services/firebase_services.dart';
 import '../../../shared/widgets/pinext_card_minimized.dart';
@@ -77,50 +78,64 @@ class CardsAndBalanceView extends StatelessWidget {
                       fontSize: 16,
                     ),
                   ),
-                  BlocBuilder<UserBloc, UserState>(
-                    builder: (context, state) {
+                  Builder(
+                    builder: (context) {
+                      final state = context.read<UserBloc>().state;
+                      final demoBlocState = context.watch<DemoBloc>().state;
                       if (state is AuthenticatedUserState) {
-                        return Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(
-                              Icons.edit,
-                              size: 20,
-                              color: customBlackColor,
-                            ),
-                            FittedBox(
-                              child: McCountingText(
-                                begin: 0,
-                                end: double.parse(state.netBalance),
-                                maxLines: 1,
-                                precision: 2,
-                                style: boldTextStyle.copyWith(
-                                  color: whiteColor,
-                                  fontSize: 50,
-                                ),
-                                duration: const Duration(seconds: 3),
-                                curve: Curves.fastOutSlowIn,
-                              ),
-                            ),
-                            IconButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  CustomTransitionPageRoute(
-                                    childWidget: EditNetBalanceScreen(
-                                      netBalance: state.netBalance,
-                                    ),
-                                  ),
-                                );
-                              },
-                              icon: const Icon(
+                        return SizedBox(
+                          height: 70,
+                          width: double.maxFinite,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(
                                 Icons.edit,
                                 size: 20,
-                                color: whiteColor,
+                                color: customBlackColor,
                               ),
-                            )
-                          ],
+                              Expanded(
+                                child: FittedBox(
+                                  child: Row(
+                                    children: [
+                                      McCountingText(
+                                        begin: 0,
+                                        end: demoBlocState is DemoEnabledState
+                                            ? 750000.0
+                                            : double.parse(state.netBalance),
+                                        maxLines: 1,
+                                        precision: 2,
+                                        style: boldTextStyle.copyWith(
+                                          color: whiteColor,
+                                          fontSize: 50,
+                                        ),
+                                        duration: const Duration(seconds: 3),
+                                        curve: Curves.fastOutSlowIn,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    CustomTransitionPageRoute(
+                                      childWidget: EditNetBalanceScreen(
+                                        netBalance: state.netBalance,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                icon: const Icon(
+                                  Icons.edit,
+                                  size: 20,
+                                  color: whiteColor,
+                                ),
+                              )
+                            ],
+                          ),
                         );
                       } else {
                         return const SizedBox.shrink();
@@ -188,67 +203,73 @@ class CardsAndBalanceView extends StatelessWidget {
                       PinextCardModel pinextCardModel = PinextCardModel.fromMap(
                         snapshot.data!.docs[index].data(),
                       );
-                      return PinextCardMinimized(
-                        pinextCardModel: pinextCardModel,
-                        onDeleteButtonClick: () {
-                          showDialog(
-                              context: context,
-                              builder: (context) {
-                                return AlertDialog(
-                                  title: Text(
-                                    'Delete card?',
-                                    style: boldTextStyle.copyWith(
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                  content: SingleChildScrollView(
-                                    child: ListBody(
-                                      children: [
-                                        Text(
-                                          "You're about to delete this card from your pinext account! Are you sure you want to do that??",
-                                          style: regularTextStyle,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(defaultBorder),
-                                  ),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      child: Text(
-                                        'Cancel',
+                      return Builder(
+                        builder: (context) {
+                          final demoBlocState = context.watch<DemoBloc>().state;
+                          return PinextCardMinimized(
+                            pinextCardModel: pinextCardModel,
+                            onDeleteButtonClick: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      title: Text(
+                                        'Delete card?',
                                         style: boldTextStyle.copyWith(
-                                          color: customBlackColor.withOpacity(
-                                            .8,
-                                          ),
+                                          fontSize: 20,
                                         ),
                                       ),
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
+                                      content: SingleChildScrollView(
+                                        child: ListBody(
+                                          children: [
+                                            Text(
+                                              "You're about to delete this card from your pinext account! Are you sure you want to do that??",
+                                              style: regularTextStyle,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(defaultBorder),
+                                      ),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: Text(
+                                            'Cancel',
+                                            style: boldTextStyle.copyWith(
+                                              color: customBlackColor.withOpacity(
+                                                .8,
+                                              ),
+                                            ),
+                                          ),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                        TextButton(
+                                          child: const Text('Approve'),
+                                          onPressed: () {
+                                            context.read<CardsAndBalancesCubit>().removeCard(pinextCardModel);
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                      actionsPadding: dialogButtonPadding,
+                                    );
+                                  });
+                            },
+                            onEditButtonClick: () {
+                              Navigator.push(
+                                  context,
+                                  CustomTransitionPageRoute(
+                                    childWidget: AddAndEditPinextCardScreen(
+                                      isEditCardScreen: true,
+                                      pinextCardModel: pinextCardModel,
+                                      isDemoMode: demoBlocState is DemoEnabledState,
                                     ),
-                                    TextButton(
-                                      child: const Text('Approve'),
-                                      onPressed: () {
-                                        context.read<CardsAndBalancesCubit>().removeCard(pinextCardModel);
-                                        Navigator.of(context).pop();
-                                      },
-                                    ),
-                                  ],
-                                  actionsPadding: dialogButtonPadding,
-                                );
-                              });
-                        },
-                        onEditButtonClick: () {
-                          Navigator.push(
-                              context,
-                              CustomTransitionPageRoute(
-                                childWidget: AddAndEditPinextCardScreen(
-                                  isEditCardScreen: true,
-                                  pinextCardModel: pinextCardModel,
-                                ),
-                              ));
+                                  ));
+                            },
+                          );
                         },
                       );
                     }),

@@ -17,6 +17,7 @@ import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 import 'package:pinext/app/shared/widgets/custom_text_field.dart';
 
 import '../../app_data/app_constants/constants.dart';
+import '../../bloc/demoBloc/demo_bloc.dart';
 import '../../bloc/userBloc/user_bloc.dart';
 import '../../models/pinext_card_model.dart';
 import '../../services/firebase_services.dart';
@@ -560,58 +561,62 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
           }
         },
         builder: (context, state) {
+          final demoBlocState = context.watch<DemoBloc>().state;
           return GetCustomButton(
             title: widget.isViewOnly ? "Update Transaction" : "Add Transaction",
             titleColor: whiteColor,
             buttonColor: customBlueColor,
             isLoading: state is AddTransactionsLoadingState ? true : false,
             callBackFunction: () {
-              if (_formKey.currentState!.validate()) {
-                if (amountController.text.isNotEmpty &&
-                    detailsController.text.isNotEmpty &&
-                    state.selectedCardNo != "none") {
-                  if (widget.isViewOnly) {
-                    GetCustomSnackbar(
-                      title: "Hello",
-                      message: "This function has not yet been deployed! :)",
-                      snackbarType: SnackbarType.info,
-                      context: context,
-                    );
-                  } else {
-                    if (state is AddTransactionsLoadingState) {
+              if (demoBlocState is DemoDisabledState) {
+                if (_formKey.currentState!.validate()) {
+                  if (amountController.text.isNotEmpty &&
+                      detailsController.text.isNotEmpty &&
+                      state.selectedCardNo != "none") {
+                    if (widget.isViewOnly) {
                       GetCustomSnackbar(
-                        title: "Snap",
-                        message: "A transaction is being processed! Please be patient. :)",
+                        title: "Hello",
+                        message: "This function has not yet been deployed! :)",
+                        snackbarType: SnackbarType.info,
+                        context: context,
+                      );
+                    } else {
+                      if (state is AddTransactionsLoadingState) {
+                        GetCustomSnackbar(
+                          title: "Snap",
+                          message: "A transaction is being processed! Please be patient. :)",
+                          snackbarType: SnackbarType.error,
+                          context: context,
+                        );
+                      } else {
+                        if (widget.isAQuickAction) {
+                          UserHandler().getCurrentUser();
+                        }
+                        context.read<AddTransactionsCubit>().addTransaction(
+                              amount: amountController.text,
+                              details: detailsController.text,
+                              transctionType: state.selectedTransactionMode == SelectedTransactionMode.enpense
+                                  ? "Expense"
+                                  : "Income",
+                            );
+                      }
+                    }
+                  } else {
+                    if (state.selectedCardNo == "none") {
+                      GetCustomSnackbar(
+                        title: "Error",
+                        message: "Please select a valid card and try again!",
                         snackbarType: SnackbarType.error,
                         context: context,
                       );
                     } else {
-                      if (widget.isAQuickAction) {
-                        UserHandler().getCurrentUser();
-                      }
-                      context.read<AddTransactionsCubit>().addTransaction(
-                            amount: amountController.text,
-                            details: detailsController.text,
-                            transctionType:
-                                state.selectedTransactionMode == SelectedTransactionMode.enpense ? "Expense" : "Income",
-                          );
+                      GetCustomSnackbar(
+                        title: "Error",
+                        message: "Please enter valid details of the transaction and try again!",
+                        snackbarType: SnackbarType.error,
+                        context: context,
+                      );
                     }
-                  }
-                } else {
-                  if (state.selectedCardNo == "none") {
-                    GetCustomSnackbar(
-                      title: "Error",
-                      message: "Please select a valid card and try again!",
-                      snackbarType: SnackbarType.error,
-                      context: context,
-                    );
-                  } else {
-                    GetCustomSnackbar(
-                      title: "Error",
-                      message: "Please enter valid details of the transaction and try again!",
-                      snackbarType: SnackbarType.error,
-                      context: context,
-                    );
                   }
                 }
               }

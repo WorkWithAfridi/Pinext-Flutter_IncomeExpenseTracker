@@ -14,6 +14,7 @@ import '../../../app_data/app_constants/constants.dart';
 import '../../../app_data/app_constants/domentions.dart';
 import '../../../app_data/custom_transition_page_route/custom_transition_page_route.dart';
 import '../../../app_data/theme_data/colors.dart';
+import '../../../bloc/demoBloc/demo_bloc.dart';
 import '../../../bloc/homeframe_cubit/homeframe_page_cubit.dart';
 import '../../../bloc/homepage_cubit/homepage_cubit.dart';
 import '../../../bloc/userBloc/user_bloc.dart';
@@ -227,11 +228,13 @@ class _GetBalanceWidget extends StatelessWidget {
                 const SizedBox(
                   height: 4,
                 ),
-                BlocBuilder<UserBloc, UserState>(
-                  builder: (context, state) {
+                Builder(
+                  builder: (context) {
+                    final state = context.read<UserBloc>().state;
+                    final demoBlocState = context.watch<DemoBloc>().state;
                     if (state is AuthenticatedUserState) {
                       return Text(
-                        "${state.netBalance} Tk",
+                        demoBlocState is DemoEnabledState ? "750000 Tk" : "${state.netBalance} Tk",
                         style: boldTextStyle.copyWith(
                           fontSize: 25,
                         ),
@@ -391,8 +394,10 @@ class _GetExpensesWidget extends StatelessWidget {
         const SizedBox(
           height: 8,
         ),
-        BlocBuilder<UserBloc, UserState>(
-          builder: (context, state) {
+        Builder(
+          builder: (context) {
+            final state = context.read<UserBloc>().state;
+            final demoBlocState = context.watch<DemoBloc>().state;
             if (state is AuthenticatedUserState) {
               return Row(
                 children: [
@@ -416,7 +421,7 @@ class _GetExpensesWidget extends StatelessWidget {
                         children: [
                           FittedBox(
                             child: Text(
-                              "- ${state.dailyExpenses}",
+                              demoBlocState is DemoEnabledState ? "- 3600 Tk" : "- ${state.dailyExpenses}",
                               style: boldTextStyle.copyWith(
                                 fontSize: 25,
                                 color: whiteColor,
@@ -457,7 +462,7 @@ class _GetExpensesWidget extends StatelessWidget {
                         children: [
                           FittedBox(
                             child: Text(
-                              "- ${state.weeklyExpenses}",
+                              demoBlocState is DemoEnabledState ? "- 10000 Tk" : "- ${state.weeklyExpenses}",
                               style: boldTextStyle.copyWith(
                                 fontSize: 25,
                                 color: whiteColor.withOpacity(.8),
@@ -508,11 +513,13 @@ class _GetExpensesWidget extends StatelessWidget {
               const SizedBox(
                 height: 4,
               ),
-              BlocBuilder<UserBloc, UserState>(
-                builder: (context, state) {
+              Builder(
+                builder: (context) {
+                  final state = context.read<UserBloc>().state;
+                  final demoBlocState = context.watch<DemoBloc>().state;
                   if (state is AuthenticatedUserState) {
                     return Text(
-                      "- ${state.monthlyExpenses} Tk",
+                      demoBlocState is DemoEnabledState ? "- 25000 Tk" : "- ${state.monthlyExpenses} Tk",
                       style: boldTextStyle.copyWith(
                         fontSize: 20,
                       ),
@@ -596,11 +603,14 @@ class _GetSavingsForThisMonthWidget extends StatelessWidget {
                           const SizedBox(
                             height: 4,
                           ),
-                          BlocBuilder<UserBloc, UserState>(
-                            builder: (context, state) {
+
+                          Builder(
+                            builder: (context) {
+                              final state = context.read<UserBloc>().state;
+                              final demoBlocState = context.watch<DemoBloc>().state;
                               if (state is AuthenticatedUserState) {
                                 return Text(
-                                  "${state.monthlySavings} Tk",
+                                  demoBlocState is DemoEnabledState ? "75000 Tk" : "${state.monthlySavings} Tk",
                                   style: boldTextStyle.copyWith(
                                     fontSize: 20,
                                   ),
@@ -649,11 +659,15 @@ class _GetSavingsForThisMonthWidget extends StatelessWidget {
                           const SizedBox(
                             height: 4,
                           ),
-                          BlocBuilder<UserBloc, UserState>(
-                            builder: (context, state) {
+                          Builder(
+                            builder: (context) {
+                              final state = context.read<UserBloc>().state;
+                              final demoBlocState = context.watch<DemoBloc>().state;
                               if (state is AuthenticatedUserState) {
                                 return Text(
-                                  "${state.monthlyEarnings == "" ? "0000" : state.monthlyEarnings} Tk",
+                                  demoBlocState is DemoEnabledState
+                                      ? "100000 Tk"
+                                      : "${state.monthlyEarnings == "" ? "0000" : state.monthlyEarnings} Tk",
                                   style: boldTextStyle.copyWith(
                                     fontSize: 20,
                                   ),
@@ -685,8 +699,10 @@ class _GetSavingsForThisMonthWidget extends StatelessWidget {
               const SizedBox(
                 height: 6,
               ),
-              BlocBuilder<UserBloc, UserState>(
-                builder: (context, state) {
+              Builder(
+                builder: (context) {
+                  final state = context.read<UserBloc>().state;
+                  final demoBlocState = context.watch<DemoBloc>().state;
                   String amount = "";
                   if (state is AuthenticatedUserState) {
                     amount = ((double.parse(state.monthlySavings) / double.parse(state.monthlyEarnings)) * 100)
@@ -703,7 +719,7 @@ class _GetSavingsForThisMonthWidget extends StatelessWidget {
                           ),
                         ),
                         TextSpan(
-                          text: " $amount% ",
+                          text: demoBlocState is DemoEnabledState ? "75%" : " $amount% ",
                           style: boldTextStyle.copyWith(color: customBlackColor),
                         ),
                         TextSpan(
@@ -778,8 +794,10 @@ class _GetBudgetEstimationsWidget extends StatelessWidget {
                       color: customBlackColor.withOpacity(.6),
                     ),
                   ),
-                  BlocBuilder<UserBloc, UserState>(
-                    builder: (context, state) {
+                  Builder(
+                    builder: (context) {
+                      final state = context.read<UserBloc>().state;
+                      final demoBlocState = context.watch<DemoBloc>().state;
                       return GestureDetector(
                         onTap: () {
                           if (state is AuthenticatedUserState) {
@@ -801,7 +819,7 @@ class _GetBudgetEstimationsWidget extends StatelessWidget {
                             children: [
                               state is AuthenticatedUserState
                                   ? Text(
-                                      "${state.monthlyBudget} Tk",
+                                      demoBlocState is DemoEnabledState ? "25000 Tk" : "${state.monthlyBudget} Tk",
                                       style: regularTextStyle.copyWith(
                                         fontWeight: FontWeight.w600,
                                         color: Colors.green,
@@ -835,35 +853,41 @@ class _GetBudgetEstimationsWidget extends StatelessWidget {
                     width: getWidth(context),
                     color: customBlueColor.withOpacity(.2),
                   ),
-                  BlocBuilder<UserBloc, UserState>(
-                    builder: (context, state) {
+                  Builder(
+                    builder: (context) {
+                      final state = context.read<UserBloc>().state;
+                      final demoBlocState = context.watch<DemoBloc>().state;
                       if (state is AuthenticatedUserState) {
                         return LayoutBuilder(
                           builder: ((context, constraints) {
                             return Container(
                               height: 5,
-                              width: state.monthlyBudget == "000"
-                                  ? 0
-                                  : constraints.maxWidth *
-                                      (double.parse(state.monthlyExpenses) / double.parse(state.monthlyBudget)),
+                              width: demoBlocState is DemoEnabledState
+                                  ? constraints.maxWidth * .5
+                                  : state.monthlyBudget == "000"
+                                      ? 0
+                                      : constraints.maxWidth *
+                                          (double.parse(state.monthlyExpenses) / double.parse(state.monthlyBudget)),
                               decoration: BoxDecoration(
-                                  color: (state.monthlyBudget == "000"
-                                                  ? 0
-                                                  : (double.parse(state.monthlyExpenses) /
-                                                          double.parse(state.monthlyBudget)) *
-                                                      100)
-                                              .ceil() >
-                                          100
-                                      ? Colors.redAccent[400]
+                                  color: demoBlocState is DemoEnabledState
+                                      ? customBlueColor
                                       : (state.monthlyBudget == "000"
                                                       ? 0
                                                       : (double.parse(state.monthlyExpenses) /
                                                               double.parse(state.monthlyBudget)) *
                                                           100)
                                                   .ceil() >
-                                              50
-                                          ? Colors.yellowAccent[800]
-                                          : customBlueColor,
+                                              100
+                                          ? Colors.redAccent[400]
+                                          : (state.monthlyBudget == "000"
+                                                          ? 0
+                                                          : (double.parse(state.monthlyExpenses) /
+                                                                  double.parse(state.monthlyBudget)) *
+                                                              100)
+                                                      .ceil() >
+                                                  50
+                                              ? Colors.yellowAccent[800]
+                                              : customBlueColor,
                                   borderRadius: BorderRadius.circular(defaultBorder)),
                             );
                           }),
@@ -878,8 +902,10 @@ class _GetBudgetEstimationsWidget extends StatelessWidget {
               const SizedBox(
                 height: 8,
               ),
-              BlocBuilder<UserBloc, UserState>(
-                builder: (context, state) {
+              Builder(
+                builder: (context) {
+                  final state = context.read<UserBloc>().state;
+                  final demoBlocState = context.watch<DemoBloc>().state;
                   if (state is AuthenticatedUserState) {
                     return Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -894,8 +920,9 @@ class _GetBudgetEstimationsWidget extends StatelessWidget {
                                 ),
                               ),
                               TextSpan(
-                                text:
-                                    "${((double.parse(state.monthlyExpenses) / double.parse(state.monthlyBudget)) * 100).ceil()}%",
+                                text: demoBlocState is DemoEnabledState
+                                    ? "50%"
+                                    : "${((double.parse(state.monthlyExpenses) / double.parse(state.monthlyBudget)) * 100).ceil()}%",
                                 style: boldTextStyle.copyWith(
                                   color: Colors.red.withOpacity(.9),
                                 ),
@@ -910,7 +937,7 @@ class _GetBudgetEstimationsWidget extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "- ${state.monthlyExpenses} TK",
+                          demoBlocState is DemoEnabledState ? "- 12500 Tk" : "- ${state.monthlyExpenses} Tk",
                           style: boldTextStyle.copyWith(
                             color: Colors.red.withOpacity(.9),
                           ),

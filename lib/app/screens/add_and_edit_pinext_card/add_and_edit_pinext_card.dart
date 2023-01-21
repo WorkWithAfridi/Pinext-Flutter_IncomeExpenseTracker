@@ -15,6 +15,7 @@ import 'package:uuid/uuid.dart';
 
 import '../../app_data/app_constants/fonts.dart';
 import '../../app_data/theme_data/colors.dart';
+import '../../bloc/demoBloc/demo_bloc.dart';
 import '../../bloc/signup_cubit/signin_cubit_cubit.dart';
 import '../../shared/widgets/custom_button.dart';
 import '../../shared/widgets/custom_text_field.dart';
@@ -25,9 +26,11 @@ class AddAndEditPinextCardScreen extends StatelessWidget {
     this.addCardForSignUpProcess = false,
     this.isEditCardScreen = false,
     this.pinextCardModel,
+    this.isDemoMode = false,
   }) : super(key: key);
   bool addCardForSignUpProcess;
   bool isEditCardScreen;
+  bool isDemoMode;
   PinextCardModel? pinextCardModel;
 
   @override
@@ -42,6 +45,7 @@ class AddAndEditPinextCardScreen extends StatelessWidget {
         addCardForSignUpProcess: addCardForSignUpProcess,
         isEditCardScreen: isEditCardScreen,
         pinextCardModel: pinextCardModel,
+        isDemoMode: isDemoMode,
       ),
     );
   }
@@ -52,10 +56,12 @@ class AddAndEditPinextCardView extends StatefulWidget {
     Key? key,
     this.addCardForSignUpProcess = false,
     this.isEditCardScreen = false,
+    this.isDemoMode = false,
     this.pinextCardModel,
   }) : super(key: key);
   bool addCardForSignUpProcess;
   bool isEditCardScreen;
+  bool isDemoMode;
   PinextCardModel? pinextCardModel;
 
   @override
@@ -73,9 +79,11 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
     descriptionController = TextEditingController();
     balanceController = TextEditingController();
     if (widget.isEditCardScreen) {
-      titleController.text = widget.pinextCardModel!.title.toString();
-      descriptionController.text = widget.pinextCardModel!.description.toString();
-      balanceController.text = widget.pinextCardModel!.balance.toString();
+      titleController.text = widget.isDemoMode ? "Bank" : widget.pinextCardModel!.title.toString();
+      descriptionController.text = widget.isDemoMode
+          ? "The purpose of lorem ipsum is to create a natural looking block of text (sentence, paragraph, page, etc.) that doesn't distract from the layout."
+          : widget.pinextCardModel!.description.toString();
+      balanceController.text = widget.isDemoMode ? "55000" : widget.pinextCardModel!.balance.toString();
       isEditCardColor = widget.pinextCardModel!.color;
     }
     super.initState();
@@ -391,27 +399,30 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                       }
                     },
                     builder: (context, state) {
+                      final demoBlocState = context.watch<DemoBloc>().state;
                       return GetCustomButton(
                         title: widget.isEditCardScreen ? "Update Pinext Card" : "Add Pinext Card",
                         titleColor: whiteColor,
                         buttonColor: customBlueColor,
                         isLoading: state is AddCardDefaultState ? false : true,
                         callBackFunction: () {
-                          if (_formKey.currentState!.validate()) {
-                            if (widget.isEditCardScreen) {
-                              context.read<AddCardCubit>().updateCardDetails(
-                                    titleController.text,
-                                    descriptionController.text,
-                                    balanceController.text,
-                                    isEditCardColor!,
-                                  );
-                            } else {
-                              context.read<AddCardCubit>().addCard(
-                                    titleController.text,
-                                    descriptionController.text,
-                                    balanceController.text,
-                                    state.color,
-                                  );
+                          if (demoBlocState is DemoDisabledState) {
+                            if (_formKey.currentState!.validate()) {
+                              if (widget.isEditCardScreen) {
+                                context.read<AddCardCubit>().updateCardDetails(
+                                      titleController.text,
+                                      descriptionController.text,
+                                      balanceController.text,
+                                      isEditCardColor!,
+                                    );
+                              } else {
+                                context.read<AddCardCubit>().addCard(
+                                      titleController.text,
+                                      descriptionController.text,
+                                      balanceController.text,
+                                      state.color,
+                                    );
+                              }
                             }
                           }
                         },

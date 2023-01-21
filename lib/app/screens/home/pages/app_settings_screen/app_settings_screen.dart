@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
@@ -9,6 +10,7 @@ import '../../../../app_data/appVersion.dart';
 import '../../../../app_data/app_constants/domentions.dart';
 import '../../../../app_data/custom_transition_page_route/custom_transition_page_route.dart';
 import '../../../../app_data/theme_data/colors.dart';
+import '../../../../bloc/demoBloc/demo_bloc.dart';
 import '../../../../services/handlers/user_handler.dart';
 
 class AppSettingsScreen extends StatelessWidget {
@@ -129,6 +131,25 @@ class AppSettingsScreen extends StatelessWidget {
             label: "Check for updates",
             icon: Icons.update,
             iconSize: 18,
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          BlocBuilder<DemoBloc, DemoState>(
+            builder: (context, state) {
+              return GetSettingsButtonWithIcon(
+                onTapFunction: () {
+                  if (state is DemoEnabledState) {
+                    context.read<DemoBloc>().add(DisableDemoModeEvent());
+                  } else {
+                    context.read<DemoBloc>().add(EnableDemoModeEvent());
+                  }
+                },
+                label: state is DemoEnabledState ? "Disable presentation mode" : "Enable presentation mode",
+                icon: state is DemoEnabledState ? Icons.pause_presentation : Icons.photo_library,
+                iconSize: 18,
+              );
+            },
           ),
           const SizedBox(
             height: 6,
