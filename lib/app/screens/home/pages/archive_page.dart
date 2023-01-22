@@ -657,7 +657,7 @@ class _GetStatisticsWidget extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                demoBlocState is DemoEnabledState ? "100000 Tk" : "${totalEarnings}Tk.",
+                                demoBlocState is DemoEnabledState ? "100000 Tk" : "$totalEarnings Tk.",
                                 style: boldTextStyle.copyWith(
                                   color: customBlueColor,
                                 ),
@@ -688,7 +688,7 @@ class _GetStatisticsWidget extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                demoBlocState is DemoEnabledState ? "75000 Tk" : "${totalSavings}Tk.",
+                                demoBlocState is DemoEnabledState ? "75000 Tk" : "$totalSavings Tk.",
                                 style: boldTextStyle.copyWith(
                                   color: customBlueColor,
                                 ),
@@ -726,7 +726,7 @@ class _GetStatisticsWidget extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                demoBlocState is DemoEnabledState ? "750000 Tk" : "${netWorth}Tk.",
+                                demoBlocState is DemoEnabledState ? "750000 Tk" : "$netWorth Tk.",
                                 style: boldTextStyle.copyWith(
                                   color: customBlackColor,
                                 ),

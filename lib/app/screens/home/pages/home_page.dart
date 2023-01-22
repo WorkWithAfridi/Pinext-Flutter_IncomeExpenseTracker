@@ -421,7 +421,7 @@ class _GetExpensesWidget extends StatelessWidget {
                         children: [
                           FittedBox(
                             child: Text(
-                              demoBlocState is DemoEnabledState ? "- 3600 Tk" : "- ${state.dailyExpenses}",
+                              demoBlocState is DemoEnabledState ? "- 3600 Tk" : "- ${state.dailyExpenses} Tk",
                               style: boldTextStyle.copyWith(
                                 fontSize: 25,
                                 color: whiteColor,
@@ -462,7 +462,7 @@ class _GetExpensesWidget extends StatelessWidget {
                         children: [
                           FittedBox(
                             child: Text(
-                              demoBlocState is DemoEnabledState ? "- 10000 Tk" : "- ${state.weeklyExpenses}",
+                              demoBlocState is DemoEnabledState ? "- 10000 Tk" : "- ${state.weeklyExpenses} Tk",
                               style: boldTextStyle.copyWith(
                                 fontSize: 25,
                                 color: whiteColor.withOpacity(.8),

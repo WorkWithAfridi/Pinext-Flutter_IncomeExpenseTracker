@@ -123,8 +123,8 @@ class _TransactionDetailsCardState extends State<TransactionDetailsCard> {
                       alignment: Alignment.centerRight,
                       child: Text(
                         widget.pinextTransactionModel.transactionType == 'Expense'
-                            ? "- ${widget.pinextTransactionModel.amount}Tk"
-                            : "+ ${widget.pinextTransactionModel.amount}Tk",
+                            ? "- ${widget.pinextTransactionModel.amount} Tk"
+                            : "+ ${widget.pinextTransactionModel.amount} Tk",
                         style: boldTextStyle.copyWith(
                           color: widget.pinextTransactionModel.transactionType == 'Expense' ? Colors.red : Colors.green,
                         ),

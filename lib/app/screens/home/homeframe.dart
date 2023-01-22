@@ -88,9 +88,7 @@ List homeframePages = [
   // ),
 ];
 
-checkIfOldUser(){
-  
-}
+checkIfOldUser() {}
 
 class HomeframeView extends StatelessWidget {
   HomeframeView({Key? key}) : super(key: key);

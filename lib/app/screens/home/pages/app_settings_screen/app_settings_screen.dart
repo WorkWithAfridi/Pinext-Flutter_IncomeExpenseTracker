@@ -119,7 +119,18 @@ class AppSettingsScreen extends StatelessWidget {
               AppHandler().writeReview(context);
             },
             label: "Post review",
-            icon: Icons.edit,
+            icon: FontAwesomeIcons.penToSquare,
+            iconSize: 18,
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          GetSettingsButtonWithIcon(
+            onTapFunction: () {
+              AppHandler().sendBugReport(context);
+            },
+            label: "Report bug",
+            icon: FontAwesomeIcons.bug,
             iconSize: 18,
           ),
           const SizedBox(
@@ -214,7 +225,7 @@ class AppSettingsScreen extends StatelessWidget {
                   }
                 },
                 label: state is DemoEnabledState ? "Disable presentation mode" : "Enable presentation mode",
-                icon: state is DemoEnabledState ? Icons.pause_presentation : Icons.photo_library,
+                icon: state is DemoEnabledState ? FontAwesomeIcons.pause : FontAwesomeIcons.play,
                 iconSize: 18,
               );
             },
