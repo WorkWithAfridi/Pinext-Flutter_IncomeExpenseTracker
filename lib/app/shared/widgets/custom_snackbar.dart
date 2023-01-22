@@ -12,21 +12,20 @@ enum SnackbarType {
   success,
 }
 
-const AnimationType snackbarAnimationType = AnimationType.fromTop;
-const Duration snackbarToastDuration = Duration(
-  seconds: 3,
-);
-const Duration snackbarAnimationDuration = Duration(
-  milliseconds: 200,
-);
-const isSnackbarDismissible = true;
-
 GetCustomSnackbar({
   required String title,
   required String message,
   required SnackbarType snackbarType,
   required BuildContext context,
 }) {
+  const AnimationType snackbarAnimationType = AnimationType.fromTop;
+  const Duration snackbarToastDuration = Duration(
+    seconds: 3,
+  );
+  const Duration snackbarAnimationDuration = Duration(
+    milliseconds: 150,
+  );
+  const isSnackbarDismissible = false;
   Text titleText = Text(
     title,
     style: boldTextStyle,
@@ -47,11 +46,6 @@ GetCustomSnackbar({
       toastDuration: snackbarToastDuration,
       dismissible: isSnackbarDismissible,
     ).show(context);
-    // snackbarContent = AwesomeSnackbarContent(
-    //   title: title,
-    //   message: message,
-    //   contentType: ContentType.success,
-    // );
   } else if (snackbarType == SnackbarType.info) {
     ElegantNotification.info(
       title: titleText,
@@ -61,12 +55,6 @@ GetCustomSnackbar({
       toastDuration: snackbarToastDuration,
       dismissible: isSnackbarDismissible,
     ).show(context);
-
-    // snackbarContent = AwesomeSnackbarContent(
-    //   title: title,
-    //   message: message,
-    //   contentType: ContentType.help,
-    // );
   } else if (snackbarType == SnackbarType.error) {
     ElegantNotification.error(
       title: titleText,
@@ -76,19 +64,5 @@ GetCustomSnackbar({
       toastDuration: snackbarToastDuration,
       dismissible: isSnackbarDismissible,
     ).show(context);
-
-    // snackbarContent = AwesomeSnackbarContent(
-    //   title: title,
-    //   message: message,
-    //   contentType: ContentType.failure,
-    // );
   }
-  // var snackbar = SnackBar(
-  //   elevation: 0,
-  //   behavior: SnackBarBehavior.floating,
-  //   backgroundColor: Colors.transparent,
-  //   content: snackbarContent,
-  // );
-
-  // ScaffoldMessenger.of(context).showSnackBar(snackbar);
 }
