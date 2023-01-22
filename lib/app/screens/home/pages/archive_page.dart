@@ -534,206 +534,13 @@ class TransactionsList extends StatelessWidget {
                               );
                             },
                           ),
-                          BlocBuilder<ArchiveSearchCubit, ArchiveSearchState>(
-                            builder: (context, archiveSearchState) {
-                              return BlocBuilder<UserStatisticsCubit, UserStatisticsState>(
-                                builder: (context, state) {
-                                  return archiveSearchState.isSearchActive
-                                      ? const SizedBox.shrink()
-                                      : Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          children: [
-                                            const SizedBox(
-                                              height: 12,
-                                            ),
-                                            Text(
-                                              "Statistics",
-                                              style: boldTextStyle.copyWith(
-                                                fontSize: 18,
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 6,
-                                            ),
-                                            Builder(
-                                              builder: (context) {
-                                                final demoBlocState = context.watch<DemoBloc>().state;
-                                                return Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                      "Withdrawals: ",
-                                                      style: regularTextStyle.copyWith(
-                                                        color: customBlackColor.withOpacity(.80),
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      demoBlocState is DemoEnabledState
-                                                          ? "- 12345 Tk"
-                                                          : "- ${state.totalExpenses} Tk.",
-                                                      style: boldTextStyle.copyWith(
-                                                        color: Colors.redAccent[400],
-                                                      ),
-                                                    )
-                                                  ],
-                                                );
-                                              },
-                                            ),
-                                            const SizedBox(
-                                              height: 4,
-                                            ),
-                                            Builder(
-                                              builder: (context) {
-                                                final demoBlocState = context.watch<DemoBloc>().state;
-
-                                                return Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                      "Diposits: ",
-                                                      style: regularTextStyle.copyWith(
-                                                        color: customBlackColor.withOpacity(.80),
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      demoBlocState is DemoEnabledState
-                                                          ? "+ 12345 Tk"
-                                                          : "+ ${state.totalSavings} Tk.",
-                                                      style: boldTextStyle.copyWith(
-                                                        color: Colors.green,
-                                                      ),
-                                                    )
-                                                  ],
-                                                );
-                                              },
-                                            ),
-                                            const SizedBox(
-                                              height: 4,
-                                            ),
-                                            Container(
-                                              height: 1,
-                                              width: getWidth(context),
-                                              color: customBlackColor.withOpacity(.05),
-                                            ),
-                                            const SizedBox(
-                                              height: 4,
-                                            ),
-                                            Builder(
-                                              builder: (context) {
-                                                final state = context.read<UserBloc>().state;
-                                                final demoBlocState = context.watch<DemoBloc>().state;
-
-                                                String totalEarnings = "";
-                                                if (state is AuthenticatedUserState) {
-                                                  totalEarnings = state.monthlyEarnings.toString();
-                                                }
-                                                return Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                      "You've earned: ",
-                                                      style: regularTextStyle.copyWith(
-                                                        color: customBlackColor.withOpacity(.80),
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      demoBlocState is DemoEnabledState
-                                                          ? "100000 Tk"
-                                                          : "${totalEarnings}Tk.",
-                                                      style: boldTextStyle.copyWith(
-                                                        color: customBlueColor,
-                                                      ),
-                                                    )
-                                                  ],
-                                                );
-                                              },
-                                            ),
-                                            const SizedBox(
-                                              height: 4,
-                                            ),
-                                            Builder(
-                                              builder: (context) {
-                                                final state = context.read<UserBloc>().state;
-                                                final demoBlocState = context.watch<DemoBloc>().state;
-
-                                                String totalSavings = "";
-                                                if (state is AuthenticatedUserState) {
-                                                  totalSavings = state.monthlySavings.toString();
-                                                }
-                                                return Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                      "You've saved: ",
-                                                      style: regularTextStyle.copyWith(
-                                                        color: customBlackColor.withOpacity(.80),
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      demoBlocState is DemoEnabledState
-                                                          ? "75000 Tk"
-                                                          : "${totalSavings}Tk.",
-                                                      style: boldTextStyle.copyWith(
-                                                        color: customBlueColor,
-                                                      ),
-                                                    )
-                                                  ],
-                                                );
-                                              },
-                                            ),
-                                            const SizedBox(
-                                              height: 4,
-                                            ),
-                                            Container(
-                                              height: 1,
-                                              width: getWidth(context),
-                                              color: customBlackColor.withOpacity(.05),
-                                            ),
-                                            const SizedBox(
-                                              height: 4,
-                                            ),
-                                            Builder(
-                                              builder: (context) {
-                                                final state = context.read<UserBloc>().state;
-                                                final demoBlocState = context.watch<DemoBloc>().state;
-                                                String netWorth = "";
-                                                if (state is AuthenticatedUserState) {
-                                                  netWorth = state.netBalance.toString();
-                                                }
-                                                return Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                      "Current NET. balance: ",
-                                                      style: regularTextStyle.copyWith(
-                                                        color: customBlackColor.withOpacity(.80),
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      demoBlocState is DemoEnabledState
-                                                          ? "750000 Tk"
-                                                          : "${netWorth}Tk.",
-                                                      style: boldTextStyle.copyWith(
-                                                        color: customBlackColor,
-                                                      ),
-                                                    )
-                                                  ],
-                                                );
-                                              },
-                                            ),
-                                          ],
-                                        );
-                                },
-                              );
-                            },
-                          )
                         ],
                       );
                     }),
                   );
                 },
               ),
+              const _GetStatisticsWidget(),
               const SizedBox(
                 height: 16,
               ),
@@ -741,6 +548,198 @@ class TransactionsList extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _GetStatisticsWidget extends StatelessWidget {
+  const _GetStatisticsWidget();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ArchiveSearchCubit, ArchiveSearchState>(
+      builder: (context, archiveSearchState) {
+        return BlocBuilder<UserStatisticsCubit, UserStatisticsState>(
+          builder: (context, state) {
+            return archiveSearchState.isSearchActive
+                ? const SizedBox.shrink()
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      Text(
+                        "Statistics",
+                        style: boldTextStyle.copyWith(
+                          fontSize: 18,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 6,
+                      ),
+                      Builder(
+                        builder: (context) {
+                          final demoBlocState = context.watch<DemoBloc>().state;
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Withdrawals: ",
+                                style: regularTextStyle.copyWith(
+                                  color: customBlackColor.withOpacity(.80),
+                                ),
+                              ),
+                              Text(
+                                demoBlocState is DemoEnabledState ? "- 12345 Tk" : "- ${state.totalExpenses} Tk.",
+                                style: boldTextStyle.copyWith(
+                                  color: Colors.redAccent[400],
+                                ),
+                              )
+                            ],
+                          );
+                        },
+                      ),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      Builder(
+                        builder: (context) {
+                          final demoBlocState = context.watch<DemoBloc>().state;
+
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Diposits: ",
+                                style: regularTextStyle.copyWith(
+                                  color: customBlackColor.withOpacity(.80),
+                                ),
+                              ),
+                              Text(
+                                demoBlocState is DemoEnabledState ? "+ 12345 Tk" : "+ ${state.totalSavings} Tk.",
+                                style: boldTextStyle.copyWith(
+                                  color: Colors.green,
+                                ),
+                              )
+                            ],
+                          );
+                        },
+                      ),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      Container(
+                        height: 1,
+                        width: getWidth(context),
+                        color: customBlackColor.withOpacity(.05),
+                      ),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      Builder(
+                        builder: (context) {
+                          final state = context.read<UserBloc>().state;
+                          final demoBlocState = context.watch<DemoBloc>().state;
+
+                          String totalEarnings = "";
+                          if (state is AuthenticatedUserState) {
+                            totalEarnings = state.monthlyEarnings.toString();
+                          }
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "You've earned: ",
+                                style: regularTextStyle.copyWith(
+                                  color: customBlackColor.withOpacity(.80),
+                                ),
+                              ),
+                              Text(
+                                demoBlocState is DemoEnabledState ? "100000 Tk" : "${totalEarnings}Tk.",
+                                style: boldTextStyle.copyWith(
+                                  color: customBlueColor,
+                                ),
+                              )
+                            ],
+                          );
+                        },
+                      ),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      Builder(
+                        builder: (context) {
+                          final state = context.read<UserBloc>().state;
+                          final demoBlocState = context.watch<DemoBloc>().state;
+
+                          String totalSavings = "";
+                          if (state is AuthenticatedUserState) {
+                            totalSavings = state.monthlySavings.toString();
+                          }
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "You've saved: ",
+                                style: regularTextStyle.copyWith(
+                                  color: customBlackColor.withOpacity(.80),
+                                ),
+                              ),
+                              Text(
+                                demoBlocState is DemoEnabledState ? "75000 Tk" : "${totalSavings}Tk.",
+                                style: boldTextStyle.copyWith(
+                                  color: customBlueColor,
+                                ),
+                              )
+                            ],
+                          );
+                        },
+                      ),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      Container(
+                        height: 1,
+                        width: getWidth(context),
+                        color: customBlackColor.withOpacity(.05),
+                      ),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      Builder(
+                        builder: (context) {
+                          final state = context.read<UserBloc>().state;
+                          final demoBlocState = context.watch<DemoBloc>().state;
+                          String netWorth = "";
+                          if (state is AuthenticatedUserState) {
+                            netWorth = state.netBalance.toString();
+                          }
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Current NET. balance: ",
+                                style: regularTextStyle.copyWith(
+                                  color: customBlackColor.withOpacity(.80),
+                                ),
+                              ),
+                              Text(
+                                demoBlocState is DemoEnabledState ? "750000 Tk" : "${netWorth}Tk.",
+                                style: boldTextStyle.copyWith(
+                                  color: customBlackColor,
+                                ),
+                              )
+                            ],
+                          );
+                        },
+                      ),
+                    ],
+                  );
+          },
+        );
+      },
     );
   }
 }
