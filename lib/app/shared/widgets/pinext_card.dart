@@ -197,13 +197,13 @@ class PinextCard extends StatelessWidget {
                             25,
                           ),
                           border: Border.all(
-                            color: Colors.white.withOpacity(.2),
+                            color: Colors.white.withOpacity(.1),
                           ),
                         ),
                         padding: const EdgeInsets.all(10),
                         child: Icon(
                           Icons.edit_note_rounded,
-                          color: Colors.white.withOpacity(.2),
+                          color: Colors.white.withOpacity(.1),
                         ),
                       ),
                     )
