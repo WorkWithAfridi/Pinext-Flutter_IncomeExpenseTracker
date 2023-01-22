@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
 import 'package:pinext/app/app_data/extensions/string_extensions.dart';
 import 'package:pinext/app/bloc/add_goal_cubit/add_goal_cubit.dart';
+import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/bloc/signup_cubit/signin_cubit_cubit.dart';
 import 'package:pinext/app/models/pinext_goal_model.dart';
 import 'package:uuid/uuid.dart';
@@ -318,33 +319,36 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                       buttonColor: customBlueColor,
                       isLoading: state is AddGoalLoadingState,
                       callBackFunction: () async {
-                        if (_formKey.currentState!.validate()) {
-                          if (widget.addingNewGoalDuringSignupProcess) {
-                            PinextGoalModel pinextGoalModel = PinextGoalModel(
-                              title: titleController.text,
-                              amount: amountController.text,
-                              description: descriptionController.text,
-                              id: const Uuid().v4().toString(),
-                            );
-                            context.read<SigninCubit>().addGoal(pinextGoalModel);
-                            Navigator.pop(context);
-                          } else if (widget.addingNewGoal) {
-                            PinextGoalModel pinextGoalModel = PinextGoalModel(
-                              title: titleController.text,
-                              amount: amountController.text,
-                              description: descriptionController.text,
-                              id: const Uuid().v4().toString(),
-                            );
-                            context.read<AddGoalCubit>().addGoal(pinextGoalModel);
-                            Navigator.pop(context);
-                          } else if (widget.editingGoal) {
-                            PinextGoalModel pinextGoalModel = PinextGoalModel(
-                              title: titleController.text,
-                              amount: amountController.text,
-                              description: descriptionController.text,
-                              id: widget.pinextGoalModel!.id,
-                            );
-                            context.read<AddGoalCubit>().updateGoal(pinextGoalModel);
+                        final demoState = context.read<DemoBloc>().state;
+                        if (demoState is DemoDisabledState) {
+                          if (_formKey.currentState!.validate()) {
+                            if (widget.addingNewGoalDuringSignupProcess) {
+                              PinextGoalModel pinextGoalModel = PinextGoalModel(
+                                title: titleController.text,
+                                amount: amountController.text,
+                                description: descriptionController.text,
+                                id: const Uuid().v4().toString(),
+                              );
+                              context.read<SigninCubit>().addGoal(pinextGoalModel);
+                              Navigator.pop(context);
+                            } else if (widget.addingNewGoal) {
+                              PinextGoalModel pinextGoalModel = PinextGoalModel(
+                                title: titleController.text,
+                                amount: amountController.text,
+                                description: descriptionController.text,
+                                id: const Uuid().v4().toString(),
+                              );
+                              context.read<AddGoalCubit>().addGoal(pinextGoalModel);
+                              Navigator.pop(context);
+                            } else if (widget.editingGoal) {
+                              PinextGoalModel pinextGoalModel = PinextGoalModel(
+                                title: titleController.text,
+                                amount: amountController.text,
+                                description: descriptionController.text,
+                                id: widget.pinextGoalModel!.id,
+                              );
+                              context.read<AddGoalCubit>().updateGoal(pinextGoalModel);
+                            }
                           }
                         }
                       },

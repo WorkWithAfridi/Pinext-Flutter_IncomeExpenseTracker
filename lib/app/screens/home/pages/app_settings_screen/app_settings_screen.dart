@@ -12,6 +12,7 @@ import '../../../../app_data/custom_transition_page_route/custom_transition_page
 import '../../../../app_data/theme_data/colors.dart';
 import '../../../../bloc/demoBloc/demo_bloc.dart';
 import '../../../../services/handlers/user_handler.dart';
+import '../../../../shared/widgets/custom_snackbar.dart';
 
 class AppSettingsScreen extends StatelessWidget {
   const AppSettingsScreen({Key? key}) : super(key: key);
@@ -139,11 +140,20 @@ class AppSettingsScreen extends StatelessWidget {
             builder: (context, state) {
               return GetSettingsButtonWithIcon(
                 onTapFunction: () {
+                  String status = "";
                   if (state is DemoEnabledState) {
                     context.read<DemoBloc>().add(DisableDemoModeEvent());
+                    status = "disabled";
                   } else {
+                    status = "enabled";
                     context.read<DemoBloc>().add(EnableDemoModeEvent());
                   }
+                  GetCustomSnackbar(
+                    title: "DEMO-MODE",
+                    message: "Presentation mode has been $status.",
+                    snackbarType: SnackbarType.info,
+                    context: context,
+                  );
                 },
                 label: state is DemoEnabledState ? "Disable presentation mode" : "Enable presentation mode",
                 icon: state is DemoEnabledState ? Icons.pause_presentation : Icons.photo_library,
@@ -214,20 +224,18 @@ class GetSettingsButtonWithIcon extends StatelessWidget {
           horizontal: defaultPadding,
         ),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Icon(
-              icon,
-              color: customBlackColor,
-              size: iconSize,
-            ),
-            const SizedBox(
-              width: 4,
-            ),
             Text(
               label,
               style: regularTextStyle.copyWith(
                 fontSize: 15,
               ),
+            ),
+            Icon(
+              icon,
+              color: customBlackColor,
+              size: iconSize,
             ),
           ],
         ),
