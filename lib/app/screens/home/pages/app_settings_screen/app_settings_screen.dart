@@ -145,7 +145,6 @@ class AppSettingsScreen extends StatelessWidget {
                     context.read<DemoBloc>().add(DisableDemoModeEvent());
                     status = "disabled";
                   } else {
-                    status = "enabled";
                     await showDialog(
                       context: context,
                       builder: (context) {
@@ -180,6 +179,7 @@ class AppSettingsScreen extends StatelessWidget {
                                 ),
                               ),
                               onPressed: () {
+                                status = "";
                                 Navigator.of(context).pop();
                               },
                             ),
