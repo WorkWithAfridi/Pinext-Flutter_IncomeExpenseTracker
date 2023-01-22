@@ -139,21 +139,79 @@ class AppSettingsScreen extends StatelessWidget {
           BlocBuilder<DemoBloc, DemoState>(
             builder: (context, state) {
               return GetSettingsButtonWithIcon(
-                onTapFunction: () {
+                onTapFunction: () async {
                   String status = "";
                   if (state is DemoEnabledState) {
                     context.read<DemoBloc>().add(DisableDemoModeEvent());
                     status = "disabled";
                   } else {
                     status = "enabled";
-                    context.read<DemoBloc>().add(EnableDemoModeEvent());
+                    await showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text(
+                            'Presentation Mode',
+                            style: boldTextStyle.copyWith(
+                              fontSize: 20,
+                            ),
+                          ),
+                          content: SingleChildScrollView(
+                            child: ListBody(
+                              children: [
+                                Text(
+                                  "Enabling Presentation Mode will temporarily replace all of your data with a template, so that you can present or show the app to other potential users! You can disable presentation mode at any time from this menu again! With that being said, do you want to proceed with this action?",
+                                  style: regularTextStyle,
+                                ),
+                              ],
+                            ),
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(defaultBorder),
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              child: Text(
+                                'Dismiss',
+                                style: boldTextStyle.copyWith(
+                                  color: customBlackColor.withOpacity(
+                                    .8,
+                                  ),
+                                ),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                            TextButton(
+                              child: Text(
+                                'Enable',
+                                style: boldTextStyle.copyWith(
+                                  color: customBlackColor.withOpacity(
+                                    .8,
+                                  ),
+                                ),
+                              ),
+                              onPressed: () {
+                                Navigator.pop(context);
+                                status = "enabled";
+                                context.read<DemoBloc>().add(EnableDemoModeEvent());
+                              },
+                            ),
+                          ],
+                          actionsPadding: dialogButtonPadding,
+                        );
+                      },
+                    );
                   }
-                  GetCustomSnackbar(
-                    title: "DEMO-MODE",
-                    message: "Presentation mode has been $status.",
-                    snackbarType: SnackbarType.info,
-                    context: context,
-                  );
+                  if (status != "") {
+                    GetCustomSnackbar(
+                      title: "DEMO-MODE",
+                      message: "Presentation mode has been $status.",
+                      snackbarType: SnackbarType.info,
+                      context: context,
+                    );
+                  }
                 },
                 label: state is DemoEnabledState ? "Disable presentation mode" : "Enable presentation mode",
                 icon: state is DemoEnabledState ? Icons.pause_presentation : Icons.photo_library,
