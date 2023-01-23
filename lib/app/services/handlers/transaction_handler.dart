@@ -23,6 +23,11 @@ class TransactionHandler {
   }) async {
     String response = "Error";
     try {
+      PinextCardModel pinextCardModel = await CardHandler().getCard(cardId);
+      if (pinextCardModel.balance < double.parse(amount)) {
+        return "Couldn't process transaction. Low balance!";
+      }
+
       String transactionId = const Uuid().v4();
       PinextTransactionModel pinextTransactionModel = PinextTransactionModel(
         transactionType: transactionType,
@@ -48,7 +53,7 @@ class TransactionHandler {
           );
 
       // Adjust card balance and updating last transaction time
-      PinextCardModel pinextCardModel = await CardHandler().getCard(cardId);
+
       double adjustedAmount = (transactionType == "Income")
           ? pinextCardModel.balance + double.parse(amount)
           : pinextCardModel.balance - double.parse(amount);
