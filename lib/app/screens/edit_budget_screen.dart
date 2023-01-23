@@ -149,7 +149,7 @@ class Editbudgetview extends StatelessWidget {
                         );
                       } else if (state is EditBudgetErrorState) {
                         GetCustomSnackbar(
-                        title: "Snap",
+                          title: "Snap",
                           message: state.errorMessage,
                           snackbarType: SnackbarType.success,
                           context: context,
@@ -164,7 +164,7 @@ class Editbudgetview extends StatelessWidget {
                         titleColor: Colors.white,
                         buttonColor: customBlueColor,
                         callBackFunction: () {
-                          final demoState = context.read<DemoBloc>().state;
+                          final demoState = context.watch<DemoBloc>().state;
                           if (demoState is DemoDisabledState) {
                             if (_formKey.currentState!.validate()) {
                               context.read<EditBudgetCubit>().updateBudgetAndMonthlyExpenses(

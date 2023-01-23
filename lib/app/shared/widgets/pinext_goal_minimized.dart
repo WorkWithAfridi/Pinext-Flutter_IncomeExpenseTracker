@@ -42,7 +42,7 @@ class PinextGoalCardMinimized extends StatelessWidget {
           children: [
             Builder(
               builder: (context) {
-                final state = context.read<UserBloc>().state;
+                final state = context.watch<UserBloc>().state;
                 final demoBlocState = context.watch<DemoBloc>().state;
                 if (state is AuthenticatedUserState) {
                   double completionAmount =
@@ -123,7 +123,7 @@ class PinextGoalCardMinimized extends StatelessWidget {
             ),
             Builder(
               builder: (context) {
-                final state = context.read<UserBloc>().state;
+                final state = context.watch<UserBloc>().state;
                 final demoBlocState = context.watch<DemoBloc>().state;
 
                 double completionAmount = 0;

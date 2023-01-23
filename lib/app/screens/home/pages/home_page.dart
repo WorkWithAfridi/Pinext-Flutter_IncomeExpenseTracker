@@ -230,7 +230,7 @@ class _GetBalanceWidget extends StatelessWidget {
                 ),
                 Builder(
                   builder: (context) {
-                    final state = context.read<UserBloc>().state;
+                    final state = context.watch<UserBloc>().state;
                     final demoBlocState = context.watch<DemoBloc>().state;
                     if (state is AuthenticatedUserState) {
                       return Text(
@@ -396,7 +396,7 @@ class _GetExpensesWidget extends StatelessWidget {
         ),
         Builder(
           builder: (context) {
-            final state = context.read<UserBloc>().state;
+            final state = context.watch<UserBloc>().state;
             final demoBlocState = context.watch<DemoBloc>().state;
             if (state is AuthenticatedUserState) {
               return Row(
@@ -515,7 +515,7 @@ class _GetExpensesWidget extends StatelessWidget {
               ),
               Builder(
                 builder: (context) {
-                  final state = context.read<UserBloc>().state;
+                  final state = context.watch<UserBloc>().state;
                   final demoBlocState = context.watch<DemoBloc>().state;
                   if (state is AuthenticatedUserState) {
                     return Text(
@@ -606,7 +606,7 @@ class _GetSavingsForThisMonthWidget extends StatelessWidget {
 
                           Builder(
                             builder: (context) {
-                              final state = context.read<UserBloc>().state;
+                              final state = context.watch<UserBloc>().state;
                               final demoBlocState = context.watch<DemoBloc>().state;
                               if (state is AuthenticatedUserState) {
                                 return Text(
@@ -661,7 +661,7 @@ class _GetSavingsForThisMonthWidget extends StatelessWidget {
                           ),
                           Builder(
                             builder: (context) {
-                              final state = context.read<UserBloc>().state;
+                              final state = context.watch<UserBloc>().state;
                               final demoBlocState = context.watch<DemoBloc>().state;
                               if (state is AuthenticatedUserState) {
                                 return Text(
@@ -701,7 +701,7 @@ class _GetSavingsForThisMonthWidget extends StatelessWidget {
               ),
               Builder(
                 builder: (context) {
-                  final state = context.read<UserBloc>().state;
+                  final state = context.watch<UserBloc>().state;
                   final demoBlocState = context.watch<DemoBloc>().state;
                   String amount = "";
                   if (state is AuthenticatedUserState) {
@@ -796,7 +796,7 @@ class _GetBudgetEstimationsWidget extends StatelessWidget {
                   ),
                   Builder(
                     builder: (context) {
-                      final state = context.read<UserBloc>().state;
+                      final state = context.watch<UserBloc>().state;
                       final demoBlocState = context.watch<DemoBloc>().state;
                       return GestureDetector(
                         onTap: () {
@@ -855,7 +855,7 @@ class _GetBudgetEstimationsWidget extends StatelessWidget {
                   ),
                   Builder(
                     builder: (context) {
-                      final state = context.read<UserBloc>().state;
+                      final state = context.watch<UserBloc>().state;
                       final demoBlocState = context.watch<DemoBloc>().state;
                       if (state is AuthenticatedUserState) {
                         return LayoutBuilder(
@@ -904,7 +904,7 @@ class _GetBudgetEstimationsWidget extends StatelessWidget {
               ),
               Builder(
                 builder: (context) {
-                  final state = context.read<UserBloc>().state;
+                  final state = context.watch<UserBloc>().state;
                   final demoBlocState = context.watch<DemoBloc>().state;
                   if (state is AuthenticatedUserState) {
                     return Row(

@@ -80,7 +80,7 @@ class CardsAndBalanceView extends StatelessWidget {
                   ),
                   Builder(
                     builder: (context) {
-                      final state = context.read<UserBloc>().state;
+                      final state = context.watch<UserBloc>().state;
                       final demoBlocState = context.watch<DemoBloc>().state;
                       if (state is AuthenticatedUserState) {
                         return SizedBox(

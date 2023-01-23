@@ -319,7 +319,7 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                       buttonColor: customBlueColor,
                       isLoading: state is AddGoalLoadingState,
                       callBackFunction: () async {
-                        final demoState = context.read<DemoBloc>().state;
+                        final demoState = context.watch<DemoBloc>().state;
                         if (demoState is DemoDisabledState) {
                           if (_formKey.currentState!.validate()) {
                             if (widget.addingNewGoalDuringSignupProcess) {

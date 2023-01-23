@@ -640,7 +640,7 @@ class _GetStatisticsWidget extends StatelessWidget {
                       ),
                       Builder(
                         builder: (context) {
-                          final state = context.read<UserBloc>().state;
+                          final state = context.watch<UserBloc>().state;
                           final demoBlocState = context.watch<DemoBloc>().state;
 
                           String totalEarnings = "";
@@ -671,7 +671,7 @@ class _GetStatisticsWidget extends StatelessWidget {
                       ),
                       Builder(
                         builder: (context) {
-                          final state = context.read<UserBloc>().state;
+                          final state = context.watch<UserBloc>().state;
                           final demoBlocState = context.watch<DemoBloc>().state;
 
                           String totalSavings = "";
@@ -710,7 +710,7 @@ class _GetStatisticsWidget extends StatelessWidget {
                       ),
                       Builder(
                         builder: (context) {
-                          final state = context.read<UserBloc>().state;
+                          final state = context.watch<UserBloc>().state;
                           final demoBlocState = context.watch<DemoBloc>().state;
                           String netWorth = "";
                           if (state is AuthenticatedUserState) {
