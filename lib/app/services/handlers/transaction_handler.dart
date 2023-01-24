@@ -24,7 +24,7 @@ class TransactionHandler {
     String response = "Error";
     try {
       PinextCardModel pinextCardModel = await CardHandler().getCard(cardId);
-      if (pinextCardModel.balance < double.parse(amount)) {
+      if (pinextCardModel.balance < double.parse(amount) && transactionType == "Expense") {
         return "Couldn't process transaction. Low balance!";
       }
 
