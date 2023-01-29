@@ -44,7 +44,7 @@ GetCustomSnackbar({
       width: width,
       animationDuration: snackbarAnimationDuration,
       toastDuration: snackbarToastDuration,
-      dismissible: isSnackbarDismissible,
+      autoDismiss: true,
     ).show(context);
   } else if (snackbarType == SnackbarType.info) {
     ElegantNotification.info(
@@ -53,7 +53,7 @@ GetCustomSnackbar({
       width: width,
       animationDuration: snackbarAnimationDuration,
       toastDuration: snackbarToastDuration,
-      dismissible: isSnackbarDismissible,
+      autoDismiss: true,
     ).show(context);
   } else if (snackbarType == SnackbarType.error) {
     ElegantNotification.error(
@@ -62,7 +62,7 @@ GetCustomSnackbar({
       width: width,
       animationDuration: snackbarAnimationDuration,
       toastDuration: snackbarToastDuration,
-      dismissible: isSnackbarDismissible,
+      autoDismiss: true,
     ).show(context);
   }
 }
