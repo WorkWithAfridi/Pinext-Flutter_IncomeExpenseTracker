@@ -78,6 +78,7 @@ class UserHandler {
     if (user.currentYear != currentYear) {
       await FirebaseServices().firebaseFirestore.collection("pinext_users").doc(FirebaseServices().getUserId()).update({
         'monthlyExpenses': "0",
+        'monthlyEarnings': "0",
         'dailyExpenses': "0",
         'weeklyExpenses': "0",
         'monthlySavings': "0",
@@ -85,6 +86,7 @@ class UserHandler {
     } else if (user.currentMonth != currentMonth) {
       await FirebaseServices().firebaseFirestore.collection("pinext_users").doc(FirebaseServices().getUserId()).update({
         'monthlyExpenses': "0",
+        'monthlyEarnings': "0",
         'dailyExpenses': "0",
         // 'weeklyExpenses': "0",
         'monthlySavings': "0",
