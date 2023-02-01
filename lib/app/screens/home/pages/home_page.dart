@@ -705,9 +705,11 @@ class _GetSavingsForThisMonthWidget extends StatelessWidget {
                   final demoBlocState = context.watch<DemoBloc>().state;
                   String amount = "";
                   if (state is AuthenticatedUserState) {
-                    amount = ((double.parse(state.monthlySavings) / double.parse(state.monthlyEarnings)) * 100)
-                        .ceil()
-                        .toString();
+                    amount = state.monthlyEarnings == "0"
+                        ? "0"
+                        : ((double.parse(state.monthlySavings) / double.parse(state.monthlyEarnings)) * 100)
+                            .ceil()
+                            .toString();
                   }
                   return RichText(
                     text: TextSpan(
