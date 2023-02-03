@@ -5,6 +5,7 @@ import 'package:pinext/app/app_data/extensions/string_extensions.dart';
 import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/bloc/edit_budget_cubit/edit_budget_cubit.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
+import 'package:pinext/app/shared/info_widget.dart';
 import 'package:pinext/app/shared/widgets/custom_button.dart';
 
 import '../app_data/app_constants/fonts.dart';
@@ -104,16 +105,13 @@ class Editbudgetview extends StatelessWidget {
                     suffixButtonAction: () {},
                   ),
                   const SizedBox(
-                    height: 4,
+                    height: 8,
                   ),
-                  Text(
-                    "*This is the maximum amount of CASH you'll be spending in one month!",
-                    style: regularTextStyle.copyWith(
-                      color: customBlackColor.withOpacity(.4),
-                    ),
+                  InfoWidget(
+                    infoText: "*This is the maximum amount of CASH you'll be spending in one month!",
                   ),
                   const SizedBox(
-                    height: 8,
+                    height: 16,
                   ),
                   Text(
                     "And how much of that have you spent so far?",

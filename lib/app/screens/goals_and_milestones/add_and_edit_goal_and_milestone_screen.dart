@@ -8,6 +8,7 @@ import 'package:pinext/app/bloc/add_goal_cubit/add_goal_cubit.dart';
 import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/bloc/signup_cubit/signin_cubit_cubit.dart';
 import 'package:pinext/app/models/pinext_goal_model.dart';
+import 'package:pinext/app/shared/info_widget.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../app_data/app_constants/fonts.dart';
@@ -220,13 +221,10 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                   suffixButtonAction: () {},
                 ),
                 const SizedBox(
-                  height: 4,
+                  height: 8,
                 ),
-                Text(
-                  "*This will be the title of you goal or milestone.",
-                  style: regularTextStyle.copyWith(
-                    color: customBlackColor.withOpacity(.4),
-                  ),
+                InfoWidget(
+                  infoText: "*This will be the title of you goal or milestone.",
                 ),
                 const SizedBox(
                   height: 12,
@@ -249,13 +247,10 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                   suffixButtonAction: () {},
                 ),
                 const SizedBox(
-                  height: 4,
+                  height: 8,
                 ),
-                Text(
-                  "*This will be the title of you goal or milestone.",
-                  style: regularTextStyle.copyWith(
-                    color: customBlackColor.withOpacity(.4),
-                  ),
+                InfoWidget(
+                  infoText: "*This will be the title of you goal or milestone.",
                 ),
                 const SizedBox(
                   height: 12,

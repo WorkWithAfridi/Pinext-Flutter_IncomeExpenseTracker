@@ -21,6 +21,7 @@ import '../../bloc/demoBloc/demo_bloc.dart';
 import '../../bloc/userBloc/user_bloc.dart';
 import '../../models/pinext_card_model.dart';
 import '../../services/firebase_services.dart';
+import '../../shared/info_widget.dart';
 import '../../shared/widgets/pinext_card.dart';
 
 class AddAndViewTransactionScreen extends StatelessWidget {
@@ -330,17 +331,18 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
                     )),
               ],
             ),
+            const SizedBox(
+              height: 2,
+            ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
-              child: Text(
-                "*Marking this transaction as an ${state.selectedTransactionMode == SelectedTransactionMode.income ? "income" : "expense"} will contribute the transaction amount towards your monthly, weekly & daily ${state.selectedTransactionMode == SelectedTransactionMode.income ? "budget goals" : "budget"}.",
-                style: regularTextStyle.copyWith(
-                  color: customBlackColor.withOpacity(
-                    .6,
-                  ),
-                ),
+              padding: const EdgeInsets.symmetric(
+                horizontal: defaultPadding,
               ),
-            )
+              child: InfoWidget(
+                infoText:
+                    "*Marking this transaction as an ${state.selectedTransactionMode == SelectedTransactionMode.income ? "income" : "expense"} will contribute the transaction amount towards your monthly, weekly & daily ${state.selectedTransactionMode == SelectedTransactionMode.income ? "budget goals" : "budget"}.",
+              ),
+            ),
           ],
         );
       },

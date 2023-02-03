@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
+import 'package:pinext/app/shared/info_widget.dart';
 
 import '../../app_data/app_constants/domentions.dart';
 import '../../app_data/app_constants/fonts.dart';
@@ -127,11 +128,9 @@ class ViewGoalsAndMilestoneView extends StatelessWidget {
                   );
                 }),
               ),
-              Text(
-                "*Please delete your milestones, once you've achieved them! Or else they will again pop up once your balance goes below the completed milestones amount!",
-                style: regularTextStyle.copyWith(
-                  color: customBlackColor.withOpacity(.4),
-                ),
+              InfoWidget(
+                infoText:
+                    "*Please delete your milestones, once you've achieved them! Or else they will again pop up once your balance goes below the completed milestones amount!",
               ),
               const SizedBox(
                 height: 8,

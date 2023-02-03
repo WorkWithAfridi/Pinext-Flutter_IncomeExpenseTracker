@@ -824,7 +824,7 @@ class _GetBudgetEstimationsWidget extends StatelessWidget {
                                       demoBlocState is DemoEnabledState ? "25000 Tk" : "${state.monthlyBudget} Tk",
                                       style: regularTextStyle.copyWith(
                                         fontWeight: FontWeight.w600,
-                                        color: Colors.green,
+                                        color: customDarkBBlueColor,
                                       ),
                                     )
                                   : const SizedBox.shrink(),

@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/extensions/string_extensions.dart';
 import 'package:pinext/app/models/pinext_goal_model.dart';
 import 'package:pinext/app/screens/goals_and_milestones/add_and_edit_goal_and_milestone_screen.dart';
+import 'package:pinext/app/shared/info_widget.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 import 'package:pinext/app/shared/widgets/pinext_card_minimized.dart';
 
@@ -121,22 +122,17 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                         fontSize: 16,
                       ),
                     ),
-                    const SizedBox(
-                      height: 4,
-                    ),
-                    Text(
-                      "*Please add in cards to see your updated NET balance here!",
-                      style: boldTextStyle.copyWith(
-                        color: customBlackColor.withOpacity(.3),
-                        fontSize: 12,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
                   ],
                 ),
               ),
               const SizedBox(
-                height: 12,
+                height: 8,
+              ),
+              InfoWidget(
+                infoText: "*Please add in cards to see your updated NET balance here!",
+              ),
+              const SizedBox(
+                height: 16,
               ),
               Text(
                 "Monthly Budget",
@@ -156,16 +152,13 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                 suffixButtonAction: () {},
               ),
               const SizedBox(
-                height: 4,
+                height: 8,
               ),
-              Text(
-                "*This is the maximum amount of CASH you'll be spending in one month!",
-                style: regularTextStyle.copyWith(
-                  color: customBlackColor.withOpacity(.4),
-                ),
+              InfoWidget(
+                infoText: "*This is the maximum amount of CASH you'll be spending in one month!",
               ),
               const SizedBox(
-                height: 8,
+                height: 16,
               ),
               Text(
                 "And how much of that have you spent so far?",
@@ -298,16 +291,14 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                height: 4,
+                height: 8,
               ),
-              Text(
-                "*You will be using these cards to keep a track on your money sources, be it either income or expenses.",
-                style: regularTextStyle.copyWith(
-                  color: customBlackColor.withOpacity(.4),
-                ),
+              InfoWidget(
+                infoText:
+                    "*You will be using these cards to keep a track on your money sources, be it either income or expenses.",
               ),
               const SizedBox(
-                height: 12,
+                height: 16,
               ),
               Text(
                 "Manage Goals",
@@ -419,16 +410,14 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                height: 4,
+                height: 8,
               ),
-              Text(
-                "*These will be your goals and milestones for the coming months, years and so on. Once you save up to them, your goals will be archived and you can add new goals.",
-                style: regularTextStyle.copyWith(
-                  color: customBlackColor.withOpacity(.4),
-                ),
+              InfoWidget(
+                infoText:
+                    "*These will be your goals and milestones for the coming months, years and so on. Once you save up to them, your goals will be archived and you can add new goals.",
               ),
               const SizedBox(
-                height: 12,
+                height: 16,
               ),
               BlocListener<UserBloc, UserState>(
                 listener: (context, state) {
