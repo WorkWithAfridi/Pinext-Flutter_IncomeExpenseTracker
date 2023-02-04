@@ -862,35 +862,20 @@ class _GetBudgetEstimationsWidget extends StatelessWidget {
                       if (state is AuthenticatedUserState) {
                         return LayoutBuilder(
                           builder: ((context, constraints) {
+                            double budgetSpentPercentage = constraints.maxWidth *
+                                (double.parse(state.monthlyExpenses) / double.parse(state.monthlyBudget));
+                            print("BudgetSppentPercentage: ${budgetSpentPercentage.toString()}");
                             return Container(
                               height: 5,
                               width: demoBlocState is DemoEnabledState
                                   ? constraints.maxWidth * .5
                                   : state.monthlyBudget == "000"
                                       ? 0
-                                      : constraints.maxWidth *
-                                          (double.parse(state.monthlyExpenses) / double.parse(state.monthlyBudget)),
+                                      : budgetSpentPercentage,
                               decoration: BoxDecoration(
-                                  color: demoBlocState is DemoEnabledState
-                                      ? customBlueColor
-                                      : (state.monthlyBudget == "000"
-                                                      ? 0
-                                                      : (double.parse(state.monthlyExpenses) /
-                                                              double.parse(state.monthlyBudget)) *
-                                                          100)
-                                                  .ceil() >
-                                              100
-                                          ? Colors.redAccent[400]
-                                          : (state.monthlyBudget == "000"
-                                                          ? 0
-                                                          : (double.parse(state.monthlyExpenses) /
-                                                                  double.parse(state.monthlyBudget)) *
-                                                              100)
-                                                      .ceil() >
-                                                  50
-                                              ? Colors.yellowAccent[800]
-                                              : customBlueColor,
-                                  borderRadius: BorderRadius.circular(defaultBorder)),
+                                color: customDarkBBlueColor,
+                                borderRadius: BorderRadius.circular(defaultBorder),
+                              ),
                             );
                           }),
                         );
