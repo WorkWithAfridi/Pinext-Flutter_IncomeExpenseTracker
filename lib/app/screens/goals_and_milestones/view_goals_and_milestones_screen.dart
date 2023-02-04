@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
-import 'package:pinext/app/shared/info_widget.dart';
+import 'package:pinext/app/shared/widgets/info_widget.dart';
 
 import '../../app_data/app_constants/domentions.dart';
 import '../../app_data/app_constants/fonts.dart';

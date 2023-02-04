@@ -5,7 +5,7 @@ import 'package:pinext/app/app_data/extensions/string_extensions.dart';
 import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/bloc/edit_budget_cubit/edit_budget_cubit.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
-import 'package:pinext/app/shared/info_widget.dart';
+import 'package:pinext/app/shared/widgets/info_widget.dart';
 import 'package:pinext/app/shared/widgets/custom_button.dart';
 
 import '../app_data/app_constants/fonts.dart';

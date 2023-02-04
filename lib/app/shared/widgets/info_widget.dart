@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../app_data/app_constants/constants.dart';
-import '../app_data/app_constants/fonts.dart';
-import '../app_data/theme_data/colors.dart';
+import '../../app_data/app_constants/constants.dart';
+import '../../app_data/app_constants/fonts.dart';
+import '../../app_data/theme_data/colors.dart';
 
 class InfoWidget extends StatelessWidget {
   InfoWidget({
@@ -44,7 +44,7 @@ class InfoWidget extends StatelessWidget {
             ],
           ),
           const SizedBox(
-            height: 8,
+            height: 4,
           ),
           Text(
             infoText,

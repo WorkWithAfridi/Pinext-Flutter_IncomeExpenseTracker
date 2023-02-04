@@ -8,7 +8,7 @@ import 'package:pinext/app/bloc/add_goal_cubit/add_goal_cubit.dart';
 import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/bloc/signup_cubit/signin_cubit_cubit.dart';
 import 'package:pinext/app/models/pinext_goal_model.dart';
-import 'package:pinext/app/shared/info_widget.dart';
+import 'package:pinext/app/shared/widgets/info_widget.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../app_data/app_constants/fonts.dart';

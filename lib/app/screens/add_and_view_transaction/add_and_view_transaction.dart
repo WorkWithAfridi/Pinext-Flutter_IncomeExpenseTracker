@@ -21,7 +21,7 @@ import '../../bloc/demoBloc/demo_bloc.dart';
 import '../../bloc/userBloc/user_bloc.dart';
 import '../../models/pinext_card_model.dart';
 import '../../services/firebase_services.dart';
-import '../../shared/info_widget.dart';
+import '../../shared/widgets/info_widget.dart';
 import '../../shared/widgets/pinext_card.dart';
 
 class AddAndViewTransactionScreen extends StatelessWidget {
