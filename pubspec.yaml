@@ -37,15 +37,15 @@ dependencies:
   firebase_auth: ^3.7.0
   firebase_core: ^1.21.1
   firebase_core_platform_interface: 4.5.1
-  firebase_messaging: ^13.0.4 
+  firebase_messaging: ^13.0.4
   firebase_storage: ^10.3.7
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.1
   flutter_intro: ^3.0.2
   font_awesome_flutter: ^10.2.1
-  get_storage: ^2.0.3
   google_sign_in: ^5.4.2
+  hydrated_bloc: ^9.0.0
   intl: ^0.17.0
   lottie: ^1.4.1
   mccounting_text: ^1.0.0
@@ -53,6 +53,7 @@ dependencies:
   path_provider: ^2.0.11
   pie_chart: ^5.3.2
   quick_actions: ^0.6.0+11
+  shared_preferences: ^2.0.17
   syncfusion_flutter_xlsio: ^20.2.48-beta
   timeago: ^3.3.0
   url_launcher: ^6.1.5

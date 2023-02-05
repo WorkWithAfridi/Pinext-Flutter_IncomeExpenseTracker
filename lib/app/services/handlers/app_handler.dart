@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../API/firebase_directories.dart';
@@ -16,12 +16,12 @@ class AppHandler {
   static final AppHandler _appHandler = AppHandler._internal();
   factory AppHandler() => _appHandler;
 
-  final storageBox = GetStorage();
   checkIfFirstBoot() async {
-    var isFirstBoot = storageBox.read("isFirstBoot");
+    final storageBox = await SharedPreferences.getInstance();
+    var isFirstBoot = storageBox.getBool("isFirstBoot");
     if (isFirstBoot == null) {
       isFirstBoot = false;
-      storageBox.write("isFirstBoot", isFirstBoot);
+      storageBox.setBool("isFirstBoot", isFirstBoot);
       return !isFirstBoot;
     } else {
       return isFirstBoot;
@@ -36,13 +36,9 @@ class AppHandler {
     //   context: context,
     // );
     Future.delayed(const Duration(milliseconds: 500)).then((value) async {
-      DocumentSnapshot appDataSnapShot = await FirebaseServices()
-          .firebaseFirestore
-          .collection(APPDATA_DIRECTORY)
-          .doc(APPVERSION_DIRECTORY)
-          .get();
-      String currentAvailableAppVersion =
-          (appDataSnapShot.data() as Map<String, dynamic>)["appVersion"];
+      DocumentSnapshot appDataSnapShot =
+          await FirebaseServices().firebaseFirestore.collection(APPDATA_DIRECTORY).doc(APPVERSION_DIRECTORY).get();
+      String currentAvailableAppVersion = (appDataSnapShot.data() as Map<String, dynamic>)["appVersion"];
       // log(currentAvailableAppVersion);
       if (currentAvailableAppVersion != appVersion) {
         showDialog(
@@ -86,8 +82,7 @@ class AppHandler {
                   child: const Text('Download'),
                   onPressed: () async {
                     // String url = "https://drive.google.com/drive/folders/1Z-fPUf9SbRhjLuHZsv87LCJxbRI3bJQT?usp=sharing";
-                    String url =
-                        "https://drive.google.com/drive/folders/1Z-fPUf9SbRhjLuHZsv87LCJxbRI3bJQT?usp=sharing";
+                    String url = "https://drive.google.com/drive/folders/1Z-fPUf9SbRhjLuHZsv87LCJxbRI3bJQT?usp=sharing";
                     // bool isiOS = Platform.isIOS;
                     if (await canLaunchUrl(Uri.parse(url))) {
                       await launchUrl(
@@ -178,8 +173,7 @@ class AppHandler {
             TextButton(
               child: const Text('Send mail'),
               onPressed: () {
-                _sendEmail(context, "PINEXT - BUG REPORT",
-                    "Please enter your description and scenario here!");
+                _sendEmail(context, "PINEXT - BUG REPORT", "Please enter your description and scenario here!");
                 Navigator.of(context).pop();
               },
             ),
@@ -194,8 +188,7 @@ class AppHandler {
     final Uri email = Uri(
         scheme: "mailto",
         path: "khondakarafridi35@gmail.com",
-        query:
-            "subject=${Uri.encodeComponent(subject)}&body=${Uri.encodeComponent(body)}");
+        query: "subject=${Uri.encodeComponent(subject)}&body=${Uri.encodeComponent(body)}");
     if (await canLaunchUrl(email)) {
       await launchUrl(email);
     } else {
