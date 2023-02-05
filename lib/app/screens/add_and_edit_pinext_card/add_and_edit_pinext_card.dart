@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:elegant_notification/elegant_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
@@ -359,19 +358,12 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                         }
                       } else {
                         if (state is AddCardErrorState) {
-                          ElegantNotification.error(
-                            title: Text(
-                              "ERROR :(",
-                              style: boldTextStyle,
-                            ),
-                            description: Text(
-                              "An error occurred while trying to add you card, please try again later!",
-                              style: regularTextStyle,
-                            ),
-                            width: getWidth(context) * .9,
-                            animationDuration: const Duration(milliseconds: 200),
-                            toastDuration: const Duration(seconds: 5),
-                          ).show(context);
+                          GetCustomSnackbar(
+                            title: "ERROR :(",
+                            message: "An error occurred while trying to add you card, please try again later!",
+                            snackbarType: SnackbarType.error,
+                            context: context,
+                          );
                           context.read<AddCardCubit>().reset();
                         }
                         if (state is AddCardSuccessState) {
