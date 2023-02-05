@@ -9,6 +9,7 @@ import 'package:pinext/app/app_data/app_constants/app_labels.dart';
 import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/app_data/routing/routes.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
+import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/screens/home/pages/app_settings_screen/app_settings_screen.dart';
 import 'package:pinext/app/screens/home/pages/archive_page.dart';
@@ -115,11 +116,16 @@ class HomeframeView extends StatelessWidget {
                   }),
             ),
             centerTitle: true,
-            title: Text(
-              "PINEXT",
-              style: regularTextStyle.copyWith(
-                fontSize: 16,
-              ),
+            title: Builder(
+              builder: (context) {
+                final demoBlocState = context.watch<DemoBloc>().state;
+                return Text(
+                  demoBlocState is DemoEnabledState ? "PINEXT : DEMO-MODE" : "PINEXT",
+                  style: regularTextStyle.copyWith(
+                    fontSize: 16,
+                  ),
+                );
+              },
             ),
           ),
           drawer: const PinextDrawer(),

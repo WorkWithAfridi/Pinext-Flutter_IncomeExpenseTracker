@@ -90,11 +90,13 @@ class HomepageView extends StatelessWidget {
                       color: customBlackColor.withOpacity(.6),
                     ),
                   ),
-                  BlocBuilder<UserBloc, UserState>(
-                    builder: (context, state) {
+                  Builder(
+                    builder: (context) {
+                      var state = context.watch<UserBloc>().state;
+                      var demoBlocState = context.watch<DemoBloc>().state;
                       if (state is AuthenticatedUserState) {
                         return Text(
-                          state.username,
+                          demoBlocState is DemoEnabledState ? "Kyoto" : state.username,
                           style: cursiveTextStyle.copyWith(
                             fontSize: 30,
                             color: customBlackColor.withOpacity(.8),
@@ -862,9 +864,13 @@ class _GetBudgetEstimationsWidget extends StatelessWidget {
                       if (state is AuthenticatedUserState) {
                         return LayoutBuilder(
                           builder: ((context, constraints) {
-                            double budgetSpentPercentage = constraints.maxWidth *
-                                (double.parse(state.monthlyExpenses) / double.parse(state.monthlyBudget));
-                            print("BudgetSppentPercentage: ${budgetSpentPercentage.toString()}");
+                            double budgetSpentPercentage = 0;
+                            if (state.monthlyBudget == "000" || state.monthlyExpenses == "000") {
+                              budgetSpentPercentage = 0;
+                            } else {
+                              budgetSpentPercentage = constraints.maxWidth *
+                                  (double.parse(state.monthlyExpenses) / double.parse(state.monthlyBudget));
+                            }
                             return Container(
                               height: 5,
                               width: demoBlocState is DemoEnabledState
