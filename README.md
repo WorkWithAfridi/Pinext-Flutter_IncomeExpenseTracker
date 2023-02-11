@@ -2,9 +2,15 @@
 
 ## A full-stack personal expense tracker using Bloc, Firebase and Flutter.
 
-PINEXT is a personal income expense tracking app that allows individuals to track their income and expenses on their mobile phones. The app includes a backend system for storing and organizing financial data, as well as user authentication to ensure that only authorized users can access the information. The app also offers a range of features to help users manage their finances, such as the ability to input and categorize income and expenses, set budgets and financial goals, and receive alerts when their monthly budgets are running low. It also provides useful insights and analysis, such as budgeting advice and generating reports, to help users understand their financial situation and make more informed decisions.
+Meet PINEXT, the ultimate personal expense tracker that makes managing your finances a breeze. PINEXT is designed to help you stay on top of your spending, earnings, and savings, and make informed decisions about your financial future. With its sleek and user-friendly interface, PINEXT is the perfect solution for anyone looking to take control of their finances.
 
-In other words PINEXT can be a valuable tool for individuals looking to better understand their financial situation and make more informed decisions about how to save and spend their money.
+One of the standout features of PINEXT is its powerful archive system. All of your transactions are stored in one convenient place, allowing you to easily review your spending history and make informed decisions about your future finances. Whether you're looking to track your monthly expenses or simply monitor your spending habits, PINEXT has you covered.
+
+Another key feature of PINEXT is its ability to automatically track your monthly budgets. With this feature, you can set and monitor your budget, and PINEXT will automatically adjust for any subscriptions you are subscribed to. This means that you can always stay on top of your finances, no matter how many monthly subscriptions you have.
+
+Additionally, PINEXT allows you to manually input your transactions, so you always have an accurate and up-to-date picture of your financial situation. Whether you're tracking your income or your expenses, PINEXT makes it easy to see where your money is going and how much you have left over.
+
+Overall, PINEXT is the perfect solution for anyone looking to take control of their finances. With its powerful archive system, automatic budget tracking, and user-friendly interface, PINEXT makes it easy to manage your money and stay on top of your finances. So why wait? Download PINEXT today and start taking control of your finances!
 
 ## In App Screenshots
 
