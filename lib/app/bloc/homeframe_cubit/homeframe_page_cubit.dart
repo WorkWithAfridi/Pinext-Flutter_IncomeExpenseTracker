@@ -49,7 +49,7 @@ class HomeframeCubit extends Cubit<HomeframeState> {
             child: ListBody(
               children: [
                 Text(
-                """Meet PINEXT, the ultimate personal expense tracker that makes managing your finances a breeze. PINEXT is designed to help you stay on top of your spending, earnings, and savings, and make informed decisions about your financial future. With its sleek and user-friendly interface, PINEXT is the perfect solution for anyone looking to take control of their finances.
+                  """Meet PINEXT, the ultimate personal expense tracker that makes managing your finances a breeze. PINEXT is designed to help you stay on top of your spending, earnings, and savings, and make informed decisions about your financial future. With its sleek and user-friendly interface, PINEXT is the perfect solution for anyone looking to take control of their finances.
 
 One of the standout features of PINEXT is its powerful archive system. All of your transactions are stored in one convenient place, allowing you to easily review your spending history and make informed decisions about your future finances. Whether you're looking to track your monthly expenses or simply monitor your spending habits, PINEXT has you covered.
 
@@ -57,7 +57,10 @@ Another key feature of PINEXT is its ability to automatically track your monthly
 
 Additionally, PINEXT allows you to manually input your transactions, so you always have an accurate and up-to-date picture of your financial situation. Whether you're tracking your income or your expenses, PINEXT makes it easy to see where your money is going and how much you have left over.
 
-Overall, PINEXT is the perfect solution for anyone looking to take control of their finances. With its powerful archive system, automatic budget tracking, and user-friendly interface, PINEXT makes it easy to manage your money and stay on top of your finances. So why wait? Download PINEXT today and start taking control of your finances!""" ,style: regularTextStyle,
+Overall, PINEXT is the perfect solution for anyone looking to take control of their finances. With its powerful archive system, automatic budget tracking, and user-friendly interface, PINEXT makes it easy to manage your money and stay on top of your finances. So why wait? Download PINEXT today and start taking control of your finances!""",
+                  style: regularTextStyle.copyWith(
+                    color: customBlackColor.withOpacity(.75),
+                  ),
                 ),
               ],
             ),
