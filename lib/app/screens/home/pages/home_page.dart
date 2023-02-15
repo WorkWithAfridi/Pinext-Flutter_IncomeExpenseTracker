@@ -717,17 +717,17 @@ class _GetSavingsForThisMonthWidget extends StatelessWidget {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: "You've saved",
+                          text: "You've saved ",
                           style: regularTextStyle.copyWith(
                             color: customBlackColor.withOpacity(.6),
                           ),
                         ),
                         TextSpan(
-                          text: demoBlocState is DemoEnabledState ? "75%" : " $amount% ",
+                          text: demoBlocState is DemoEnabledState ? "75%" : "$amount%",
                           style: boldTextStyle.copyWith(color: customBlackColor),
                         ),
                         TextSpan(
-                          text: "of your earnings in ",
+                          text: " of your earnings in ",
                           style: regularTextStyle.copyWith(
                             color: customBlackColor.withOpacity(.6),
                           ),
