@@ -358,7 +358,7 @@ packages:
       name: image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.15"
+    version: "3.3.0"
   intl:
     dependency: "direct main"
     description:
@@ -685,7 +685,7 @@ packages:
       name: syncfusion_flutter_xlsio
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "20.4.50-beta"
+    version: "20.3.61-beta"
   syncfusion_officecore:
     dependency: transitive
     description:
