@@ -6,6 +6,7 @@ import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/app_data/extensions/string_extensions.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/add_subscription_cubit/add_subscription_cubit.dart';
+import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
 import 'package:pinext/app/models/pinext_subscription_model.dart';
 import 'package:pinext/app/services/firebase_services.dart';
@@ -293,30 +294,34 @@ class AddSubscriptionView extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(
                     horizontal: defaultPadding,
                   ),
-                  child: BlocBuilder<AddSubscriptionCubit, AddSubscriptionState>(
-                    builder: (context, state) {
+                  child: Builder(
+                    builder: (context) {
+                      final state = context.watch<AddSubscriptionCubit>().state;
+                      final demoState = context.watch<DemoBloc>().state;
                       return GetCustomButton(
                         title: "Save Subscription",
                         titleColor: whiteColor,
                         isLoading: state is AddSubscriptionLoading,
                         buttonColor: customBlueColor,
                         callBackFunction: () {
-                          String title = titleController.text;
-                          String description = descriptionController.text;
-                          String amount = amountController.text;
-                          bool isAutomaticallyPayEnabled = state.automaticallyPayActivated;
-                          context.read<AddSubscriptionCubit>().addSubscription(
-                                PinextSubscriptionModel(
-                                  dateAdded: DateTime.now().toString(),
-                                  lastPaidOn: DateTime.now().toString(),
-                                  amount: amount,
-                                  subscriptionId: const Uuid().v4(),
-                                  assignedCardId: state.selectedCardNo,
-                                  automaticallyDeductEnabled: isAutomaticallyPayEnabled,
-                                  description: description,
-                                  title: title,
-                                ),
-                              );
+                          if (demoState is DemoDisabledState) {
+                            String title = titleController.text;
+                            String description = descriptionController.text;
+                            String amount = amountController.text;
+                            bool isAutomaticallyPayEnabled = state.automaticallyPayActivated;
+                            context.read<AddSubscriptionCubit>().addSubscription(
+                                  PinextSubscriptionModel(
+                                    dateAdded: DateTime.now().toString(),
+                                    lastPaidOn: DateTime.now().toString(),
+                                    amount: amount,
+                                    subscriptionId: const Uuid().v4(),
+                                    assignedCardId: state.selectedCardNo,
+                                    automaticallyDeductEnabled: isAutomaticallyPayEnabled,
+                                    description: description,
+                                    title: title,
+                                  ),
+                                );
+                          }
                         },
                       );
                     },
