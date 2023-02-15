@@ -194,7 +194,7 @@ class AddSubscriptionView extends StatelessWidget {
                     children: [
                       InfoWidget(
                         infoText:
-                            "Enabling this option will automatically deduct the subscription amount at the start of everymonth, from the selected card!",
+                            "Enabling this option will automatically deduct the subscription amount at the start of every month, from the selected card!",
                       ),
                       const SizedBox(
                         height: 12,

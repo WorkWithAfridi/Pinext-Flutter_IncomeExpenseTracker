@@ -1,10 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pinext/app/app_data/custom_transition_page_route/custom_transition_page_route.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/budget_bloc/budget_bloc.dart';
-import 'package:pinext/app/screens/home/pages/budget_pages/add_subscription_page.dart';
 
 import '../../../app_data/app_constants/constants.dart';
 import '../../../app_data/app_constants/domentions.dart';
@@ -69,84 +67,11 @@ class BudgetView extends StatelessWidget {
                 ),
                 const _GetSubscriptionWidget(),
                 const SizedBox(
-                  height: 8,
-                ),
-                const _GetAddSubscriptionButton(),
-                const SizedBox(
-                  height: 8,
-                ),
-                InfoWidget(
-                  infoText:
-                      "Tired of adding repetitive transactions? Try adding subscriptions, which will automatically deduct (if automatically deduction is set, during set-up process) that amount from your specified card at the beginning of every month!",
-                ),
-                const SizedBox(
                   height: 30,
                 ),
               ],
             ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class _GetAddSubscriptionButton extends StatelessWidget {
-  const _GetAddSubscriptionButton({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          CustomTransitionPageRoute(
-            childWidget: AddSubscriptionPage(),
-          ),
-        );
-      },
-      child: Container(
-        height: 100,
-        decoration: BoxDecoration(
-          color: greyColor,
-          borderRadius: BorderRadius.circular(
-            defaultBorder,
-          ),
-        ),
-        alignment: Alignment.center,
-        width: getWidth(context),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              height: 25,
-              width: 25,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(
-                  25,
-                ),
-                border: Border.all(
-                  color: customBlackColor.withOpacity(.4),
-                ),
-              ),
-              child: Icon(
-                Icons.add,
-                size: 16,
-                color: customBlackColor.withOpacity(.4),
-              ),
-            ),
-            const SizedBox(
-              width: 8,
-            ),
-            Text(
-              "Add a subscription",
-              style: boldTextStyle.copyWith(
-                color: customBlackColor.withOpacity(.4),
-              ),
-            ),
-          ],
         ),
       ),
     );
@@ -169,6 +94,13 @@ class _GetSubscriptionWidget extends StatelessWidget {
           style: boldTextStyle.copyWith(
             fontSize: 20,
           ),
+        ),
+        const SizedBox(
+          height: 8,
+        ),
+        InfoWidget(
+          infoText:
+              "Tired of adding repetitive transactions? Try adding subscriptions, which will automatically deduct (if automatically deduction is set, during set-up process) that amount from your specified card at the beginning of every month!",
         ),
         const SizedBox(
           height: 8,
