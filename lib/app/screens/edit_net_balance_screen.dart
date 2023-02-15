@@ -12,6 +12,7 @@ import '../bloc/userBloc/user_bloc.dart';
 import '../shared/widgets/custom_button.dart';
 import '../shared/widgets/custom_snackbar.dart';
 import '../shared/widgets/custom_text_field.dart';
+import '../shared/widgets/info_widget.dart';
 
 class EditNetBalanceScreen extends StatelessWidget {
   EditNetBalanceScreen({
@@ -136,6 +137,13 @@ class EditNetBalanceView extends StatelessWidget {
                       return InputValidation(value).isCorrectNumber();
                     },
                     suffixButtonAction: () {},
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  InfoWidget(
+                    infoText:
+                        "Updating your NET balance will not affect any of your card balances, but will effect your total cumulative NET balance statistics!",
                   ),
                   const SizedBox(
                     height: 16,
