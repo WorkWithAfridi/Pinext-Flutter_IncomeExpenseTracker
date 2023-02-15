@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
-import 'package:pinext/app/shared/widgets/info_widget.dart';
 
 import '../../../app_data/app_constants/constants.dart';
 import '../../../app_data/app_constants/domentions.dart';
@@ -13,6 +12,7 @@ import '../../../models/pinext_transaction_model.dart';
 import '../../../services/date_time_services.dart';
 import '../../../services/firebase_services.dart';
 import '../../../shared/widgets/budget_estimations.dart';
+import '../../../shared/widgets/info_widget.dart';
 import '../../../shared/widgets/transaction_details_card.dart';
 
 class BudgetPage extends StatelessWidget {
@@ -51,7 +51,7 @@ class BudgetPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Subscriptions Details",
+                      "Subscriptions details",
                       style: boldTextStyle.copyWith(
                         fontSize: 20,
                       ),
@@ -189,52 +189,6 @@ class BudgetPage extends StatelessWidget {
                           const SizedBox(
                             height: 6,
                           ),
-                          Builder(
-                            builder: (context) {
-                              final state = context.watch<UserBloc>().state;
-                              final demoBlocState = context.watch<DemoBloc>().state;
-                              String amount = "";
-                              if (state is AuthenticatedUserState) {
-                                amount = state.monthlyEarnings == "0"
-                                    ? "0"
-                                    : ((double.parse(state.monthlySavings) / double.parse(state.monthlyEarnings)) * 100)
-                                        .ceil()
-                                        .toString();
-                              }
-                              return RichText(
-                                text: TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: "You've saved",
-                                      style: regularTextStyle.copyWith(
-                                        color: customBlackColor.withOpacity(.6),
-                                      ),
-                                    ),
-                                    TextSpan(
-                                      text: demoBlocState is DemoEnabledState ? "75%" : " $amount% ",
-                                      style: boldTextStyle.copyWith(color: customBlackColor),
-                                    ),
-                                    TextSpan(
-                                      text: "of your earnings in ",
-                                      style: regularTextStyle.copyWith(
-                                        color: customBlackColor.withOpacity(.6),
-                                      ),
-                                    ),
-                                    TextSpan(
-                                      text: "${months[int.parse(currentMonth) - 1]}",
-                                      style: boldTextStyle.copyWith(color: customBlackColor),
-                                    ),
-                                    TextSpan(
-                                      text: ".",
-                                      style: regularTextStyle.copyWith(
-                                        color: customBlackColor.withOpacity(.6),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
-                          ),
                         ],
                       ),
                     ),
@@ -248,13 +202,6 @@ class BudgetPage extends StatelessWidget {
                   style: boldTextStyle.copyWith(
                     fontSize: 20,
                   ),
-                ),
-                const SizedBox(
-                  height: 4,
-                ),
-                InfoWidget(
-                  infoText:
-                      "Adding subscriptions will automatically deduct (if automatically deduction is set, during set-up process) that amount from your specified card at the beginning of every month!",
                 ),
                 const SizedBox(
                   height: 8,
@@ -318,7 +265,77 @@ class BudgetPage extends StatelessWidget {
                       ],
                     );
                   }),
-                )
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    // Navigator.push(
+                    //   context,
+                    //   CustomTransitionPageRoute(
+                    //     childWidget: AddAndEditGoalsAndMilestoneScreen(
+                    //       addingNewGoal: false,
+                    //       addingNewGoalDuringSignupProcess: true,
+                    //       editingGoal: false,
+                    //       pinextGoalModel: null,
+                    //     ),
+                    //   ),
+                    // );
+                  },
+                  child: Container(
+                    height: 100,
+                    decoration: BoxDecoration(
+                      color: greyColor,
+                      borderRadius: BorderRadius.circular(
+                        defaultBorder,
+                      ),
+                    ),
+                    alignment: Alignment.center,
+                    width: getWidth(context),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          height: 25,
+                          width: 25,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                              25,
+                            ),
+                            border: Border.all(
+                              color: customBlackColor.withOpacity(.4),
+                            ),
+                          ),
+                          child: Icon(
+                            Icons.add,
+                            size: 16,
+                            color: customBlackColor.withOpacity(.4),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        Text(
+                          "Add a subscription",
+                          style: boldTextStyle.copyWith(
+                            color: customBlackColor.withOpacity(.4),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                InfoWidget(
+                  infoText:
+                      "Tired of adding repetitive transactions? Try adding subscriptions, which will automatically deduct (if automatically deduction is set, during set-up process) that amount from your specified card at the beginning of every month!",
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
               ],
             ),
           ),
