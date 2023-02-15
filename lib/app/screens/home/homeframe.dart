@@ -149,7 +149,7 @@ class HomeframeView extends StatelessWidget {
                       ),
                     );
                   })
-              : state.selectedIndex == 3
+              : state.selectedIndex == 4
                   ? FloatingActionButton(
                       onPressed: () {
                         context.read<HomeframeCubit>().showAboutDialog(context);
@@ -164,7 +164,7 @@ class HomeframeView extends StatelessWidget {
                       ),
                     )
                   : const SizedBox.shrink(),
-          floatingActionButtonLocation: state.selectedIndex != 3
+          floatingActionButtonLocation: state.selectedIndex != 4
               ? FloatingActionButtonLocation.miniEndTop
               : FloatingActionButtonLocation.endFloat,
           bottomNavigationBar: BottomNavigationBar(
