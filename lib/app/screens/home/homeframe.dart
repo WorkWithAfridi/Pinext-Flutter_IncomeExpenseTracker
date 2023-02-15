@@ -7,6 +7,7 @@ import 'package:flutter_intro/flutter_intro.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pinext/app/app_data/app_constants/app_labels.dart';
 import 'package:pinext/app/app_data/app_constants/domentions.dart';
+import 'package:pinext/app/app_data/custom_transition_page_route/custom_transition_page_route.dart';
 import 'package:pinext/app/app_data/routing/routes.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
@@ -23,6 +24,7 @@ import '../../app_data/app_constants/fonts.dart';
 import '../../bloc/archive_cubit/user_statistics_cubit/user_statistics_cubit.dart';
 import '../../bloc/homeframe_cubit/homeframe_page_cubit.dart';
 import '../../services/handlers/app_handler.dart';
+import 'pages/budget_pages/add_subscription_page.dart';
 
 class Homeframe extends StatefulWidget {
   const Homeframe({Key? key}) : super(key: key);
@@ -133,14 +135,23 @@ class HomeframeView extends StatelessWidget {
             }),
             itemBuilder: ((context, index) => homeframePages[index]),
           ),
-          floatingActionButton: state.selectedIndex == 0
+          floatingActionButton: state.selectedIndex == 0 || state.selectedIndex == 2
               ? IntroStepBuilder(
                   order: 1,
                   text: intro_label_one,
                   builder: (context, introkey) {
                     return FloatingActionButton(
                       onPressed: () {
-                        context.read<HomeframeCubit>().openAddTransactionsPage(context);
+                        if (state.selectedIndex == 0) {
+                          context.read<HomeframeCubit>().openAddTransactionsPage(context);
+                        } else if (state.selectedIndex == 2) {
+                          Navigator.push(
+                            context,
+                            CustomTransitionPageRoute(
+                              childWidget: const AddSubscriptionPage(),
+                            ),
+                          );
+                        }
                       },
                       backgroundColor: customBlackColor,
                       child: const Icon(

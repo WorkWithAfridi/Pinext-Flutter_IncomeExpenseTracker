@@ -1,13 +1,32 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/app_data/extensions/string_extensions.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
+import 'package:pinext/app/bloc/add_subscription_cubit/add_subscription_cubit.dart';
+import 'package:pinext/app/models/pinext_card_model.dart';
+import 'package:pinext/app/services/firebase_services.dart';
+import 'package:pinext/app/shared/widgets/custom_button.dart';
 import 'package:pinext/app/shared/widgets/custom_text_field.dart';
 import 'package:pinext/app/shared/widgets/info_widget.dart';
+import 'package:pinext/app/shared/widgets/pinext_card.dart';
 
 class AddSubscriptionPage extends StatelessWidget {
-  AddSubscriptionPage({
+  const AddSubscriptionPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => AddSubscriptionCubit(),
+      child: AddSubscriptionView(),
+    );
+  }
+}
+
+class AddSubscriptionView extends StatelessWidget {
+  AddSubscriptionView({
     super.key,
   });
 
@@ -29,7 +48,7 @@ class AddSubscriptionPage extends StatelessWidget {
           ),
         ),
         title: Text(
-          "Add subscription",
+          "Adding a new subscription",
           style: regularTextStyle,
         ),
       ),
@@ -56,8 +75,12 @@ class AddSubscriptionPage extends StatelessWidget {
                         height: 12,
                       ),
                       Text(
-                        "Subscription title",
-                        style: boldTextStyle,
+                        "Title",
+                        style: boldTextStyle.copyWith(
+                          color: customBlackColor.withOpacity(
+                            .6,
+                          ),
+                        ),
                       ),
                       const SizedBox(
                         height: 8,
@@ -76,8 +99,12 @@ class AddSubscriptionPage extends StatelessWidget {
                         height: 12,
                       ),
                       Text(
-                        "Subscription description",
-                        style: boldTextStyle,
+                        "Description",
+                        style: boldTextStyle.copyWith(
+                          color: customBlackColor.withOpacity(
+                            .6,
+                          ),
+                        ),
                       ),
                       const SizedBox(
                         height: 8,
@@ -97,8 +124,12 @@ class AddSubscriptionPage extends StatelessWidget {
                         height: 12,
                       ),
                       Text(
-                        "Subscription amount",
-                        style: boldTextStyle,
+                        "Amount",
+                        style: boldTextStyle.copyWith(
+                          color: customBlackColor.withOpacity(
+                            .6,
+                          ),
+                        ),
                       ),
                       const SizedBox(
                         height: 8,
@@ -130,12 +161,22 @@ class AddSubscriptionPage extends StatelessWidget {
                     children: [
                       Text(
                         "Automatically pay",
-                        style: boldTextStyle,
+                        style: boldTextStyle.copyWith(
+                          color: customBlackColor.withOpacity(
+                            .6,
+                          ),
+                        ),
                       ),
-                      Switch(
-                        value: true,
-                        activeColor: customBlueColor,
-                        onChanged: (value) {},
+                      BlocBuilder<AddSubscriptionCubit, AddSubscriptionState>(
+                        builder: (context, state) {
+                          return Switch(
+                            value: state.automaticallyPayActivated,
+                            activeColor: customBlueColor,
+                            onChanged: (value) {
+                              context.read<AddSubscriptionCubit>().toogleAutomaticallyPaySwitch(value);
+                            },
+                          );
+                        },
                       ),
                     ],
                   ),
@@ -155,8 +196,108 @@ class AddSubscriptionPage extends StatelessWidget {
                         infoText:
                             "Enabling this option will automatically deduct the subscription amount at the start of everymonth, from the selected card!",
                       ),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      Text(
+                        "Select card",
+                        style: boldTextStyle.copyWith(
+                          color: customBlackColor.withOpacity(
+                            .6,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
                     ],
                   ),
+                ),
+                SizedBox(
+                  height: 185,
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        const SizedBox(
+                          width: defaultPadding,
+                        ),
+                        StreamBuilder(
+                          stream: FirebaseServices()
+                              .firebaseFirestore
+                              .collection("pinext_users")
+                              .doc(FirebaseServices().getUserId())
+                              .collection("pinext_cards")
+                              .orderBy(
+                                'lastTransactionData',
+                                descending: true,
+                              )
+                              .snapshots(),
+                          builder: ((context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+                            if (snapshot.connectionState == ConnectionState.waiting) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                            return BlocBuilder<AddSubscriptionCubit, AddSubscriptionState>(
+                              builder: (cubitContext, state) {
+                                return ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: snapshot.data!.docs.length,
+                                  itemBuilder: ((context, index) {
+                                    PinextCardModel pinextCardModel = PinextCardModel.fromMap(
+                                      snapshot.data!.docs[index].data(),
+                                    );
+
+                                    String color = pinextCardModel.color;
+                                    late Color cardColor = getColorFromString(color);
+
+                                    return GestureDetector(
+                                      onTap: () {
+                                        cubitContext.read<AddSubscriptionCubit>().selectCard(pinextCardModel.cardId);
+                                      },
+                                      child: PinextCard(
+                                        title: pinextCardModel.title,
+                                        balance: pinextCardModel.balance,
+                                        cardColor: cardColor,
+                                        isSelected: state.selectedCardNo == pinextCardModel.cardId,
+                                        lastTransactionDate: pinextCardModel.lastTransactionData,
+                                        cardDetails: pinextCardModel.description,
+                                        // cardModel: pinextCardModel,
+                                      ),
+                                    );
+                                  }),
+                                );
+                              },
+                            );
+                          }),
+                        ),
+                        const SizedBox(
+                          width: defaultPadding - 10,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: defaultPadding,
+                  ),
+                  child: GetCustomButton(
+                    title: "Save Subscription",
+                    titleColor: whiteColor,
+                    buttonColor: customBlueColor,
+                    callBackFunction: () {},
+                  ),
+                ),
+                const SizedBox(
+                  height: 30,
                 ),
               ],
             ),
