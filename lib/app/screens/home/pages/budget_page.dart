@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/custom_transition_page_route/custom_transition_page_route.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
+import 'package:pinext/app/bloc/budget_bloc/budget_bloc.dart';
 import 'package:pinext/app/screens/home/pages/budget_pages/add_subscription_page.dart';
 
 import '../../../app_data/app_constants/constants.dart';
@@ -19,6 +20,18 @@ import '../../../shared/widgets/transaction_details_card.dart';
 
 class BudgetPage extends StatelessWidget {
   const BudgetPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => BudgetBloc(),
+      child: const BudgetView(),
+    );
+  }
+}
+
+class BudgetView extends StatelessWidget {
+  const BudgetView({super.key});
 
   @override
   Widget build(BuildContext context) {
