@@ -806,6 +806,9 @@ PODS:
   - quick_actions_ios (0.0.1):
     - Flutter
   - ReachabilitySwift (5.0.0)
+  - shared_preferences_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
   - url_launcher_ios (0.0.1):
     - Flutter
 
@@ -821,6 +824,7 @@ DEPENDENCIES:
   - open_file (from `.symlinks/plugins/open_file/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/ios`)
   - quick_actions_ios (from `.symlinks/plugins/quick_actions_ios/ios`)
+  - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
 
 SPEC REPOS:
@@ -877,6 +881,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/path_provider_foundation/ios"
   quick_actions_ios:
     :path: ".symlinks/plugins/quick_actions_ios/ios"
+  shared_preferences_foundation:
+    :path: ".symlinks/plugins/shared_preferences_foundation/ios"
   url_launcher_ios:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
 
@@ -920,7 +926,8 @@ SPEC CHECKSUMS:
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
   quick_actions_ios: 5ec8f5f1ae81512ac803fe10c197ebb875767a9e
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
-  url_launcher_ios: ae1517e5e344f5544fb090b079e11f399dfbe4d2
+  shared_preferences_foundation: 297b3ebca31b34ec92be11acd7fb0ba932c822ca
+  url_launcher_ios: fb12c43172927bb5cf75aeebd073f883801f1993
 
 PODFILE CHECKSUM: fe0e1ee7f3d1f7d00b11b474b62dd62134535aea
 

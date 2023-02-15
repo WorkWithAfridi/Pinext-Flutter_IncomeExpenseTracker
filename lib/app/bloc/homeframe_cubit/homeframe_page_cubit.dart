@@ -13,8 +13,8 @@ class HomeframeCubit extends Cubit<HomeframeState> {
   HomeframeCubit()
       : super(
           HoemframeInitialState(
-            selectedIndex: 0,
-            pageController: PageController(initialPage: 0),
+            selectedIndex: 2,
+            pageController: PageController(initialPage: 2),
           ),
         );
 

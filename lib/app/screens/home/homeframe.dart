@@ -13,6 +13,7 @@ import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/screens/home/pages/app_settings_screen/app_settings_screen.dart';
 import 'package:pinext/app/screens/home/pages/archive_page.dart';
+import 'package:pinext/app/screens/home/pages/budget_page.dart';
 import 'package:pinext/app/screens/home/pages/cards_and_balance_page.dart';
 import 'package:pinext/app/screens/home/pages/home_page.dart';
 import 'package:pinext/app/services/handlers/card_handler.dart';
@@ -78,15 +79,9 @@ class _HomeframeState extends State<Homeframe> {
 List homeframePages = [
   const Homepage(),
   const ArchivePage(),
+  const BudgetPage(),
   const CardsAndBalancePage(),
   const AppSettingsScreen()
-  // Center(
-  //   child: Text(
-  //     "The section is still under development.\nAnd will be updated at a later date!",
-  //     style: regularTextStyle.copyWith(color: customBlackColor.withOpacity(.2)),
-  //     textAlign: TextAlign.center,
-  //   ),
-  // ),
 ];
 
 checkIfOldUser() {}
@@ -205,6 +200,12 @@ class HomeframeView extends StatelessWidget {
                       );
                     }),
                 label: "Archive",
+              ),
+              const BottomNavigationBarItem(
+                icon: Icon(
+                  FontAwesomeIcons.dollarSign,
+                ),
+                label: "Budget",
               ),
               BottomNavigationBarItem(
                 icon: IntroStepBuilder(
