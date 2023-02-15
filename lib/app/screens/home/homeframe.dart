@@ -117,7 +117,7 @@ class HomeframeView extends StatelessWidget {
                 return Text(
                   demoBlocState is DemoEnabledState ? "PINEXT : DEMO-MODE" : "PINEXT",
                   style: regularTextStyle.copyWith(
-                    fontSize: 16,
+                    fontSize: 20,
                   ),
                 );
               },
@@ -146,6 +146,7 @@ class HomeframeView extends StatelessWidget {
                       child: const Icon(
                         Icons.add,
                         color: whiteColor,
+                        size: 16,
                       ),
                     );
                   })
@@ -159,7 +160,7 @@ class HomeframeView extends StatelessWidget {
                         "?",
                         style: boldTextStyle.copyWith(
                           color: whiteColor,
-                          fontSize: 18,
+                          fontSize: 16,
                         ),
                       ),
                     )
@@ -176,16 +177,19 @@ class HomeframeView extends StatelessWidget {
             selectedItemColor: customBlueColor,
             unselectedItemColor: customBlackColor.withOpacity(.4),
             type: BottomNavigationBarType.fixed,
-            showSelectedLabels: false,
-            showUnselectedLabels: false,
+            // showSelectedLabels: false,
+            // showUnselectedLabels: false,
+            selectedLabelStyle: regularTextStyle,
+            unselectedLabelStyle: regularTextStyle.copyWith(fontSize: 10),
             items: [
               BottomNavigationBarItem(
                 icon: IntroStepBuilder(
                     order: 2,
                     text: intro_label_two,
                     builder: (context, introkey) {
-                      return const Icon(
+                      return Icon(
                         Icons.home,
+                        size: state.selectedIndex == 0 ? 20 : 16,
                       );
                     }),
                 label: "Home",
@@ -195,15 +199,17 @@ class HomeframeView extends StatelessWidget {
                     order: 3,
                     text: intro_label_three,
                     builder: (context, introkey) {
-                      return const Icon(
+                      return Icon(
                         Icons.list,
+                        size: state.selectedIndex == 1 ? 20 : 16,
                       );
                     }),
                 label: "Archive",
               ),
-              const BottomNavigationBarItem(
+              BottomNavigationBarItem(
                 icon: Icon(
                   FontAwesomeIcons.dollarSign,
+                  size: state.selectedIndex == 2 ? 20 : 16,
                 ),
                 label: "Budget",
               ),
@@ -212,8 +218,9 @@ class HomeframeView extends StatelessWidget {
                     order: 4,
                     text: intro_label_four,
                     builder: (context, introkey) {
-                      return const Icon(
+                      return Icon(
                         Icons.wallet,
+                        size: state.selectedIndex == 3 ? 20 : 16,
                       );
                     }),
                 label: "Wallet",
@@ -223,11 +230,12 @@ class HomeframeView extends StatelessWidget {
                     order: 5,
                     text: intro_label_five,
                     builder: (context, introkey) {
-                      return const Icon(
-                        Icons.admin_panel_settings,
+                      return Icon(
+                        Icons.more_horiz,
+                        size: state.selectedIndex == 4 ? 20 : 16,
                       );
                     }),
-                label: "Admin settings",
+                label: "More",
               ),
             ],
           ),
@@ -256,7 +264,7 @@ class PinextDrawer extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(
-                  height: 10,
+                  height: 20,
                 ),
                 IconButton(
                   onPressed: () {
@@ -302,7 +310,7 @@ class PinextDrawer extends StatelessWidget {
                             Text(
                               "By",
                               style: regularTextStyle.copyWith(
-                                fontSize: 10,
+                                fontSize: 20,
                                 color: customBlackColor.withOpacity(.4),
                               ),
                             ),
@@ -328,7 +336,7 @@ class PinextDrawer extends StatelessWidget {
                   },
                   icon: Icon(
                     FontAwesomeIcons.bug,
-                    size: 18,
+                    size: 20,
                     color: customBlackColor.withOpacity(.8),
                   ),
                 ),
@@ -341,7 +349,7 @@ class PinextDrawer extends StatelessWidget {
                 //   },
                 //   icon: Icon(
                 //     Icons.update,
-                //     size: 18,
+                //     size: 20,
                 //     color: customBlackColor.withOpacity(.8),
                 //   ),
                 // ),
@@ -374,7 +382,7 @@ class PinextDrawer extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 20,
                 ),
               ],
             ),
