@@ -6,7 +6,7 @@ class PinextSubscriptionModel {
   String amount;
   String subscriptionId;
   String assignedCardId;
-  String automaticallyDeductEnabled;
+  bool automaticallyDeductEnabled;
   String description;
   String title;
   PinextSubscriptionModel({
@@ -40,7 +40,7 @@ class PinextSubscriptionModel {
       amount: map['amount'] as String,
       subscriptionId: map['subscriptionId'] as String,
       assignedCardId: map['assignedCardId'] as String,
-      automaticallyDeductEnabled: map['automaticallyDeductEnabled'] as String,
+      automaticallyDeductEnabled: map['automaticallyDeductEnabled'],
       description: map['description'] as String,
       title: map['title'] as String,
     );

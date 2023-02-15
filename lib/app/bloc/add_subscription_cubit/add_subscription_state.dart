@@ -25,8 +25,17 @@ abstract class AddSubscriptionState extends Equatable {
       ];
 }
 
-class AddSubscriptionInitial extends AddSubscriptionState {
-  AddSubscriptionInitial({
+class AddSubscriptionDefault extends AddSubscriptionState {
+  AddSubscriptionDefault({
+    required super.title,
+    required super.description,
+    required super.amount,
+    required super.automaticallyPayActivated,
+    required super.selectedCardNo,
+  });
+}
+class AddSubscriptionLoading extends AddSubscriptionState {
+  AddSubscriptionLoading({
     required super.title,
     required super.description,
     required super.amount,

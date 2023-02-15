@@ -7,11 +7,13 @@ import 'package:pinext/app/app_data/extensions/string_extensions.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/add_subscription_cubit/add_subscription_cubit.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
+import 'package:pinext/app/models/pinext_subscription_model.dart';
 import 'package:pinext/app/services/firebase_services.dart';
 import 'package:pinext/app/shared/widgets/custom_button.dart';
 import 'package:pinext/app/shared/widgets/custom_text_field.dart';
 import 'package:pinext/app/shared/widgets/info_widget.dart';
 import 'package:pinext/app/shared/widgets/pinext_card.dart';
+import 'package:uuid/uuid.dart';
 
 class AddSubscriptionPage extends StatelessWidget {
   const AddSubscriptionPage({super.key});
@@ -30,7 +32,9 @@ class AddSubscriptionView extends StatelessWidget {
     super.key,
   });
 
-  TextEditingController netBalanceController = TextEditingController();
+  TextEditingController titleController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+  TextEditingController amountController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -86,8 +90,8 @@ class AddSubscriptionView extends StatelessWidget {
                         height: 8,
                       ),
                       CustomTextFormField(
-                        controller: TextEditingController(),
-                        hintTitle: "Netflix subscription",
+                        controller: titleController,
+                        hintTitle: "Ex: Netflix subscription",
                         textInputType: TextInputType.number,
                         onChanged: (String value) {},
                         validator: (String value) {
@@ -111,7 +115,7 @@ class AddSubscriptionView extends StatelessWidget {
                       ),
                       CustomTextFormField(
                         numberOfLines: 4,
-                        controller: TextEditingController(),
+                        controller: descriptionController,
                         hintTitle: "",
                         textInputType: TextInputType.number,
                         onChanged: (String value) {},
@@ -136,8 +140,8 @@ class AddSubscriptionView extends StatelessWidget {
                       ),
                       CustomTextFormField(
                         numberOfLines: 1,
-                        controller: TextEditingController(),
-                        hintTitle: "",
+                        controller: amountController,
+                        hintTitle: "Ex: 1200",
                         textInputType: TextInputType.number,
                         onChanged: (String value) {},
                         validator: (String value) {
@@ -289,11 +293,33 @@ class AddSubscriptionView extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(
                     horizontal: defaultPadding,
                   ),
-                  child: GetCustomButton(
-                    title: "Save Subscription",
-                    titleColor: whiteColor,
-                    buttonColor: customBlueColor,
-                    callBackFunction: () {},
+                  child: BlocBuilder<AddSubscriptionCubit, AddSubscriptionState>(
+                    builder: (context, state) {
+                      return GetCustomButton(
+                        title: "Save Subscription",
+                        titleColor: whiteColor,
+                        isLoading: state is AddSubscriptionLoading,
+                        buttonColor: customBlueColor,
+                        callBackFunction: () {
+                          String title = titleController.text;
+                          String description = descriptionController.text;
+                          String amount = amountController.text;
+                          bool isAutomaticallyPayEnabled = state.automaticallyPayActivated;
+                          context.read<AddSubscriptionCubit>().addSubscription(
+                                PinextSubscriptionModel(
+                                  dateAdded: DateTime.now().toString(),
+                                  lastPaidOn: DateTime.now().toString(),
+                                  amount: amount,
+                                  subscriptionId: const Uuid().v4(),
+                                  assignedCardId: state.selectedCardNo,
+                                  automaticallyDeductEnabled: isAutomaticallyPayEnabled,
+                                  description: description,
+                                  title: title,
+                                ),
+                              );
+                        },
+                      );
+                    },
                   ),
                 ),
                 const SizedBox(
