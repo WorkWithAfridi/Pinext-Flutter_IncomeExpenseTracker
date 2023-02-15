@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pinext/app/app_data/custom_transition_page_route/custom_transition_page_route.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
+import 'package:pinext/app/screens/home/pages/budget_pages/add_subscription_page.dart';
 
 import '../../../app_data/app_constants/constants.dart';
 import '../../../app_data/app_constants/domentions.dart';
@@ -84,17 +86,12 @@ class _GetAddSubscriptionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Navigator.push(
-        //   context,
-        //   CustomTransitionPageRoute(
-        //     childWidget: AddAndEditGoalsAndMilestoneScreen(
-        //       addingNewGoal: false,
-        //       addingNewGoalDuringSignupProcess: true,
-        //       editingGoal: false,
-        //       pinextGoalModel: null,
-        //     ),
-        //   ),
-        // );
+        Navigator.push(
+          context,
+          CustomTransitionPageRoute(
+            childWidget: AddSubscriptionPage(),
+          ),
+        );
       },
       child: Container(
         height: 100,
