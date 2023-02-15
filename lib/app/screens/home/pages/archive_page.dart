@@ -277,9 +277,6 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
           ),
         ),
         TransactionsList(),
-        const SizedBox(
-          height: 30,
-        ),
       ],
     );
   }
@@ -548,7 +545,7 @@ class TransactionsList extends StatelessWidget {
               ),
               const _GetStatisticsWidget(),
               const SizedBox(
-                height: 16,
+                height: 30,
               ),
             ],
           ),
@@ -668,7 +665,7 @@ class _GetStatisticsWidget extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    demoBlocState is DemoEnabledState ? "100000 Tk" : " Tk.",
+                                    demoBlocState is DemoEnabledState ? "100000 Tk" : "$totalEarnings Tk.",
                                     style: boldTextStyle.copyWith(
                                       color: customBlueColor,
                                     ),
@@ -699,7 +696,7 @@ class _GetStatisticsWidget extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    demoBlocState is DemoEnabledState ? "75000 Tk" : " Tk.",
+                                    demoBlocState is DemoEnabledState ? "75000 Tk" : "$totalSavings Tk.",
                                     style: boldTextStyle.copyWith(
                                       color: customBlueColor,
                                     ),
@@ -737,7 +734,7 @@ class _GetStatisticsWidget extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    demoBlocState is DemoEnabledState ? "750000 Tk" : " Tk.",
+                                    demoBlocState is DemoEnabledState ? "750000 Tk" : "$netWorth Tk.",
                                     style: boldTextStyle.copyWith(
                                       color: customBlackColor,
                                     ),
