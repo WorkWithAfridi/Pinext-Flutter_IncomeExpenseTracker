@@ -25,8 +25,8 @@ abstract class AddSubscriptionState extends Equatable {
       ];
 }
 
-class AddSubscriptionDefault extends AddSubscriptionState {
-  AddSubscriptionDefault({
+class AddSubscriptionDefaultState extends AddSubscriptionState {
+  AddSubscriptionDefaultState({
     required super.title,
     required super.description,
     required super.amount,
@@ -34,8 +34,9 @@ class AddSubscriptionDefault extends AddSubscriptionState {
     required super.selectedCardNo,
   });
 }
-class AddSubscriptionLoading extends AddSubscriptionState {
-  AddSubscriptionLoading({
+
+class AddSubscriptionLoadingState extends AddSubscriptionState {
+  AddSubscriptionLoadingState({
     required super.title,
     required super.description,
     required super.amount,

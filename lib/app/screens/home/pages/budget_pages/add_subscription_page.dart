@@ -301,7 +301,7 @@ class AddSubscriptionView extends StatelessWidget {
                       return GetCustomButton(
                         title: "Save Subscription",
                         titleColor: whiteColor,
-                        isLoading: state is AddSubscriptionLoading,
+                        isLoading: state is AddSubscriptionLoadingState,
                         buttonColor: customBlueColor,
                         callBackFunction: () {
                           if (demoState is DemoDisabledState) {

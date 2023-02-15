@@ -7,7 +7,7 @@ part 'add_subscription_state.dart';
 class AddSubscriptionCubit extends Cubit<AddSubscriptionState> {
   AddSubscriptionCubit()
       : super(
-          AddSubscriptionDefault(
+          AddSubscriptionDefaultState(
             amount: '000',
             title: "",
             description: "",
@@ -18,7 +18,7 @@ class AddSubscriptionCubit extends Cubit<AddSubscriptionState> {
 
   selectCard(String selectedCardNo) {
     emit(
-      AddSubscriptionDefault(
+      AddSubscriptionDefaultState(
         selectedCardNo: selectedCardNo,
         title: state.title,
         description: state.description,
@@ -30,7 +30,7 @@ class AddSubscriptionCubit extends Cubit<AddSubscriptionState> {
 
   toogleAutomaticallyPaySwitch(bool value) {
     emit(
-      AddSubscriptionDefault(
+      AddSubscriptionDefaultState(
         selectedCardNo: state.selectedCardNo,
         title: state.title,
         description: state.description,
@@ -44,7 +44,7 @@ class AddSubscriptionCubit extends Cubit<AddSubscriptionState> {
     PinextSubscriptionModel pinextSubscriptionModel,
   ) async {
     emit(
-      AddSubscriptionLoading(
+      AddSubscriptionLoadingState(
         title: pinextSubscriptionModel.title,
         description: pinextSubscriptionModel.description,
         amount: pinextSubscriptionModel.amount,
@@ -56,7 +56,7 @@ class AddSubscriptionCubit extends Cubit<AddSubscriptionState> {
       const Duration(seconds: 2),
     );
     emit(
-      AddSubscriptionDefault(
+      AddSubscriptionDefaultState(
         title: pinextSubscriptionModel.title,
         description: pinextSubscriptionModel.description,
         amount: pinextSubscriptionModel.amount,
