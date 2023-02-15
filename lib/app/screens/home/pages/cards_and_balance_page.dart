@@ -351,7 +351,7 @@ class CardsAndBalanceView extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: 12,
+              height: 30,
             ),
           ],
         ),

@@ -181,6 +181,9 @@ class HomepageView extends StatelessWidget {
               height: 12,
             ),
             const _GetBalanceWidget(),
+            const SizedBox(
+              height: 30,
+            ),
           ],
         ),
       ),

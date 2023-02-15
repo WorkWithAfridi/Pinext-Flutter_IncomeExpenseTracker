@@ -50,7 +50,7 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
   String dateTimeNow = DateTime.now().toString();
 
   late ScrollController monthScrollController;
-  
+
   @override
   void initState() {
     monthScrollController = ScrollController(initialScrollOffset: 40.0 * (int.parse(currentMonth) - 1));
@@ -276,7 +276,10 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
             ),
           ),
         ),
-        TransactionsList()
+        TransactionsList(),
+        const SizedBox(
+          height: 30,
+        ),
       ],
     );
   }
@@ -309,7 +312,7 @@ class TransactionsList extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               const SizedBox(
-                height: 8,
+                height: 10,
               ),
               Text(
                 "Transactions",

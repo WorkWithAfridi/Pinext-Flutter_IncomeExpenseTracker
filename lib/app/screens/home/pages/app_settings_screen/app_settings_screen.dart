@@ -254,7 +254,10 @@ class AppSettingsScreen extends StatelessWidget {
               fontSize: 16,
               color: customBlackColor.withOpacity(.2),
             ),
-          )
+          ),
+          const SizedBox(
+            height: 30,
+          ),
         ],
       ),
     );
