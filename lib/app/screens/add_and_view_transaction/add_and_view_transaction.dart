@@ -273,7 +273,7 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
               ),
               widget.isViewOnly ? const SizedBox.shrink() : AddTransactionButton(),
               const SizedBox(
-                height: 12,
+                height: 30,
               ),
             ],
           ),
