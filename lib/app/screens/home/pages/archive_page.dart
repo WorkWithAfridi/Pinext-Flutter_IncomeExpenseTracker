@@ -298,256 +298,259 @@ class TransactionsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: defaultPadding,
-        ),
+      child: Scrollbar(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 10,
-              ),
-              Text(
-                "Transactions",
-                style: boldTextStyle.copyWith(
-                  fontSize: 18,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: defaultPadding,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 10,
                 ),
-              ),
-              const SizedBox(
-                height: 2,
-              ),
-              BlocBuilder<ArchiveCubit, ArchiveState>(
-                builder: (context, state) {
-                  String selectedMonth = "0${int.parse(state.selectedMonth) + 1}".length > 2
-                      ? "0${int.parse(state.selectedMonth) + 1}".substring(1, 3)
-                      : "0${int.parse(state.selectedMonth) + 1}";
-                  return StreamBuilder(
-                    stream: FirebaseServices()
-                        .firebaseFirestore
-                        .collection('pinext_users')
-                        .doc(FirebaseServices().getUserId())
-                        .collection('pinext_transactions')
-                        .doc(state.selectedYear)
-                        .collection(selectedMonth)
-                        .orderBy(
-                          "transactionDate",
-                          descending: true,
-                        )
-                        .snapshots(),
-                    builder: ((context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(
-                          child: SizedBox.shrink(),
-                        );
-                      }
-                      if (snapshot.data!.docs.isEmpty) {
-                        context.read<ArchiveCubit>().noDataFound(true);
-                        return SizedBox(
-                          height: MediaQuery.of(context).size.height - 300,
-                          child: Container(
-                            // height: double.maxFinite,
-                            width: MediaQuery.of(context).size.width,
-                            color: Colors.transparent,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                Text(
+                  "Transactions",
+                  style: boldTextStyle.copyWith(
+                    fontSize: 18,
+                  ),
+                ),
+                const SizedBox(
+                  height: 2,
+                ),
+                BlocBuilder<ArchiveCubit, ArchiveState>(
+                  builder: (context, state) {
+                    String selectedMonth = "0${int.parse(state.selectedMonth) + 1}".length > 2
+                        ? "0${int.parse(state.selectedMonth) + 1}".substring(1, 3)
+                        : "0${int.parse(state.selectedMonth) + 1}";
+                    return StreamBuilder(
+                      stream: FirebaseServices()
+                          .firebaseFirestore
+                          .collection('pinext_users')
+                          .doc(FirebaseServices().getUserId())
+                          .collection('pinext_transactions')
+                          .doc(state.selectedYear)
+                          .collection(selectedMonth)
+                          .orderBy(
+                            "transactionDate",
+                            descending: true,
+                          )
+                          .snapshots(),
+                      builder: ((context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return const Center(
+                            child: SizedBox.shrink(),
+                          );
+                        }
+                        if (snapshot.data!.docs.isEmpty) {
+                          context.read<ArchiveCubit>().noDataFound(true);
+                          return SizedBox(
+                            height: MediaQuery.of(context).size.height - 300,
+                            child: Container(
+                              // height: double.maxFinite,
+                              width: MediaQuery.of(context).size.width,
+                              color: Colors.transparent,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "404",
+                                    style:
+                                        boldTextStyle.copyWith(fontSize: 25, color: customBlackColor.withOpacity(.5)),
+                                  ),
+                                  const SizedBox(
+                                    height: 4,
+                                  ),
+                                  Text(
+                                    "No record found!",
+                                    style: regularTextStyle.copyWith(color: customBlackColor.withOpacity(.5)),
+                                  ),
+                                  const SizedBox(
+                                    height: 2,
+                                  ),
+                                  Text(
+                                    ":(",
+                                    style: regularTextStyle.copyWith(color: customBlackColor.withOpacity(.5)),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        }
+                        context.read<ArchiveCubit>().noDataFound(false);
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
                               children: [
-                                Text(
-                                  "404",
-                                  style: boldTextStyle.copyWith(fontSize: 25, color: customBlackColor.withOpacity(.5)),
+                                Expanded(
+                                  child: Wrap(
+                                    spacing: 5,
+                                    runSpacing: -8,
+                                    children: [
+                                      ...List.generate(
+                                        filters.length,
+                                        (index) {
+                                          return GestureDetector(
+                                            onTap: () {
+                                              String selectedFilter = filters[index].toString();
+                                              if (state.selectedFilter != selectedFilter) {
+                                                context.read<ArchiveCubit>().changeFilter(selectedFilter);
+                                              } else {
+                                                context.read<ArchiveCubit>().changeFilter(
+                                                      "All transactions",
+                                                    );
+                                              }
+
+                                              context.read<UserStatisticsCubit>().resetState();
+                                            },
+                                            child: Chip(
+                                              elevation: 0,
+                                              label: Text(
+                                                filters[index].toString(),
+                                                style: regularTextStyle.copyWith(
+                                                  color: filters[index] == state.selectedFilter
+                                                      ? whiteColor
+                                                      : customBlackColor.withOpacity(.6),
+                                                ),
+                                              ),
+                                              backgroundColor:
+                                                  filters[index] == state.selectedFilter ? customBlueColor : greyColor,
+                                            ),
+                                          );
+                                        },
+                                      ).toList(),
+                                    ],
+                                  ),
                                 ),
-                                const SizedBox(
-                                  height: 4,
-                                ),
-                                Text(
-                                  "No record found!",
-                                  style: regularTextStyle.copyWith(color: customBlackColor.withOpacity(.5)),
-                                ),
-                                const SizedBox(
-                                  height: 2,
-                                ),
-                                Text(
-                                  ":(",
-                                  style: regularTextStyle.copyWith(color: customBlackColor.withOpacity(.5)),
-                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    context.read<ArchiveSearchCubit>().toogleSearch();
+                                    context.read<UserStatisticsCubit>().resetState();
+                                  },
+                                  child: BlocBuilder<ArchiveSearchCubit, ArchiveSearchState>(
+                                    builder: (context, state) {
+                                      return Icon(
+                                        state.isSearchActive ? Icons.search_off_rounded : Icons.search_rounded,
+                                        color: customBlueColor,
+                                        size: 25,
+                                      );
+                                    },
+                                  ),
+                                )
                               ],
                             ),
-                          ),
-                        );
-                      }
-                      context.read<ArchiveCubit>().noDataFound(false);
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Wrap(
-                                  spacing: 5,
-                                  runSpacing: -8,
-                                  children: [
-                                    ...List.generate(
-                                      filters.length,
-                                      (index) {
-                                        return GestureDetector(
-                                          onTap: () {
-                                            String selectedFilter = filters[index].toString();
-                                            if (state.selectedFilter != selectedFilter) {
-                                              context.read<ArchiveCubit>().changeFilter(selectedFilter);
-                                            } else {
-                                              context.read<ArchiveCubit>().changeFilter(
-                                                    "All transactions",
-                                                  );
-                                            }
-
-                                            context.read<UserStatisticsCubit>().resetState();
-                                          },
-                                          child: Chip(
-                                            elevation: 0,
-                                            label: Text(
-                                              filters[index].toString(),
-                                              style: regularTextStyle.copyWith(
-                                                color: filters[index] == state.selectedFilter
-                                                    ? whiteColor
-                                                    : customBlackColor.withOpacity(.6),
-                                              ),
-                                            ),
-                                            backgroundColor:
-                                                filters[index] == state.selectedFilter ? customBlueColor : greyColor,
-                                          ),
-                                        );
-                                      },
-                                    ).toList(),
-                                  ],
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  context.read<ArchiveSearchCubit>().toogleSearch();
-                                  context.read<UserStatisticsCubit>().resetState();
-                                },
-                                child: BlocBuilder<ArchiveSearchCubit, ArchiveSearchState>(
-                                  builder: (context, state) {
-                                    return Icon(
-                                      state.isSearchActive ? Icons.search_off_rounded : Icons.search_rounded,
-                                      color: customBlueColor,
-                                      size: 25,
-                                    );
-                                  },
-                                ),
-                              )
-                            ],
-                          ),
-                          BlocBuilder<ArchiveSearchCubit, ArchiveSearchState>(
-                            builder: (context, state) {
-                              if (state.isSearchActive) {
-                                return Column(
-                                  children: [
-                                    const SizedBox(
-                                      height: 4,
-                                    ),
-                                    CustomTextFormField(
-                                      controller: searchController,
-                                      hintTitle: "Search term",
-                                      showClearSuffix: true,
-                                      onChanged: (searchTerm) {
-                                        context.read<ArchiveSearchCubit>().updateSearchTerm(searchTerm);
-                                      },
-                                      validator: () {
-                                        return null;
-                                      },
-                                      suffixButtonAction: () {
-                                        searchController.clear();
-                                        context.read<ArchiveSearchCubit>().updateSearchTerm("");
-                                      },
-                                    ),
-                                    const SizedBox(
-                                      height: 4,
-                                    ),
-                                  ],
+                            BlocBuilder<ArchiveSearchCubit, ArchiveSearchState>(
+                              builder: (context, state) {
+                                if (state.isSearchActive) {
+                                  return Column(
+                                    children: [
+                                      const SizedBox(
+                                        height: 4,
+                                      ),
+                                      CustomTextFormField(
+                                        controller: searchController,
+                                        hintTitle: "Search term",
+                                        showClearSuffix: true,
+                                        onChanged: (searchTerm) {
+                                          context.read<ArchiveSearchCubit>().updateSearchTerm(searchTerm);
+                                        },
+                                        validator: () {
+                                          return null;
+                                        },
+                                        suffixButtonAction: () {
+                                          searchController.clear();
+                                          context.read<ArchiveSearchCubit>().updateSearchTerm("");
+                                        },
+                                      ),
+                                      const SizedBox(
+                                        height: 4,
+                                      ),
+                                    ],
+                                  );
+                                }
+                                return SizedBox.fromSize();
+                              },
+                            ),
+                            BlocBuilder<ArchiveSearchCubit, ArchiveSearchState>(
+                              builder: (context, searchState) {
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                                  child: ListView.builder(
+                                    itemCount: snapshot.data!.docs.length,
+                                    shrinkWrap: true,
+                                    physics: const NeverScrollableScrollPhysics(),
+                                    itemBuilder: ((context, index) {
+                                      if (snapshot.data!.docs.isEmpty) {
+                                        return const Text("No data found! :(");
+                                      }
+                                      PinextTransactionModel pinextTransactionModel = PinextTransactionModel.fromMap(
+                                        snapshot.data!.docs[index].data(),
+                                      );
+                                      TransactionDetailsCard transactionDetailsCard =
+                                          TransactionDetailsCard(pinextTransactionModel: pinextTransactionModel);
+                                      context.read<UserStatisticsCubit>().updateStatistics(
+                                            amount: double.parse(pinextTransactionModel.amount),
+                                            isExpense: pinextTransactionModel.transactionType == "Expense",
+                                          );
+                                      if (state.selectedFilter == "All transactions") {
+                                        if (searchState.isSearchActive) {
+                                          if (pinextTransactionModel.details
+                                              .toLowerCase()
+                                              .contains(searchState.searchTerm.toLowerCase())) {
+                                            return transactionDetailsCard;
+                                          } else {
+                                            return const SizedBox.shrink();
+                                          }
+                                        }
+                                        return transactionDetailsCard;
+                                      } else if (state.selectedFilter == "Income" &&
+                                          pinextTransactionModel.transactionType == "Income") {
+                                        if (searchState.isSearchActive) {
+                                          if (pinextTransactionModel.details
+                                              .toLowerCase()
+                                              .contains(searchState.searchTerm.toLowerCase())) {
+                                            return transactionDetailsCard;
+                                          } else {
+                                            return const SizedBox.shrink();
+                                          }
+                                        }
+                                        return transactionDetailsCard;
+                                      } else if (state.selectedFilter == "Expenses" &&
+                                          pinextTransactionModel.transactionType == "Expense") {
+                                        if (searchState.isSearchActive) {
+                                          if (pinextTransactionModel.details
+                                              .toLowerCase()
+                                              .contains(searchState.searchTerm.toLowerCase())) {
+                                            return transactionDetailsCard;
+                                          } else {
+                                            return const SizedBox.shrink();
+                                          }
+                                        }
+                                        return transactionDetailsCard;
+                                      }
+                                      return const SizedBox.shrink();
+                                    }),
+                                  ),
                                 );
-                              }
-                              return SizedBox.fromSize();
-                            },
-                          ),
-                          BlocBuilder<ArchiveSearchCubit, ArchiveSearchState>(
-                            builder: (context, searchState) {
-                              return Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                                child: ListView.builder(
-                                  itemCount: snapshot.data!.docs.length,
-                                  shrinkWrap: true,
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  itemBuilder: ((context, index) {
-                                    if (snapshot.data!.docs.isEmpty) {
-                                      return const Text("No data found! :(");
-                                    }
-                                    PinextTransactionModel pinextTransactionModel = PinextTransactionModel.fromMap(
-                                      snapshot.data!.docs[index].data(),
-                                    );
-                                    TransactionDetailsCard transactionDetailsCard =
-                                        TransactionDetailsCard(pinextTransactionModel: pinextTransactionModel);
-                                    context.read<UserStatisticsCubit>().updateStatistics(
-                                          amount: double.parse(pinextTransactionModel.amount),
-                                          isExpense: pinextTransactionModel.transactionType == "Expense",
-                                        );
-                                    if (state.selectedFilter == "All transactions") {
-                                      if (searchState.isSearchActive) {
-                                        if (pinextTransactionModel.details
-                                            .toLowerCase()
-                                            .contains(searchState.searchTerm.toLowerCase())) {
-                                          return transactionDetailsCard;
-                                        } else {
-                                          return const SizedBox.shrink();
-                                        }
-                                      }
-                                      return transactionDetailsCard;
-                                    } else if (state.selectedFilter == "Income" &&
-                                        pinextTransactionModel.transactionType == "Income") {
-                                      if (searchState.isSearchActive) {
-                                        if (pinextTransactionModel.details
-                                            .toLowerCase()
-                                            .contains(searchState.searchTerm.toLowerCase())) {
-                                          return transactionDetailsCard;
-                                        } else {
-                                          return const SizedBox.shrink();
-                                        }
-                                      }
-                                      return transactionDetailsCard;
-                                    } else if (state.selectedFilter == "Expenses" &&
-                                        pinextTransactionModel.transactionType == "Expense") {
-                                      if (searchState.isSearchActive) {
-                                        if (pinextTransactionModel.details
-                                            .toLowerCase()
-                                            .contains(searchState.searchTerm.toLowerCase())) {
-                                          return transactionDetailsCard;
-                                        } else {
-                                          return const SizedBox.shrink();
-                                        }
-                                      }
-                                      return transactionDetailsCard;
-                                    }
-                                    return const SizedBox.shrink();
-                                  }),
-                                ),
-                              );
-                            },
-                          ),
-                        ],
-                      );
-                    }),
-                  );
-                },
-              ),
-              const _GetStatisticsWidget(),
-              const SizedBox(
-                height: 30,
-              ),
-            ],
+                              },
+                            ),
+                          ],
+                        );
+                      }),
+                    );
+                  },
+                ),
+                const _GetStatisticsWidget(),
+                const SizedBox(
+                  height: 30,
+                ),
+              ],
+            ),
           ),
         ),
       ),

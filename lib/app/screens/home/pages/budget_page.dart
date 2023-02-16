@@ -38,38 +38,40 @@ class BudgetView extends StatelessWidget {
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: defaultPadding,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Budget & Subscriptions",
-                  style: boldTextStyle.copyWith(
-                    fontSize: 25,
+        child: Scrollbar(
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: defaultPadding,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Budget & Subscriptions",
+                    style: boldTextStyle.copyWith(
+                      fontSize: 25,
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
-                const GetBudgetEstimationsWidget(),
-                const SizedBox(
-                  height: 12,
-                ),
-                const _GetSubscriptionDetailsWidget(),
-                const SizedBox(
-                  height: 12,
-                ),
-                const _GetSubscriptionWidget(),
-                const SizedBox(
-                  height: 30,
-                ),
-              ],
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  const GetBudgetEstimationsWidget(),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  const _GetSubscriptionDetailsWidget(),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  const _GetSubscriptionWidget(),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                ],
+              ),
             ),
           ),
         ),

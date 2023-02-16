@@ -12,7 +12,7 @@ class AddGoalCubit extends Cubit<AddGoalState> {
 
   addGoal(PinextGoalModel pinextGoalModel) async {
     emit(AddGoalLoadingState());
-    log("At Goal Cubit");
+    await Future.delayed(const Duration(seconds: 1));
     await GoalHandler().addGoal(pinextGoalModel: pinextGoalModel);
     emit(AddGoalSuccessState());
   }
@@ -24,6 +24,7 @@ class AddGoalCubit extends Cubit<AddGoalState> {
     await GoalHandler().updateGoal(pinextGoalModel: pinextGoalModel);
     emit(UpdateGoalSuccessState());
   }
+
   deleteGoal(PinextGoalModel pinextGoalModel) async {
     emit(AddGoalLoadingState());
     emit(AddGoalLoadingState());

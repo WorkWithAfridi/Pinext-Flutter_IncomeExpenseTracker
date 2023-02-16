@@ -137,145 +137,147 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
           style: regularTextStyle,
         ),
       ),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: defaultPadding,
+      body: Scrollbar(
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: defaultPadding,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SelectTransactionTypeCard(),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                        ],
+                      ),
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SelectTransactionTypeCard(),
-                        const SizedBox(
-                          height: 12,
-                        ),
-                      ],
-                    ),
-                  ),
-                  widget.isViewOnly
-                      ? const SizedBox.shrink()
-                      : Column(
-                          children: [
-                            ChooseIfmarkAsOrNot(),
-                            const SizedBox(
-                              height: 12,
-                            ),
-                          ],
-                        ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: defaultPadding,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Amount",
-                          style: boldTextStyle.copyWith(
-                            color: customBlackColor.withOpacity(
-                              .6,
+                    widget.isViewOnly
+                        ? const SizedBox.shrink()
+                        : Column(
+                            children: [
+                              ChooseIfmarkAsOrNot(),
+                              const SizedBox(
+                                height: 12,
+                              ),
+                            ],
+                          ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: defaultPadding,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Amount",
+                            style: boldTextStyle.copyWith(
+                              color: customBlackColor.withOpacity(
+                                .6,
+                              ),
                             ),
                           ),
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        CustomTextFormField(
-                          isEnabled: !widget.isViewOnly,
-                          controller: amountController,
-                          hintTitle: "Enter amount...",
-                          textInputType: TextInputType.number,
-                          onChanged: (String value) {},
-                          validator: (value) {
-                            return InputValidation(value).isCorrectNumber();
-                          },
-                          suffixButtonAction: () {},
-                        ),
-                        const SizedBox(
-                          height: 12,
-                        ),
-                        Text(
-                          "Details",
-                          style: boldTextStyle.copyWith(
-                            color: customBlackColor.withOpacity(
-                              .6,
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          CustomTextFormField(
+                            isEnabled: !widget.isViewOnly,
+                            controller: amountController,
+                            hintTitle: "Enter amount...",
+                            textInputType: TextInputType.number,
+                            onChanged: (String value) {},
+                            validator: (value) {
+                              return InputValidation(value).isCorrectNumber();
+                            },
+                            suffixButtonAction: () {},
+                          ),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          Text(
+                            "Details",
+                            style: boldTextStyle.copyWith(
+                              color: customBlackColor.withOpacity(
+                                .6,
+                              ),
                             ),
                           ),
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        CustomTextFormField(
-                          isEnabled: !widget.isViewOnly,
-                          controller: detailsController,
-                          hintTitle: "Enter description...",
-                          numberOfLines: 3,
-                          onChanged: (String value) {
-                            context.read<AddTransactionsCubit>().changeSelectedDescription(value);
-                          },
-                          validator: (value) {
-                            return InputValidation(value).isNotEmpty();
-                          },
-                          suffixButtonAction: () {},
-                        ),
-                        widget.isViewOnly
-                            ? const SizedBox.shrink()
-                            : Column(
-                                children: [
-                                  const SizedBox(
-                                    height: 8,
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          CustomTextFormField(
+                            isEnabled: !widget.isViewOnly,
+                            controller: detailsController,
+                            hintTitle: "Enter description...",
+                            numberOfLines: 3,
+                            onChanged: (String value) {
+                              context.read<AddTransactionsCubit>().changeSelectedDescription(value);
+                            },
+                            validator: (value) {
+                              return InputValidation(value).isNotEmpty();
+                            },
+                            suffixButtonAction: () {},
+                          ),
+                          widget.isViewOnly
+                              ? const SizedBox.shrink()
+                              : Column(
+                                  children: [
+                                    const SizedBox(
+                                      height: 8,
+                                    ),
+                                    GetSuggestionsList(),
+                                  ],
+                                ),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          widget.isViewOnly
+                              ? Text(
+                                  "Card",
+                                  style: boldTextStyle.copyWith(
+                                    color: customBlackColor.withOpacity(
+                                      .6,
+                                    ),
                                   ),
-                                  GetSuggestionsList(),
-                                ],
-                              ),
-                        const SizedBox(
-                          height: 12,
-                        ),
-                        widget.isViewOnly
-                            ? Text(
-                                "Card",
-                                style: boldTextStyle.copyWith(
-                                  color: customBlackColor.withOpacity(
-                                    .6,
+                                )
+                              : Text(
+                                  "Select card",
+                                  style: boldTextStyle.copyWith(
+                                    color: customBlackColor.withOpacity(
+                                      .6,
+                                    ),
                                   ),
                                 ),
-                              )
-                            : Text(
-                                "Select card",
-                                style: boldTextStyle.copyWith(
-                                  color: customBlackColor.withOpacity(
-                                    .6,
-                                  ),
-                                ),
-                              ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                      ],
+                          const SizedBox(
+                            height: 8,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              _GetCardListWidget(
-                isViewOnly: widget.isViewOnly,
-              ),
-              const SizedBox(
-                height: 12,
-              ),
-              widget.isViewOnly ? const SizedBox.shrink() : AddTransactionButton(),
-              const SizedBox(
-                height: 30,
-              ),
-            ],
+                  ],
+                ),
+                _GetCardListWidget(
+                  isViewOnly: widget.isViewOnly,
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                widget.isViewOnly ? const SizedBox.shrink() : AddTransactionButton(),
+                const SizedBox(
+                  height: 30,
+                ),
+              ],
+            ),
           ),
         ),
       ),

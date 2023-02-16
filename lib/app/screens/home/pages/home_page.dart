@@ -72,119 +72,121 @@ class HomepageView extends StatelessWidget {
     return SizedBox(
       height: getHeight(context),
       width: getWidth(context),
-      child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: defaultPadding,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    getGreetings(),
-                    style: regularTextStyle.copyWith(
-                      color: customBlackColor.withOpacity(.6),
+      child: Scrollbar(
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: defaultPadding,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      getGreetings(),
+                      style: regularTextStyle.copyWith(
+                        color: customBlackColor.withOpacity(.6),
+                      ),
                     ),
-                  ),
-                  Builder(
-                    builder: (context) {
-                      var state = context.watch<UserBloc>().state;
-                      var demoBlocState = context.watch<DemoBloc>().state;
-                      if (state is AuthenticatedUserState) {
-                        return Text(
-                          demoBlocState is DemoEnabledState ? "Kyoto" : state.username,
-                          style: cursiveTextStyle.copyWith(
-                            fontSize: 30,
-                            color: customBlackColor.withOpacity(.8),
-                          ),
-                        );
-                      } else {
-                        return const SizedBox.shrink();
-                      }
-                    },
-                  ),
-                  // const SizedBox(
-                  //   height: 8,
-                  // ),
-                ],
+                    Builder(
+                      builder: (context) {
+                        var state = context.watch<UserBloc>().state;
+                        var demoBlocState = context.watch<DemoBloc>().state;
+                        if (state is AuthenticatedUserState) {
+                          return Text(
+                            demoBlocState is DemoEnabledState ? "Kyoto" : state.username,
+                            style: cursiveTextStyle.copyWith(
+                              fontSize: 30,
+                              color: customBlackColor.withOpacity(.8),
+                            ),
+                          );
+                        } else {
+                          return const SizedBox.shrink();
+                        }
+                      },
+                    ),
+                    // const SizedBox(
+                    //   height: 8,
+                    // ),
+                  ],
+                ),
               ),
-            ),
-            // SizedBox(
-            //   height: 40,
-            //   child: SingleChildScrollView(
-            //     physics: const BouncingScrollPhysics(),
-            //     scrollDirection: Axis.horizontal,
-            //     child: Row(
-            //       children: [
-            //         const SizedBox(
-            //           width: defaultPadding,
-            //         ),
-            //         BlocBuilder<HomepageCubit, HomepageState>(
-            //           builder: (context, state) {
-            //             return ListView.builder(
-            //               shrinkWrap: true,
-            //               scrollDirection: Axis.horizontal,
-            //               itemCount: homepageFilters.length,
-            //               itemBuilder: ((context, index) {
-            //                 return MenuFilterPill(
-            //                   filtertitle: homepageFilters[index],
-            //                   selectedFilter: state.selectedFilter,
-            //                 );
-            //               }),
-            //             );
-            //           },
-            //         ),
-            //         const SizedBox(
-            //           width: defaultPadding - 10,
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: defaultPadding,
+              // SizedBox(
+              //   height: 40,
+              //   child: SingleChildScrollView(
+              //     physics: const BouncingScrollPhysics(),
+              //     scrollDirection: Axis.horizontal,
+              //     child: Row(
+              //       children: [
+              //         const SizedBox(
+              //           width: defaultPadding,
+              //         ),
+              //         BlocBuilder<HomepageCubit, HomepageState>(
+              //           builder: (context, state) {
+              //             return ListView.builder(
+              //               shrinkWrap: true,
+              //               scrollDirection: Axis.horizontal,
+              //               itemCount: homepageFilters.length,
+              //               itemBuilder: ((context, index) {
+              //                 return MenuFilterPill(
+              //                   filtertitle: homepageFilters[index],
+              //                   selectedFilter: state.selectedFilter,
+              //                 );
+              //               }),
+              //             );
+              //           },
+              //         ),
+              //         const SizedBox(
+              //           width: defaultPadding - 10,
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: defaultPadding,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    SizedBox(
+                      // height: 16,
+                      height: 12,
+                    ),
+                    GetBudgetEstimationsWidget(),
+                    SizedBox(
+                      height: 12,
+                    ),
+                    _GetSavingsForThisMonthWidget(),
+                    SizedBox(
+                      height: 12,
+                    ),
+                    _GetExpensesWidget(),
+                    SizedBox(
+                      height: 12,
+                    ),
+                    _GetPastTransactionsWidget(),
+                    SizedBox(
+                      height: 12,
+                    ),
+                    _GetGoalsAndMilestonesWidget()
+                  ],
+                ),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  SizedBox(
-                    // height: 16,
-                    height: 12,
-                  ),
-                  GetBudgetEstimationsWidget(),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  _GetSavingsForThisMonthWidget(),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  _GetExpensesWidget(),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  _GetPastTransactionsWidget(),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  _GetGoalsAndMilestonesWidget()
-                ],
+              const _GetYourCardsWidget(),
+              const SizedBox(
+                height: 12,
               ),
-            ),
-            const _GetYourCardsWidget(),
-            const SizedBox(
-              height: 12,
-            ),
-            const _GetBalanceWidget(),
-            const SizedBox(
-              height: 30,
-            ),
-          ],
+              const _GetBalanceWidget(),
+              const SizedBox(
+                height: 30,
+              ),
+            ],
+          ),
         ),
       ),
     );
