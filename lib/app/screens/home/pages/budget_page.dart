@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
-import 'package:pinext/app/bloc/budget_bloc/budget_bloc.dart';
+import 'package:pinext/app/bloc/budget_cubit/budget_cubit.dart';
 import 'package:pinext/app/models/pinext_subscription_model.dart';
 import 'package:pinext/app/services/handlers/subscription_handler.dart';
 import 'package:pinext/app/shared/widgets/budget_estimations.dart';
@@ -14,7 +14,6 @@ import '../../../app_data/app_constants/constants.dart';
 import '../../../app_data/app_constants/domentions.dart';
 import '../../../app_data/app_constants/fonts.dart';
 import '../../../bloc/demoBloc/demo_bloc.dart';
-import '../../../bloc/userBloc/user_bloc.dart';
 import '../../../services/date_time_services.dart';
 import '../../../services/firebase_services.dart';
 
@@ -24,7 +23,7 @@ class BudgetPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => BudgetBloc(),
+      create: (context) => BudgetCubit(),
       child: const BudgetView(),
     );
   }
@@ -170,6 +169,15 @@ class SubscriptionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     log(subscriptionModel.lastPaidOn.substring(5, 7));
     log(currentMonth);
+    if (subscriptionModel.lastPaidOn.substring(5, 7) == currentMonth) {
+      context.read<BudgetCubit>().updatePaidAmount(double.parse(subscriptionModel.amount));
+    } else {
+      context.read<BudgetCubit>().updateDueAmount(double.parse(subscriptionModel.amount));
+      // context.read<BudgetCubit>().state.dueAmount =
+      //     context.read<BudgetCubit>().state.dueAmount + double.parse(subscriptionModel.amount);
+    }
+    log("paid amount : ${context.read<BudgetCubit>().state.paidAmount}");
+    log("paid amount : ${context.read<BudgetCubit>().state.dueAmount}");
     return Padding(
         padding: const EdgeInsets.only(bottom: 10.0),
         child: Container(
@@ -434,21 +442,13 @@ class _GetSubscriptionDetailsWidget extends StatelessWidget {
                           ),
                           Builder(
                             builder: (context) {
-                              final state = context.watch<UserBloc>().state;
+                              final state = context.watch<BudgetCubit>().state;
                               final demoBlocState = context.watch<DemoBloc>().state;
-                              if (state is AuthenticatedUserState) {
-                                return Text(
-                                  demoBlocState is DemoEnabledState ? "75000 Tk" : "${state.monthlySavings} Tk",
-                                  style: boldTextStyle.copyWith(
-                                    fontSize: 20,
-                                    color: Colors.green,
-                                  ),
-                                );
-                              }
                               return Text(
-                                "Loading...",
+                                demoBlocState is DemoEnabledState ? "75000 Tk" : "${state.paidAmount} Tk",
                                 style: boldTextStyle.copyWith(
                                   fontSize: 20,
+                                  color: Colors.green,
                                 ),
                               );
                             },
@@ -490,23 +490,13 @@ class _GetSubscriptionDetailsWidget extends StatelessWidget {
                           ),
                           Builder(
                             builder: (context) {
-                              final state = context.watch<UserBloc>().state;
+                              final state = context.watch<BudgetCubit>().state;
                               final demoBlocState = context.watch<DemoBloc>().state;
-                              if (state is AuthenticatedUserState) {
-                                return Text(
-                                  demoBlocState is DemoEnabledState
-                                      ? "100000 Tk"
-                                      : "${state.monthlyEarnings == "" ? "0000" : state.monthlyEarnings} Tk",
-                                  style: boldTextStyle.copyWith(
-                                    fontSize: 20,
-                                    color: Colors.red,
-                                  ),
-                                );
-                              }
                               return Text(
-                                "Loading...",
+                                demoBlocState is DemoEnabledState ? "100000 Tk" : "${state.dueAmount} Tk",
                                 style: boldTextStyle.copyWith(
                                   fontSize: 20,
+                                  color: Colors.red,
                                 ),
                               );
                             },

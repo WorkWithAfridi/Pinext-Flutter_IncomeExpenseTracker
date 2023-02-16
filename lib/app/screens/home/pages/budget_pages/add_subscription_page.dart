@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
+import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/app_data/extensions/string_extensions.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
@@ -245,6 +246,21 @@ class AddSubscriptionView extends StatelessWidget {
                             if (snapshot.connectionState == ConnectionState.waiting) {
                               return const Center(
                                 child: CircularProgressIndicator(),
+                              );
+                            }
+                            if (snapshot.data!.docs.isEmpty) {
+                              return SizedBox(
+                                width: getWidth(context) - defaultPadding,
+                                child: Center(
+                                  child: Text(
+                                    "No card found!",
+                                    style: regularTextStyle.copyWith(
+                                      color: Colors.black.withOpacity(
+                                        .5,
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               );
                             }
                             return BlocBuilder<AddSubscriptionCubit, AddSubscriptionState>(
