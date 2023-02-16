@@ -1,20 +1,21 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/budget_bloc/budget_bloc.dart';
+import 'package:pinext/app/models/pinext_subscription_model.dart';
+import 'package:pinext/app/shared/widgets/budget_estimations.dart';
+import 'package:pinext/app/shared/widgets/info_widget.dart';
 
 import '../../../app_data/app_constants/constants.dart';
 import '../../../app_data/app_constants/domentions.dart';
 import '../../../app_data/app_constants/fonts.dart';
 import '../../../bloc/demoBloc/demo_bloc.dart';
 import '../../../bloc/userBloc/user_bloc.dart';
-import '../../../models/pinext_transaction_model.dart';
 import '../../../services/date_time_services.dart';
 import '../../../services/firebase_services.dart';
-import '../../../shared/widgets/budget_estimations.dart';
-import '../../../shared/widgets/info_widget.dart';
-import '../../../shared/widgets/transaction_details_card.dart';
 
 class BudgetPage extends StatelessWidget {
   const BudgetPage({super.key});
@@ -103,7 +104,7 @@ class _GetSubscriptionWidget extends StatelessWidget {
               "Tired of adding repetitive transactions? Try adding subscriptions, which will automatically deduct (if automatically deduction is set, during set-up process) that amount from your specified card at the beginning of every month!",
         ),
         const SizedBox(
-          height: 8,
+          height: 10,
         ),
         StreamBuilder(
           stream: FirebaseServices()
@@ -135,31 +136,50 @@ class _GetSubscriptionWidget extends StatelessWidget {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                  child: ListView.builder(
-                    itemCount: snapshot.data!.docs.length > 10 ? 10 : snapshot.data!.docs.length,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: ((context, index) {
-                      if (snapshot.data!.docs.isEmpty) {
-                        return const Text("No data found! :(");
-                      }
-                      if (snapshot.data!.docs.isEmpty) {
-                        return Text(
-                          "No data found! :(",
-                          style: regularTextStyle.copyWith(
-                            color: customBlackColor.withOpacity(.4),
-                          ),
-                        );
-                      }
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                //   child: ListView.builder(
+                //     itemCount: snapshot.data!.docs.length > 10 ? 10 : snapshot.data!.docs.length,
+                //     shrinkWrap: true,
+                //     physics: const NeverScrollableScrollPhysics(),
+                //     itemBuilder: ((context, index) {
+                //       if (snapshot.data!.docs.isEmpty) {
+                //         return const Text("No data found! :(");
+                //       }
+                //       if (snapshot.data!.docs.isEmpty) {
+                //         return Text(
+                //           "No data found! :(",
+                //           style: regularTextStyle.copyWith(
+                //             color: customBlackColor.withOpacity(.4),
+                //           ),
+                //         );
+                //       }
 
-                      PinextTransactionModel pinextTransactionModel = PinextTransactionModel.fromMap(
-                        snapshot.data!.docs[index].data(),
-                      );
-                      return TransactionDetailsCard(pinextTransactionModel: pinextTransactionModel);
-                    }),
-                  ),
+                //       PinextTransactionModel pinextTransactionModel = PinextTransactionModel.fromMap(
+                //         snapshot.data!.docs[index].data(),
+                //       );
+                //       return TransactionDetailsCard(pinextTransactionModel: pinextTransactionModel);
+                //     }),
+                //   ),
+                // )
+                ListView.builder(
+                  itemCount: 5,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: ((context, index) {
+                    return SubscriptionCard(
+                      subscriptionModel: PinextSubscriptionModel(
+                        title: "Test sub",
+                        description: "Lorem Ipsum is simply dummy text of",
+                        amount: "2000",
+                        subscriptionId: '123',
+                        lastPaidOn: '2023-01-12 13:34:01.808442',
+                        assignedCardId: '',
+                        automaticallyDeductEnabled: false,
+                        dateAdded: '2023-01-12 13:34:01.808442',
+                      ),
+                    );
+                  }),
                 )
               ],
             );
@@ -167,6 +187,183 @@ class _GetSubscriptionWidget extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+class SubscriptionCard extends StatelessWidget {
+  SubscriptionCard({
+    Key? key,
+    required this.subscriptionModel,
+  }) : super(key: key);
+
+  PinextSubscriptionModel subscriptionModel;
+
+  @override
+  Widget build(BuildContext context) {
+    log(subscriptionModel.lastPaidOn.substring(5, 7));
+    log(currentMonth);
+    return Padding(
+        padding: const EdgeInsets.only(bottom: 10.0),
+        child: Container(
+          height: 100,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(
+              defaultBorder,
+            ),
+            border: Border.all(
+              color: customBlackColor.withOpacity(.2),
+              width: .5,
+            ),
+          ),
+          width: getWidth(context),
+          child: Builder(
+            builder: (context) {
+              final demoBlocState = context.watch<DemoBloc>().state;
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(15),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            demoBlocState is DemoEnabledState ? "Subscription name" : subscriptionModel.title,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                              color: customBlackColor,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            maxLines: 1,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Details",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 10,
+                                  color: customBlackColor.withOpacity(.4),
+                                ),
+                              ),
+                              Text(
+                                subscriptionModel.description,
+                                maxLines: 1,
+                                style: regularTextStyle.copyWith(overflow: TextOverflow.ellipsis),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Amount : ",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 12,
+                                  color: customBlackColor.withOpacity(.4),
+                                ),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  "${subscriptionModel.amount} Tk",
+                                  maxLines: 1,
+                                  style: boldTextStyle.copyWith(
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Container(
+                        width: .5,
+                        height: getHeight(context),
+                        color: customBlackColor.withOpacity(.2),
+                      ),
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      RotatedBox(
+                        quarterTurns: 3,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Status : ",
+                              style: TextStyle(
+                                fontWeight: FontWeight.normal,
+                                color: customBlackColor.withOpacity(.4),
+                              ),
+                            ),
+                            Text(
+                              subscriptionModel.lastPaidOn.substring(5, 7) == currentMonth ? "PAID" : "DUE",
+                              style: regularTextStyle.copyWith(
+                                  color: subscriptionModel.lastPaidOn.substring(5, 7) == currentMonth
+                                      ? customBlackColor
+                                      : Colors.red[400]),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                            width: .5,
+                            height: getHeight(context),
+                            color: customBlackColor.withOpacity(.2),
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  // onEditButtonClick();
+                                },
+                                icon: const Icon(
+                                  Icons.edit,
+                                  color: customBlackColor,
+                                ),
+                              ),
+                              Container(
+                                width: 30,
+                                height: .5,
+                                color: customBlackColor.withOpacity(.2),
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  demoBlocState is DemoEnabledState ? () {} : () {};
+                                },
+                                icon: const Icon(
+                                  Icons.delete,
+                                  color: customBlackColor,
+                                ),
+                              )
+                            ],
+                          )
+                        ],
+                      )
+                    ],
+                  )
+                ],
+              );
+            },
+          ),
+        ));
   }
 }
 
