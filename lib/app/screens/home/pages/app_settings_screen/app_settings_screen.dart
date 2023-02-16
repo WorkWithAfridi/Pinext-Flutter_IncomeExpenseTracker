@@ -24,245 +24,243 @@ class AppSettingsScreen extends StatelessWidget {
     return SizedBox(
       height: height,
       width: width,
-      child: Scrollbar(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: defaultPadding,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: "Hello,\n",
-                        style: regularTextStyle.copyWith(
-                          color: customBlackColor.withOpacity(.6),
-                        ),
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: defaultPadding,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: "Hello,\n",
+                      style: regularTextStyle.copyWith(
+                        color: customBlackColor.withOpacity(.6),
                       ),
-                      TextSpan(
-                        text: "${UserHandler().currentUser.username} 👋",
-                        style: cursiveTextStyle.copyWith(
-                          // height: .95,
-                          fontSize: 30,
-                          color: customBlackColor.withOpacity(.8),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                // const SizedBox(
-                //   height: 8,
-                // ),
-                // GetSettingsButtonWithIcon(
-                //   onTapFunction: () {
-                //     GetCustomSnackbar(
-                //       title: "Snap",
-                //       message:
-                //           "The section is still under development.\nAnd will be updated at a later date!",
-                //       snackbarType: SnackbarType.info,
-                //       context: context,
-                //     );
-                //   },
-                //   label: "${UserHandler().currentUser.username} - User settings",
-                //   icon: Icons.person,
-                //   iconSize: 18,
-                // ),
-                const SizedBox(
-                  height: 8,
-                ),
-                GetSettingsButtonWithIcon(
-                  onTapFunction: () {
-                    Navigator.push(
-                      context,
-                      CustomTransitionPageRoute(
-                        childWidget: const ViewGoalsAndMilestoneScreen(),
-                      ),
-                    );
-                  },
-                  label: "Goals & Milestones",
-                  icon: Icons.stop,
-                  iconSize: 18,
-                ),
-                // const SizedBox(
-                //   height: 8,
-                // ),
-                // GetSettingsButtonWithIcon(
-                //   onTapFunction: () {
-                //     GetCustomSnackbar(
-                //       title: "Snap",
-                //       message:
-                //           "The section is still under development.\nAnd will be updated at a later date!",
-                //       snackbarType: SnackbarType.info,
-                //       context: context,
-                //     );
-                //   },
-                //   label: "App settings",
-                //   icon: Icons.settings,
-                //   iconSize: 18,
-                // ),
-                const SizedBox(
-                  height: 8,
-                ),
-                GetSettingsButtonWithIcon(
-                  onTapFunction: () {
-                    AppHandler().requestNewFuture(context);
-                  },
-                  label: "Request new future!",
-                  icon: FontAwesomeIcons.fire,
-                  iconSize: 16,
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                GetSettingsButtonWithIcon(
-                  onTapFunction: () {
-                    AppHandler().writeReview(context);
-                  },
-                  label: "Post review",
-                  icon: FontAwesomeIcons.penToSquare,
-                  iconSize: 18,
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                GetSettingsButtonWithIcon(
-                  onTapFunction: () {
-                    AppHandler().sendBugReport(context);
-                  },
-                  label: "Report bug",
-                  icon: FontAwesomeIcons.bug,
-                  iconSize: 18,
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                GetSettingsButtonWithIcon(
-                  onTapFunction: () {
-                    AppHandler().checkForUpdate(context);
-                  },
-                  label: "Check for updates",
-                  icon: Icons.update,
-                  iconSize: 18,
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                BlocBuilder<DemoBloc, DemoState>(
-                  builder: (context, state) {
-                    return GetSettingsButtonWithIcon(
-                      onTapFunction: () async {
-                        String status = "";
-                        if (state is DemoEnabledState) {
-                          context.read<DemoBloc>().add(DisableDemoModeEvent());
-                          status = "disabled";
-                        } else {
-                          await showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                title: Text(
-                                  'Presentation Mode',
-                                  style: boldTextStyle.copyWith(
-                                    fontSize: 20,
-                                  ),
-                                ),
-                                content: SingleChildScrollView(
-                                  child: ListBody(
-                                    children: [
-                                      Text(
-                                        "Enabling Presentation Mode will temporarily replace all of your data with a template, so that you can present or show the app to other potential users! You can disable presentation mode at any time from this menu again! With that being said, do you want to proceed with this action?",
-                                        style: regularTextStyle,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(defaultBorder),
-                                ),
-                                actions: <Widget>[
-                                  TextButton(
-                                    child: Text(
-                                      'Dismiss',
-                                      style: boldTextStyle.copyWith(
-                                        color: customBlackColor.withOpacity(
-                                          .8,
-                                        ),
-                                      ),
-                                    ),
-                                    onPressed: () {
-                                      status = "";
-                                      Navigator.of(context).pop();
-                                    },
-                                  ),
-                                  TextButton(
-                                    child: Text(
-                                      'Enable',
-                                      style: boldTextStyle.copyWith(
-                                        color: customBlackColor.withOpacity(
-                                          .8,
-                                        ),
-                                      ),
-                                    ),
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                      status = "enabled";
-                                      context.read<DemoBloc>().add(EnableDemoModeEvent());
-                                    },
-                                  ),
-                                ],
-                                actionsPadding: dialogButtonPadding,
-                              );
-                            },
-                          );
-                        }
-                        if (status != "") {
-                          GetCustomSnackbar(
-                            title: "DEMO-MODE",
-                            message: "Presentation mode has been $status.",
-                            snackbarType: SnackbarType.info,
-                            context: context,
-                          );
-                        }
-                      },
-                      label: state is DemoEnabledState ? "Disable presentation mode" : "Enable presentation mode",
-                      icon: state is DemoEnabledState ? FontAwesomeIcons.pause : FontAwesomeIcons.play,
-                      iconSize: 18,
-                    );
-                  },
-                ),
-                const SizedBox(
-                  height: 6,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 3,
-                  ),
-                  child: Text(
-                    "App Version: $appVersion",
-                    style: regularTextStyle.copyWith(
-                      fontSize: 12,
-                      color: customBlackColor.withOpacity(.2),
                     ),
-                    textAlign: TextAlign.center,
-                  ),
+                    TextSpan(
+                      text: "${UserHandler().currentUser.username} 👋",
+                      style: cursiveTextStyle.copyWith(
+                        // height: .95,
+                        fontSize: 30,
+                        color: customBlackColor.withOpacity(.8),
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 3),
-                Text(
-                  " by Kyoto",
-                  style: cursiveTextStyle.copyWith(
-                    // height: .95,
-                    fontSize: 16,
+              ),
+              // const SizedBox(
+              //   height: 8,
+              // ),
+              // GetSettingsButtonWithIcon(
+              //   onTapFunction: () {
+              //     GetCustomSnackbar(
+              //       title: "Snap",
+              //       message:
+              //           "The section is still under development.\nAnd will be updated at a later date!",
+              //       snackbarType: SnackbarType.info,
+              //       context: context,
+              //     );
+              //   },
+              //   label: "${UserHandler().currentUser.username} - User settings",
+              //   icon: Icons.person,
+              //   iconSize: 18,
+              // ),
+              const SizedBox(
+                height: 8,
+              ),
+              GetSettingsButtonWithIcon(
+                onTapFunction: () {
+                  Navigator.push(
+                    context,
+                    CustomTransitionPageRoute(
+                      childWidget: const ViewGoalsAndMilestoneScreen(),
+                    ),
+                  );
+                },
+                label: "Goals & Milestones",
+                icon: Icons.stop,
+                iconSize: 18,
+              ),
+              // const SizedBox(
+              //   height: 8,
+              // ),
+              // GetSettingsButtonWithIcon(
+              //   onTapFunction: () {
+              //     GetCustomSnackbar(
+              //       title: "Snap",
+              //       message:
+              //           "The section is still under development.\nAnd will be updated at a later date!",
+              //       snackbarType: SnackbarType.info,
+              //       context: context,
+              //     );
+              //   },
+              //   label: "App settings",
+              //   icon: Icons.settings,
+              //   iconSize: 18,
+              // ),
+              const SizedBox(
+                height: 8,
+              ),
+              GetSettingsButtonWithIcon(
+                onTapFunction: () {
+                  AppHandler().requestNewFuture(context);
+                },
+                label: "Request new future!",
+                icon: FontAwesomeIcons.fire,
+                iconSize: 16,
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              GetSettingsButtonWithIcon(
+                onTapFunction: () {
+                  AppHandler().writeReview(context);
+                },
+                label: "Post review",
+                icon: FontAwesomeIcons.penToSquare,
+                iconSize: 18,
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              GetSettingsButtonWithIcon(
+                onTapFunction: () {
+                  AppHandler().sendBugReport(context);
+                },
+                label: "Report bug",
+                icon: FontAwesomeIcons.bug,
+                iconSize: 18,
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              GetSettingsButtonWithIcon(
+                onTapFunction: () {
+                  AppHandler().checkForUpdate(context);
+                },
+                label: "Check for updates",
+                icon: Icons.update,
+                iconSize: 18,
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              BlocBuilder<DemoBloc, DemoState>(
+                builder: (context, state) {
+                  return GetSettingsButtonWithIcon(
+                    onTapFunction: () async {
+                      String status = "";
+                      if (state is DemoEnabledState) {
+                        context.read<DemoBloc>().add(DisableDemoModeEvent());
+                        status = "disabled";
+                      } else {
+                        await showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text(
+                                'Presentation Mode',
+                                style: boldTextStyle.copyWith(
+                                  fontSize: 20,
+                                ),
+                              ),
+                              content: SingleChildScrollView(
+                                child: ListBody(
+                                  children: [
+                                    Text(
+                                      "Enabling Presentation Mode will temporarily replace all of your data with a template, so that you can present or show the app to other potential users! You can disable presentation mode at any time from this menu again! With that being said, do you want to proceed with this action?",
+                                      style: regularTextStyle,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(defaultBorder),
+                              ),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: Text(
+                                    'Dismiss',
+                                    style: boldTextStyle.copyWith(
+                                      color: customBlackColor.withOpacity(
+                                        .8,
+                                      ),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    status = "";
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                                TextButton(
+                                  child: Text(
+                                    'Enable',
+                                    style: boldTextStyle.copyWith(
+                                      color: customBlackColor.withOpacity(
+                                        .8,
+                                      ),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    status = "enabled";
+                                    context.read<DemoBloc>().add(EnableDemoModeEvent());
+                                  },
+                                ),
+                              ],
+                              actionsPadding: dialogButtonPadding,
+                            );
+                          },
+                        );
+                      }
+                      if (status != "") {
+                        GetCustomSnackbar(
+                          title: "DEMO-MODE",
+                          message: "Presentation mode has been $status.",
+                          snackbarType: SnackbarType.info,
+                          context: context,
+                        );
+                      }
+                    },
+                    label: state is DemoEnabledState ? "Disable presentation mode" : "Enable presentation mode",
+                    icon: state is DemoEnabledState ? FontAwesomeIcons.pause : FontAwesomeIcons.play,
+                    iconSize: 18,
+                  );
+                },
+              ),
+              const SizedBox(
+                height: 6,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 3,
+                ),
+                child: Text(
+                  "App Version: $appVersion",
+                  style: regularTextStyle.copyWith(
+                    fontSize: 12,
                     color: customBlackColor.withOpacity(.2),
                   ),
+                  textAlign: TextAlign.center,
                 ),
-                const SizedBox(
-                  height: 30,
+              ),
+              const SizedBox(height: 3),
+              Text(
+                " by Kyoto",
+                style: cursiveTextStyle.copyWith(
+                  // height: .95,
+                  fontSize: 16,
+                  color: customBlackColor.withOpacity(.2),
                 ),
-              ],
-            ),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+            ],
           ),
         ),
       ),
