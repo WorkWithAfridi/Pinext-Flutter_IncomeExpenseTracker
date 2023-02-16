@@ -13,6 +13,7 @@ class AddSubscriptionCubit extends Cubit<AddSubscriptionState> {
             description: "",
             automaticallyPayActivated: false,
             selectedCardNo: "",
+            alreadyPaid: "",
           ),
         );
 
@@ -24,6 +25,7 @@ class AddSubscriptionCubit extends Cubit<AddSubscriptionState> {
         description: state.description,
         amount: state.amount,
         automaticallyPayActivated: state.automaticallyPayActivated,
+        alreadyPaid: state.alreadyPaid,
       ),
     );
   }
@@ -36,6 +38,7 @@ class AddSubscriptionCubit extends Cubit<AddSubscriptionState> {
         description: state.description,
         amount: state.amount,
         automaticallyPayActivated: value,
+        alreadyPaid: state.alreadyPaid,
       ),
     );
   }
@@ -50,6 +53,7 @@ class AddSubscriptionCubit extends Cubit<AddSubscriptionState> {
         amount: pinextSubscriptionModel.amount,
         automaticallyPayActivated: pinextSubscriptionModel.automaticallyDeductEnabled,
         selectedCardNo: pinextSubscriptionModel.assignedCardId,
+        alreadyPaid: state.alreadyPaid,
       ),
     );
     await Future.delayed(
@@ -62,8 +66,21 @@ class AddSubscriptionCubit extends Cubit<AddSubscriptionState> {
         amount: pinextSubscriptionModel.amount,
         automaticallyPayActivated: pinextSubscriptionModel.automaticallyDeductEnabled,
         selectedCardNo: pinextSubscriptionModel.assignedCardId,
+        alreadyPaid: state.alreadyPaid,
       ),
     );
-    print(pinextSubscriptionModel.toString());
+  }
+
+  changeAlreadyPaidStatus(String status) {
+    emit(
+      AddSubscriptionDefaultState(
+        selectedCardNo: state.selectedCardNo,
+        title: state.title,
+        description: state.description,
+        amount: state.amount,
+        automaticallyPayActivated: state.automaticallyPayActivated,
+        alreadyPaid: status,
+      ),
+    );
   }
 }

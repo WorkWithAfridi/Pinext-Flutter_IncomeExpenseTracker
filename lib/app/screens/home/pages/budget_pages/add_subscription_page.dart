@@ -9,6 +9,7 @@ import 'package:pinext/app/bloc/add_subscription_cubit/add_subscription_cubit.da
 import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
 import 'package:pinext/app/models/pinext_subscription_model.dart';
+import 'package:pinext/app/services/date_time_services.dart';
 import 'package:pinext/app/services/firebase_services.dart';
 import 'package:pinext/app/shared/widgets/custom_button.dart';
 import 'package:pinext/app/shared/widgets/custom_text_field.dart';
@@ -80,7 +81,7 @@ class AddSubscriptionView extends StatelessWidget {
                         height: 12,
                       ),
                       Text(
-                        "Title",
+                        "Title *",
                         style: boldTextStyle.copyWith(
                           color: customBlackColor.withOpacity(
                             .6,
@@ -129,7 +130,7 @@ class AddSubscriptionView extends StatelessWidget {
                         height: 12,
                       ),
                       Text(
-                        "Amount",
+                        "Amount *",
                         style: boldTextStyle.copyWith(
                           color: customBlackColor.withOpacity(
                             .6,
@@ -205,7 +206,7 @@ class AddSubscriptionView extends StatelessWidget {
                         height: 12,
                       ),
                       Text(
-                        "Select card",
+                        "Select card *",
                         style: boldTextStyle.copyWith(
                           color: customBlackColor.withOpacity(
                             .6,
@@ -287,7 +288,142 @@ class AddSubscriptionView extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox( 
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: defaultPadding,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      Text(
+                        "Already paid? *",
+                        style: boldTextStyle.copyWith(
+                          color: customBlackColor.withOpacity(
+                            .6,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(
+                          defaultPadding,
+                        ),
+                        decoration: BoxDecoration(
+                          color: greyColor,
+                          borderRadius: BorderRadius.circular(
+                            defaultBorder,
+                          ),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                const Icon(
+                                  Icons.money,
+                                  color: Colors.green,
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    "Have you already added this transaction into PINEXT Archive for ${months[int.parse(currentMonth) - 1]} $currentYear ?",
+                                    style: regularTextStyle.copyWith(
+                                      color: customBlackColor.withOpacity(
+                                        .8,
+                                      ),
+                                    ),
+                                    maxLines: 5,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 12,
+                            ),
+                            BlocBuilder<AddSubscriptionCubit, AddSubscriptionState>(
+                              builder: (context, state) {
+                                return Row(
+                                  children: [
+                                    Flexible(
+                                      flex: 1,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          context.read<AddSubscriptionCubit>().changeAlreadyPaidStatus("NO");
+                                        },
+                                        child: Container(
+                                          height: kToolbarHeight - 8,
+                                          width: double.maxFinite,
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                              color: Colors.red,
+                                            ),
+                                            color: state.alreadyPaid == "NO" ? Colors.red[200] : Colors.transparent,
+                                            borderRadius: BorderRadius.circular(
+                                              defaultBorder,
+                                            ),
+                                          ),
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                            "NO",
+                                            style: boldTextStyle.copyWith(
+                                              color: state.alreadyPaid == "NO" ? whiteColor : Colors.red,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 8,
+                                    ),
+                                    Flexible(
+                                      flex: 1,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          context.read<AddSubscriptionCubit>().changeAlreadyPaidStatus("YES");
+                                        },
+                                        child: Container(
+                                          height: kToolbarHeight - 8,
+                                          width: double.maxFinite,
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                              color: customBlueColor,
+                                            ),
+                                            color: state.alreadyPaid == "YES"
+                                                ? customBlueColor.withOpacity(.5)
+                                                : Colors.transparent,
+                                            borderRadius: BorderRadius.circular(
+                                              defaultBorder,
+                                            ),
+                                          ),
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                            "YES",
+                                            style: boldTextStyle.copyWith(
+                                              color: state.alreadyPaid == "YES" ? whiteColor : customBlueColor,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                const SizedBox(
                   height: 12,
                 ),
                 Padding(

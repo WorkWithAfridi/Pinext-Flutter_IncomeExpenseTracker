@@ -7,12 +7,14 @@ abstract class AddSubscriptionState extends Equatable {
   String amount;
   bool automaticallyPayActivated;
   String selectedCardNo;
+  String alreadyPaid;
   AddSubscriptionState({
     required this.title,
     required this.description,
     required this.amount,
     required this.automaticallyPayActivated,
     required this.selectedCardNo,
+    required this.alreadyPaid,
   });
 
   @override
@@ -22,6 +24,7 @@ abstract class AddSubscriptionState extends Equatable {
         amount,
         automaticallyPayActivated,
         selectedCardNo,
+        alreadyPaid,
       ];
 }
 
@@ -32,6 +35,7 @@ class AddSubscriptionDefaultState extends AddSubscriptionState {
     required super.amount,
     required super.automaticallyPayActivated,
     required super.selectedCardNo,
+    required super.alreadyPaid,
   });
 }
 
@@ -42,5 +46,6 @@ class AddSubscriptionLoadingState extends AddSubscriptionState {
     required super.amount,
     required super.automaticallyPayActivated,
     required super.selectedCardNo,
+    required super.alreadyPaid,
   });
 }
