@@ -49,3 +49,25 @@ class AddSubscriptionLoadingState extends AddSubscriptionState {
     required super.alreadyPaid,
   });
 }
+
+class AddSubscriptionSuccessState extends AddSubscriptionState {
+  AddSubscriptionSuccessState({
+    required super.title,
+    required super.description,
+    required super.amount,
+    required super.automaticallyPayActivated,
+    required super.selectedCardNo,
+    required super.alreadyPaid,
+  });
+}
+
+class AddSubscriptionErrorState extends AddSubscriptionState {
+  AddSubscriptionErrorState({
+    required super.title,
+    required super.description,
+    required super.amount,
+    required super.automaticallyPayActivated,
+    required super.selectedCardNo,
+    required super.alreadyPaid,
+  });
+}

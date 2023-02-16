@@ -12,6 +12,7 @@ import 'package:pinext/app/models/pinext_subscription_model.dart';
 import 'package:pinext/app/services/date_time_services.dart';
 import 'package:pinext/app/services/firebase_services.dart';
 import 'package:pinext/app/shared/widgets/custom_button.dart';
+import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 import 'package:pinext/app/shared/widgets/custom_text_field.dart';
 import 'package:pinext/app/shared/widgets/info_widget.dart';
 import 'package:pinext/app/shared/widgets/pinext_card.dart';
@@ -166,7 +167,7 @@ class AddSubscriptionView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Automatically pay",
+                        "Automatically add transaction",
                         style: boldTextStyle.copyWith(
                           color: customBlackColor.withOpacity(
                             .6,
@@ -430,9 +431,26 @@ class AddSubscriptionView extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(
                     horizontal: defaultPadding,
                   ),
-                  child: Builder(
-                    builder: (context) {
-                      final state = context.watch<AddSubscriptionCubit>().state;
+                  child: BlocConsumer<AddSubscriptionCubit, AddSubscriptionState>(
+                    listener: ((context, state) {
+                      if (state is AddSubscriptionSuccessState) {
+                        Navigator.pop(context);
+                        GetCustomSnackbar(
+                          title: "Subscription added!!",
+                          message: "A new subscription has been added!",
+                          snackbarType: SnackbarType.success,
+                          context: context,
+                        );
+                      } else if (state is AddSubscriptionErrorState) {
+                        GetCustomSnackbar(
+                          title: "Snap",
+                          message: "An error occurred while trying to add your subscription.",
+                          snackbarType: SnackbarType.error,
+                          context: context,
+                        );
+                      }
+                    }),
+                    builder: (context, state) {
                       final demoState = context.watch<DemoBloc>().state;
                       return GetCustomButton(
                         title: "Save Subscription",
@@ -441,22 +459,40 @@ class AddSubscriptionView extends StatelessWidget {
                         buttonColor: customBlueColor,
                         callBackFunction: () {
                           if (demoState is DemoDisabledState) {
-                            String title = titleController.text;
-                            String description = descriptionController.text;
-                            String amount = amountController.text;
-                            bool isAutomaticallyPayEnabled = state.automaticallyPayActivated;
-                            context.read<AddSubscriptionCubit>().addSubscription(
-                                  PinextSubscriptionModel(
-                                    dateAdded: DateTime.now().toString(),
-                                    lastPaidOn: DateTime.now().toString(),
-                                    amount: amount,
-                                    subscriptionId: const Uuid().v4(),
-                                    assignedCardId: state.selectedCardNo,
-                                    automaticallyDeductEnabled: isAutomaticallyPayEnabled,
-                                    description: description,
-                                    title: title,
-                                  ),
-                                );
+                            if (_formKey.currentState!.validate() && state.alreadyPaid != "") {
+                              String title = titleController.text;
+                              String description = descriptionController.text;
+                              String amount = amountController.text;
+                              bool isAutomaticallyPayEnabled = state.automaticallyPayActivated;
+                              String lastPaidOn = state.alreadyPaid == "YES"
+                                  ? DateTime.now().toString()
+                                  : DateTime.now().toString().replaceRange(
+                                        5,
+                                        7,
+                                        int.parse(DateTime.now().toString().substring(5, 7)) == 1
+                                            ? "12"
+                                            : (int.parse(DateTime.now().toString().substring(5, 7)) - 1).toString(),
+                                      );
+                              context.read<AddSubscriptionCubit>().addSubscription(
+                                    PinextSubscriptionModel(
+                                      dateAdded: DateTime.now().toString(),
+                                      lastPaidOn: lastPaidOn,
+                                      amount: amount,
+                                      subscriptionId: const Uuid().v4(),
+                                      assignedCardId: state.selectedCardNo,
+                                      automaticallyDeductEnabled: isAutomaticallyPayEnabled,
+                                      description: description,
+                                      title: title,
+                                    ),
+                                  );
+                            } else {
+                              GetCustomSnackbar(
+                                title: "ERROR",
+                                message: "Please fill up the form and try again!",
+                                snackbarType: SnackbarType.error,
+                                context: context,
+                              );
+                            }
                           }
                         },
                       );

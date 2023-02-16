@@ -111,12 +111,10 @@ class _GetSubscriptionWidget extends StatelessWidget {
               .firebaseFirestore
               .collection('pinext_users')
               .doc(FirebaseServices().getUserId())
-              .collection('pinext_transactions')
-              .doc(currentYear)
-              .collection(currentMonth)
+              .collection('pinext_subscriptions')
               .orderBy(
-                "transactionDate",
-                descending: true,
+                "lastPaidOn",
+                descending: false,
               )
               .snapshots(),
           builder: ((context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
@@ -136,51 +134,20 @@ class _GetSubscriptionWidget extends StatelessWidget {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Padding(
-                //   padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                //   child: ListView.builder(
-                //     itemCount: snapshot.data!.docs.length > 10 ? 10 : snapshot.data!.docs.length,
-                //     shrinkWrap: true,
-                //     physics: const NeverScrollableScrollPhysics(),
-                //     itemBuilder: ((context, index) {
-                //       if (snapshot.data!.docs.isEmpty) {
-                //         return const Text("No data found! :(");
-                //       }
-                //       if (snapshot.data!.docs.isEmpty) {
-                //         return Text(
-                //           "No data found! :(",
-                //           style: regularTextStyle.copyWith(
-                //             color: customBlackColor.withOpacity(.4),
-                //           ),
-                //         );
-                //       }
-
-                //       PinextTransactionModel pinextTransactionModel = PinextTransactionModel.fromMap(
-                //         snapshot.data!.docs[index].data(),
-                //       );
-                //       return TransactionDetailsCard(pinextTransactionModel: pinextTransactionModel);
-                //     }),
-                //   ),
-                // )
-                ListView.builder(
-                  itemCount: 5,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: ((context, index) {
-                    return SubscriptionCard(
-                      subscriptionModel: PinextSubscriptionModel(
-                        title: "Test sub",
-                        description: "Lorem Ipsum is simply dummy text of",
-                        amount: "2000",
-                        subscriptionId: '123',
-                        lastPaidOn: '2023-01-12 13:34:01.808442',
-                        assignedCardId: '',
-                        automaticallyDeductEnabled: false,
-                        dateAdded: '2023-01-12 13:34:01.808442',
-                      ),
-                    );
-                  }),
-                )
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                  child: ListView.builder(
+                    itemCount: snapshot.data!.docs.length > 10 ? 10 : snapshot.data!.docs.length,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: ((context, index) {
+                      PinextSubscriptionModel subscriptionModel = PinextSubscriptionModel.fromMap(
+                        snapshot.data!.docs[index].data(),
+                      );
+                      return SubscriptionCard(subscriptionModel: subscriptionModel);
+                    }),
+                  ),
+                ),
               ],
             );
           }),
@@ -229,56 +196,51 @@ class SubscriptionCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            demoBlocState is DemoEnabledState ? "Subscription name" : subscriptionModel.title,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                              color: customBlackColor,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            maxLines: 1,
-                          ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Details",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 10,
-                                  color: customBlackColor.withOpacity(.4),
-                                ),
-                              ),
-                              Text(
-                                subscriptionModel.description,
+                                demoBlocState is DemoEnabledState ? "Subscription name" : subscriptionModel.title,
+                                style: boldTextStyle,
                                 maxLines: 1,
-                                style: regularTextStyle.copyWith(overflow: TextOverflow.ellipsis),
+                              ),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Amount : ",
+                                    style: regularTextStyle.copyWith(
+                                      color: customBlackColor.withOpacity(.7),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      "${subscriptionModel.amount} Tk",
+                                      maxLines: 1,
+                                      style: boldTextStyle,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Amount : ",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 12,
-                                  color: customBlackColor.withOpacity(.4),
-                                ),
-                              ),
-                              Expanded(
-                                child: Text(
-                                  "${subscriptionModel.amount} Tk",
-                                  maxLines: 1,
-                                  style: boldTextStyle.copyWith(
-                                    fontSize: 12,
+                          RichText(
+                            maxLines: 1,
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: "Details : ",
+                                  style: regularTextStyle.copyWith(
+                                    color: customBlackColor.withOpacity(.7),
                                   ),
                                 ),
-                              ),
-                            ],
+                                TextSpan(
+                                  text: subscriptionModel.description,
+                                  style: boldTextStyle,
+                                )
+                              ],
+                            ),
                           ),
                         ],
                       ),
@@ -428,6 +390,7 @@ class _GetSubscriptionDetailsWidget extends StatelessWidget {
                                   demoBlocState is DemoEnabledState ? "75000 Tk" : "${state.monthlySavings} Tk",
                                   style: boldTextStyle.copyWith(
                                     fontSize: 20,
+                                    color: Colors.green,
                                   ),
                                 );
                               }
@@ -485,6 +448,7 @@ class _GetSubscriptionDetailsWidget extends StatelessWidget {
                                       : "${state.monthlyEarnings == "" ? "0000" : state.monthlyEarnings} Tk",
                                   style: boldTextStyle.copyWith(
                                     fontSize: 20,
+                                    color: Colors.red,
                                   ),
                                 );
                               }
