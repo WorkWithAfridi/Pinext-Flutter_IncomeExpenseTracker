@@ -45,8 +45,9 @@ class PinextGoalCardMinimized extends StatelessWidget {
                 final state = context.watch<UserBloc>().state;
                 final demoBlocState = context.watch<DemoBloc>().state;
                 if (state is AuthenticatedUserState) {
-                  double completionAmount =
-                      ((double.parse(state.netBalance) / double.parse(pinextGoalModel.amount)) * 100);
+                  double completionAmount = int.parse(state.netBalance) <= 0
+                      ? 0
+                      : ((double.parse(state.netBalance) / double.parse(pinextGoalModel.amount)) * 100);
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -128,7 +129,9 @@ class PinextGoalCardMinimized extends StatelessWidget {
 
                 double completionAmount = 0;
                 if (state is AuthenticatedUserState) {
-                  completionAmount = ((double.parse(state.netBalance) / double.parse(pinextGoalModel.amount)) * 100);
+                  completionAmount = int.parse(state.netBalance) <= 0
+                      ? 0
+                      : ((double.parse(state.netBalance) / double.parse(pinextGoalModel.amount)) * 100);
                 }
                 return RichText(
                   text: TextSpan(
@@ -213,8 +216,9 @@ class PinextGoalCardMinimized extends StatelessWidget {
             BlocBuilder<UserBloc, UserState>(
               builder: (context, state) {
                 if (state is AuthenticatedUserState) {
-                  double completionAmount =
-                      ((double.parse(state.netBalance) / double.parse(pinextGoalModel.amount)) * 100);
+                  double completionAmount = int.parse(state.netBalance) <= 0
+                      ? 0.0
+                      : ((double.parse(state.netBalance) / double.parse(pinextGoalModel.amount)) * 100);
                   if (completionAmount > 100) {
                     return const SizedBox.shrink();
                   } else {
@@ -228,8 +232,9 @@ class PinextGoalCardMinimized extends StatelessWidget {
                             ),
                           ),
                           TextSpan(
-                            text:
-                                "${((double.parse(state.netBalance) / double.parse(pinextGoalModel.amount)) * 100).toString().substring(0, 4)}%",
+                            text: int.parse(state.netBalance) <= 0
+                                ? "0%"
+                                : "${((double.parse(state.netBalance) / double.parse(pinextGoalModel.amount)) * 100).toString().substring(0, 4)}%",
                             style: boldTextStyle.copyWith(
                               color: Colors.red.withOpacity(.9),
                             ),
