@@ -424,6 +424,9 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                     ),
                   ),
                 ),
+                const SizedBox(
+                  height: 30,
+                ),
               ],
             ),
           ),
