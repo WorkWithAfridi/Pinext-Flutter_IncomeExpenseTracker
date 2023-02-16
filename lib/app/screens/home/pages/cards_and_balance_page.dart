@@ -9,6 +9,7 @@ import 'package:pinext/app/app_data/custom_transition_page_route/custom_transiti
 import 'package:pinext/app/bloc/cards_and_balances_cubit/cards_and_balances_cubit.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/screens/edit_net_balance_screen.dart';
+import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 
 import '../../../app_data/app_constants/constants.dart';
 import '../../../app_data/app_constants/domentions.dart';
@@ -294,7 +295,13 @@ class CardsAndBalanceView extends StatelessWidget {
                   context.read<UserBloc>().add(RefreshUserStateEvent());
                 }
                 if (state is CardsAndBalancesSuccessfullyRemovedCardState) {
-                  log("Card removed");
+                  log("removed");
+                  GetCustomSnackbar(
+                    title: "Success",
+                    message: "Card has been removed from your card list.",
+                    snackbarType: SnackbarType.success,
+                    context: context,
+                  );
                 }
               },
               child: GestureDetector(

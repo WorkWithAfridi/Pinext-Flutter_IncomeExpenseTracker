@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/budget_bloc/budget_bloc.dart';
 import 'package:pinext/app/models/pinext_subscription_model.dart';
+import 'package:pinext/app/services/handlers/subscription_handler.dart';
 import 'package:pinext/app/shared/widgets/budget_estimations.dart';
 import 'package:pinext/app/shared/widgets/info_widget.dart';
 
@@ -225,23 +226,25 @@ class SubscriptionCard extends StatelessWidget {
                               ),
                             ],
                           ),
-                          RichText(
-                            maxLines: 1,
-                            text: TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: "Details : ",
-                                  style: regularTextStyle.copyWith(
-                                    color: customBlackColor.withOpacity(.7),
+                          subscriptionModel.description == ""
+                              ? const SizedBox.shrink()
+                              : RichText(
+                                  maxLines: 1,
+                                  text: TextSpan(
+                                    children: [
+                                      TextSpan(
+                                        text: "Details : ",
+                                        style: regularTextStyle.copyWith(
+                                          color: customBlackColor.withOpacity(.7),
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text: subscriptionModel.description,
+                                        style: boldTextStyle,
+                                      )
+                                    ],
                                   ),
                                 ),
-                                TextSpan(
-                                  text: subscriptionModel.description,
-                                  style: boldTextStyle,
-                                )
-                              ],
-                            ),
-                          ),
                         ],
                       ),
                     ),
@@ -308,7 +311,55 @@ class SubscriptionCard extends StatelessWidget {
                               ),
                               IconButton(
                                 onPressed: () {
-                                  demoBlocState is DemoEnabledState ? () {} : () {};
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          title: Text(
+                                            'Delete subscription?',
+                                            style: boldTextStyle.copyWith(
+                                              fontSize: 20,
+                                            ),
+                                          ),
+                                          content: SingleChildScrollView(
+                                            child: ListBody(
+                                              children: [
+                                                Text(
+                                                  "You're about to delete this subscription from your pinext account! Are you sure you want to do that??",
+                                                  style: regularTextStyle,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(defaultBorder),
+                                          ),
+                                          actions: <Widget>[
+                                            TextButton(
+                                              child: Text(
+                                                'Cancel',
+                                                style: boldTextStyle.copyWith(
+                                                  color: customBlackColor.withOpacity(
+                                                    .8,
+                                                  ),
+                                                ),
+                                              ),
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                            ),
+                                            TextButton(
+                                              child: const Text('Approve'),
+                                              onPressed: () {
+                                                SubscriptionHandler()
+                                                    .removeSubscription(subscriptionModel: subscriptionModel);
+                                                Navigator.of(context).pop();
+                                              },
+                                            ),
+                                          ],
+                                          actionsPadding: dialogButtonPadding,
+                                        );
+                                      });
                                 },
                                 icon: const Icon(
                                   Icons.delete,
