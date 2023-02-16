@@ -17,7 +17,6 @@ class ArchiveCubit extends Cubit<ArchiveState> {
                 .toString(),
             selectedFilter: "All transactions",
             selectedYear: currentYear,
-            noDataFound: true,
           ),
         );
 
@@ -27,7 +26,6 @@ class ArchiveCubit extends Cubit<ArchiveState> {
         selectedMonth: selectedMonth,
         selectedFilter: "All transactions",
         selectedYear: state.selectedYear,
-        noDataFound: state.noDataFound,
       ),
     );
   }
@@ -38,7 +36,6 @@ class ArchiveCubit extends Cubit<ArchiveState> {
         selectedMonth: state.selectedMonth,
         selectedFilter: selectedFilter,
         selectedYear: state.selectedYear,
-        noDataFound: state.noDataFound,
       ),
     );
   }
@@ -50,18 +47,6 @@ class ArchiveCubit extends Cubit<ArchiveState> {
         selectedMonth: state.selectedMonth,
         selectedFilter: state.selectedFilter,
         selectedYear: selectedYear,
-        noDataFound: state.noDataFound,
-      ),
-    );
-  }
-
-  noDataFound(bool status) {
-    emit(
-      ArchiveInitialState(
-        selectedMonth: state.selectedMonth,
-        selectedFilter: state.selectedFilter,
-        selectedYear: state.selectedYear,
-        noDataFound: status,
       ),
     );
   }

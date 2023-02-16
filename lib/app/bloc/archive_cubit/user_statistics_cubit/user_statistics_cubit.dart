@@ -10,6 +10,7 @@ class UserStatisticsCubit extends Cubit<UserStatisticsState> {
             totalExpenses: 0,
             totalSavings: 0,
             outcome: 0,
+            noDataFound: true,
           ),
         );
 
@@ -32,6 +33,7 @@ class UserStatisticsCubit extends Cubit<UserStatisticsState> {
       totalExpenses: totalExpenses,
       totalSavings: totalSavings,
       outcome: outcome,
+      noDataFound: state.noDataFound,
     ));
   }
 
@@ -41,6 +43,18 @@ class UserStatisticsCubit extends Cubit<UserStatisticsState> {
         totalExpenses: 0,
         totalSavings: 0,
         outcome: 0,
+        noDataFound: true,
+      ),
+    );
+  }
+
+  noDataFound(bool status) {
+    emit(
+      UserStatisticsDefaultState(
+        totalExpenses: 0,
+        totalSavings: 0,
+        outcome: 0,
+        noDataFound: status,
       ),
     );
   }

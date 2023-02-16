@@ -5,19 +5,16 @@ abstract class ArchiveState extends Equatable {
     required this.selectedMonth,
     required this.selectedFilter,
     required this.selectedYear,
-    required this.noDataFound,
   });
   String selectedMonth;
   String selectedYear;
   String selectedFilter;
-  bool noDataFound;
 
   @override
   List<Object> get props => [
         selectedMonth,
         selectedFilter,
         selectedYear,
-        noDataFound,
       ];
 }
 
@@ -26,6 +23,5 @@ class ArchiveInitialState extends ArchiveState {
     required super.selectedMonth,
     required super.selectedFilter,
     required super.selectedYear,
-    required super.noDataFound,
   });
 }
