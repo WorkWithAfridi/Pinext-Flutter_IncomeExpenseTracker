@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/budget_cubit/budget_cubit.dart';
+import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/models/pinext_subscription_model.dart';
 import 'package:pinext/app/services/handlers/subscription_handler.dart';
 import 'package:pinext/app/services/handlers/transaction_handler.dart' as transation;
 import 'package:pinext/app/shared/widgets/budget_estimations.dart';
+import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 import 'package:pinext/app/shared/widgets/info_widget.dart';
 
 import '../../../app_data/app_constants/constants.dart';
@@ -228,18 +230,28 @@ class SubscriptionCard extends StatelessWidget {
                     onChanged: (value) async {
                       PinextSubscriptionModel updatedSubscriptionModel = subscriptionModel;
                       if (value == true) {
-                        // transation.TransactionHandler().addTransaction(
-                        //   amount: updatedSubscriptionModel.amount,
-                        //   description: updatedSubscriptionModel.title,
-                        //   transactionType: "Expense",
-                        //   cardId: updatedSubscriptionModel.assignedCardId,
-                        //   markedAs: true,
-                        // );
+                        transation.TransactionHandler()
+                            .addTransaction(
+                          amount: updatedSubscriptionModel.amount,
+                          description: updatedSubscriptionModel.title,
+                          transactionType: "Expense",
+                          cardId: updatedSubscriptionModel.assignedCardId,
+                          markedAs: true,
+                        )
+                            .then((value) {
+                          context.read<UserBloc>().add(RefreshUserStateEvent());
+                        });
                         updatedSubscriptionModel.lastPaidOn = DateTime.now().toString();
                       } else {
-                        var date = DateTime.now();
-                        var lastMonthDate = DateTime(date.year, date.month - 1, date.day);
-                        updatedSubscriptionModel.lastPaidOn = lastMonthDate.toString();
+                        GetCustomSnackbar(
+                          title: "Snap",
+                          message: "This transaction has already been processed!",
+                          snackbarType: SnackbarType.info,
+                          context: context,
+                        );
+                        // var date = DateTime.now();
+                        // var lastMonthDate = DateTime(date.year, date.month - 1, date.day);
+                        // updatedSubscriptionModel.lastPaidOn = lastMonthDate.toString();
                       }
                       context.read<BudgetCubit>().resetSubscriptionDetailCount();
                       await SubscriptionHandler().updateSubscription(updatedSubscriptionModel);
