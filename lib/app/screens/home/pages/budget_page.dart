@@ -130,6 +130,7 @@ class _GetSubscriptionWidget extends StatelessWidget {
                 ),
               );
             }
+            context.read<BudgetCubit>().resetSubscriptionDetailCount();
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5.0),
               child: ListView.builder(
