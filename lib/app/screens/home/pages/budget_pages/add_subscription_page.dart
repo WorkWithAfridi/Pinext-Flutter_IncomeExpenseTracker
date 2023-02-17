@@ -8,10 +8,12 @@ import 'package:pinext/app/app_data/extensions/string_extensions.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/add_subscription_cubit/add_subscription_cubit.dart';
 import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
+import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
 import 'package:pinext/app/models/pinext_subscription_model.dart';
 import 'package:pinext/app/services/date_time_services.dart';
 import 'package:pinext/app/services/firebase_services.dart';
+import 'package:pinext/app/services/handlers/transaction_handler.dart' as transaction;
 import 'package:pinext/app/shared/widgets/custom_button.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 import 'package:pinext/app/shared/widgets/custom_text_field.dart';
@@ -448,8 +450,18 @@ class AddSubscriptionView extends StatelessWidget {
                     horizontal: defaultPadding,
                   ),
                   child: BlocConsumer<AddSubscriptionCubit, AddSubscriptionState>(
-                    listener: ((context, state) {
+                    listener: ((context, state) async {
                       if (state is AddSubscriptionSuccessState) {
+                        if (state.alreadyPaid == "YES") {
+                          await transaction.TransactionHandler().addTransaction(
+                            amount: amountController.text,
+                            description: titleController.text,
+                            transactionType: "Expense",
+                            cardId: state.selectedCardNo,
+                            markedAs: true,
+                          );
+                        }
+                        context.read<UserBloc>().add(RefreshUserStateEvent());
                         Navigator.pop(context);
                         GetCustomSnackbar(
                           title: "Subscription added!!",
@@ -485,6 +497,7 @@ class AddSubscriptionView extends StatelessWidget {
                               var lastMonthDate = DateTime(date.year, date.month - 1, date.day);
                               String lastPaidOn =
                                   state.alreadyPaid == "YES" ? DateTime.now().toString() : lastMonthDate.toString();
+
                               context.read<AddSubscriptionCubit>().addSubscription(
                                     PinextSubscriptionModel(
                                       dateAdded: DateTime.now().toString(),
