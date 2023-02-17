@@ -7,6 +7,7 @@ import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/budget_cubit/budget_cubit.dart';
 import 'package:pinext/app/models/pinext_subscription_model.dart';
 import 'package:pinext/app/services/handlers/subscription_handler.dart';
+import 'package:pinext/app/services/handlers/transaction_handler.dart' as transation;
 import 'package:pinext/app/shared/widgets/budget_estimations.dart';
 import 'package:pinext/app/shared/widgets/info_widget.dart';
 
@@ -227,6 +228,13 @@ class SubscriptionCard extends StatelessWidget {
                     onChanged: (value) async {
                       PinextSubscriptionModel updatedSubscriptionModel = subscriptionModel;
                       if (value == true) {
+                        // transation.TransactionHandler().addTransaction(
+                        //   amount: updatedSubscriptionModel.amount,
+                        //   description: updatedSubscriptionModel.title,
+                        //   transactionType: "Expense",
+                        //   cardId: updatedSubscriptionModel.assignedCardId,
+                        //   markedAs: true,
+                        // );
                         updatedSubscriptionModel.lastPaidOn = DateTime.now().toString();
                       } else {
                         var date = DateTime.now();

@@ -495,6 +495,7 @@ class AddSubscriptionView extends StatelessWidget {
                                       automaticallyDeductEnabled: isAutomaticallyPayEnabled,
                                       description: description,
                                       title: title,
+                                      transactionId: "",
                                     ),
                                   );
                             } else {

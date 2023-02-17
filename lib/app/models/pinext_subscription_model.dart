@@ -9,16 +9,17 @@ class PinextSubscriptionModel {
   bool automaticallyDeductEnabled;
   String description;
   String title;
-  PinextSubscriptionModel({
-    required this.dateAdded,
-    required this.lastPaidOn,
-    required this.amount,
-    required this.subscriptionId,
-    required this.assignedCardId,
-    required this.automaticallyDeductEnabled,
-    required this.description,
-    required this.title,
-  });
+  String transactionId;
+  PinextSubscriptionModel(
+      {required this.dateAdded,
+      required this.lastPaidOn,
+      required this.amount,
+      required this.subscriptionId,
+      required this.assignedCardId,
+      required this.automaticallyDeductEnabled,
+      required this.description,
+      required this.title,
+      required this.transactionId});
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -30,6 +31,7 @@ class PinextSubscriptionModel {
       'automaticallyDeductEnabled': automaticallyDeductEnabled,
       'description': description,
       'title': title,
+      'transactionId': transactionId,
     };
   }
 
@@ -43,6 +45,7 @@ class PinextSubscriptionModel {
       automaticallyDeductEnabled: map['automaticallyDeductEnabled'],
       description: map['description'] as String,
       title: map['title'] as String,
+      transactionId: map['transactionId'] ?? "",
     );
   }
 
@@ -53,6 +56,6 @@ class PinextSubscriptionModel {
 
   @override
   String toString() {
-    return 'PinextSubscriptionModel(dateAdded: $dateAdded, lastPaidOn: $lastPaidOn, amount: $amount, subscriptionId: $subscriptionId, assignedCardId: $assignedCardId, automaticallyDeductEnabled: $automaticallyDeductEnabled, description: $description, title: $title)';
+    return 'PinextSubscriptionModel(dateAdded: $dateAdded, lastPaidOn: $lastPaidOn, transactionId: $transactionId,  amount: $amount, subscriptionId: $subscriptionId, assignedCardId: $assignedCardId, automaticallyDeductEnabled: $automaticallyDeductEnabled, description: $description, title: $title)';
   }
 }
