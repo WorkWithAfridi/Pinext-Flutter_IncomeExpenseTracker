@@ -1,6 +1,7 @@
 import 'package:pinext/app/API/firebase_directories.dart';
 import 'package:pinext/app/models/pinext_subscription_model.dart';
 import 'package:pinext/app/services/firebase_services.dart';
+import 'package:pinext/app/services/handlers/user_handler.dart';
 
 class SubscriptionHandler {
   SubscriptionHandler._internal();
@@ -37,5 +38,20 @@ class SubscriptionHandler {
         .doc(subscriptionModel.subscriptionId)
         .delete();
     return;
+  }
+
+  Future updateSubscription(PinextSubscriptionModel subscriptionModel) async {
+    try {
+      await FirebaseServices()
+          .firebaseFirestore
+          .collection(USERS_DIRECTORY)
+          .doc(UserHandler().currentUser.userId)
+          .collection("pinext_subscriptions")
+          .doc(subscriptionModel.subscriptionId)
+          .update(subscriptionModel.toMap());
+      return "success";
+    } catch (err) {
+      return "error";
+    }
   }
 }

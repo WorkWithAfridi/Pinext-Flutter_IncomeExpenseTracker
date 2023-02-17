@@ -30,4 +30,13 @@ class BudgetCubit extends Cubit<BudgetState> {
       ),
     );
   }
+
+  resetSubscriptionDetailCount() {
+    emit(
+      BudgetDefault(
+        paidAmount: 0.0,
+        dueAmount: 0.0,
+      ),
+    );
+  }
 }

@@ -112,10 +112,6 @@ class _GetSubscriptionWidget extends StatelessWidget {
               .collection('pinext_users')
               .doc(FirebaseServices().getUserId())
               .collection('pinext_subscriptions')
-              .orderBy(
-                "lastPaidOn",
-                descending: false,
-              )
               .snapshots(),
           builder: ((context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -131,24 +127,19 @@ class _GetSubscriptionWidget extends StatelessWidget {
                 ),
               );
             }
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                  child: ListView.builder(
-                    itemCount: snapshot.data!.docs.length > 10 ? 10 : snapshot.data!.docs.length,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: ((context, index) {
-                      PinextSubscriptionModel subscriptionModel = PinextSubscriptionModel.fromMap(
-                        snapshot.data!.docs[index].data(),
-                      );
-                      return SubscriptionCard(subscriptionModel: subscriptionModel);
-                    }),
-                  ),
-                ),
-              ],
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 5.0),
+              child: ListView.builder(
+                itemCount: snapshot.data!.docs.length > 10 ? 10 : snapshot.data!.docs.length,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: ((context, index) {
+                  PinextSubscriptionModel subscriptionModel = PinextSubscriptionModel.fromMap(
+                    snapshot.data!.docs[index].data(),
+                  );
+                  return SubscriptionCard(subscriptionModel: subscriptionModel);
+                }),
+              ),
             );
           }),
         ),
@@ -164,24 +155,20 @@ class SubscriptionCard extends StatelessWidget {
   }) : super(key: key);
 
   PinextSubscriptionModel subscriptionModel;
+  late int date;
 
   @override
   Widget build(BuildContext context) {
-    log(subscriptionModel.lastPaidOn.substring(5, 7));
-    log(currentMonth);
     if (subscriptionModel.lastPaidOn.substring(5, 7) == currentMonth) {
       context.read<BudgetCubit>().updatePaidAmount(double.parse(subscriptionModel.amount));
     } else {
       context.read<BudgetCubit>().updateDueAmount(double.parse(subscriptionModel.amount));
-      // context.read<BudgetCubit>().state.dueAmount =
-      //     context.read<BudgetCubit>().state.dueAmount + double.parse(subscriptionModel.amount);
     }
-    log("paid amount : ${context.read<BudgetCubit>().state.paidAmount}");
-    log("paid amount : ${context.read<BudgetCubit>().state.dueAmount}");
+    log(subscriptionModel.toString());
     return Padding(
         padding: const EdgeInsets.only(bottom: 10.0),
         child: Container(
-          height: 100,
+          height: kToolbarHeight,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(
               defaultBorder,
@@ -191,194 +178,65 @@ class SubscriptionCard extends StatelessWidget {
               width: .5,
             ),
           ),
-          width: getWidth(context),
+          padding: const EdgeInsets.only(left: defaultPadding, right: 4),
           child: Builder(
             builder: (context) {
               final demoBlocState = context.watch<DemoBloc>().state;
               return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(15),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                demoBlocState is DemoEnabledState ? "Subscription name" : subscriptionModel.title,
-                                style: boldTextStyle,
-                                maxLines: 1,
-                              ),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Amount : ",
-                                    style: regularTextStyle.copyWith(
-                                      color: customBlackColor.withOpacity(.7),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      "${subscriptionModel.amount} Tk",
-                                      maxLines: 1,
-                                      style: boldTextStyle,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          subscriptionModel.description == ""
-                              ? const SizedBox.shrink()
-                              : RichText(
-                                  maxLines: 1,
-                                  text: TextSpan(
-                                    children: [
-                                      TextSpan(
-                                        text: "Details : ",
-                                        style: regularTextStyle.copyWith(
-                                          color: customBlackColor.withOpacity(.7),
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text: subscriptionModel.description,
-                                        style: boldTextStyle,
-                                      )
-                                    ],
-                                  ),
-                                ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      Container(
-                        width: .5,
-                        height: getHeight(context),
-                        color: customBlackColor.withOpacity(.2),
-                      ),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      RotatedBox(
-                        quarterTurns: 3,
-                        child: Row(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          demoBlocState is DemoEnabledState ? "Subscription name" : subscriptionModel.title,
+                          style: boldTextStyle,
+                          maxLines: 1,
+                        ),
+                        Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "Status : ",
-                              style: TextStyle(
-                                fontWeight: FontWeight.normal,
-                                color: customBlackColor.withOpacity(.4),
+                              "Amount : ",
+                              style: regularTextStyle.copyWith(
+                                color: customBlackColor.withOpacity(.7),
                               ),
                             ),
-                            Text(
-                              subscriptionModel.lastPaidOn.substring(5, 7) == currentMonth ? "PAID" : "DUE",
-                              style: regularTextStyle.copyWith(
-                                  color: subscriptionModel.lastPaidOn.substring(5, 7) == currentMonth
-                                      ? customBlackColor
-                                      : Colors.red[400]),
+                            Expanded(
+                              child: Text(
+                                "${subscriptionModel.amount} Tk",
+                                maxLines: 1,
+                                style: boldTextStyle,
+                              ),
                             ),
                           ],
                         ),
+                      ],
+                    ),
+                  ),
+                  Checkbox(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                        4,
                       ),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      Row(
-                        children: [
-                          Container(
-                            width: .5,
-                            height: getHeight(context),
-                            color: customBlackColor.withOpacity(.2),
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              IconButton(
-                                onPressed: () {
-                                  // onEditButtonClick();
-                                },
-                                icon: const Icon(
-                                  Icons.edit,
-                                  color: customBlackColor,
-                                ),
-                              ),
-                              Container(
-                                width: 30,
-                                height: .5,
-                                color: customBlackColor.withOpacity(.2),
-                              ),
-                              IconButton(
-                                onPressed: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return AlertDialog(
-                                          title: Text(
-                                            'Delete subscription?',
-                                            style: boldTextStyle.copyWith(
-                                              fontSize: 20,
-                                            ),
-                                          ),
-                                          content: SingleChildScrollView(
-                                            child: ListBody(
-                                              children: [
-                                                Text(
-                                                  "You're about to delete this subscription from your pinext account! Are you sure you want to do that??",
-                                                  style: regularTextStyle,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(defaultBorder),
-                                          ),
-                                          actions: <Widget>[
-                                            TextButton(
-                                              child: Text(
-                                                'Cancel',
-                                                style: boldTextStyle.copyWith(
-                                                  color: customBlackColor.withOpacity(
-                                                    .8,
-                                                  ),
-                                                ),
-                                              ),
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                              },
-                                            ),
-                                            TextButton(
-                                              child: const Text('Approve'),
-                                              onPressed: () {
-                                                SubscriptionHandler()
-                                                    .removeSubscription(subscriptionModel: subscriptionModel);
-                                                Navigator.of(context).pop();
-                                              },
-                                            ),
-                                          ],
-                                          actionsPadding: dialogButtonPadding,
-                                        );
-                                      });
-                                },
-                                icon: const Icon(
-                                  Icons.delete,
-                                  color: customBlackColor,
-                                ),
-                              )
-                            ],
-                          )
-                        ],
-                      )
-                    ],
+                    ),
+                    activeColor: customBlueColor,
+                    value: subscriptionModel.lastPaidOn.substring(5, 7) == currentMonth,
+                    onChanged: (value) async {
+                      PinextSubscriptionModel updatedSubscriptionModel = subscriptionModel;
+                      if (value == true) {
+                        updatedSubscriptionModel.lastPaidOn = DateTime.now().toString();
+                      } else {
+                        var date = DateTime.now();
+                        var lastMonthDate = DateTime(date.year, date.month - 1, date.day);
+                        updatedSubscriptionModel.lastPaidOn = lastMonthDate.toString();
+                      }
+                      context.read<BudgetCubit>().resetSubscriptionDetailCount();
+                      await SubscriptionHandler().updateSubscription(updatedSubscriptionModel);
+                      log(updatedSubscriptionModel.lastPaidOn);
+                    },
                   )
                 ],
               );

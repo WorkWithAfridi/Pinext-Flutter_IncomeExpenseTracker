@@ -480,15 +480,11 @@ class AddSubscriptionView extends StatelessWidget {
                               String description = descriptionController.text;
                               String amount = amountController.text;
                               bool isAutomaticallyPayEnabled = state.automaticallyPayActivated;
-                              String lastPaidOn = state.alreadyPaid == "YES"
-                                  ? DateTime.now().toString()
-                                  : DateTime.now().toString().replaceRange(
-                                        5,
-                                        7,
-                                        int.parse(DateTime.now().toString().substring(5, 7)) == 1
-                                            ? "12"
-                                            : (int.parse(DateTime.now().toString().substring(5, 7)) - 1).toString(),
-                                      );
+
+                              var date = DateTime.now();
+                              var lastMonthDate = DateTime(date.year, date.month - 1, date.day);
+                              String lastPaidOn =
+                                  state.alreadyPaid == "YES" ? DateTime.now().toString() : lastMonthDate.toString();
                               context.read<AddSubscriptionCubit>().addSubscription(
                                     PinextSubscriptionModel(
                                       dateAdded: DateTime.now().toString(),
