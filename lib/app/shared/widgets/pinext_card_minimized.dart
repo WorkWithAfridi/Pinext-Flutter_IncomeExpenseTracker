@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mccounting_text/mccounting_text.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
+import 'package:pinext/app/shared/widgets/animated_counter_text_widget.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import '../../app_data/app_constants/constants.dart';
@@ -56,7 +56,9 @@ class PinextCardMinimized extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          demoBlocState is DemoEnabledState ? "Bank" : pinextCardModel.title,
+                          demoBlocState is DemoEnabledState
+                              ? "Bank"
+                              : pinextCardModel.title,
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
@@ -83,11 +85,12 @@ class PinextCardMinimized extends StatelessWidget {
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                McCountingText(
+                                AnimatedCounterTextWidget(
                                   begin: 0,
                                   end: demoBlocState is DemoEnabledState
                                       ? 55000.0
-                                      : double.parse(pinextCardModel.balance.toString()),
+                                      : double.parse(
+                                          pinextCardModel.balance.toString()),
                                   maxLines: 1,
                                   precision: 2,
                                   style: boldTextStyle.copyWith(
@@ -95,7 +98,6 @@ class PinextCardMinimized extends StatelessWidget {
                                     fontSize: 20,
                                     color: customBlackColor,
                                   ),
-                                  duration: const Duration(seconds: 3),
                                   curve: Curves.fastOutSlowIn,
                                 ),
                                 const Text('/Tk'),
@@ -180,7 +182,9 @@ class PinextCardMinimized extends StatelessWidget {
                             ),
                             IconButton(
                               onPressed: () {
-                                demoBlocState is DemoEnabledState ? () {} : onDeleteButtonClick();
+                                demoBlocState is DemoEnabledState
+                                    ? () {}
+                                    : onDeleteButtonClick();
                               },
                               icon: const Icon(
                                 Icons.delete,

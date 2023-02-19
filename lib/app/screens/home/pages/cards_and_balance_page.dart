@@ -3,12 +3,12 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mccounting_text/mccounting_text.dart';
 import 'package:pinext/app/API/firebase_directories.dart';
 import 'package:pinext/app/app_data/custom_transition_page_route/custom_transition_page_route.dart';
 import 'package:pinext/app/bloc/cards_and_balances_cubit/cards_and_balances_cubit.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/screens/edit_net_balance_screen.dart';
+import 'package:pinext/app/shared/widgets/animated_counter_text_widget.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 
 import '../../../app_data/app_constants/constants.dart';
@@ -100,7 +100,7 @@ class CardsAndBalanceView extends StatelessWidget {
                                 child: FittedBox(
                                   child: Row(
                                     children: [
-                                      McCountingText(
+                                      AnimatedCounterTextWidget(
                                         begin: 0,
                                         end: demoBlocState is DemoEnabledState
                                             ? 750000.0
@@ -111,7 +111,6 @@ class CardsAndBalanceView extends StatelessWidget {
                                           color: whiteColor,
                                           fontSize: 50,
                                         ),
-                                        duration: const Duration(seconds: 3),
                                         curve: Curves.fastOutSlowIn,
                                       ),
                                     ],

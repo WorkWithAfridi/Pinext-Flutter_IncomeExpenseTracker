@@ -464,14 +464,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.0"
-  mccounting_text:
-    dependency: "direct main"
-    description:
-      name: mccounting_text
-      sha256: "25e00b01e677ec1568df8bf22aa7618077ed7d22f3ddfc1022f90c9974a137b3"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.0"
   meta:
     dependency: transitive
     description:
