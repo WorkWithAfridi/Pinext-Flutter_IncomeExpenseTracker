@@ -226,45 +226,57 @@ class SubscriptionCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Checkbox(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                        4,
-                      ),
-                    ),
-                    activeColor: customBlueColor,
-                    value: subscriptionModel.lastPaidOn.substring(5, 7) == currentMonth,
-                    onChanged: (value) async {
-                      PinextSubscriptionModel updatedSubscriptionModel = subscriptionModel;
-                      if (value == true) {
-                        transation.TransactionHandler()
-                            .addTransaction(
-                          amount: updatedSubscriptionModel.amount,
-                          description: updatedSubscriptionModel.title,
-                          transactionType: "Expense",
-                          cardId: updatedSubscriptionModel.assignedCardId,
-                          markedAs: true,
+                  subscriptionModel.lastPaidOn.substring(5, 7) == currentMonth
+                      ? Padding(
+                          padding: const EdgeInsets.only(
+                            right: defaultPadding - 4,
+                          ),
+                          child: Text(
+                            "PAID",
+                            style: boldTextStyle.copyWith(
+                              color: Colors.green,
+                            ),
+                          ),
                         )
-                            .then((value) {
-                          context.read<UserBloc>().add(RefreshUserStateEvent());
-                        });
-                        updatedSubscriptionModel.lastPaidOn = DateTime.now().toString();
-                      } else {
-                        GetCustomSnackbar(
-                          title: "Snap",
-                          message: "This subscription has already been processed and added into PINEXT archive!",
-                          snackbarType: SnackbarType.info,
-                          context: context,
-                        );
-                        // var date = DateTime.now();
-                        // var lastMonthDate = DateTime(date.year, date.month - 1, date.day);
-                        // updatedSubscriptionModel.lastPaidOn = lastMonthDate.toString();
-                      }
-                      // context.read<BudgetCubit>().resetSubscriptionDetailCount();
-                      await SubscriptionHandler().updateSubscription(updatedSubscriptionModel);
-                      log(updatedSubscriptionModel.lastPaidOn);
-                    },
-                  )
+                      : Checkbox(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                              4,
+                            ),
+                          ),
+                          activeColor: customBlueColor,
+                          value: subscriptionModel.lastPaidOn.substring(5, 7) == currentMonth,
+                          onChanged: (value) async {
+                            PinextSubscriptionModel updatedSubscriptionModel = subscriptionModel;
+                            if (value == true) {
+                              transation.TransactionHandler()
+                                  .addTransaction(
+                                amount: updatedSubscriptionModel.amount,
+                                description: updatedSubscriptionModel.title,
+                                transactionType: "Expense",
+                                cardId: updatedSubscriptionModel.assignedCardId,
+                                markedAs: true,
+                              )
+                                  .then((value) {
+                                context.read<UserBloc>().add(RefreshUserStateEvent());
+                              });
+                              updatedSubscriptionModel.lastPaidOn = DateTime.now().toString();
+                            } else {
+                              GetCustomSnackbar(
+                                title: "Snap",
+                                message: "This subscription has already been processed and added into PINEXT archive!",
+                                snackbarType: SnackbarType.info,
+                                context: context,
+                              );
+                              // var date = DateTime.now();
+                              // var lastMonthDate = DateTime(date.year, date.month - 1, date.day);
+                              // updatedSubscriptionModel.lastPaidOn = lastMonthDate.toString();
+                            }
+                            // context.read<BudgetCubit>().resetSubscriptionDetailCount();
+                            await SubscriptionHandler().updateSubscription(updatedSubscriptionModel);
+                            log(updatedSubscriptionModel.lastPaidOn);
+                          },
+                        )
                 ],
               );
             },
