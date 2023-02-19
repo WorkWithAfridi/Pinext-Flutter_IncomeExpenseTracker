@@ -253,8 +253,11 @@ class AddSubscriptionView extends StatelessWidget {
                               .snapshots(),
                           builder: ((context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
                             if (snapshot.connectionState == ConnectionState.waiting) {
-                              return const Center(
-                                child: CircularProgressIndicator(),
+                              return SizedBox(
+                                width: getWidth(context) - defaultPadding,
+                                child: const Center(
+                                  child: CircularProgressIndicator(),
+                                ),
                               );
                             }
                             if (snapshot.data!.docs.isEmpty) {
