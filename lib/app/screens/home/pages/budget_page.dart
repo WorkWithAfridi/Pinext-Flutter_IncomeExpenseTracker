@@ -97,7 +97,7 @@ class _GetSubscriptionWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Subscriptions",
+              "Monthly subscriptions",
               style: boldTextStyle.copyWith(
                 fontSize: 20,
               ),
@@ -117,6 +117,10 @@ class _GetSubscriptionWidget extends StatelessWidget {
               .collection('pinext_users')
               .doc(FirebaseServices().getUserId())
               .collection('pinext_subscriptions')
+              .orderBy(
+                "dateAdded",
+                descending: true,
+              )
               .snapshots(),
           builder: ((context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
