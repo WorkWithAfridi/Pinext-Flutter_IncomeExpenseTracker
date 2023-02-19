@@ -68,9 +68,11 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
     // TODO: implement initState
     super.initState();
     if (widget.isEdit) {
-      titleController.text = widget.subscriptionModel!.title;
-      descriptionController.text = widget.subscriptionModel!.description;
-      amountController.text = widget.subscriptionModel!.amount;
+      var demoState = context.read<DemoBloc>().state;
+      titleController.text = demoState is DemoEnabledState ? "Subscription name" : widget.subscriptionModel!.title;
+      descriptionController.text =
+          demoState is DemoEnabledState ? "a natural looking block of text." : widget.subscriptionModel!.description;
+      amountController.text = demoState is DemoEnabledState ? "1000" : widget.subscriptionModel!.amount;
     }
   }
 
@@ -369,12 +371,15 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
                                     titleColor: whiteColor,
                                     buttonColor: customBlueColor,
                                     callBackFunction: () {
-                                      PinextSubscriptionModel updatedSubscriptionModel = widget.subscriptionModel!;
-                                      updatedSubscriptionModel.lastPaidOn = DateTime.now().toString();
-                                      context.read<AddSubscriptionCubit>().updateSubscription(
-                                            updatedSubscriptionModel,
-                                            true,
-                                          );
+                                      var demoState = context.read<DemoBloc>().state;
+                                      if (demoState is DemoDisabledState) {
+                                        PinextSubscriptionModel updatedSubscriptionModel = widget.subscriptionModel!;
+                                        updatedSubscriptionModel.lastPaidOn = DateTime.now().toString();
+                                        context.read<AddSubscriptionCubit>().updateSubscription(
+                                              updatedSubscriptionModel,
+                                              true,
+                                            );
+                                      }
                                     },
                                   ),
                                   const SizedBox(
@@ -385,12 +390,15 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
                                     titleColor: whiteColor,
                                     buttonColor: customBlueColor,
                                     callBackFunction: () {
-                                      PinextSubscriptionModel updatedSubscriptionModel = widget.subscriptionModel!;
-                                      updatedSubscriptionModel.lastPaidOn = DateTime.now().toString();
-                                      context.read<AddSubscriptionCubit>().updateSubscription(
-                                            updatedSubscriptionModel,
-                                            false,
-                                          );
+                                      var demoState = context.read<DemoBloc>().state;
+                                      if (demoState is DemoDisabledState) {
+                                        PinextSubscriptionModel updatedSubscriptionModel = widget.subscriptionModel!;
+                                        updatedSubscriptionModel.lastPaidOn = DateTime.now().toString();
+                                        context.read<AddSubscriptionCubit>().updateSubscription(
+                                              updatedSubscriptionModel,
+                                              false,
+                                            );
+                                      }
                                     },
                                   ),
                                 ],
@@ -705,8 +713,8 @@ class _SaveButton extends StatelessWidget {
             callBackFunction: () {
               if (demoState is DemoDisabledState) {
                 if (formKey.currentState!.validate() && state.alreadyPaid != "" && state.selectedCardNo != "") {
-                  String title = titleController.text;
-                  String description = descriptionController.text;
+                  String title = titleController.text.toLowerCase();
+                  String description = descriptionController.text.toLowerCase();
                   String amount = amountController.text;
                   bool isAutomaticallyPayEnabled = state.automaticallyPayActivated;
 
