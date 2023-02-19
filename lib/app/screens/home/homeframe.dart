@@ -148,7 +148,7 @@ class HomeframeView extends StatelessWidget {
                           Navigator.push(
                             context,
                             CustomTransitionPageRoute(
-                              childWidget: const AddSubscriptionPage(),
+                              childWidget: AddSubscriptionPage(),
                             ),
                           );
                         }

@@ -3,10 +3,12 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pinext/app/app_data/custom_transition_page_route/custom_transition_page_route.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/budget_cubit/budget_cubit.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/models/pinext_subscription_model.dart';
+import 'package:pinext/app/screens/home/pages/budget_pages/add_subscription_page.dart';
 import 'package:pinext/app/services/handlers/subscription_handler.dart';
 import 'package:pinext/app/services/handlers/transaction_handler.dart' as transation;
 import 'package:pinext/app/shared/widgets/budget_estimations.dart';
@@ -177,109 +179,123 @@ class SubscriptionCard extends StatelessWidget {
     log(subscriptionModel.toString());
     return Padding(
         padding: const EdgeInsets.only(bottom: 10.0),
-        child: Container(
-          height: kToolbarHeight,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(
-              defaultBorder,
+        child: GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              CustomTransitionPageRoute(
+                childWidget: AddSubscriptionPage(
+                  isEdit: true,
+                  subscriptionModel: subscriptionModel,
+                ),
+              ),
+            );
+          },
+          child: Container(
+            height: kToolbarHeight,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(
+                defaultBorder,
+              ),
+              border: Border.all(
+                color: customBlackColor.withOpacity(.2),
+                width: .5,
+              ),
             ),
-            border: Border.all(
-              color: customBlackColor.withOpacity(.2),
-              width: .5,
-            ),
-          ),
-          padding: const EdgeInsets.only(left: defaultPadding, right: 4),
-          child: Builder(
-            builder: (context) {
-              final demoBlocState = context.watch<DemoBloc>().state;
-              return Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          demoBlocState is DemoEnabledState ? "Subscription name" : subscriptionModel.title,
-                          style: boldTextStyle,
-                          maxLines: 1,
-                        ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Amount : ",
-                              style: regularTextStyle.copyWith(
-                                color: customBlackColor.withOpacity(.7),
+            padding: const EdgeInsets.only(left: defaultPadding, right: 4),
+            child: Builder(
+              builder: (context) {
+                final demoBlocState = context.watch<DemoBloc>().state;
+                return Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            demoBlocState is DemoEnabledState ? "Subscription name" : subscriptionModel.title,
+                            style: boldTextStyle,
+                            maxLines: 1,
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Amount : ",
+                                style: regularTextStyle.copyWith(
+                                  color: customBlackColor.withOpacity(.7),
+                                ),
                               ),
-                            ),
-                            Expanded(
-                              child: Text(
-                                "${subscriptionModel.amount} Tk",
-                                maxLines: 1,
-                                style: boldTextStyle,
+                              Expanded(
+                                child: Text(
+                                  "${subscriptionModel.amount} Tk",
+                                  maxLines: 1,
+                                  style: boldTextStyle,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  subscriptionModel.lastPaidOn.substring(5, 7) == currentMonth
-                      ? Padding(
-                          padding: const EdgeInsets.only(
-                            right: defaultPadding - 4,
-                          ),
-                          child: Text(
-                            "PAID",
-                            style: boldTextStyle.copyWith(
-                              color: Colors.green,
+                    subscriptionModel.lastPaidOn.substring(5, 7) == currentMonth
+                        ? Padding(
+                            padding: const EdgeInsets.only(
+                              right: defaultPadding - 4,
                             ),
-                          ),
-                        )
-                      : Checkbox(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(
-                              4,
+                            child: Text(
+                              "PAID",
+                              style: boldTextStyle.copyWith(
+                                color: Colors.green,
+                              ),
                             ),
-                          ),
-                          activeColor: customBlueColor,
-                          value: subscriptionModel.lastPaidOn.substring(5, 7) == currentMonth,
-                          onChanged: (value) async {
-                            PinextSubscriptionModel updatedSubscriptionModel = subscriptionModel;
-                            if (value == true) {
-                              transation.TransactionHandler()
-                                  .addTransaction(
-                                amount: updatedSubscriptionModel.amount,
-                                description: updatedSubscriptionModel.title,
-                                transactionType: "Expense",
-                                cardId: updatedSubscriptionModel.assignedCardId,
-                                markedAs: true,
-                              )
-                                  .then((value) {
-                                context.read<UserBloc>().add(RefreshUserStateEvent());
-                              });
-                              updatedSubscriptionModel.lastPaidOn = DateTime.now().toString();
-                            } else {
-                              GetCustomSnackbar(
-                                title: "Snap",
-                                message: "This subscription has already been processed and added into PINEXT archive!",
-                                snackbarType: SnackbarType.info,
-                                context: context,
-                              );
-                              // var date = DateTime.now();
-                              // var lastMonthDate = DateTime(date.year, date.month - 1, date.day);
-                              // updatedSubscriptionModel.lastPaidOn = lastMonthDate.toString();
-                            }
-                            // context.read<BudgetCubit>().resetSubscriptionDetailCount();
-                            await SubscriptionHandler().updateSubscription(updatedSubscriptionModel);
-                            log(updatedSubscriptionModel.lastPaidOn);
-                          },
-                        )
-                ],
-              );
-            },
+                          )
+                        : Checkbox(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                4,
+                              ),
+                            ),
+                            activeColor: customBlueColor,
+                            value: subscriptionModel.lastPaidOn.substring(5, 7) == currentMonth,
+                            onChanged: (value) async {
+                              PinextSubscriptionModel updatedSubscriptionModel = subscriptionModel;
+                              if (value == true) {
+                                transation.TransactionHandler()
+                                    .addTransaction(
+                                  amount: updatedSubscriptionModel.amount,
+                                  description: updatedSubscriptionModel.title,
+                                  transactionType: "Expense",
+                                  cardId: updatedSubscriptionModel.assignedCardId,
+                                  markedAs: true,
+                                )
+                                    .then((value) {
+                                  context.read<UserBloc>().add(RefreshUserStateEvent());
+                                });
+                                updatedSubscriptionModel.lastPaidOn = DateTime.now().toString();
+                              } else {
+                                GetCustomSnackbar(
+                                  title: "Snap",
+                                  message:
+                                      "This subscription has already been processed and added into PINEXT archive!",
+                                  snackbarType: SnackbarType.info,
+                                  context: context,
+                                );
+                                // var date = DateTime.now();
+                                // var lastMonthDate = DateTime(date.year, date.month - 1, date.day);
+                                // updatedSubscriptionModel.lastPaidOn = lastMonthDate.toString();
+                              }
+                              // context.read<BudgetCubit>().resetSubscriptionDetailCount();
+                              await SubscriptionHandler().updateSubscription(updatedSubscriptionModel);
+                              log(updatedSubscriptionModel.lastPaidOn);
+                            },
+                          )
+                  ],
+                );
+              },
+            ),
           ),
         ));
   }

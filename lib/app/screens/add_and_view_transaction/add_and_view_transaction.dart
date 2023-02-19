@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/app_data/extensions/string_extensions.dart';
 import 'package:pinext/app/app_data/routing/routes.dart';
@@ -267,6 +268,7 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
               ),
               _GetCardListWidget(
                 isViewOnly: widget.isViewOnly,
+                viewTransactionModel: widget.pinextTransactionModel,
               ),
               const SizedBox(
                 height: 12,
@@ -637,9 +639,11 @@ class _GetCardListWidget extends StatelessWidget {
   _GetCardListWidget({
     Key? key,
     required this.isViewOnly,
+    this.viewTransactionModel,
   }) : super(key: key);
 
   bool isViewOnly;
+  PinextTransactionModel? viewTransactionModel;
 
   @override
   Widget build(BuildContext context) {
@@ -654,20 +658,46 @@ class _GetCardListWidget extends StatelessWidget {
               width: defaultPadding,
             ),
             StreamBuilder(
-              stream: FirebaseServices()
-                  .firebaseFirestore
-                  .collection("pinext_users")
-                  .doc(FirebaseServices().getUserId())
-                  .collection("pinext_cards")
-                  .orderBy(
-                    'lastTransactionData',
-                    descending: true,
-                  )
-                  .snapshots(),
+              stream: isViewOnly
+                  ? FirebaseServices()
+                      .firebaseFirestore
+                      .collection("pinext_users")
+                      .doc(FirebaseServices().getUserId())
+                      .collection("pinext_cards")
+                      .where('cardId', isEqualTo: viewTransactionModel!.cardId)
+                      .snapshots()
+                  : FirebaseServices()
+                      .firebaseFirestore
+                      .collection("pinext_users")
+                      .doc(FirebaseServices().getUserId())
+                      .collection("pinext_cards")
+                      .orderBy(
+                        'lastTransactionData',
+                        descending: true,
+                      )
+                      .snapshots(),
               builder: ((context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
+                  return SizedBox(
+                    width: getWidth(context) - defaultPadding,
+                    child: const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
+                }
+                if (snapshot.data!.docs.isEmpty) {
+                  return SizedBox(
+                    width: getWidth(context) - defaultPadding,
+                    child: Center(
+                      child: Text(
+                        "No card found!",
+                        style: regularTextStyle.copyWith(
+                          color: Colors.black.withOpacity(
+                            .5,
+                          ),
+                        ),
+                      ),
+                    ),
                   );
                 }
                 return ListView.builder(
@@ -705,11 +735,7 @@ class _GetCardListWidget extends StatelessWidget {
                             // cardModel: pinextCardModel,
                           ),
                         );
-                        return isViewOnly
-                            ? state.selectedCardNo == pinextCardModel.cardId
-                                ? pinextCardWidget
-                                : const SizedBox.shrink()
-                            : pinextCardWidget;
+                        return pinextCardWidget;
                       },
                     );
                   }),

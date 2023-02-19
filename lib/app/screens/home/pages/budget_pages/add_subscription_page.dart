@@ -22,30 +22,69 @@ import 'package:pinext/app/shared/widgets/pinext_card.dart';
 import 'package:uuid/uuid.dart';
 
 class AddSubscriptionPage extends StatelessWidget {
-  const AddSubscriptionPage({super.key});
+  AddSubscriptionPage({
+    super.key,
+    this.isEdit = false,
+    this.subscriptionModel,
+  });
+  bool isEdit;
+  PinextSubscriptionModel? subscriptionModel;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => AddSubscriptionCubit(),
-      child: AddSubscriptionView(),
+      child: AddSubscriptionView(
+        isEdit: isEdit,
+        subscriptionModel: subscriptionModel,
+      ),
     );
   }
 }
 
-class AddSubscriptionView extends StatelessWidget {
+class AddSubscriptionView extends StatefulWidget {
   AddSubscriptionView({
     super.key,
+    this.isEdit = false,
+    this.subscriptionModel,
   });
+  bool isEdit;
+  PinextSubscriptionModel? subscriptionModel;
 
+  @override
+  State<AddSubscriptionView> createState() => _AddSubscriptionViewState();
+}
+
+class _AddSubscriptionViewState extends State<AddSubscriptionView> {
   TextEditingController titleController = TextEditingController();
+
   TextEditingController descriptionController = TextEditingController();
+
   TextEditingController amountController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.isEdit) {
+      titleController.text = widget.subscriptionModel!.title;
+      descriptionController.text = widget.subscriptionModel!.description;
+      amountController.text = widget.subscriptionModel!.amount;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    if (widget.isEdit) {
+      final addSubscriptionCubit = context.read<AddSubscriptionCubit>().state;
+      addSubscriptionCubit.automaticallyPayActivated = widget.subscriptionModel!.automaticallyDeductEnabled;
+
+      context
+          .read<AddSubscriptionCubit>()
+          .changeAlreadyPaidStatus(widget.subscriptionModel!.lastPaidOn.substring(5, 7) == currentMonth ? "YES" : "NO");
+    }
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -197,7 +236,9 @@ class AddSubscriptionView extends StatelessWidget {
                             value: state.automaticallyPayActivated,
                             activeColor: customBlueColor,
                             onChanged: (value) {
-                              context.read<AddSubscriptionCubit>().toogleAutomaticallyPaySwitch(value);
+                              if (!widget.isEdit) {
+                                context.read<AddSubscriptionCubit>().toogleAutomaticallyPaySwitch(value);
+                              }
                             },
                           );
                         },
@@ -217,7 +258,7 @@ class AddSubscriptionView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        "Select card *",
+                        !widget.isEdit ? "Select card *" : "Selected card",
                         style: boldTextStyle.copyWith(
                           color: customBlackColor.withOpacity(
                             .6,
@@ -241,16 +282,27 @@ class AddSubscriptionView extends StatelessWidget {
                           width: defaultPadding,
                         ),
                         StreamBuilder(
-                          stream: FirebaseServices()
-                              .firebaseFirestore
-                              .collection("pinext_users")
-                              .doc(FirebaseServices().getUserId())
-                              .collection("pinext_cards")
-                              .orderBy(
-                                'lastTransactionData',
-                                descending: true,
-                              )
-                              .snapshots(),
+                          stream: widget.isEdit
+                              ? FirebaseServices()
+                                  .firebaseFirestore
+                                  .collection("pinext_users")
+                                  .doc(FirebaseServices().getUserId())
+                                  .collection("pinext_cards")
+                                  .where(
+                                    'cardId',
+                                    isEqualTo: widget.subscriptionModel!.assignedCardId,
+                                  )
+                                  .snapshots()
+                              : FirebaseServices()
+                                  .firebaseFirestore
+                                  .collection("pinext_users")
+                                  .doc(FirebaseServices().getUserId())
+                                  .collection("pinext_cards")
+                                  .orderBy(
+                                    'lastTransactionData',
+                                    descending: true,
+                                  )
+                                  .snapshots(),
                           builder: ((context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
                             if (snapshot.connectionState == ConnectionState.waiting) {
                               return SizedBox(
@@ -363,7 +415,9 @@ class AddSubscriptionView extends StatelessWidget {
                                 ),
                                 Expanded(
                                   child: Text(
-                                    "Have you already added this transaction into PINEXT Archive for ${months[int.parse(currentMonth) - 1]} $currentYear ?",
+                                    widget.isEdit
+                                        ? "Transaction added into PINEXT archives for ${months[int.parse(currentMonth) - 1]} $currentYear ? "
+                                        : "Have you already added this transaction into PINEXT Archive for ${months[int.parse(currentMonth) - 1]} $currentYear ?",
                                     style: regularTextStyle.copyWith(
                                       color: customBlackColor.withOpacity(
                                         .8,
@@ -455,88 +509,91 @@ class AddSubscriptionView extends StatelessWidget {
                 const SizedBox(
                   height: 12,
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: defaultPadding,
-                  ),
-                  child: BlocConsumer<AddSubscriptionCubit, AddSubscriptionState>(
-                    listener: ((context, state) async {
-                      if (state is AddSubscriptionSuccessState) {
-                        if (state.alreadyPaid == "YES") {
-                          await transaction.TransactionHandler().addTransaction(
-                            amount: amountController.text,
-                            description: titleController.text,
-                            transactionType: "Expense",
-                            cardId: state.selectedCardNo,
-                            markedAs: true,
-                          );
-                        }
-                        context.read<UserBloc>().add(RefreshUserStateEvent());
-                        Navigator.pop(context);
-                        GetCustomSnackbar(
-                          title: "Subscription added!!",
-                          message: "A new subscription has been added!",
-                          snackbarType: SnackbarType.success,
-                          context: context,
-                        );
-                      } else if (state is AddSubscriptionErrorState) {
-                        GetCustomSnackbar(
-                          title: "Snap",
-                          message: "An error occurred while trying to add your subscription.",
-                          snackbarType: SnackbarType.error,
-                          context: context,
-                        );
-                      }
-                    }),
-                    builder: (context, state) {
-                      final demoState = context.watch<DemoBloc>().state;
-                      return GetCustomButton(
-                        title: "Save Subscription",
-                        titleColor: whiteColor,
-                        isLoading: state is AddSubscriptionLoadingState,
-                        buttonColor: customBlueColor,
-                        callBackFunction: () {
-                          if (demoState is DemoDisabledState) {
-                            if (_formKey.currentState!.validate() &&
-                                state.alreadyPaid != "" &&
-                                state.selectedCardNo != "") {
-                              String title = titleController.text;
-                              String description = descriptionController.text;
-                              String amount = amountController.text;
-                              bool isAutomaticallyPayEnabled = state.automaticallyPayActivated;
-
-                              var date = DateTime.now();
-                              var lastMonthDate = DateTime(date.year, date.month - 1, date.day);
-                              String lastPaidOn =
-                                  state.alreadyPaid == "YES" ? DateTime.now().toString() : lastMonthDate.toString();
-
-                              context.read<AddSubscriptionCubit>().addSubscription(
-                                    PinextSubscriptionModel(
-                                      dateAdded: DateTime.now().toString(),
-                                      lastPaidOn: lastPaidOn,
-                                      amount: amount,
-                                      subscriptionId: const Uuid().v4(),
-                                      assignedCardId: state.selectedCardNo,
-                                      automaticallyDeductEnabled: isAutomaticallyPayEnabled,
-                                      description: description,
-                                      title: title,
-                                      transactionId: "",
-                                    ),
-                                  );
-                            } else {
+                widget.isEdit
+                    ? const SizedBox.shrink()
+                    : Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: defaultPadding,
+                        ),
+                        child: BlocConsumer<AddSubscriptionCubit, AddSubscriptionState>(
+                          listener: ((context, state) async {
+                            if (state is AddSubscriptionSuccessState) {
+                              if (state.alreadyPaid == "YES") {
+                                await transaction.TransactionHandler().addTransaction(
+                                  amount: amountController.text,
+                                  description: titleController.text,
+                                  transactionType: "Expense",
+                                  cardId: state.selectedCardNo,
+                                  markedAs: true,
+                                );
+                              }
+                              context.read<UserBloc>().add(RefreshUserStateEvent());
+                              Navigator.pop(context);
                               GetCustomSnackbar(
-                                title: "ERROR",
-                                message: "Please input all the required fields and try again!",
+                                title: "Subscription added!!",
+                                message: "A new subscription has been added!",
+                                snackbarType: SnackbarType.success,
+                                context: context,
+                              );
+                            } else if (state is AddSubscriptionErrorState) {
+                              GetCustomSnackbar(
+                                title: "Snap",
+                                message: "An error occurred while trying to add your subscription.",
                                 snackbarType: SnackbarType.error,
                                 context: context,
                               );
                             }
-                          }
-                        },
-                      );
-                    },
-                  ),
-                ),
+                          }),
+                          builder: (context, state) {
+                            final demoState = context.watch<DemoBloc>().state;
+                            return GetCustomButton(
+                              title: "Save Subscription",
+                              titleColor: whiteColor,
+                              isLoading: state is AddSubscriptionLoadingState,
+                              buttonColor: customBlueColor,
+                              callBackFunction: () {
+                                if (demoState is DemoDisabledState) {
+                                  if (_formKey.currentState!.validate() &&
+                                      state.alreadyPaid != "" &&
+                                      state.selectedCardNo != "") {
+                                    String title = titleController.text;
+                                    String description = descriptionController.text;
+                                    String amount = amountController.text;
+                                    bool isAutomaticallyPayEnabled = state.automaticallyPayActivated;
+
+                                    var date = DateTime.now();
+                                    var lastMonthDate = DateTime(date.year, date.month - 1, date.day);
+                                    String lastPaidOn = state.alreadyPaid == "YES"
+                                        ? DateTime.now().toString()
+                                        : lastMonthDate.toString();
+
+                                    context.read<AddSubscriptionCubit>().addSubscription(
+                                          PinextSubscriptionModel(
+                                            dateAdded: DateTime.now().toString(),
+                                            lastPaidOn: lastPaidOn,
+                                            amount: amount,
+                                            subscriptionId: const Uuid().v4(),
+                                            assignedCardId: state.selectedCardNo,
+                                            automaticallyDeductEnabled: isAutomaticallyPayEnabled,
+                                            description: description,
+                                            title: title,
+                                            transactionId: "",
+                                          ),
+                                        );
+                                  } else {
+                                    GetCustomSnackbar(
+                                      title: "ERROR",
+                                      message: "Please input all the required fields and try again!",
+                                      snackbarType: SnackbarType.error,
+                                      context: context,
+                                    );
+                                  }
+                                }
+                              },
+                            );
+                          },
+                        ),
+                      ),
                 const SizedBox(
                   height: 30,
                 ),
