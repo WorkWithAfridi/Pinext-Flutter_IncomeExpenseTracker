@@ -487,7 +487,9 @@ class AddSubscriptionView extends StatelessWidget {
                         buttonColor: customBlueColor,
                         callBackFunction: () {
                           if (demoState is DemoDisabledState) {
-                            if (_formKey.currentState!.validate() && state.alreadyPaid != "") {
+                            if (_formKey.currentState!.validate() &&
+                                state.alreadyPaid != "" &&
+                                state.selectedCardNo != "") {
                               String title = titleController.text;
                               String description = descriptionController.text;
                               String amount = amountController.text;
@@ -514,7 +516,7 @@ class AddSubscriptionView extends StatelessWidget {
                             } else {
                               GetCustomSnackbar(
                                 title: "ERROR",
-                                message: "Please fill up the form and try again!",
+                                message: "Please input all the required fields and try again!",
                                 snackbarType: SnackbarType.error,
                                 context: context,
                               );

@@ -77,7 +77,7 @@ class AddSubscriptionCubit extends Cubit<AddSubscriptionState> {
       );
     } else {
       emit(
-        AddSubscriptionSuccessState(
+        AddSubscriptionErrorState(
           title: pinextSubscriptionModel.title,
           description: pinextSubscriptionModel.description,
           amount: pinextSubscriptionModel.amount,

@@ -246,7 +246,7 @@ class SubscriptionCard extends StatelessWidget {
                       } else {
                         GetCustomSnackbar(
                           title: "Snap",
-                          message: "This transaction has already been processed!",
+                          message: "This subscription has already been processed and added into PINEXT archive!",
                           snackbarType: SnackbarType.info,
                           context: context,
                         );
@@ -254,7 +254,7 @@ class SubscriptionCard extends StatelessWidget {
                         // var lastMonthDate = DateTime(date.year, date.month - 1, date.day);
                         // updatedSubscriptionModel.lastPaidOn = lastMonthDate.toString();
                       }
-                      context.read<BudgetCubit>().resetSubscriptionDetailCount();
+                      // context.read<BudgetCubit>().resetSubscriptionDetailCount();
                       await SubscriptionHandler().updateSubscription(updatedSubscriptionModel);
                       log(updatedSubscriptionModel.lastPaidOn);
                     },
