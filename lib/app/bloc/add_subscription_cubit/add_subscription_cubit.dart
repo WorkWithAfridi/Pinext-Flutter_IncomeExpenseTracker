@@ -78,13 +78,29 @@ class AddSubscriptionCubit extends Cubit<AddSubscriptionState> {
     }
   }
 
-  updateSubscription(PinextSubscriptionModel subscriptionModel, bool addTransactionToArchive) async {
-    emit(
-      AddSubscriptionLoadingState(
-        automaticallyPayActivated: subscriptionModel.automaticallyDeductEnabled,
-        selectedCardNo: subscriptionModel.assignedCardId,
-        alreadyPaid: "",
-      ),
+  updateSubscription(
+    PinextSubscriptionModel subscriptionModel,
+    bool addTransactionToArchive,
+  ) async {
+    if (addTransactionToArchive) {
+      emit(
+        UpdateSubscriptionMarkAsPaidAndAddTransactionButtonLoadingState(
+          automaticallyPayActivated: subscriptionModel.automaticallyDeductEnabled,
+          selectedCardNo: "",
+          alreadyPaid: "",
+        ),
+      );
+    } else {
+      emit(
+        UpdateSubscriptionMarkAsPaidButtonLoadingState(
+          automaticallyPayActivated: subscriptionModel.automaticallyDeductEnabled,
+          selectedCardNo: "",
+          alreadyPaid: "",
+        ),
+      );
+    }
+    await Future.delayed(
+      const Duration(seconds: 1),
     );
     String response = await SubscriptionHandler().updateSubscription(
       subscriptionModel: subscriptionModel,
@@ -94,7 +110,7 @@ class AddSubscriptionCubit extends Cubit<AddSubscriptionState> {
       emit(
         SubscriptionSuccessfullyUpdatedState(
           automaticallyPayActivated: subscriptionModel.automaticallyDeductEnabled,
-          selectedCardNo: subscriptionModel.assignedCardId,
+          selectedCardNo: "",
           alreadyPaid: "",
         ),
       );
@@ -102,7 +118,7 @@ class AddSubscriptionCubit extends Cubit<AddSubscriptionState> {
       emit(
         SubscriptionFailedToUpdateState(
           automaticallyPayActivated: subscriptionModel.automaticallyDeductEnabled,
-          selectedCardNo: subscriptionModel.assignedCardId,
+          selectedCardNo: "",
           alreadyPaid: "",
         ),
       );

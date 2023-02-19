@@ -110,6 +110,7 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
                 snackbarType: SnackbarType.error,
                 context: context,
               );
+              context.read<AddSubscriptionCubit>().resetState();
             } else if (state is SubscriptionSuccessfullyUpdatedState) {
               context.read<UserBloc>().add(RefreshUserStateEvent());
               Navigator.pop(context);
@@ -366,39 +367,52 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
                                   const SizedBox(
                                     height: 8,
                                   ),
-                                  GetCustomButton(
-                                    title: "Mark as paid and add transaction to archive",
-                                    titleColor: whiteColor,
-                                    buttonColor: customBlueColor,
-                                    callBackFunction: () {
-                                      var demoState = context.read<DemoBloc>().state;
-                                      if (demoState is DemoDisabledState) {
-                                        PinextSubscriptionModel updatedSubscriptionModel = widget.subscriptionModel!;
-                                        updatedSubscriptionModel.lastPaidOn = DateTime.now().toString();
-                                        context.read<AddSubscriptionCubit>().updateSubscription(
-                                              updatedSubscriptionModel,
-                                              true,
-                                            );
-                                      }
+                                  BlocBuilder<AddSubscriptionCubit, AddSubscriptionState>(
+                                    builder: (context, state) {
+                                      return GetCustomButton(
+                                        title: "Mark as paid and add transaction to archive",
+                                        titleColor: whiteColor,
+                                        buttonColor: customBlueColor,
+                                        isLoading:
+                                            state is UpdateSubscriptionMarkAsPaidAndAddTransactionButtonLoadingState,
+                                        callBackFunction: () {
+                                          var demoState = context.read<DemoBloc>().state;
+                                          if (demoState is DemoDisabledState) {
+                                            PinextSubscriptionModel updatedSubscriptionModel =
+                                                widget.subscriptionModel!;
+                                            updatedSubscriptionModel.lastPaidOn = DateTime.now().toString();
+                                            context.read<AddSubscriptionCubit>().updateSubscription(
+                                                  updatedSubscriptionModel,
+                                                  true,
+                                                );
+                                          }
+                                        },
+                                      );
                                     },
                                   ),
                                   const SizedBox(
                                     height: 8,
                                   ),
-                                  GetCustomButton(
-                                    title: "Mark as paid",
-                                    titleColor: whiteColor,
-                                    buttonColor: customBlueColor,
-                                    callBackFunction: () {
-                                      var demoState = context.read<DemoBloc>().state;
-                                      if (demoState is DemoDisabledState) {
-                                        PinextSubscriptionModel updatedSubscriptionModel = widget.subscriptionModel!;
-                                        updatedSubscriptionModel.lastPaidOn = DateTime.now().toString();
-                                        context.read<AddSubscriptionCubit>().updateSubscription(
-                                              updatedSubscriptionModel,
-                                              false,
-                                            );
-                                      }
+                                  BlocBuilder<AddSubscriptionCubit, AddSubscriptionState>(
+                                    builder: (context, state) {
+                                      return GetCustomButton(
+                                        title: "Mark as paid",
+                                        titleColor: whiteColor,
+                                        isLoading: state is UpdateSubscriptionMarkAsPaidButtonLoadingState,
+                                        buttonColor: customBlueColor,
+                                        callBackFunction: () {
+                                          var demoState = context.read<DemoBloc>().state;
+                                          if (demoState is DemoDisabledState) {
+                                            PinextSubscriptionModel updatedSubscriptionModel =
+                                                widget.subscriptionModel!;
+                                            updatedSubscriptionModel.lastPaidOn = DateTime.now().toString();
+                                            context.read<AddSubscriptionCubit>().updateSubscription(
+                                                  updatedSubscriptionModel,
+                                                  false,
+                                                );
+                                          }
+                                        },
+                                      );
                                     },
                                   ),
                                 ],

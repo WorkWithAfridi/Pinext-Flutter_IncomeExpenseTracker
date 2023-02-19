@@ -58,8 +58,25 @@ class SubscriptionSuccessfullyUpdatedState extends AddSubscriptionState {
     required super.alreadyPaid,
   });
 }
+
 class SubscriptionFailedToUpdateState extends AddSubscriptionState {
   SubscriptionFailedToUpdateState({
+    required super.automaticallyPayActivated,
+    required super.selectedCardNo,
+    required super.alreadyPaid,
+  });
+}
+
+class UpdateSubscriptionMarkAsPaidAndAddTransactionButtonLoadingState extends AddSubscriptionState {
+  UpdateSubscriptionMarkAsPaidAndAddTransactionButtonLoadingState({
+    required super.automaticallyPayActivated,
+    required super.selectedCardNo,
+    required super.alreadyPaid,
+  });
+}
+
+class UpdateSubscriptionMarkAsPaidButtonLoadingState extends AddSubscriptionState {
+  UpdateSubscriptionMarkAsPaidButtonLoadingState({
     required super.automaticallyPayActivated,
     required super.selectedCardNo,
     required super.alreadyPaid,
