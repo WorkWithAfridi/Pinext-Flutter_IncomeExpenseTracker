@@ -2,16 +2,10 @@
 part of 'add_subscription_cubit.dart';
 
 abstract class AddSubscriptionState extends Equatable {
-  String title;
-  String description;
-  String amount;
   bool automaticallyPayActivated;
   String selectedCardNo;
   String alreadyPaid;
   AddSubscriptionState({
-    required this.title,
-    required this.description,
-    required this.amount,
     required this.automaticallyPayActivated,
     required this.selectedCardNo,
     required this.alreadyPaid,
@@ -19,9 +13,6 @@ abstract class AddSubscriptionState extends Equatable {
 
   @override
   List<Object> get props => [
-        title,
-        description,
-        amount,
         automaticallyPayActivated,
         selectedCardNo,
         alreadyPaid,
@@ -30,9 +21,6 @@ abstract class AddSubscriptionState extends Equatable {
 
 class AddSubscriptionDefaultState extends AddSubscriptionState {
   AddSubscriptionDefaultState({
-    required super.title,
-    required super.description,
-    required super.amount,
     required super.automaticallyPayActivated,
     required super.selectedCardNo,
     required super.alreadyPaid,
@@ -41,9 +29,6 @@ class AddSubscriptionDefaultState extends AddSubscriptionState {
 
 class AddSubscriptionLoadingState extends AddSubscriptionState {
   AddSubscriptionLoadingState({
-    required super.title,
-    required super.description,
-    required super.amount,
     required super.automaticallyPayActivated,
     required super.selectedCardNo,
     required super.alreadyPaid,
@@ -52,9 +37,6 @@ class AddSubscriptionLoadingState extends AddSubscriptionState {
 
 class AddSubscriptionSuccessState extends AddSubscriptionState {
   AddSubscriptionSuccessState({
-    required super.title,
-    required super.description,
-    required super.amount,
     required super.automaticallyPayActivated,
     required super.selectedCardNo,
     required super.alreadyPaid,
@@ -63,9 +45,6 @@ class AddSubscriptionSuccessState extends AddSubscriptionState {
 
 class AddSubscriptionErrorState extends AddSubscriptionState {
   AddSubscriptionErrorState({
-    required super.title,
-    required super.description,
-    required super.amount,
     required super.automaticallyPayActivated,
     required super.selectedCardNo,
     required super.alreadyPaid,
