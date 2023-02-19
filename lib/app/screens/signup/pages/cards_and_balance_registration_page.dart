@@ -364,7 +364,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                   ),
                   InfoWidget(
                     infoText:
-                        "*These will be your goals and milestones for the coming months, years and so on. Once you save up to them, your goals will be archived and you can add new goals.",
+                        "These will be your goals and milestones for the coming months, years and so on. Once you save up to them, your goals will be archived and you can add new goals.",
                   ),
                 ],
               ),

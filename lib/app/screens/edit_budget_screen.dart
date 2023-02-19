@@ -95,7 +95,7 @@ class Editbudgetview extends StatelessWidget {
                         style: boldTextStyle,
                       ),
                       InfoWidget(
-                        infoText: "*This is the maximum amount of CASH you'll be spending in one month!",
+                        infoText: "This is the maximum amount of CASH you'll be spending in one month!",
                       ),
                     ],
                   ),

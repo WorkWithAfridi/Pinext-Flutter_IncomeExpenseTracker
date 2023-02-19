@@ -343,7 +343,7 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
                   ),
                   child: InfoWidget(
                     infoText:
-                        "*Marking this transaction as an ${state.selectedTransactionMode == SelectedTransactionMode.income ? "income" : "expense"} will contribute the transaction amount towards your monthly, weekly & daily ${state.selectedTransactionMode == SelectedTransactionMode.income ? "budget goals" : "budget"}.",
+                        "Marking this transaction as an ${state.selectedTransactionMode == SelectedTransactionMode.income ? "income" : "expense"} will contribute the transaction amount towards your monthly, weekly & daily ${state.selectedTransactionMode == SelectedTransactionMode.income ? "budget goals" : "budget"}.",
                   ),
                 ),
               ],
