@@ -171,6 +171,7 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
                           height: 8,
                         ),
                         CustomTextFormField(
+                          isEnabled: !widget.isEdit,
                           controller: titleController,
                           hintTitle: "Ex: Netflix subscription",
                           textInputType: TextInputType.number,
@@ -195,6 +196,7 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
                           height: 8,
                         ),
                         CustomTextFormField(
+                          isEnabled: !widget.isEdit,
                           numberOfLines: 4,
                           controller: descriptionController,
                           hintTitle: "",
@@ -220,6 +222,7 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
                           height: 8,
                         ),
                         CustomTextFormField(
+                          isEnabled: !widget.isEdit,
                           numberOfLines: 1,
                           controller: amountController,
                           hintTitle: "Ex: 1200",
