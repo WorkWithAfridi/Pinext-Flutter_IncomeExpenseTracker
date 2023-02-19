@@ -121,9 +121,18 @@ class EditNetBalanceView extends StatelessWidget {
                   const SizedBox(
                     height: 8,
                   ),
-                  Text(
-                    "Do you want to update it?",
-                    style: boldTextStyle,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Do you want to update it?",
+                        style: boldTextStyle,
+                      ),
+                      InfoWidget(
+                        infoText:
+                            "Updating your NET balance will not affect any of your card balances, but will effect your total cumulative NET balance statistics!",
+                      ),
+                    ],
                   ),
                   const SizedBox(
                     height: 8,
@@ -137,13 +146,6 @@ class EditNetBalanceView extends StatelessWidget {
                       return InputValidation(value).isCorrectNumber();
                     },
                     suffixButtonAction: () {},
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  InfoWidget(
-                    infoText:
-                        "Updating your NET balance will not affect any of your card balances, but will effect your total cumulative NET balance statistics!",
                   ),
                   const SizedBox(
                     height: 16,

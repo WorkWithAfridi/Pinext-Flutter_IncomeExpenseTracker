@@ -93,18 +93,20 @@ class _GetSubscriptionWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          "Subscriptions",
-          style: boldTextStyle.copyWith(
-            fontSize: 20,
-          ),
-        ),
-        const SizedBox(
-          height: 8,
-        ),
-        InfoWidget(
-          infoText:
-              "Tired of adding repetitive transactions? Try adding subscriptions, which will automatically deduct (if automatically deduction is set, during set-up process) that amount from your specified card at the beginning of every month!",
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "Subscriptions",
+              style: boldTextStyle.copyWith(
+                fontSize: 20,
+              ),
+            ),
+            InfoWidget(
+              infoText:
+                  "Tired of adding repetitive transactions? Try adding subscriptions, subscriptions will automatically deduct (if automatically deduction is set, during set-up process) that amount from your specified card at the beginning of every month!",
+            ),
+          ],
         ),
         const SizedBox(
           height: 10,

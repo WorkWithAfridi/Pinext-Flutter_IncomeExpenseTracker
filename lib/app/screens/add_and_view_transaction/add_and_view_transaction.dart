@@ -15,13 +15,13 @@ import 'package:pinext/app/services/handlers/user_handler.dart';
 import 'package:pinext/app/shared/widgets/custom_button.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 import 'package:pinext/app/shared/widgets/custom_text_field.dart';
+import 'package:pinext/app/shared/widgets/info_widget.dart';
 
 import '../../app_data/app_constants/constants.dart';
 import '../../bloc/demoBloc/demo_bloc.dart';
 import '../../bloc/userBloc/user_bloc.dart';
 import '../../models/pinext_card_model.dart';
 import '../../services/firebase_services.dart';
-import '../../shared/widgets/info_widget.dart';
 import '../../shared/widgets/pinext_card.dart';
 
 class AddAndViewTransactionScreen extends StatelessWidget {
@@ -288,60 +288,63 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
         return Column(
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const SizedBox(
-                  width: 6,
-                ),
-                Checkbox(
-                  value: state.markAs,
-                  activeColor: customBlueColor,
-                  onChanged: (value) {
-                    context.read<AddTransactionsCubit>().togglemarkAs(value);
-                  },
-                ),
-                GestureDetector(
-                    onTap: () {
-                      context.read<AddTransactionsCubit>().togglemarkAs(state.markAs);
-                    },
-                    child: RichText(
-                      text: TextSpan(
-                        // style: DefaultTextStyle.of(context).style,
-                        style: regularTextStyle.copyWith(
-                          color: customBlackColor.withOpacity(
-                            .6,
-                          ),
-                        ),
-
-                        children: [
-                          const TextSpan(
-                            text: 'mark as ',
-                          ),
-                          TextSpan(
-                            text:
-                                state.selectedTransactionMode == SelectedTransactionMode.income ? "INCOME" : "EXPENSE",
-                            style: boldTextStyle.copyWith(
-                              color: state.selectedTransactionMode == SelectedTransactionMode.income
-                                  ? Colors.green
-                                  : Colors.red,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const SizedBox(
+                      width: 6,
+                    ),
+                    Checkbox(
+                      value: state.markAs,
+                      activeColor: customBlueColor,
+                      onChanged: (value) {
+                        context.read<AddTransactionsCubit>().togglemarkAs(value);
+                      },
+                    ),
+                    GestureDetector(
+                        onTap: () {
+                          context.read<AddTransactionsCubit>().togglemarkAs(state.markAs);
+                        },
+                        child: RichText(
+                          text: TextSpan(
+                            // style: DefaultTextStyle.of(context).style,
+                            style: regularTextStyle.copyWith(
+                              color: customBlackColor.withOpacity(
+                                .6,
+                              ),
                             ),
+
+                            children: [
+                              const TextSpan(
+                                text: 'mark as ',
+                              ),
+                              TextSpan(
+                                text: state.selectedTransactionMode == SelectedTransactionMode.income
+                                    ? "INCOME"
+                                    : "EXPENSE",
+                                style: boldTextStyle.copyWith(
+                                  color: state.selectedTransactionMode == SelectedTransactionMode.income
+                                      ? Colors.green
+                                      : Colors.red,
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    )),
+                        )),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: defaultPadding,
+                  ),
+                  child: InfoWidget(
+                    infoText:
+                        "*Marking this transaction as an ${state.selectedTransactionMode == SelectedTransactionMode.income ? "income" : "expense"} will contribute the transaction amount towards your monthly, weekly & daily ${state.selectedTransactionMode == SelectedTransactionMode.income ? "budget goals" : "budget"}.",
+                  ),
+                ),
               ],
-            ),
-            const SizedBox(
-              height: 2,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: defaultPadding,
-              ),
-              child: InfoWidget(
-                infoText:
-                    "*Marking this transaction as an ${state.selectedTransactionMode == SelectedTransactionMode.income ? "income" : "expense"} will contribute the transaction amount towards your monthly, weekly & daily ${state.selectedTransactionMode == SelectedTransactionMode.income ? "budget goals" : "budget"}.",
-              ),
             ),
           ],
         );

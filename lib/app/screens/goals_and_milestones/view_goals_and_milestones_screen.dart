@@ -53,11 +53,20 @@ class ViewGoalsAndMilestoneView extends StatelessWidget {
                   color: customBlackColor.withOpacity(.6),
                 ),
               ),
-              Text(
-                "Goals & Milestones",
-                style: boldTextStyle.copyWith(
-                  fontSize: 25,
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Goals & Milestones",
+                    style: boldTextStyle.copyWith(
+                      fontSize: 25,
+                    ),
+                  ),
+                  InfoWidget(
+                    infoText:
+                        "Please delete your milestones, once you've achieved them! Or else they will again pop up once your balance goes below the completed milestones amount!",
+                  ),
+                ],
               ),
               const SizedBox(
                 height: 8,
@@ -127,10 +136,6 @@ class ViewGoalsAndMilestoneView extends StatelessWidget {
                     ],
                   );
                 }),
-              ),
-              InfoWidget(
-                infoText:
-                    "*Please delete your milestones, once you've achieved them! Or else they will again pop up once your balance goes below the completed milestones amount!",
               ),
               const SizedBox(
                 height: 8,

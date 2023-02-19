@@ -14,47 +14,80 @@ class InfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(
-        defaultPadding,
-      ),
-      decoration: BoxDecoration(
-        color: greyColor,
-        borderRadius: BorderRadius.circular(
-          defaultBorder,
-        ),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              const Icon(
-                Icons.info,
-                color: customDarkBBlueColor,
+    return PopupMenuButton(
+      color: Colors.transparent,
+      shadowColor: Colors.transparent,
+      splashRadius: 0,
+      surfaceTintColor: Colors.transparent,
+      padding: const EdgeInsets.all(0),
+
+      // elevation: 6,
+      itemBuilder: (context) => [
+        PopupMenuItem(
+          enabled: false,
+          child: Card(
+            elevation: 6,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(
+                defaultBorder,
               ),
-              const SizedBox(
-                width: 4,
-              ),
-              Text(
-                "Info.",
-                style: boldTextStyle,
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 4,
-          ),
-          Text(
-            infoText,
-            style: regularTextStyle.copyWith(
-              color: customBlackColor.withOpacity(
-                .6,
+            ),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Container(
+                padding: const EdgeInsets.all(
+                  defaultPadding,
+                ),
+                decoration: BoxDecoration(
+                  color: greyColor,
+                  borderRadius: BorderRadius.circular(
+                    defaultBorder,
+                  ),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Row(
+                    //   children: [
+                    //     const Icon(
+                    //       Icons.info,
+                    //       color: customDarkBBlueColor,
+                    //     ),
+                    //     const SizedBox(
+                    //       width: 4,
+                    //     ),
+                    //     Text(
+                    //       "Info.",
+                    //       style: boldTextStyle,
+                    //     ),
+                    //   ],
+                    // ),
+                    // const SizedBox(
+                    //   height: 4,
+                    // ),
+                    Text(
+                      infoText,
+                      style: regularTextStyle.copyWith(
+                        color: customBlackColor.withOpacity(
+                          .6,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-        ],
+        ),
+      ],
+      onSelected: (value) {},
+      position: PopupMenuPosition.over,
+      child: const Icon(
+        Icons.help,
+        color: customBlueColor,
       ),
     );
   }

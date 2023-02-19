@@ -85,8 +85,6 @@ class SigninCubit extends Cubit<SigninState> {
     );
   }
 
-  
-
   signupUser({
     required String emailAddress,
     required String password,
@@ -103,9 +101,8 @@ class SigninCubit extends Cubit<SigninState> {
       state.goals,
       state.goals.length,
     ));
-    await Future.delayed(const Duration(seconds: 2));
-    String result =
-        await AuthenticationServices().signupUserUsingEmailAndPassword(
+    await Future.delayed(const Duration(seconds: 1));
+    String result = await AuthenticationServices().signupUserUsingEmailAndPassword(
       emailAddress: emailAddress,
       password: password,
       username: username,

@@ -198,9 +198,17 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                 const SizedBox(
                   height: 12,
                 ),
-                Text(
-                  "What are your saving up for?",
-                  style: boldTextStyle,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "What are your saving up for?",
+                      style: boldTextStyle,
+                    ),
+                    InfoWidget(
+                      infoText: "This will be the title of you goal or milestone.",
+                    ),
+                  ],
                 ),
                 const SizedBox(
                   height: 8,
@@ -220,17 +228,19 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                   suffixButtonAction: () {},
                 ),
                 const SizedBox(
-                  height: 8,
-                ),
-                InfoWidget(
-                  infoText: "*This will be the title of you goal or milestone.",
-                ),
-                const SizedBox(
                   height: 12,
                 ),
-                Text(
-                  "Amount",
-                  style: boldTextStyle,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Amount",
+                      style: boldTextStyle,
+                    ),
+                    InfoWidget(
+                      infoText: "This is the amount you need to save to achieve/ complete your goal/ milestone.",
+                    ),
+                  ],
                 ),
                 const SizedBox(
                   height: 8,
@@ -244,12 +254,6 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                     return InputValidation(value).isCorrectNumber();
                   },
                   suffixButtonAction: () {},
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                InfoWidget(
-                  infoText: "*This will be the title of you goal or milestone.",
                 ),
                 const SizedBox(
                   height: 12,

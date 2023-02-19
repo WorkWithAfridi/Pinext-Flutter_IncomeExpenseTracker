@@ -161,6 +161,9 @@ class AddSubscriptionView extends StatelessWidget {
                     ],
                   ),
                 ),
+                const SizedBox(
+                  height: 6,
+                ),
                 Padding(
                   padding: const EdgeInsets.only(
                     right: 8,
@@ -169,13 +172,24 @@ class AddSubscriptionView extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "Automatically add transaction",
-                        style: boldTextStyle.copyWith(
-                          color: customBlackColor.withOpacity(
-                            .6,
+                      Row(
+                        children: [
+                          Text(
+                            "Automatically add transaction",
+                            style: boldTextStyle.copyWith(
+                              color: customBlackColor.withOpacity(
+                                .6,
+                              ),
+                            ),
                           ),
-                        ),
+                          const SizedBox(
+                            width: 6,
+                          ),
+                          InfoWidget(
+                            infoText:
+                                "Enabling this option will automatically deduct the subscription amount at the start of every month, from the selected card!",
+                          ),
+                        ],
                       ),
                       BlocBuilder<AddSubscriptionCubit, AddSubscriptionState>(
                         builder: (context, state) {
@@ -192,7 +206,7 @@ class AddSubscriptionView extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(
-                  height: 6,
+                  height: 8,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(
@@ -202,13 +216,6 @@ class AddSubscriptionView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      InfoWidget(
-                        infoText:
-                            "Enabling this option will automatically deduct the subscription amount at the start of every month, from the selected card!",
-                      ),
-                      const SizedBox(
-                        height: 12,
-                      ),
                       Text(
                         "Select card *",
                         style: boldTextStyle.copyWith(

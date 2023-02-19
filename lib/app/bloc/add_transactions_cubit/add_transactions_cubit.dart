@@ -48,7 +48,7 @@ class AddTransactionsCubit extends Cubit<AddTransactionsState> {
       selectedDescription: state.selectedDescription,
       markAs: state.markAs,
     ));
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds:1));
     String response = await TransactionHandler().addTransaction(
       amount: amount,
       description: details,
