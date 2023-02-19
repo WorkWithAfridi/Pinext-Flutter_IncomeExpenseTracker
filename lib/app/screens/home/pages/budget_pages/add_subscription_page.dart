@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -102,8 +100,24 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
                 snackbarType: SnackbarType.error,
                 context: context,
               );
+              context.read<AddSubscriptionCubit>().resetState();
+            } else if (state is SubscriptionFailedToUpdateState) {
+              GetCustomSnackbar(
+                title: "Snap",
+                message: "An error occurred while updating your subscrition. :(",
+                snackbarType: SnackbarType.error,
+                context: context,
+              );
+            } else if (state is SubscriptionSuccessfullyUpdatedState) {
+              context.read<UserBloc>().add(RefreshUserStateEvent());
+              Navigator.pop(context);
+              GetCustomSnackbar(
+                title: "Updated",
+                message: "Your subscription has been updated!",
+                snackbarType: SnackbarType.success,
+                context: context,
+              );
             }
-            context.read<AddSubscriptionCubit>().resetState();
           }),
         ),
       ],
@@ -320,7 +334,7 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
                                     height: 8,
                                   ),
                                   GetCustomButton(
-                                    title: "PAID",
+                                    title: "Marked as paid",
                                     titleColor: whiteColor,
                                     buttonColor: customBlueColor,
                                     callBackFunction: () {},
@@ -348,10 +362,17 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
                                     height: 8,
                                   ),
                                   GetCustomButton(
-                                    title: "Mark as paid and add to archive",
+                                    title: "Mark as paid and add transaction to archive",
                                     titleColor: whiteColor,
                                     buttonColor: customBlueColor,
-                                    callBackFunction: () {},
+                                    callBackFunction: () {
+                                      PinextSubscriptionModel updatedSubscriptionModel = widget.subscriptionModel!;
+                                      updatedSubscriptionModel.lastPaidOn = DateTime.now().toString();
+                                      context.read<AddSubscriptionCubit>().updateSubscription(
+                                            updatedSubscriptionModel,
+                                            true,
+                                          );
+                                    },
                                   ),
                                   const SizedBox(
                                     height: 8,
@@ -360,7 +381,14 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
                                     title: "Mark as paid",
                                     titleColor: whiteColor,
                                     buttonColor: customBlueColor,
-                                    callBackFunction: () {},
+                                    callBackFunction: () {
+                                      PinextSubscriptionModel updatedSubscriptionModel = widget.subscriptionModel!;
+                                      updatedSubscriptionModel.lastPaidOn = DateTime.now().toString();
+                                      context.read<AddSubscriptionCubit>().updateSubscription(
+                                            updatedSubscriptionModel,
+                                            false,
+                                          );
+                                    },
                                   ),
                                 ],
                               ),

@@ -53,13 +53,15 @@ class SubscriptionHandler {
           .collection("pinext_subscriptions")
           .doc(subscriptionModel.subscriptionId)
           .update(subscriptionModel.toMap());
-      await TransactionHandler().addTransaction(
-        amount: subscriptionModel.amount,
-        description: subscriptionModel.title,
-        transactionType: "Expense",
-        cardId: subscriptionModel.assignedCardId,
-        markedAs: true,
-      );
+      if (addTransactionToArchive) {
+        await TransactionHandler().addTransaction(
+          amount: subscriptionModel.amount,
+          description: subscriptionModel.title,
+          transactionType: "Expense",
+          cardId: subscriptionModel.assignedCardId,
+          markedAs: true,
+        );
+      }
       return "success";
     } catch (err) {
       return "error";
