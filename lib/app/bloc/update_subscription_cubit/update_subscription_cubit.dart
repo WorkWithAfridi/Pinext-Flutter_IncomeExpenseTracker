@@ -7,6 +7,7 @@ part 'update_subscription_state.dart';
 
 class UpdateSubscriptionCubit extends Cubit<UpdateSubscriptionState> {
   UpdateSubscriptionCubit() : super(UpdateSubscriptionDefault());
+
   updateSubscriptionStatus({required PinextSubscriptionModel subscriptionModel}) async {
     subscriptionModel.lastPaidOn = DateTime.now().toString();
     String response = await SubscriptionHandler().updateSubscription(
@@ -18,5 +19,9 @@ class UpdateSubscriptionCubit extends Cubit<UpdateSubscriptionState> {
     } else {
       emit(SubscriptionUpdatedErrorState());
     }
+  }
+
+  resetState() {
+    emit(UpdateSubscriptionDefault());
   }
 }

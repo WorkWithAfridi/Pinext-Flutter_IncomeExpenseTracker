@@ -52,6 +52,7 @@ class BudgetView extends StatelessWidget {
             if (state is SubscriptionUpdatedSuccessfullyState) {
               log("Updating user state");
               context.read<UserBloc>().add(RefreshUserStateEvent());
+              context.read<UpdateSubscriptionCubit>().resetState();
             }
           },
         ),
@@ -184,8 +185,8 @@ class SubscriptionCard extends StatelessWidget {
     required this.subscriptionModel,
   }) : super(key: key);
 
-  PinextSubscriptionModel subscriptionModel;
   late int date;
+  PinextSubscriptionModel subscriptionModel;
 
   @override
   Widget build(BuildContext context) {
