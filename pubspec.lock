@@ -157,10 +157,10 @@ packages:
     dependency: "direct main"
     description:
       name: elegant_notification
-      sha256: "246bee0d80e6344ac32e93d2e25e7a828ab4c17d7f821e354b88668e9ea0fda7"
+      sha256: "076f6bead597a1ee806b5b762af4d62e333a65ba7ed14a0a497dd71ca299c02a"
       url: "https://pub.dev"
     source: hosted
-    version: "1.6.4"
+    version: "1.7.0"
   equatable:
     dependency: "direct main"
     description:
@@ -913,10 +913,10 @@ packages:
     dependency: transitive
     description:
       name: xml
-      sha256: ac0e3f4bf00ba2708c33fbabbbe766300e509f8c82dbd4ab6525039813f7e2fb
+      sha256: "979ee37d622dec6365e2efa4d906c37470995871fe9ae080d967e192d88286b5"
       url: "https://pub.dev"
     source: hosted
-    version: "6.1.0"
+    version: "6.2.2"
 sdks:
-  dart: ">=2.18.0 <3.0.0"
+  dart: ">=2.19.0 <3.0.0"
   flutter: ">=3.3.0"
