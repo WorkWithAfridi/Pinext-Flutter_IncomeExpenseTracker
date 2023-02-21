@@ -177,7 +177,7 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
                           isEnabled: !widget.isEdit,
                           controller: titleController,
                           hintTitle: "Ex: Netflix subscription",
-                          textInputType: TextInputType.number,
+                          textInputType: TextInputType.text,
                           onChanged: (String value) {},
                           validator: (String value) {
                             return InputValidation(value).isNotEmpty();
@@ -203,7 +203,7 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
                           numberOfLines: 4,
                           controller: descriptionController,
                           hintTitle: "",
-                          textInputType: TextInputType.number,
+                          textInputType: TextInputType.text,
                           onChanged: (String value) {},
                           validator: (String value) {
                             return null;
