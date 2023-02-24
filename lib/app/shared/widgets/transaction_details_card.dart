@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:pinext/app/app_data/custom_transition_page_route/custom_transition_page_route.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
+import 'package:pinext/app/screens/add_and_view_transaction/add_and_view_transaction.dart';
 import 'package:pinext/app/services/handlers/card_handler.dart';
 
 import '../../app_data/app_constants/domentions.dart';
 import '../../app_data/app_constants/fonts.dart';
-import '../../app_data/custom_transition_page_route/custom_transition_page_route.dart';
 import '../../app_data/theme_data/colors.dart';
 import '../../bloc/demoBloc/demo_bloc.dart';
 import '../../models/pinext_transaction_model.dart';
-import '../../screens/add_and_view_transaction/add_and_view_transaction.dart';
 
 class TransactionDetailsCard extends StatefulWidget {
   const TransactionDetailsCard({
