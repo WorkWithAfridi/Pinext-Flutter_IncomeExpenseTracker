@@ -17,7 +17,6 @@ jobs:
           channel: 'stable'
     - run: flutter pub get
     - name: Build
-      if: (github.base_ref == 'master' && github.event_name == 'push')
       run: |
         flutter build appbundle
         flutter build apk
@@ -25,7 +24,7 @@ jobs:
       uses: actions/upload-artifact@master
       with:
         name: apk-build
-        path: build/app/outputs/flutter-apk/
+        path: build/app/outputs/bundle/release
     - name: Deploy
       if: (github.base_ref == 'master' && github.event_name == 'push')
       uses: wzieba/Firebase-Distribution-Github-Action@v1.2.1
