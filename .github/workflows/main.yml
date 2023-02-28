@@ -25,3 +25,12 @@ jobs:
       with:
         name: apk-build
         path: build/app/outputs/bundle/release
+    - name: Deploy
+      if: (github.base_ref == 'master' && github.event_name == 'pull_request')
+      uses: wzieba/Firebase-Distribution-Github-Action@v1.2.1
+      with:
+        appId: ${{secrets.FIREBASE_ANDROID_APPID}}
+        token: ${{secrets.FIREBASE_TOKEN}}
+        groups: testers
+        release_notes: "a new version"
+        file: build/app/outputs/apk/release/app-release.apk
