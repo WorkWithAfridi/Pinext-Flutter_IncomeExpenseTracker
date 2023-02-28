@@ -14,16 +14,15 @@ jobs:
         with:
           channel: 'stable'
 
-      - name: Build
+      - name: Build Gradle
         run: flutter build apk --release
       - run: ls build/app/outputs/flutter-apk
 
       # - run: ls build/app/outputs/bundle/release
       - name: Upload artifact to Firebase App Distribution
-        uses: wzieba/Firebase-Distribution-Github-Action@v1.2.1
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
           appId: ${{secrets.APP_ID}}
           serviceCredentialsFileContent: ${{secrets.CREDENTIAL_FILE_CONTENT}}
           groups: testers
-          release_notes: "A new version has been released."
           file: build/app/outputs/flutter-apk/app-release.apk
