@@ -5,6 +5,7 @@ jobs:
 
   build_and_deploy:
     name: Build and Deploy
+    if: (github.base_ref == 'master' && github.event_name == 'pull_request')
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
