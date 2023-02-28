@@ -23,7 +23,7 @@ class Pinext extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Dev_branch
+    // master_branch
     return MultiBlocProvider(
       providers: [
         BlocProvider(
