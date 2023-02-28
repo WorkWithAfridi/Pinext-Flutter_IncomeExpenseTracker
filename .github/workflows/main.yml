@@ -1,11 +1,7 @@
 name: CI/CD
 on: [pull_request, push]
 
-on:  #events (push and pull_request)
-  push: 
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+on: [pull_request, push]
 
 jobs:   #here we specify the jobs - We could have multiple jobs
   build:  #name it something meaningful 
