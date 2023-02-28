@@ -10,8 +10,6 @@ on:  #events (push and pull_request)
 jobs:   #here we specify the jobs - We could have multiple jobs
   build:  #name it something meaningful 
     runs-on: macos-latest   #runner: select a machine to use
-
-    //put down the steps
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-java@v1
