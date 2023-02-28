@@ -24,7 +24,7 @@ jobs:
       uses: actions/upload-artifact@master
       with:
         name: apk-build
-        path: build/app/outputs/bundle/release
+        path: build/app/outputs/apk/release
     - name: Deploy
       if: (github.base_ref == 'master' && github.event_name == 'push')
       uses: wzieba/Firebase-Distribution-Github-Action@v1.2.1
