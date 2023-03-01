@@ -7,7 +7,6 @@ import 'package:pinext/app/bloc/signin_cubit/login_cubit.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/services/authentication_services.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
-import 'package:pinext/app/shared/widgets/socials_button.dart';
 
 import '../../app_data/app_constants/constants.dart';
 import '../../app_data/theme_data/colors.dart';
@@ -283,20 +282,20 @@ class _SigninScreenViewState extends State<SigninScreenView> {
                     },
                   ),
                 ),
-                const SizedBox(
-                  height: 12,
-                ),
-                Text(
-                  "Or sign in with socials",
-                  style: regularTextStyle.copyWith(
-                    fontSize: 14,
-                    color: customBlackColor.withOpacity(.6),
-                  ),
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                SocialsButton(),
+                // const SizedBox(
+                //   height: 12,
+                // ),
+                // Text(
+                //   "Or sign in with socials",
+                //   style: regularTextStyle.copyWith(
+                //     fontSize: 14,
+                //     color: customBlackColor.withOpacity(.6),
+                //   ),
+                // ),
+                // const SizedBox(
+                //   height: 8,
+                // ),
+                // SocialsButton(),
                 const SizedBox(
                   height: 8,
                 ),
