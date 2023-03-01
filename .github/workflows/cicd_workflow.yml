@@ -1,16 +1,9 @@
 name: CI/CD
 
 on:
-  # push:
-  #   branches:
-  #     - master
-  pull_request:
+  push:
     branches:
       - master
-  pull:
-    branches:
-      - master
-
 
 jobs:   
   build_and_deploy:
