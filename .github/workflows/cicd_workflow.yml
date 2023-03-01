@@ -1,10 +1,8 @@
 name: CI/CD
-
 on:
   push:
     branches:
       - master
-
 jobs:   
   build_and_deploy:
     runs-on: ubuntu-latest
@@ -16,12 +14,9 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           channel: 'stable'
-
       - name: Build Gradle
         run: flutter build apk --release
       - run: ls build/app/outputs/flutter-apk
-
-      # - run: ls build/app/outputs/bundle/release
       - name: Upload artifact to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
