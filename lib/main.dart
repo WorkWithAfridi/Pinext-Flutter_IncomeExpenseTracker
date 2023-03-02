@@ -1,6 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pinext/app/bloc/archive_cubit/archive_cubit.dart';
+import 'package:pinext/app/bloc/archive_cubit/search_cubit/search_cubit.dart';
+import 'package:pinext/app/bloc/archive_cubit/user_statistics_cubit/user_statistics_cubit.dart';
 import 'package:pinext/app/bloc/cards_and_balances_cubit/cards_and_balances_cubit.dart';
 import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
@@ -36,7 +39,16 @@ class Pinext extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => DemoBloc(),
-        )
+        ),
+        BlocProvider(
+          create: (context) => UserStatisticsCubit(),
+        ),
+        BlocProvider(
+          create: (context) => ArchiveCubit(),
+        ),
+        BlocProvider(
+          create: (context) => ArchiveSearchCubit(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

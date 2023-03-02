@@ -639,17 +639,16 @@ class _GetCardList extends StatelessWidget {
                   );
                 }
                 if (snapshot.data!.docs.isEmpty) {
-                  return SizedBox(
-                    width: getWidth(context) - defaultPadding,
-                    child: Center(
-                      child: Text(
-                        "No card found!",
-                        style: regularTextStyle.copyWith(
-                          color: Colors.black.withOpacity(
-                            .5,
-                          ),
-                        ),
+                  return Container(
+                    padding: const EdgeInsets.all(20),
+                    width: getWidth(context) - defaultPadding * 2,
+                    alignment: Alignment.center,
+                    child: Text(
+                      "Please add a Pinext card to view your cards list here.",
+                      style: regularTextStyle.copyWith(
+                        color: customBlackColor.withOpacity(.4),
                       ),
+                      maxLines: 3,
                     ),
                   );
                 }

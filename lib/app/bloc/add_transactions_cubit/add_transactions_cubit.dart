@@ -12,6 +12,7 @@ class AddTransactionsCubit extends Cubit<AddTransactionsState> {
             selectedCardNo: "none",
             selectedDescription: "none",
             markAs: true,
+            selectedTag: "",
           ),
         );
 
@@ -22,6 +23,7 @@ class AddTransactionsCubit extends Cubit<AddTransactionsState> {
         selectedCardNo: state.selectedCardNo,
         selectedDescription: state.selectedDescription,
         markAs: state.markAs,
+        selectedTag: state.selectedTag,
       ),
     );
   }
@@ -33,6 +35,7 @@ class AddTransactionsCubit extends Cubit<AddTransactionsState> {
         selectedCardNo: state.selectedCardNo,
         selectedDescription: state.selectedDescription,
         markAs: !state.markAs,
+        selectedTag: state.selectedTag,
       ),
     );
   }
@@ -41,20 +44,23 @@ class AddTransactionsCubit extends Cubit<AddTransactionsState> {
     required String amount,
     required String details,
     required String transctionType,
+    required String transctionTag,
   }) async {
     emit(AddTransactionsLoadingState(
       selectedTransactionMode: state.selectedTransactionMode,
       selectedCardNo: state.selectedCardNo,
       selectedDescription: state.selectedDescription,
       markAs: state.markAs,
+      selectedTag: state.selectedTag,
     ));
-    await Future.delayed(const Duration(seconds:1));
+    await Future.delayed(const Duration(seconds: 1));
     String response = await TransactionHandler().addTransaction(
       amount: amount,
       description: details,
       transactionType: transctionType,
       cardId: state.selectedCardNo,
-      markedAs: state.markAs
+      markedAs: state.markAs,
+      transactionTag: transctionTag,
     );
     if (response == 'Success') {
       emit(AddTransactionsSuccessState(
@@ -62,6 +68,7 @@ class AddTransactionsCubit extends Cubit<AddTransactionsState> {
         selectedCardNo: state.selectedCardNo,
         selectedDescription: state.selectedDescription,
         markAs: state.markAs,
+        selectedTag: state.selectedTag,
       ));
     } else {
       emit(AddTransactionsErrorState(
@@ -70,6 +77,7 @@ class AddTransactionsCubit extends Cubit<AddTransactionsState> {
         errorMessage: response,
         selectedDescription: state.selectedDescription,
         markAs: state.markAs,
+        selectedTag: state.selectedTag,
       ));
     }
   }
@@ -80,6 +88,7 @@ class AddTransactionsCubit extends Cubit<AddTransactionsState> {
       selectedTransactionMode: state.selectedTransactionMode,
       selectedDescription: state.selectedDescription,
       markAs: state.markAs,
+      selectedTag: state.selectedTag,
     ));
   }
 
@@ -89,6 +98,7 @@ class AddTransactionsCubit extends Cubit<AddTransactionsState> {
       selectedCardNo: state.selectedCardNo,
       selectedDescription: state.selectedDescription,
       markAs: state.markAs,
+      selectedTag: state.selectedTag,
     ));
   }
 
@@ -98,6 +108,27 @@ class AddTransactionsCubit extends Cubit<AddTransactionsState> {
       selectedCardNo: state.selectedCardNo,
       selectedDescription: selectedDescription,
       markAs: state.markAs,
+      selectedTag: state.selectedTag,
+    ));
+  }
+
+  changeSelectedTag(String selectedTag) {
+    if (selectedTag == "Income") {
+      changeSelectedTransactionMode(SelectedTransactionMode.income);
+    } else if (selectedTag == "Others" ||
+        selectedTag == "Transfer" ||
+        selectedTag == "Miscellaneous" ||
+        selectedTag == "") {
+      changeSelectedTransactionMode(state.selectedTransactionMode);
+    } else {
+      changeSelectedTransactionMode(SelectedTransactionMode.enpense);
+    }
+    emit(AddTransactionsDefaultState(
+      selectedTransactionMode: state.selectedTransactionMode,
+      selectedCardNo: state.selectedCardNo,
+      selectedDescription: state.selectedDescription,
+      markAs: state.markAs,
+      selectedTag: selectedTag,
     ));
   }
 }

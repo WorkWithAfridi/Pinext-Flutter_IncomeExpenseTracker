@@ -59,6 +59,7 @@ class SubscriptionHandler {
           description: subscriptionModel.title,
           transactionType: "Expense",
           cardId: subscriptionModel.assignedCardId,
+          transactionTag: "Subscription",
           markedAs: true,
         );
       }

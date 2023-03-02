@@ -10,11 +10,13 @@ abstract class AddTransactionsState extends Equatable {
     required this.selectedTransactionMode,
     required this.selectedCardNo,
     required this.selectedDescription,
+    required this.selectedTag,
     required this.markAs,
   });
   SelectedTransactionMode selectedTransactionMode;
   String selectedCardNo;
   String selectedDescription;
+  String selectedTag;
   bool markAs;
 
   @override
@@ -22,7 +24,8 @@ abstract class AddTransactionsState extends Equatable {
         selectedTransactionMode,
         selectedCardNo,
         selectedDescription,
-        markAs
+        markAs,
+        selectedTag,
       ];
 }
 
@@ -31,6 +34,7 @@ class AddTransactionsDefaultState extends AddTransactionsState {
     required super.selectedTransactionMode,
     required super.selectedCardNo,
     required super.selectedDescription,
+    required super.selectedTag,
     required super.markAs,
   });
 }
@@ -40,6 +44,7 @@ class AddTransactionsSuccessState extends AddTransactionsState {
     required super.selectedTransactionMode,
     required super.selectedCardNo,
     required super.selectedDescription,
+    required super.selectedTag,
     required super.markAs,
   });
 }
@@ -50,6 +55,7 @@ class AddTransactionsErrorState extends AddTransactionsState {
     required super.selectedTransactionMode,
     required super.selectedCardNo,
     required super.selectedDescription,
+    required super.selectedTag,
     required super.markAs,
     required this.errorMessage,
   });
@@ -60,6 +66,7 @@ class AddTransactionsLoadingState extends AddTransactionsState {
     required super.selectedTransactionMode,
     required super.selectedCardNo,
     required super.selectedDescription,
+    required super.selectedTag,
     required super.markAs,
   });
 }

@@ -228,19 +228,37 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
                           },
                           suffixButtonAction: () {},
                         ),
-                        widget.isViewOnly
-                            ? const SizedBox.shrink()
-                            : Column(
-                                children: [
-                                  const SizedBox(
-                                    height: 8,
-                                  ),
-                                  GetSuggestionsList(),
-                                ],
-                              ),
                         const SizedBox(
                           height: 12,
                         ),
+                        widget.isViewOnly && widget.pinextTransactionModel!.transactionTag != ""
+                            ? Column(
+                                children: [
+                                  GetTagsList(),
+                                  const SizedBox(
+                                    height: 12,
+                                  ),
+                                ],
+                              )
+                            : const SizedBox.shrink(),
+                        !widget.isViewOnly
+                            ? Column(
+                                children: [
+                                  GetTagsList(),
+                                  const SizedBox(
+                                    height: 12,
+                                  ),
+                                ],
+                              )
+                            : const SizedBox.shrink(),
+                        // Column(
+                        //   children: [
+                        //     GetTagsList(),
+                        //     const SizedBox(
+                        //       height: 12,
+                        //     ),
+                        //   ],
+                        // ),
                         widget.isViewOnly
                             ? Text(
                                 "Card",
@@ -521,6 +539,72 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
     );
   }
 
+  Column GetTagsList() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Tags",
+          style: boldTextStyle.copyWith(
+            color: customBlackColor.withOpacity(
+              .6,
+            ),
+          ),
+        ),
+        BlocBuilder<AddTransactionsCubit, AddTransactionsState>(
+          builder: (context, state) {
+            if (widget.isViewOnly) {
+              return Chip(
+                label: Text(
+                  widget.pinextTransactionModel!.transactionTag,
+                  style: regularTextStyle.copyWith(
+                    color: whiteColor,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                backgroundColor: customBlueColor,
+              );
+            }
+            return Wrap(
+              spacing: 5,
+              runSpacing: -8,
+              children: [
+                ...List.generate(
+                  transactionTags.length,
+                  (index) {
+                    return GestureDetector(
+                      onTap: () {
+                        String selectedTag = transactionTags[index].toString();
+                        if (state.selectedTag != selectedTag) {
+                          context.read<AddTransactionsCubit>().changeSelectedTag(selectedTag);
+                        } else {
+                          context.read<AddTransactionsCubit>().changeSelectedTag("");
+                        }
+                      },
+                      child: Chip(
+                        label: Text(
+                          transactionTags[index].toString(),
+                          style: regularTextStyle.copyWith(
+                            color: transactionTags[index] == state.selectedTag
+                                ? whiteColor
+                                : customBlackColor.withOpacity(.6),
+                            fontWeight:
+                                transactionTags[index] == state.selectedTag ? FontWeight.w600 : FontWeight.normal,
+                          ),
+                        ),
+                        backgroundColor: transactionTags[index] == state.selectedTag ? customBlueColor : greyColor,
+                      ),
+                    );
+                  },
+                ).toList(),
+              ],
+            );
+          },
+        ),
+      ],
+    );
+  }
+
   Padding AddTransactionButton() {
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -579,7 +663,8 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
                 if (_formKey.currentState!.validate()) {
                   if (amountController.text.isNotEmpty &&
                       detailsController.text.isNotEmpty &&
-                      state.selectedCardNo != "none") {
+                      state.selectedCardNo != "none" &&
+                      state.selectedTag != "") {
                     if (widget.isViewOnly) {
                       GetCustomSnackbar(
                         title: "Hello",
@@ -605,6 +690,7 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
                               transctionType: state.selectedTransactionMode == SelectedTransactionMode.enpense
                                   ? "Expense"
                                   : "Income",
+                              transctionTag: state.selectedTag,
                             );
                       }
                     }
@@ -616,10 +702,24 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
                         snackbarType: SnackbarType.error,
                         context: context,
                       );
-                    } else {
+                    } else if (detailsController.text.isEmpty) {
                       GetCustomSnackbar(
                         title: "Error",
                         message: "Please enter valid details of the transaction and try again!",
+                        snackbarType: SnackbarType.error,
+                        context: context,
+                      );
+                    } else if (amountController.text.isEmpty) {
+                      GetCustomSnackbar(
+                        title: "Error",
+                        message: "Please enter valid amount and try again!",
+                        snackbarType: SnackbarType.error,
+                        context: context,
+                      );
+                    } else if (state.selectedTag == "") {
+                      GetCustomSnackbar(
+                        title: "Error",
+                        message: "Please enter a valid transaction tag and try again!",
                         snackbarType: SnackbarType.error,
                         context: context,
                       );
@@ -686,17 +786,16 @@ class _GetCardListWidget extends StatelessWidget {
                   );
                 }
                 if (snapshot.data!.docs.isEmpty) {
-                  return SizedBox(
-                    width: getWidth(context) - defaultPadding,
-                    child: Center(
-                      child: Text(
-                        "No card found!",
-                        style: regularTextStyle.copyWith(
-                          color: Colors.black.withOpacity(
-                            .5,
-                          ),
-                        ),
+                  return Container(
+                    padding: const EdgeInsets.all(20),
+                    width: getWidth(context) - defaultPadding * 2,
+                    alignment: Alignment.center,
+                    child: Text(
+                      "Please add a Pinext card to view your cards list here.",
+                      style: regularTextStyle.copyWith(
+                        color: customBlackColor.withOpacity(.4),
                       ),
+                      maxLines: 3,
                     ),
                   );
                 }
@@ -729,9 +828,10 @@ class _GetCardListWidget extends StatelessWidget {
                             title: pinextCardModel.title,
                             balance: pinextCardModel.balance,
                             cardColor: cardColor,
-                            isSelected: state.selectedCardNo == pinextCardModel.cardId,
+                            isSelected: isViewOnly ? false : state.selectedCardNo == pinextCardModel.cardId,
                             lastTransactionDate: pinextCardModel.lastTransactionData,
                             cardDetails: pinextCardModel.description,
+
                             // cardModel: pinextCardModel,
                           ),
                         );

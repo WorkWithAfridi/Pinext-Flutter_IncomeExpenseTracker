@@ -8,6 +8,7 @@ class PinextTransactionModel {
   String cardId;
   String transactionDate;
   String transactionId;
+  String transactionTag;
   PinextTransactionModel({
     required this.transactionType,
     required this.amount,
@@ -15,6 +16,7 @@ class PinextTransactionModel {
     required this.cardId,
     required this.transactionDate,
     required this.transactionId,
+    required this.transactionTag,
   });
 
   Map<String, dynamic> toMap() {
@@ -25,6 +27,7 @@ class PinextTransactionModel {
       'cardId': cardId,
       'transactionDate': transactionDate,
       'transactionId': transactionId,
+      'transactionTag': transactionTag,
     };
   }
 
@@ -36,17 +39,34 @@ class PinextTransactionModel {
       cardId: map['cardId'] as String,
       transactionDate: map['transactionDate'] as String,
       transactionId: map['transactionId'] as String,
+      transactionTag: map['transactionTag'] ?? "",
     );
   }
 
   String toJson() => json.encode(toMap());
 
   factory PinextTransactionModel.fromJson(String source) =>
-      PinextTransactionModel.fromMap(
-          json.decode(source) as Map<String, dynamic>);
+      PinextTransactionModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
     return 'PinextTransactionModel(transactionType: $transactionType, amount: $amount, details: $details, cardId: $cardId, transactionDate: $transactionDate, transactionId: $transactionId)';
   }
 }
+
+List<String> transactionTags = [
+  "Income",
+  "Food and Groceries",
+  "Transportation",
+  "Housing and Utilities",
+  "Health and Wellness",
+  "Education and Training",
+  "Entertainment and Leisure",
+  "Personal Care",
+  "Clothing and Accessories",
+  "Gifts and Donations",
+  "Miscellaneous",
+  "Others",
+  "Transfer",
+  "Subscription"
+];

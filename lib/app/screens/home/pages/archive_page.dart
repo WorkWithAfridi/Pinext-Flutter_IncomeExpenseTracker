@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/archive_cubit/search_cubit/search_cubit.dart';
@@ -25,17 +26,18 @@ class ArchivePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => ArchiveCubit(),
-        ),
-        BlocProvider(
-          create: (context) => ArchiveSearchCubit(),
-        ),
-      ],
-      child: const ArchiveMonthView(),
-    );
+    return const ArchiveMonthView();
+    // return MultiBlocProvider(
+    //   providers: [
+    //     BlocProvider(
+    //       create: (context) => ArchiveCubit(),
+    //     ),
+    //     BlocProvider(
+    //       create: (context) => ArchiveSearchCubit(),
+    //     ),
+    //   ],
+    //   child: const ArchiveMonthView(),
+    // );
   }
 }
 
@@ -53,8 +55,7 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
 
   @override
   void initState() {
-    monthScrollController = ScrollController(
-        initialScrollOffset: 40.0 * (int.parse(currentMonth) - 1));
+    monthScrollController = ScrollController(initialScrollOffset: 40.0 * (int.parse(currentMonth) - 1));
     super.initState();
   }
 
@@ -93,20 +94,15 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
                     builder: (context, state) {
                       return GestureDetector(
                         onTap: () {
-                          String selectedMonth =
-                              "0${int.parse(state.selectedMonth)}".length > 2
-                                  ? "0${int.parse(state.selectedMonth)}"
-                                      .substring(1, 3)
-                                  : "0${int.parse(state.selectedMonth)}";
-
+                          String selectedMonth = "0${int.parse(state.selectedMonth)}".length > 2
+                              ? "0${int.parse(state.selectedMonth)}".substring(1, 3)
+                              : "0${int.parse(state.selectedMonth)}";
                           GetCustomSnackbar(
                             title: "Generating Report",
-                            message:
-                                "Your report is being generated, please be patient! :)",
+                            message: "Your report is being generated, please be patient! :)",
                             snackbarType: SnackbarType.info,
                             context: context,
                           );
-
                           FileHandler().createReportForMonth(
                               int.parse(
                                 selectedMonth,
@@ -162,18 +158,13 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
                               width: 300,
                               height: 300,
                               child: CustomYearPicker(
-                                firstDate:
-                                    DateTime(DateTime.now().year - 100, 1),
+                                firstDate: DateTime(DateTime.now().year - 100, 1),
                                 lastDate: DateTime(DateTime.now().year, 1),
                                 initialDate: DateTime.now(),
                                 selectedDate: selectedDate,
                                 onChanged: (DateTime dateTime) {
-                                  context
-                                      .read<ArchiveCubit>()
-                                      .changeYear(dateTime.year.toString());
-                                  context
-                                      .read<UserStatisticsCubit>()
-                                      .resetState();
+                                  context.read<ArchiveCubit>().changeYear(dateTime.year.toString());
+                                  context.read<UserStatisticsCubit>().resetState();
 
                                   Navigator.pop(context);
                                 },
@@ -234,27 +225,20 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
                         String currentMonth = months[index];
                         return GestureDetector(
                           onTap: () {
-                            context
-                                .read<ArchiveCubit>()
-                                .changeMonth((index).toString());
-                            context
-                                .read<UserStatisticsCubit>()
-                                .noDataFound(true);
+                            context.read<ArchiveCubit>().changeMonth((index).toString());
+                            context.read<UserStatisticsCubit>().noDataFound(true);
                             context.read<UserStatisticsCubit>().resetState();
                           },
                           child: Padding(
-                              padding: EdgeInsets.only(
-                                  right: currentMonth == "December"
-                                      ? defaultPadding
-                                      : 8),
-                              child: state.selectedMonth.toString() ==
-                                      (index).toString()
+                              padding: EdgeInsets.only(right: currentMonth == "December" ? defaultPadding : 8),
+                              child: state.selectedMonth.toString() == (index).toString()
                                   ? Chip(
                                       label: Text(
                                         currentMonth,
                                         style: regularTextStyle.copyWith(
-                                            fontWeight: FontWeight.w600,
-                                            color: whiteColor),
+                                          fontWeight: FontWeight.w600,
+                                          color: whiteColor,
+                                        ),
                                       ),
                                       backgroundColor: customBlueColor,
                                     )
@@ -264,8 +248,7 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
                                         currentMonth,
                                         style: regularTextStyle.copyWith(
                                           fontWeight: FontWeight.normal,
-                                          color:
-                                              customBlackColor.withOpacity(.6),
+                                          color: customBlackColor.withOpacity(.6),
                                         ),
                                       ),
                                       backgroundColor: greyColor,
@@ -329,25 +312,11 @@ class TransactionsList extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  "Transactions",
-                  style: boldTextStyle.copyWith(
-                    fontSize: 18,
-                  ),
-                ),
-                const SizedBox(
-                  height: 2,
-                ),
                 BlocBuilder<ArchiveCubit, ArchiveState>(
                   builder: (context, state) {
-                    String selectedMonth =
-                        "0${int.parse(state.selectedMonth) + 1}".length > 2
-                            ? "0${int.parse(state.selectedMonth) + 1}"
-                                .substring(1, 3)
-                            : "0${int.parse(state.selectedMonth) + 1}";
+                    String selectedMonth = "0${int.parse(state.selectedMonth) + 1}".length > 2
+                        ? "0${int.parse(state.selectedMonth) + 1}".substring(1, 3)
+                        : "0${int.parse(state.selectedMonth) + 1}";
                     return StreamBuilder(
                       stream: FirebaseServices()
                           .firebaseFirestore
@@ -361,11 +330,8 @@ class TransactionsList extends StatelessWidget {
                             descending: true,
                           )
                           .snapshots(),
-                      builder: ((context,
-                          AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                              snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
+                      builder: ((context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
                           return const Center(
                             child: SizedBox.shrink(),
                           );
@@ -382,31 +348,32 @@ class TransactionsList extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Text(
-                                    "404",
-                                    style: boldTextStyle.copyWith(
-                                        fontSize: 25,
-                                        color:
-                                            customBlackColor.withOpacity(.5)),
+                                  SizedBox(
+                                    height: getHeight(context) / 2,
+                                    width: getWidth(context) / 1.5,
+                                    child: LottieBuilder.asset(
+                                      'assets/animations/404.json',
+                                    ),
                                   ),
-                                  const SizedBox(
-                                    height: 4,
-                                  ),
-                                  Text(
-                                    "No record found!",
-                                    style: regularTextStyle.copyWith(
-                                        color:
-                                            customBlackColor.withOpacity(.5)),
-                                  ),
-                                  const SizedBox(
-                                    height: 2,
-                                  ),
-                                  Text(
-                                    ":(",
-                                    style: regularTextStyle.copyWith(
-                                        color:
-                                            customBlackColor.withOpacity(.5)),
-                                  ),
+                                  // Text(
+                                  //   "404",
+                                  //   style:
+                                  //       boldTextStyle.copyWith(fontSize: 25, color: customBlackColor.withOpacity(.5)),
+                                  // ),
+                                  // const SizedBox(
+                                  //   height: 4,
+                                  // ),
+                                  // Text(
+                                  //   "No record found!",
+                                  //   style: regularTextStyle.copyWith(color: customBlackColor.withOpacity(.5)),
+                                  // ),
+                                  // const SizedBox(
+                                  //   height: 2,
+                                  // ),
+                                  // Text(
+                                  //   ":(",
+                                  //   style: regularTextStyle.copyWith(color: customBlackColor.withOpacity(.5)),
+                                  // ),
                                 ],
                               ),
                             ),
@@ -416,6 +383,18 @@ class TransactionsList extends StatelessWidget {
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              "Transactions",
+                              style: boldTextStyle.copyWith(
+                                fontSize: 18,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 2,
+                            ),
                             Row(
                               children: [
                                 Expanded(
@@ -428,43 +407,35 @@ class TransactionsList extends StatelessWidget {
                                         (index) {
                                           return GestureDetector(
                                             onTap: () {
-                                              String selectedFilter =
-                                                  filters[index].toString();
-                                              if (state.selectedFilter !=
-                                                  selectedFilter) {
-                                                context
-                                                    .read<ArchiveCubit>()
-                                                    .changeFilter(
-                                                        selectedFilter);
+                                              String selectedFilter = filters[index].toString();
+                                              if (state.selectedFilter == selectedFilter &&
+                                                  selectedFilter == "All transactions") {
+                                                return;
+                                              }
+                                              if (state.selectedFilter != selectedFilter) {
+                                                context.read<ArchiveCubit>().changeFilter(selectedFilter);
                                               } else {
-                                                context
-                                                    .read<ArchiveCubit>()
-                                                    .changeFilter(
+                                                context.read<ArchiveCubit>().changeFilter(
                                                       "All transactions",
                                                     );
                                               }
-
-                                              context
-                                                  .read<UserStatisticsCubit>()
-                                                  .resetState();
+                                              context.read<UserStatisticsCubit>().resetState();
                                             },
                                             child: Chip(
                                               elevation: 0,
                                               label: Text(
                                                 filters[index].toString(),
-                                                style:
-                                                    regularTextStyle.copyWith(
-                                                  color: filters[index] ==
-                                                          state.selectedFilter
+                                                style: regularTextStyle.copyWith(
+                                                  color: filters[index] == state.selectedFilter
                                                       ? whiteColor
-                                                      : customBlackColor
-                                                          .withOpacity(.6),
+                                                      : customBlackColor.withOpacity(.6),
+                                                  fontWeight: filters[index] == state.selectedFilter
+                                                      ? FontWeight.w600
+                                                      : FontWeight.normal,
                                                 ),
                                               ),
-                                              backgroundColor: filters[index] ==
-                                                      state.selectedFilter
-                                                  ? customBlueColor
-                                                  : greyColor,
+                                              backgroundColor:
+                                                  filters[index] == state.selectedFilter ? customBlueColor : greyColor,
                                             ),
                                           );
                                         },
@@ -474,20 +445,13 @@ class TransactionsList extends StatelessWidget {
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    context
-                                        .read<ArchiveSearchCubit>()
-                                        .toogleSearch();
-                                    context
-                                        .read<UserStatisticsCubit>()
-                                        .resetState();
+                                    context.read<ArchiveSearchCubit>().toogleSearch();
+                                    context.read<UserStatisticsCubit>().resetState();
                                   },
-                                  child: BlocBuilder<ArchiveSearchCubit,
-                                      ArchiveSearchState>(
+                                  child: BlocBuilder<ArchiveSearchCubit, ArchiveSearchState>(
                                     builder: (context, state) {
                                       return Icon(
-                                        state.isSearchActive
-                                            ? Icons.search_off_rounded
-                                            : Icons.search_rounded,
+                                        state.isSearchActive ? Icons.search_off_rounded : Icons.search_rounded,
                                         color: customBlueColor,
                                         size: 25,
                                       );
@@ -509,18 +473,14 @@ class TransactionsList extends StatelessWidget {
                                         hintTitle: "Search term",
                                         showClearSuffix: true,
                                         onChanged: (searchTerm) {
-                                          context
-                                              .read<ArchiveSearchCubit>()
-                                              .updateSearchTerm(searchTerm);
+                                          context.read<ArchiveSearchCubit>().updateSearchTerm(searchTerm);
                                         },
                                         validator: () {
                                           return null;
                                         },
                                         suffixButtonAction: () {
                                           searchController.clear();
-                                          context
-                                              .read<ArchiveSearchCubit>()
-                                              .updateSearchTerm("");
+                                          context.read<ArchiveSearchCubit>().updateSearchTerm("");
                                         },
                                       ),
                                       const SizedBox(
@@ -535,75 +495,54 @@ class TransactionsList extends StatelessWidget {
                             BlocBuilder<ArchiveSearchCubit, ArchiveSearchState>(
                               builder: (context, searchState) {
                                 return Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 5.0),
+                                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
                                   child: ListView.builder(
                                     itemCount: snapshot.data!.docs.length,
                                     shrinkWrap: true,
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
+                                    physics: const NeverScrollableScrollPhysics(),
                                     itemBuilder: ((context, index) {
                                       if (snapshot.data!.docs.isEmpty) {
                                         return const Text("No data found! :(");
                                       }
-                                      PinextTransactionModel
-                                          pinextTransactionModel =
-                                          PinextTransactionModel.fromMap(
+                                      PinextTransactionModel pinextTransactionModel = PinextTransactionModel.fromMap(
                                         snapshot.data!.docs[index].data(),
                                       );
-                                      TransactionDetailsCard
-                                          transactionDetailsCard =
-                                          TransactionDetailsCard(
-                                              pinextTransactionModel:
-                                                  pinextTransactionModel);
-                                      context
-                                          .read<UserStatisticsCubit>()
-                                          .updateStatistics(
-                                            amount: double.parse(
-                                                pinextTransactionModel.amount),
-                                            isExpense: pinextTransactionModel
-                                                    .transactionType ==
-                                                "Expense",
-                                          );
-                                      if (state.selectedFilter ==
-                                          "All transactions") {
+                                      TransactionDetailsCard transactionDetailsCard =
+                                          TransactionDetailsCard(pinextTransactionModel: pinextTransactionModel);
+                                      context.read<UserStatisticsCubit>().updateStatistics(
+                                          amount: double.parse(pinextTransactionModel.amount),
+                                          isExpense: pinextTransactionModel.transactionType == "Expense",
+                                          tag: pinextTransactionModel.transactionTag,
+                                          tagAmount: double.parse(pinextTransactionModel.amount));
+                                      if (state.selectedFilter == "All transactions") {
                                         if (searchState.isSearchActive) {
                                           if (pinextTransactionModel.details
                                               .toLowerCase()
-                                              .contains(searchState.searchTerm
-                                                  .toLowerCase())) {
+                                              .contains(searchState.searchTerm.toLowerCase())) {
                                             return transactionDetailsCard;
                                           } else {
                                             return const SizedBox.shrink();
                                           }
                                         }
                                         return transactionDetailsCard;
-                                      } else if (state.selectedFilter ==
-                                              "Income" &&
-                                          pinextTransactionModel
-                                                  .transactionType ==
-                                              "Income") {
+                                      } else if (state.selectedFilter == "Income" &&
+                                          pinextTransactionModel.transactionType == "Income") {
                                         if (searchState.isSearchActive) {
                                           if (pinextTransactionModel.details
                                               .toLowerCase()
-                                              .contains(searchState.searchTerm
-                                                  .toLowerCase())) {
+                                              .contains(searchState.searchTerm.toLowerCase())) {
                                             return transactionDetailsCard;
                                           } else {
                                             return const SizedBox.shrink();
                                           }
                                         }
                                         return transactionDetailsCard;
-                                      } else if (state.selectedFilter ==
-                                              "Expenses" &&
-                                          pinextTransactionModel
-                                                  .transactionType ==
-                                              "Expense") {
+                                      } else if (state.selectedFilter == "Expenses" &&
+                                          pinextTransactionModel.transactionType == "Expense") {
                                         if (searchState.isSearchActive) {
                                           if (pinextTransactionModel.details
                                               .toLowerCase()
-                                              .contains(searchState.searchTerm
-                                                  .toLowerCase())) {
+                                              .contains(searchState.searchTerm.toLowerCase())) {
                                             return transactionDetailsCard;
                                           } else {
                                             return const SizedBox.shrink();
@@ -671,27 +610,11 @@ class _GetStatisticsWidget extends StatelessWidget {
                           ),
                           Builder(
                             builder: (context) {
-                              final demoBlocState =
-                                  context.watch<DemoBloc>().state;
-                              return Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "Withdrawals: ",
-                                    style: regularTextStyle.copyWith(
-                                      color: customBlackColor.withOpacity(.80),
-                                    ),
-                                  ),
-                                  Text(
-                                    demoBlocState is DemoEnabledState
-                                        ? "- 12345 Tk"
-                                        : "- ${state.totalExpenses} Tk.",
-                                    style: boldTextStyle.copyWith(
-                                      color: Colors.redAccent[400],
-                                    ),
-                                  )
-                                ],
+                              final demoBlocState = context.watch<DemoBloc>().state;
+                              return _GetOverviewWidget(
+                                isDemoActive: demoBlocState is DemoEnabledState,
+                                title: "Withdrawals",
+                                amount: state.totalExpenses.toString(),
                               );
                             },
                           ),
@@ -700,28 +623,11 @@ class _GetStatisticsWidget extends StatelessWidget {
                           ),
                           Builder(
                             builder: (context) {
-                              final demoBlocState =
-                                  context.watch<DemoBloc>().state;
-
-                              return Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "Diposits: ",
-                                    style: regularTextStyle.copyWith(
-                                      color: customBlackColor.withOpacity(.80),
-                                    ),
-                                  ),
-                                  Text(
-                                    demoBlocState is DemoEnabledState
-                                        ? "+ 12345 Tk"
-                                        : "+ ${state.totalSavings} Tk.",
-                                    style: boldTextStyle.copyWith(
-                                      color: Colors.green,
-                                    ),
-                                  )
-                                ],
+                              final demoBlocState = context.watch<DemoBloc>().state;
+                              return _GetOverviewWidget(
+                                isDemoActive: demoBlocState is DemoEnabledState,
+                                title: "Diposits",
+                                amount: state.totalSavings.toString(),
                               );
                             },
                           ),
@@ -739,33 +645,16 @@ class _GetStatisticsWidget extends StatelessWidget {
                           Builder(
                             builder: (context) {
                               final state = context.watch<UserBloc>().state;
-                              final demoBlocState =
-                                  context.watch<DemoBloc>().state;
+                              final demoBlocState = context.watch<DemoBloc>().state;
 
                               String totalEarnings = "";
                               if (state is AuthenticatedUserState) {
-                                totalEarnings =
-                                    state.monthlyEarnings.toString();
+                                totalEarnings = state.monthlyEarnings.toString();
                               }
-                              return Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "You've earned: ",
-                                    style: regularTextStyle.copyWith(
-                                      color: customBlackColor.withOpacity(.80),
-                                    ),
-                                  ),
-                                  Text(
-                                    demoBlocState is DemoEnabledState
-                                        ? "100000 Tk"
-                                        : "$totalEarnings Tk.",
-                                    style: boldTextStyle.copyWith(
-                                      color: customBlueColor,
-                                    ),
-                                  )
-                                ],
+                              return _GetOverviewWidget(
+                                isDemoActive: demoBlocState is DemoEnabledState,
+                                title: "You've earned",
+                                amount: totalEarnings.toString(),
                               );
                             },
                           ),
@@ -775,32 +664,16 @@ class _GetStatisticsWidget extends StatelessWidget {
                           Builder(
                             builder: (context) {
                               final state = context.watch<UserBloc>().state;
-                              final demoBlocState =
-                                  context.watch<DemoBloc>().state;
+                              final demoBlocState = context.watch<DemoBloc>().state;
 
                               String totalSavings = "";
                               if (state is AuthenticatedUserState) {
                                 totalSavings = state.monthlySavings.toString();
                               }
-                              return Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "You've saved: ",
-                                    style: regularTextStyle.copyWith(
-                                      color: customBlackColor.withOpacity(.80),
-                                    ),
-                                  ),
-                                  Text(
-                                    demoBlocState is DemoEnabledState
-                                        ? "75000 Tk"
-                                        : "$totalSavings Tk.",
-                                    style: boldTextStyle.copyWith(
-                                      color: customBlueColor,
-                                    ),
-                                  )
-                                ],
+                              return _GetOverviewWidget(
+                                isDemoActive: demoBlocState is DemoEnabledState,
+                                title: "You've saved",
+                                amount: totalSavings.toString(),
                               );
                             },
                           ),
@@ -818,30 +691,156 @@ class _GetStatisticsWidget extends StatelessWidget {
                           Builder(
                             builder: (context) {
                               final state = context.watch<UserBloc>().state;
-                              final demoBlocState =
-                                  context.watch<DemoBloc>().state;
+                              final demoBlocState = context.watch<DemoBloc>().state;
                               String netWorth = "";
                               if (state is AuthenticatedUserState) {
                                 netWorth = state.netBalance.toString();
                               }
-                              return Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                              return _GetOverviewWidget(
+                                isDemoActive: demoBlocState is DemoEnabledState,
+                                title: "Current NET. balance",
+                                amount: netWorth.toString(),
+                              );
+                            },
+                          ),
+                          const SizedBox(
+                            height: 4,
+                          ),
+                          Container(
+                            height: 1,
+                            width: getWidth(context),
+                            color: customBlackColor.withOpacity(.05),
+                          ),
+                          const SizedBox(
+                            height: 4,
+                          ),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          Text(
+                            "Overview",
+                            style: boldTextStyle.copyWith(
+                              fontSize: 18,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 6,
+                          ),
+                          Builder(
+                            builder: (context) {
+                              final state = context.watch<UserStatisticsCubit>().state;
+                              final demoBlocState = context.watch<DemoBloc>().state;
+                              return Column(
                                 children: [
-                                  Text(
-                                    "Current NET. balance: ",
-                                    style: regularTextStyle.copyWith(
-                                      color: customBlackColor.withOpacity(.80),
-                                    ),
+                                  _GetOverviewWidget(
+                                    isDemoActive: demoBlocState is DemoEnabledState,
+                                    title: "Income",
+                                    amount: state.income.toString(),
                                   ),
-                                  Text(
-                                    demoBlocState is DemoEnabledState
-                                        ? "750000 Tk"
-                                        : "$netWorth Tk.",
-                                    style: boldTextStyle.copyWith(
-                                      color: customBlackColor,
-                                    ),
-                                  )
+                                  const SizedBox(
+                                    height: 4,
+                                  ),
+                                  _GetOverviewWidget(
+                                    isDemoActive: demoBlocState is DemoEnabledState,
+                                    title: "Food and Groceries",
+                                    amount: state.foodAndGroceries.toString(),
+                                  ),
+                                  const SizedBox(
+                                    height: 4,
+                                  ),
+                                  _GetOverviewWidget(
+                                    isDemoActive: demoBlocState is DemoEnabledState,
+                                    title: "Transportation",
+                                    amount: state.transportation.toString(),
+                                  ),
+                                  const SizedBox(
+                                    height: 4,
+                                  ),
+                                  _GetOverviewWidget(
+                                    isDemoActive: demoBlocState is DemoEnabledState,
+                                    title: "Housing and Utilities",
+                                    amount: state.transportation.toString(),
+                                  ),
+                                  const SizedBox(
+                                    height: 4,
+                                  ),
+                                  _GetOverviewWidget(
+                                    isDemoActive: demoBlocState is DemoEnabledState,
+                                    title: "Health and Wellness",
+                                    amount: state.healthAndWellness.toString(),
+                                  ),
+                                  const SizedBox(
+                                    height: 4,
+                                  ),
+                                  _GetOverviewWidget(
+                                    isDemoActive: demoBlocState is DemoEnabledState,
+                                    title: "Education and Training",
+                                    amount: state.educationAndTraining.toString(),
+                                  ),
+                                  const SizedBox(
+                                    height: 4,
+                                  ),
+                                  _GetOverviewWidget(
+                                    isDemoActive: demoBlocState is DemoEnabledState,
+                                    title: "Entertainment and Leisure",
+                                    amount: state.entertainmentAndLeisure.toString(),
+                                  ),
+                                  const SizedBox(
+                                    height: 4,
+                                  ),
+                                  _GetOverviewWidget(
+                                    isDemoActive: demoBlocState is DemoEnabledState,
+                                    title: "Personal Care",
+                                    amount: state.personalCare.toString(),
+                                  ),
+                                  const SizedBox(
+                                    height: 4,
+                                  ),
+                                  _GetOverviewWidget(
+                                    isDemoActive: demoBlocState is DemoEnabledState,
+                                    title: "Clothing and Accessories",
+                                    amount: state.clothingAndAccessories.toString(),
+                                  ),
+                                  const SizedBox(
+                                    height: 4,
+                                  ),
+                                  _GetOverviewWidget(
+                                    isDemoActive: demoBlocState is DemoEnabledState,
+                                    title: "Gifts and Donations",
+                                    amount: state.giftsAndDonations.toString(),
+                                  ),
+                                  const SizedBox(
+                                    height: 4,
+                                  ),
+                                  _GetOverviewWidget(
+                                    isDemoActive: demoBlocState is DemoEnabledState,
+                                    title: "Miscellaneous",
+                                    amount: state.miscellaneous.toString(),
+                                  ),
+                                  const SizedBox(
+                                    height: 4,
+                                  ),
+                                  _GetOverviewWidget(
+                                    isDemoActive: demoBlocState is DemoEnabledState,
+                                    title: "Others",
+                                    amount: state.others.toString(),
+                                  ),
+                                  const SizedBox(
+                                    height: 4,
+                                  ),
+                                  _GetOverviewWidget(
+                                    isDemoActive: demoBlocState is DemoEnabledState,
+                                    title: "Transferred",
+                                    amount: state.transfer.toString(),
+                                  ),
+                                  const SizedBox(
+                                    height: 4,
+                                  ),
+                                  _GetOverviewWidget(
+                                    isDemoActive: demoBlocState is DemoEnabledState,
+                                    title: "Subscription",
+                                    amount: state.subscription.toString(),
+                                  ),
                                 ],
                               );
                             },
@@ -853,6 +852,37 @@ class _GetStatisticsWidget extends StatelessWidget {
           },
         );
       },
+    );
+  }
+}
+
+class _GetOverviewWidget extends StatelessWidget {
+  _GetOverviewWidget({
+    required this.isDemoActive,
+    required this.title,
+    required this.amount,
+  });
+  bool isDemoActive;
+  String title;
+  String amount;
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          "$title: ",
+          style: regularTextStyle.copyWith(
+            color: customBlackColor.withOpacity(.80),
+          ),
+        ),
+        Text(
+          isDemoActive ? "100000 Tk" : "$amount Tk.",
+          style: boldTextStyle.copyWith(
+            color: customBlueColor,
+          ),
+        )
+      ],
     );
   }
 }

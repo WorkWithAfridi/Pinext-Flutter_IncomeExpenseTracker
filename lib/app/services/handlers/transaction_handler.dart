@@ -20,6 +20,7 @@ class TransactionHandler {
     required String transactionType,
     required String cardId,
     required bool markedAs,
+    required String transactionTag,
   }) async {
     String response = "Error";
     try {
@@ -36,6 +37,7 @@ class TransactionHandler {
         cardId: cardId,
         transactionDate: DateTime.now().toString(),
         transactionId: transactionId,
+        transactionTag: transactionTag,
       );
       //Adding transaction
       FirebaseServices()
