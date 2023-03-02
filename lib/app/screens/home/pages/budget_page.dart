@@ -166,9 +166,6 @@ class TransactionsList extends StatelessWidget {
           },
         ),
         const _GetStatisticsWidget(),
-        const SizedBox(
-          height: 30,
-        ),
       ],
     );
   }
@@ -320,7 +317,7 @@ class _GetStatisticsWidget extends StatelessWidget {
                   },
                 ),
                 const SizedBox(
-                  height: 12,
+                  height: 4,
                 ),
                 Text(
                   "Summary",
@@ -425,6 +422,9 @@ class _GetStatisticsWidget extends StatelessWidget {
                       amount: netWorth.toString(),
                     );
                   },
+                ),
+                const SizedBox(
+                  height: 12,
                 ),
               ],
             );

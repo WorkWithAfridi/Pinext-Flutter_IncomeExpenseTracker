@@ -600,7 +600,7 @@ class _GetStatisticsWidget extends StatelessWidget {
                             height: 12,
                           ),
                           Text(
-                            "Statistics",
+                            "Summary",
                             style: boldTextStyle.copyWith(
                               fontSize: 18,
                             ),
@@ -714,137 +714,137 @@ class _GetStatisticsWidget extends StatelessWidget {
                           const SizedBox(
                             height: 4,
                           ),
-                          const SizedBox(
-                            height: 12,
-                          ),
-                          Text(
-                            "Overview",
-                            style: boldTextStyle.copyWith(
-                              fontSize: 18,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 6,
-                          ),
-                          Builder(
-                            builder: (context) {
-                              final state = context.watch<UserStatisticsCubit>().state;
-                              final demoBlocState = context.watch<DemoBloc>().state;
-                              return Column(
-                                children: [
-                                  _GetOverviewWidget(
-                                    isDemoActive: demoBlocState is DemoEnabledState,
-                                    title: "Income",
-                                    amount: state.income.toString(),
-                                  ),
-                                  const SizedBox(
-                                    height: 4,
-                                  ),
-                                  _GetOverviewWidget(
-                                    isDemoActive: demoBlocState is DemoEnabledState,
-                                    title: "Food and Groceries",
-                                    amount: state.foodAndGroceries.toString(),
-                                  ),
-                                  const SizedBox(
-                                    height: 4,
-                                  ),
-                                  _GetOverviewWidget(
-                                    isDemoActive: demoBlocState is DemoEnabledState,
-                                    title: "Transportation",
-                                    amount: state.transportation.toString(),
-                                  ),
-                                  const SizedBox(
-                                    height: 4,
-                                  ),
-                                  _GetOverviewWidget(
-                                    isDemoActive: demoBlocState is DemoEnabledState,
-                                    title: "Housing and Utilities",
-                                    amount: state.transportation.toString(),
-                                  ),
-                                  const SizedBox(
-                                    height: 4,
-                                  ),
-                                  _GetOverviewWidget(
-                                    isDemoActive: demoBlocState is DemoEnabledState,
-                                    title: "Health and Wellness",
-                                    amount: state.healthAndWellness.toString(),
-                                  ),
-                                  const SizedBox(
-                                    height: 4,
-                                  ),
-                                  _GetOverviewWidget(
-                                    isDemoActive: demoBlocState is DemoEnabledState,
-                                    title: "Education and Training",
-                                    amount: state.educationAndTraining.toString(),
-                                  ),
-                                  const SizedBox(
-                                    height: 4,
-                                  ),
-                                  _GetOverviewWidget(
-                                    isDemoActive: demoBlocState is DemoEnabledState,
-                                    title: "Entertainment and Leisure",
-                                    amount: state.entertainmentAndLeisure.toString(),
-                                  ),
-                                  const SizedBox(
-                                    height: 4,
-                                  ),
-                                  _GetOverviewWidget(
-                                    isDemoActive: demoBlocState is DemoEnabledState,
-                                    title: "Personal Care",
-                                    amount: state.personalCare.toString(),
-                                  ),
-                                  const SizedBox(
-                                    height: 4,
-                                  ),
-                                  _GetOverviewWidget(
-                                    isDemoActive: demoBlocState is DemoEnabledState,
-                                    title: "Clothing and Accessories",
-                                    amount: state.clothingAndAccessories.toString(),
-                                  ),
-                                  const SizedBox(
-                                    height: 4,
-                                  ),
-                                  _GetOverviewWidget(
-                                    isDemoActive: demoBlocState is DemoEnabledState,
-                                    title: "Gifts and Donations",
-                                    amount: state.giftsAndDonations.toString(),
-                                  ),
-                                  const SizedBox(
-                                    height: 4,
-                                  ),
-                                  _GetOverviewWidget(
-                                    isDemoActive: demoBlocState is DemoEnabledState,
-                                    title: "Miscellaneous",
-                                    amount: state.miscellaneous.toString(),
-                                  ),
-                                  const SizedBox(
-                                    height: 4,
-                                  ),
-                                  _GetOverviewWidget(
-                                    isDemoActive: demoBlocState is DemoEnabledState,
-                                    title: "Others",
-                                    amount: state.others.toString(),
-                                  ),
-                                  const SizedBox(
-                                    height: 4,
-                                  ),
-                                  _GetOverviewWidget(
-                                    isDemoActive: demoBlocState is DemoEnabledState,
-                                    title: "Transferred",
-                                    amount: state.transfer.toString(),
-                                  ),
-                                  const SizedBox(
-                                    height: 4,
-                                  ),
-                                  _GetOverviewWidget(
-                                    isDemoActive: demoBlocState is DemoEnabledState,
-                                    title: "Subscription",
-                                    amount: state.subscription.toString(),
-                                  ),
-                                ],
-                              );
-                            },
-                          ),
+                          // const SizedBox(
+                          //   height: 12,
+                          // ),
+                          // Text(
+                          //   "Overview",
+                          //   style: boldTextStyle.copyWith(
+                          //     fontSize: 18,
+                          //   ),
+                          // ),
+                          // const SizedBox(
+                          //   height: 6,
+                          // ),
+                          // Builder(
+                          //   builder: (context) {
+                          //     final state = context.watch<UserStatisticsCubit>().state;
+                          //     final demoBlocState = context.watch<DemoBloc>().state;
+                          //     return Column(
+                          //       children: [
+                          //         _GetOverviewWidget(
+                          //           isDemoActive: demoBlocState is DemoEnabledState,
+                          //           title: "Income",
+                          //           amount: state.income.toString(),
+                          //         ),
+                          //         const SizedBox(
+                          //           height: 4,
+                          //         ),
+                          //         _GetOverviewWidget(
+                          //           isDemoActive: demoBlocState is DemoEnabledState,
+                          //           title: "Food and Groceries",
+                          //           amount: state.foodAndGroceries.toString(),
+                          //         ),
+                          //         const SizedBox(
+                          //           height: 4,
+                          //         ),
+                          //         _GetOverviewWidget(
+                          //           isDemoActive: demoBlocState is DemoEnabledState,
+                          //           title: "Transportation",
+                          //           amount: state.transportation.toString(),
+                          //         ),
+                          //         const SizedBox(
+                          //           height: 4,
+                          //         ),
+                          //         _GetOverviewWidget(
+                          //           isDemoActive: demoBlocState is DemoEnabledState,
+                          //           title: "Housing and Utilities",
+                          //           amount: state.transportation.toString(),
+                          //         ),
+                          //         const SizedBox(
+                          //           height: 4,
+                          //         ),
+                          //         _GetOverviewWidget(
+                          //           isDemoActive: demoBlocState is DemoEnabledState,
+                          //           title: "Health and Wellness",
+                          //           amount: state.healthAndWellness.toString(),
+                          //         ),
+                          //         const SizedBox(
+                          //           height: 4,
+                          //         ),
+                          //         _GetOverviewWidget(
+                          //           isDemoActive: demoBlocState is DemoEnabledState,
+                          //           title: "Education and Training",
+                          //           amount: state.educationAndTraining.toString(),
+                          //         ),
+                          //         const SizedBox(
+                          //           height: 4,
+                          //         ),
+                          //         _GetOverviewWidget(
+                          //           isDemoActive: demoBlocState is DemoEnabledState,
+                          //           title: "Entertainment and Leisure",
+                          //           amount: state.entertainmentAndLeisure.toString(),
+                          //         ),
+                          //         const SizedBox(
+                          //           height: 4,
+                          //         ),
+                          //         _GetOverviewWidget(
+                          //           isDemoActive: demoBlocState is DemoEnabledState,
+                          //           title: "Personal Care",
+                          //           amount: state.personalCare.toString(),
+                          //         ),
+                          //         const SizedBox(
+                          //           height: 4,
+                          //         ),
+                          //         _GetOverviewWidget(
+                          //           isDemoActive: demoBlocState is DemoEnabledState,
+                          //           title: "Clothing and Accessories",
+                          //           amount: state.clothingAndAccessories.toString(),
+                          //         ),
+                          //         const SizedBox(
+                          //           height: 4,
+                          //         ),
+                          //         _GetOverviewWidget(
+                          //           isDemoActive: demoBlocState is DemoEnabledState,
+                          //           title: "Gifts and Donations",
+                          //           amount: state.giftsAndDonations.toString(),
+                          //         ),
+                          //         const SizedBox(
+                          //           height: 4,
+                          //         ),
+                          //         _GetOverviewWidget(
+                          //           isDemoActive: demoBlocState is DemoEnabledState,
+                          //           title: "Miscellaneous",
+                          //           amount: state.miscellaneous.toString(),
+                          //         ),
+                          //         const SizedBox(
+                          //           height: 4,
+                          //         ),
+                          //         _GetOverviewWidget(
+                          //           isDemoActive: demoBlocState is DemoEnabledState,
+                          //           title: "Others",
+                          //           amount: state.others.toString(),
+                          //         ),
+                          //         const SizedBox(
+                          //           height: 4,
+                          //         ),
+                          //         _GetOverviewWidget(
+                          //           isDemoActive: demoBlocState is DemoEnabledState,
+                          //           title: "Transferred",
+                          //           amount: state.transfer.toString(),
+                          //         ),
+                          //         const SizedBox(
+                          //           height: 4,
+                          //         ),
+                          //         _GetOverviewWidget(
+                          //           isDemoActive: demoBlocState is DemoEnabledState,
+                          //           title: "Subscription",
+                          //           amount: state.subscription.toString(),
+                          //         ),
+                          //       ],
+                          //     );
+                          //   },
+                          // ),
                         ],
                       );
               },
