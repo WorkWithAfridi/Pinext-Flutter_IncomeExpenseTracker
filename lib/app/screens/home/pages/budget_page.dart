@@ -309,12 +309,20 @@ class _GetStatisticsWidget extends StatelessWidget {
                         ),
                         _GetOverviewWidget(
                           isDemoActive: demoBlocState is DemoEnabledState,
-                          title: "Subscription",
+                          title: "Subscriptions",
                           amount: state.subscription.toString(),
                         ),
                       ],
                     );
                   },
+                ),
+                const SizedBox(
+                  height: 6,
+                ),
+                Container(
+                  height: 1,
+                  width: getWidth(context),
+                  color: customBlackColor.withOpacity(.05),
                 ),
                 const SizedBox(
                   height: 4,
