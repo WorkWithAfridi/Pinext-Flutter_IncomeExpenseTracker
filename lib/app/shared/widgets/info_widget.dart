@@ -41,7 +41,7 @@ class InfoWidget extends StatelessWidget {
                   defaultPadding,
                 ),
                 decoration: BoxDecoration(
-                  color: greyColor,
+                  color: whiteColor,
                   borderRadius: BorderRadius.circular(
                     defaultBorder,
                   ),
