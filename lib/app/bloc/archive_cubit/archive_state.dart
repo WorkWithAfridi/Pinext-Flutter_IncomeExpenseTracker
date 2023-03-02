@@ -5,10 +5,12 @@ abstract class ArchiveState extends Equatable {
     required this.selectedMonth,
     required this.selectedFilter,
     required this.selectedYear,
+    required this.archiveList,
   });
   String selectedMonth;
   String selectedYear;
   String selectedFilter;
+  List archiveList;
 
   @override
   List<Object> get props => [
@@ -23,5 +25,6 @@ class ArchiveInitialState extends ArchiveState {
     required super.selectedMonth,
     required super.selectedFilter,
     required super.selectedYear,
+    required super.archiveList,
   });
 }

@@ -1,5 +1,10 @@
-import 'package:bloc/bloc.dart';
+import 'dart:developer';
+
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../models/pinext_transaction_model.dart';
 
 part 'user_statistics_state.dart';
 
@@ -30,8 +35,8 @@ class UserStatisticsCubit extends Cubit<UserStatisticsState> {
 
   updateStatistics({
     required double amount,
-    required isExpense,
-    required tag,
+    required bool isExpense,
+    required String tag,
     required double tagAmount,
   }) {
     double totalExpenses = 0;
@@ -40,9 +45,11 @@ class UserStatisticsCubit extends Cubit<UserStatisticsState> {
     if (isExpense) {
       totalExpenses = state.totalExpenses + amount;
       totalSavings = state.totalSavings;
+      log("Is an expense");
     } else {
       totalSavings = state.totalSavings + amount;
       totalExpenses = state.totalExpenses;
+      log("Is a Income");
     }
 
     switch (tag) {
@@ -92,26 +99,44 @@ class UserStatisticsCubit extends Cubit<UserStatisticsState> {
 
     outcome = totalSavings - totalExpenses;
 
-    emit(UserStatisticsDefaultState(
-      totalExpenses: totalExpenses,
-      totalSavings: totalSavings,
-      outcome: outcome,
-      noDataFound: false,
-      income: state.income,
-      foodAndGroceries: state.foodAndGroceries,
-      transportation: state.transportation,
-      housingAndUtilities: state.housingAndUtilities,
-      healthAndWellness: state.healthAndWellness,
-      educationAndTraining: state.educationAndTraining,
-      entertainmentAndLeisure: state.entertainmentAndLeisure,
-      personalCare: state.personalCare,
-      clothingAndAccessories: state.clothingAndAccessories,
-      giftsAndDonations: state.giftsAndDonations,
-      miscellaneous: state.miscellaneous,
-      others: state.others,
-      transfer: state.transfer,
-      subscription: state.subscription,
-    ));
+    emit(
+      UserStatisticsDefaultState(
+        totalExpenses: totalExpenses,
+        totalSavings: totalSavings,
+        outcome: outcome,
+        noDataFound: false,
+        income: state.income,
+        foodAndGroceries: state.foodAndGroceries,
+        transportation: state.transportation,
+        housingAndUtilities: state.housingAndUtilities,
+        healthAndWellness: state.healthAndWellness,
+        educationAndTraining: state.educationAndTraining,
+        entertainmentAndLeisure: state.entertainmentAndLeisure,
+        personalCare: state.personalCare,
+        clothingAndAccessories: state.clothingAndAccessories,
+        giftsAndDonations: state.giftsAndDonations,
+        miscellaneous: state.miscellaneous,
+        others: state.others,
+        transfer: state.transfer,
+        subscription: state.subscription,
+      ),
+    );
+  }
+
+  extractUserStatisticsFromTransactionList(
+    BuildContext context,
+    List transactionList,
+  ) {
+    log(transactionList.toString());
+    resetState();
+    for (PinextTransactionModel transaction in transactionList) {
+      updateStatistics(
+        amount: double.parse(transaction.amount),
+        isExpense: transaction.transactionType == "Expense",
+        tag: transaction.transactionTag,
+        tagAmount: double.parse(transaction.amount),
+      );
+    }
   }
 
   resetState() {

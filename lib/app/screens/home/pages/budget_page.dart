@@ -17,10 +17,8 @@ import 'package:pinext/app/shared/widgets/info_widget.dart';
 import '../../../app_data/app_constants/constants.dart';
 import '../../../app_data/app_constants/domentions.dart';
 import '../../../app_data/app_constants/fonts.dart';
-import '../../../bloc/archive_cubit/archive_cubit.dart';
 import '../../../bloc/archive_cubit/user_statistics_cubit/user_statistics_cubit.dart';
 import '../../../bloc/demoBloc/demo_bloc.dart';
-import '../../../models/pinext_transaction_model.dart';
 import '../../../services/date_time_services.dart';
 import '../../../services/firebase_services.dart';
 
@@ -45,7 +43,6 @@ class BudgetPage extends StatelessWidget {
 
 class BudgetView extends StatelessWidget {
   const BudgetView({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MultiBlocListener(
@@ -56,6 +53,7 @@ class BudgetView extends StatelessWidget {
               log("Updating user state");
               context.read<UserBloc>().add(RefreshUserStateEvent());
               context.read<UpdateSubscriptionCubit>().resetState();
+              log("resetting");
             }
           },
         ),
@@ -88,7 +86,7 @@ class BudgetView extends StatelessWidget {
                   const SizedBox(
                     height: 12,
                   ),
-                  const TransactionsList(),
+                  const _GetStatisticsWidget(),
                   const _GetSubscriptionDetailsWidget(),
                   const SizedBox(
                     height: 12,
@@ -107,336 +105,259 @@ class BudgetView extends StatelessWidget {
   }
 }
 
-class TransactionsList extends StatelessWidget {
-  const TransactionsList({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        BlocBuilder<ArchiveCubit, ArchiveState>(
-          builder: (context, state) {
-            return StreamBuilder(
-              stream: FirebaseServices()
-                  .firebaseFirestore
-                  .collection('pinext_users')
-                  .doc(FirebaseServices().getUserId())
-                  .collection('pinext_transactions')
-                  .doc(currentYear)
-                  .collection(currentMonth)
-                  .orderBy(
-                    "transactionDate",
-                    descending: true,
-                  )
-                  .snapshots(),
-              builder: ((context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: SizedBox.shrink(),
-                  );
-                }
-
-                context.read<UserStatisticsCubit>().noDataFound(false);
-                return MediaQuery.removePadding(
-                  context: context,
-                  removeBottom: true,
-                  child: ListView.builder(
-                    itemCount: snapshot.data!.docs.length,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: ((context, index) {
-                      PinextTransactionModel pinextTransactionModel = PinextTransactionModel.fromMap(
-                        snapshot.data!.docs[index].data(),
-                      );
-                      context.read<UserStatisticsCubit>().updateStatistics(
-                          amount: double.parse(pinextTransactionModel.amount),
-                          isExpense: pinextTransactionModel.transactionType == "Expense",
-                          tag: pinextTransactionModel.transactionTag,
-                          tagAmount: double.parse(pinextTransactionModel.amount));
-                      return const SizedBox.shrink();
-                    }),
-                  ),
-                );
-              }),
-            );
-          },
-        ),
-        const _GetStatisticsWidget(),
-      ],
-    );
-  }
-}
-
 class _GetStatisticsWidget extends StatelessWidget {
   const _GetStatisticsWidget();
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ArchiveCubit, ArchiveState>(
-      builder: (context, archiveState) {
-        final userStatisticsState = context.watch<UserStatisticsCubit>().state;
-        if (userStatisticsState.noDataFound) {
-          return const SizedBox.shrink();
-        }
-        return BlocBuilder<UserStatisticsCubit, UserStatisticsState>(
-          builder: (context, state) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
+    return BlocBuilder<UserStatisticsCubit, UserStatisticsState>(
+      builder: (context, state) {
+        final demoBlocState = context.watch<DemoBloc>().state;
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(
+              "Overview",
+              style: boldTextStyle.copyWith(
+                fontSize: 18,
+              ),
+            ),
+            const SizedBox(
+              height: 6,
+            ),
+            Column(
               children: [
-                Text(
-                  "Overview",
-                  style: boldTextStyle.copyWith(
-                    fontSize: 18,
-                  ),
-                ),
-                const SizedBox(
-                  height: 6,
-                ),
-                Builder(
-                  builder: (context) {
-                    final state = context.watch<UserStatisticsCubit>().state;
-                    final demoBlocState = context.watch<DemoBloc>().state;
-                    return Column(
-                      children: [
-                        _GetOverviewWidget(
-                          isDemoActive: demoBlocState is DemoEnabledState,
-                          title: "Income",
-                          amount: state.income.toString(),
-                        ),
-                        const SizedBox(
-                          height: 4,
-                        ),
-                        _GetOverviewWidget(
-                          isDemoActive: demoBlocState is DemoEnabledState,
-                          title: "Food and Groceries",
-                          amount: state.foodAndGroceries.toString(),
-                        ),
-                        const SizedBox(
-                          height: 4,
-                        ),
-                        _GetOverviewWidget(
-                          isDemoActive: demoBlocState is DemoEnabledState,
-                          title: "Transportation",
-                          amount: state.transportation.toString(),
-                        ),
-                        const SizedBox(
-                          height: 4,
-                        ),
-                        _GetOverviewWidget(
-                          isDemoActive: demoBlocState is DemoEnabledState,
-                          title: "Housing and Utilities",
-                          amount: state.transportation.toString(),
-                        ),
-                        const SizedBox(
-                          height: 4,
-                        ),
-                        _GetOverviewWidget(
-                          isDemoActive: demoBlocState is DemoEnabledState,
-                          title: "Health and Wellness",
-                          amount: state.healthAndWellness.toString(),
-                        ),
-                        const SizedBox(
-                          height: 4,
-                        ),
-                        _GetOverviewWidget(
-                          isDemoActive: demoBlocState is DemoEnabledState,
-                          title: "Education and Training",
-                          amount: state.educationAndTraining.toString(),
-                        ),
-                        const SizedBox(
-                          height: 4,
-                        ),
-                        _GetOverviewWidget(
-                          isDemoActive: demoBlocState is DemoEnabledState,
-                          title: "Entertainment and Leisure",
-                          amount: state.entertainmentAndLeisure.toString(),
-                        ),
-                        const SizedBox(
-                          height: 4,
-                        ),
-                        _GetOverviewWidget(
-                          isDemoActive: demoBlocState is DemoEnabledState,
-                          title: "Personal Care",
-                          amount: state.personalCare.toString(),
-                        ),
-                        const SizedBox(
-                          height: 4,
-                        ),
-                        _GetOverviewWidget(
-                          isDemoActive: demoBlocState is DemoEnabledState,
-                          title: "Clothing and Accessories",
-                          amount: state.clothingAndAccessories.toString(),
-                        ),
-                        const SizedBox(
-                          height: 4,
-                        ),
-                        _GetOverviewWidget(
-                          isDemoActive: demoBlocState is DemoEnabledState,
-                          title: "Gifts and Donations",
-                          amount: state.giftsAndDonations.toString(),
-                        ),
-                        const SizedBox(
-                          height: 4,
-                        ),
-                        _GetOverviewWidget(
-                          isDemoActive: demoBlocState is DemoEnabledState,
-                          title: "Miscellaneous",
-                          amount: state.miscellaneous.toString(),
-                        ),
-                        const SizedBox(
-                          height: 4,
-                        ),
-                        _GetOverviewWidget(
-                          isDemoActive: demoBlocState is DemoEnabledState,
-                          title: "Others",
-                          amount: state.others.toString(),
-                        ),
-                        const SizedBox(
-                          height: 4,
-                        ),
-                        _GetOverviewWidget(
-                          isDemoActive: demoBlocState is DemoEnabledState,
-                          title: "Transferred",
-                          amount: state.transfer.toString(),
-                        ),
-                        const SizedBox(
-                          height: 4,
-                        ),
-                        _GetOverviewWidget(
-                          isDemoActive: demoBlocState is DemoEnabledState,
-                          title: "Subscriptions",
-                          amount: state.subscription.toString(),
-                        ),
-                      ],
-                    );
-                  },
-                ),
-                const SizedBox(
-                  height: 6,
-                ),
-                Container(
-                  height: 1,
-                  width: getWidth(context),
-                  color: customBlackColor.withOpacity(.05),
+                _GetOverviewWidget(
+                  isDemoActive: demoBlocState is DemoEnabledState,
+                  title: "Income",
+                  amount: state.income.toString(),
                 ),
                 const SizedBox(
                   height: 4,
                 ),
-                Text(
-                  "Summary",
-                  style: boldTextStyle.copyWith(
-                    fontSize: 18,
-                  ),
-                ),
-                const SizedBox(
-                  height: 6,
-                ),
-                Builder(
-                  builder: (context) {
-                    final demoBlocState = context.watch<DemoBloc>().state;
-                    return _GetOverviewWidget(
-                      isDemoActive: demoBlocState is DemoEnabledState,
-                      title: "Withdrawals",
-                      amount: state.totalExpenses.toString(),
-                    );
-                  },
+                _GetOverviewWidget(
+                  isDemoActive: demoBlocState is DemoEnabledState,
+                  title: "Food and Groceries",
+                  amount: state.foodAndGroceries.toString(),
                 ),
                 const SizedBox(
                   height: 4,
                 ),
-                Builder(
-                  builder: (context) {
-                    final demoBlocState = context.watch<DemoBloc>().state;
-                    return _GetOverviewWidget(
-                      isDemoActive: demoBlocState is DemoEnabledState,
-                      title: "Diposits",
-                      amount: state.totalSavings.toString(),
-                    );
-                  },
+                _GetOverviewWidget(
+                  isDemoActive: demoBlocState is DemoEnabledState,
+                  title: "Transportation",
+                  amount: state.transportation.toString(),
                 ),
                 const SizedBox(
                   height: 4,
                 ),
-                Container(
-                  height: 1,
-                  width: getWidth(context),
-                  color: customBlackColor.withOpacity(.05),
+                _GetOverviewWidget(
+                  isDemoActive: demoBlocState is DemoEnabledState,
+                  title: "Housing and Utilities",
+                  amount: state.transportation.toString(),
                 ),
                 const SizedBox(
                   height: 4,
                 ),
-                Builder(
-                  builder: (context) {
-                    final state = context.watch<UserBloc>().state;
-                    final demoBlocState = context.watch<DemoBloc>().state;
-
-                    String totalEarnings = "";
-                    if (state is AuthenticatedUserState) {
-                      totalEarnings = state.monthlyEarnings.toString();
-                    }
-                    return _GetOverviewWidget(
-                      isDemoActive: demoBlocState is DemoEnabledState,
-                      title: "You've earned",
-                      amount: totalEarnings.toString(),
-                    );
-                  },
+                _GetOverviewWidget(
+                  isDemoActive: demoBlocState is DemoEnabledState,
+                  title: "Health and Wellness",
+                  amount: state.healthAndWellness.toString(),
                 ),
                 const SizedBox(
                   height: 4,
                 ),
-                Builder(
-                  builder: (context) {
-                    final state = context.watch<UserBloc>().state;
-                    final demoBlocState = context.watch<DemoBloc>().state;
-
-                    String totalSavings = "";
-                    if (state is AuthenticatedUserState) {
-                      totalSavings = state.monthlySavings.toString();
-                    }
-                    return _GetOverviewWidget(
-                      isDemoActive: demoBlocState is DemoEnabledState,
-                      title: "You've saved",
-                      amount: totalSavings.toString(),
-                    );
-                  },
+                _GetOverviewWidget(
+                  isDemoActive: demoBlocState is DemoEnabledState,
+                  title: "Education and Training",
+                  amount: state.educationAndTraining.toString(),
                 ),
                 const SizedBox(
                   height: 4,
                 ),
-                Container(
-                  height: 1,
-                  width: getWidth(context),
-                  color: customBlackColor.withOpacity(.05),
+                _GetOverviewWidget(
+                  isDemoActive: demoBlocState is DemoEnabledState,
+                  title: "Entertainment and Leisure",
+                  amount: state.entertainmentAndLeisure.toString(),
                 ),
                 const SizedBox(
                   height: 4,
                 ),
-                Builder(
-                  builder: (context) {
-                    final state = context.watch<UserBloc>().state;
-                    final demoBlocState = context.watch<DemoBloc>().state;
-                    String netWorth = "";
-                    if (state is AuthenticatedUserState) {
-                      netWorth = state.netBalance.toString();
-                    }
-                    return _GetOverviewWidget(
-                      isDemoActive: demoBlocState is DemoEnabledState,
-                      title: "Current NET. balance",
-                      amount: netWorth.toString(),
-                    );
-                  },
+                _GetOverviewWidget(
+                  isDemoActive: demoBlocState is DemoEnabledState,
+                  title: "Personal Care",
+                  amount: state.personalCare.toString(),
                 ),
                 const SizedBox(
-                  height: 12,
+                  height: 4,
+                ),
+                _GetOverviewWidget(
+                  isDemoActive: demoBlocState is DemoEnabledState,
+                  title: "Clothing and Accessories",
+                  amount: state.clothingAndAccessories.toString(),
+                ),
+                const SizedBox(
+                  height: 4,
+                ),
+                _GetOverviewWidget(
+                  isDemoActive: demoBlocState is DemoEnabledState,
+                  title: "Gifts and Donations",
+                  amount: state.giftsAndDonations.toString(),
+                ),
+                const SizedBox(
+                  height: 4,
+                ),
+                _GetOverviewWidget(
+                  isDemoActive: demoBlocState is DemoEnabledState,
+                  title: "Miscellaneous",
+                  amount: state.miscellaneous.toString(),
+                ),
+                const SizedBox(
+                  height: 4,
+                ),
+                _GetOverviewWidget(
+                  isDemoActive: demoBlocState is DemoEnabledState,
+                  title: "Others",
+                  amount: state.others.toString(),
+                ),
+                const SizedBox(
+                  height: 4,
+                ),
+                _GetOverviewWidget(
+                  isDemoActive: demoBlocState is DemoEnabledState,
+                  title: "Transferred",
+                  amount: state.transfer.toString(),
+                ),
+                const SizedBox(
+                  height: 4,
+                ),
+                _GetOverviewWidget(
+                  isDemoActive: demoBlocState is DemoEnabledState,
+                  title: "Subscriptions",
+                  amount: state.subscription.toString(),
                 ),
               ],
-            );
-          },
+            ),
+            const SizedBox(
+              height: 6,
+            ),
+            Container(
+              height: 1,
+              width: getWidth(context),
+              color: customBlackColor.withOpacity(.05),
+            ),
+            const SizedBox(
+              height: 4,
+            ),
+            Text(
+              "Summary",
+              style: boldTextStyle.copyWith(
+                fontSize: 18,
+              ),
+            ),
+            const SizedBox(
+              height: 6,
+            ),
+            Builder(
+              builder: (context) {
+                final demoBlocState = context.watch<DemoBloc>().state;
+                return _GetOverviewWidget(
+                  isDemoActive: demoBlocState is DemoEnabledState,
+                  title: "Withdrawals",
+                  amount: state.totalExpenses.toString(),
+                );
+              },
+            ),
+            const SizedBox(
+              height: 4,
+            ),
+            Builder(
+              builder: (context) {
+                final demoBlocState = context.watch<DemoBloc>().state;
+                return _GetOverviewWidget(
+                  isDemoActive: demoBlocState is DemoEnabledState,
+                  title: "Diposits",
+                  amount: state.totalSavings.toString(),
+                );
+              },
+            ),
+            const SizedBox(
+              height: 4,
+            ),
+            Container(
+              height: 1,
+              width: getWidth(context),
+              color: customBlackColor.withOpacity(.05),
+            ),
+            const SizedBox(
+              height: 4,
+            ),
+            Builder(
+              builder: (context) {
+                final state = context.watch<UserBloc>().state;
+                final demoBlocState = context.watch<DemoBloc>().state;
+
+                String totalEarnings = "";
+                if (state is AuthenticatedUserState) {
+                  totalEarnings = state.monthlyEarnings.toString();
+                }
+                return _GetOverviewWidget(
+                  isDemoActive: demoBlocState is DemoEnabledState,
+                  title: "You've earned",
+                  amount: totalEarnings.toString(),
+                );
+              },
+            ),
+            const SizedBox(
+              height: 4,
+            ),
+            Builder(
+              builder: (context) {
+                final state = context.watch<UserBloc>().state;
+                final demoBlocState = context.watch<DemoBloc>().state;
+
+                String totalSavings = "";
+                if (state is AuthenticatedUserState) {
+                  totalSavings = state.monthlySavings.toString();
+                }
+                return _GetOverviewWidget(
+                  isDemoActive: demoBlocState is DemoEnabledState,
+                  title: "You've saved",
+                  amount: totalSavings.toString(),
+                );
+              },
+            ),
+            const SizedBox(
+              height: 4,
+            ),
+            Container(
+              height: 1,
+              width: getWidth(context),
+              color: customBlackColor.withOpacity(.05),
+            ),
+            const SizedBox(
+              height: 4,
+            ),
+            Builder(
+              builder: (context) {
+                final state = context.watch<UserBloc>().state;
+                final demoBlocState = context.watch<DemoBloc>().state;
+                String netWorth = "";
+                if (state is AuthenticatedUserState) {
+                  netWorth = state.netBalance.toString();
+                }
+                return _GetOverviewWidget(
+                  isDemoActive: demoBlocState is DemoEnabledState,
+                  title: "Current NET. balance",
+                  amount: netWorth.toString(),
+                );
+              },
+            ),
+            const SizedBox(
+              height: 12,
+            ),
+          ],
         );
       },
     );

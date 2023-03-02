@@ -13,11 +13,11 @@ import '../../../app_data/app_constants/constants.dart';
 import '../../../app_data/app_constants/domentions.dart';
 import '../../../app_data/custom_transition_page_route/custom_transition_page_route.dart';
 import '../../../app_data/theme_data/colors.dart';
+import '../../../bloc/archive_cubit/archive_cubit.dart';
 import '../../../bloc/demoBloc/demo_bloc.dart';
 import '../../../bloc/homeframe_cubit/homeframe_page_cubit.dart';
 import '../../../bloc/homepage_cubit/homepage_cubit.dart';
 import '../../../bloc/userBloc/user_bloc.dart';
-import '../../../models/pinext_transaction_model.dart';
 import '../../../services/date_time_services.dart';
 import '../../../shared/widgets/budget_estimations.dart';
 import '../../../shared/widgets/pinext_card.dart';
@@ -69,6 +69,7 @@ class HomepageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<ArchiveCubit>().getCurrentMonthTransactionArchive(context);
     return SizedBox(
       height: getHeight(context),
       width: getWidth(context),
@@ -794,26 +795,9 @@ class _GetPastTransactionsWidget extends StatelessWidget {
         const SizedBox(
           height: 4,
         ),
-        StreamBuilder(
-          stream: FirebaseServices()
-              .firebaseFirestore
-              .collection('pinext_users')
-              .doc(FirebaseServices().getUserId())
-              .collection('pinext_transactions')
-              .doc(currentYear)
-              .collection(currentMonth)
-              .orderBy(
-                "transactionDate",
-                descending: true,
-              )
-              .snapshots(),
-          builder: ((context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: SizedBox.shrink(),
-              );
-            }
-            if (snapshot.data!.docs.isEmpty) {
+        BlocBuilder<ArchiveCubit, ArchiveState>(
+          builder: (context, archiveState) {
+            if (archiveState.archiveList.isEmpty) {
               return Text(
                 "404 - No record found!",
                 style: regularTextStyle.copyWith(
@@ -821,38 +805,17 @@ class _GetPastTransactionsWidget extends StatelessWidget {
                 ),
               );
             }
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                  child: ListView.builder(
-                    itemCount: snapshot.data!.docs.length > 10 ? 10 : snapshot.data!.docs.length,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: ((context, index) {
-                      if (snapshot.data!.docs.isEmpty) {
-                        return const Text("No data found! :(");
-                      }
-                      if (snapshot.data!.docs.isEmpty) {
-                        return Text(
-                          "No data found! :(",
-                          style: regularTextStyle.copyWith(
-                            color: customBlackColor.withOpacity(.4),
-                          ),
-                        );
-                      }
-
-                      PinextTransactionModel pinextTransactionModel = PinextTransactionModel.fromMap(
-                        snapshot.data!.docs[index].data(),
-                      );
-                      return TransactionDetailsCard(pinextTransactionModel: pinextTransactionModel);
-                    }),
-                  ),
-                )
-              ],
+            return ListView.builder(
+              itemCount: archiveState.archiveList.length,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                return TransactionDetailsCard(
+                  pinextTransactionModel: archiveState.archiveList[index],
+                );
+              },
             );
-          }),
+          },
         ),
       ],
     );

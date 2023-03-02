@@ -511,7 +511,7 @@ class TransactionsList extends StatelessWidget {
                                           TransactionDetailsCard(pinextTransactionModel: pinextTransactionModel);
                                       context.read<UserStatisticsCubit>().updateStatistics(
                                           amount: double.parse(pinextTransactionModel.amount),
-                                          isExpense: pinextTransactionModel.transactionType == "Expense",
+                                          isExpense: pinextTransactionModel.transactionType.toString() == "Expense",
                                           tag: pinextTransactionModel.transactionTag,
                                           tagAmount: double.parse(pinextTransactionModel.amount));
                                       if (state.selectedFilter == "All transactions") {
