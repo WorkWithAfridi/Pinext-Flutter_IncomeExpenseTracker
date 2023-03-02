@@ -136,10 +136,26 @@ class _GetStatisticsWidget extends StatelessWidget {
                 const SizedBox(
                   height: 4,
                 ),
+                Container(
+                  height: 1,
+                  width: getWidth(context),
+                  color: customBlackColor.withOpacity(.05),
+                ),
+                const SizedBox(
+                  height: 4,
+                ),
                 _GetOverviewWidget(
                   isDemoActive: demoBlocState is DemoEnabledState,
                   title: "Food and Groceries",
                   amount: state.foodAndGroceries.toString(),
+                ),
+                const SizedBox(
+                  height: 4,
+                ),
+                Container(
+                  height: 1,
+                  width: getWidth(context),
+                  color: customBlackColor.withOpacity(.05),
                 ),
                 const SizedBox(
                   height: 4,
@@ -152,10 +168,26 @@ class _GetStatisticsWidget extends StatelessWidget {
                 const SizedBox(
                   height: 4,
                 ),
+                Container(
+                  height: 1,
+                  width: getWidth(context),
+                  color: customBlackColor.withOpacity(.05),
+                ),
+                const SizedBox(
+                  height: 4,
+                ),
                 _GetOverviewWidget(
                   isDemoActive: demoBlocState is DemoEnabledState,
                   title: "Housing and Utilities",
                   amount: state.transportation.toString(),
+                ),
+                const SizedBox(
+                  height: 4,
+                ),
+                Container(
+                  height: 1,
+                  width: getWidth(context),
+                  color: customBlackColor.withOpacity(.05),
                 ),
                 const SizedBox(
                   height: 4,
@@ -168,10 +200,26 @@ class _GetStatisticsWidget extends StatelessWidget {
                 const SizedBox(
                   height: 4,
                 ),
+                Container(
+                  height: 1,
+                  width: getWidth(context),
+                  color: customBlackColor.withOpacity(.05),
+                ),
+                const SizedBox(
+                  height: 4,
+                ),
                 _GetOverviewWidget(
                   isDemoActive: demoBlocState is DemoEnabledState,
                   title: "Education and Training",
                   amount: state.educationAndTraining.toString(),
+                ),
+                const SizedBox(
+                  height: 4,
+                ),
+                Container(
+                  height: 1,
+                  width: getWidth(context),
+                  color: customBlackColor.withOpacity(.05),
                 ),
                 const SizedBox(
                   height: 4,
@@ -184,10 +232,26 @@ class _GetStatisticsWidget extends StatelessWidget {
                 const SizedBox(
                   height: 4,
                 ),
+                Container(
+                  height: 1,
+                  width: getWidth(context),
+                  color: customBlackColor.withOpacity(.05),
+                ),
+                const SizedBox(
+                  height: 4,
+                ),
                 _GetOverviewWidget(
                   isDemoActive: demoBlocState is DemoEnabledState,
                   title: "Personal Care",
                   amount: state.personalCare.toString(),
+                ),
+                const SizedBox(
+                  height: 4,
+                ),
+                Container(
+                  height: 1,
+                  width: getWidth(context),
+                  color: customBlackColor.withOpacity(.05),
                 ),
                 const SizedBox(
                   height: 4,
@@ -200,10 +264,26 @@ class _GetStatisticsWidget extends StatelessWidget {
                 const SizedBox(
                   height: 4,
                 ),
+                Container(
+                  height: 1,
+                  width: getWidth(context),
+                  color: customBlackColor.withOpacity(.05),
+                ),
+                const SizedBox(
+                  height: 4,
+                ),
                 _GetOverviewWidget(
                   isDemoActive: demoBlocState is DemoEnabledState,
                   title: "Gifts and Donations",
                   amount: state.giftsAndDonations.toString(),
+                ),
+                const SizedBox(
+                  height: 4,
+                ),
+                Container(
+                  height: 1,
+                  width: getWidth(context),
+                  color: customBlackColor.withOpacity(.05),
                 ),
                 const SizedBox(
                   height: 4,
@@ -216,6 +296,14 @@ class _GetStatisticsWidget extends StatelessWidget {
                 const SizedBox(
                   height: 4,
                 ),
+                Container(
+                  height: 1,
+                  width: getWidth(context),
+                  color: customBlackColor.withOpacity(.05),
+                ),
+                const SizedBox(
+                  height: 4,
+                ),
                 _GetOverviewWidget(
                   isDemoActive: demoBlocState is DemoEnabledState,
                   title: "Others",
@@ -224,10 +312,26 @@ class _GetStatisticsWidget extends StatelessWidget {
                 const SizedBox(
                   height: 4,
                 ),
+                Container(
+                  height: 1,
+                  width: getWidth(context),
+                  color: customBlackColor.withOpacity(.05),
+                ),
+                const SizedBox(
+                  height: 4,
+                ),
                 _GetOverviewWidget(
                   isDemoActive: demoBlocState is DemoEnabledState,
                   title: "Transferred",
                   amount: state.transfer.toString(),
+                ),
+                const SizedBox(
+                  height: 4,
+                ),
+                Container(
+                  height: 1,
+                  width: getWidth(context),
+                  color: customBlackColor.withOpacity(.05),
                 ),
                 const SizedBox(
                   height: 4,
@@ -272,6 +376,14 @@ class _GetStatisticsWidget extends StatelessWidget {
             const SizedBox(
               height: 4,
             ),
+            Container(
+              height: 1,
+              width: getWidth(context),
+              color: customBlackColor.withOpacity(.05),
+            ),
+            const SizedBox(
+              height: 4,
+            ),
             Builder(
               builder: (context) {
                 final demoBlocState = context.watch<DemoBloc>().state;
@@ -308,6 +420,14 @@ class _GetStatisticsWidget extends StatelessWidget {
                   amount: totalEarnings.toString(),
                 );
               },
+            ),
+            const SizedBox(
+              height: 4,
+            ),
+            Container(
+              height: 1,
+              width: getWidth(context),
+              color: customBlackColor.withOpacity(.05),
             ),
             const SizedBox(
               height: 4,
@@ -353,6 +473,14 @@ class _GetStatisticsWidget extends StatelessWidget {
                   amount: netWorth.toString(),
                 );
               },
+            ),
+            const SizedBox(
+              height: 4,
+            ),
+            Container(
+              height: 1,
+              width: getWidth(context),
+              color: customBlackColor.withOpacity(.05),
             ),
             const SizedBox(
               height: 12,
