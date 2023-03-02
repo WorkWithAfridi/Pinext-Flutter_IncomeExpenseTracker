@@ -17,6 +17,8 @@ abstract class ArchiveState extends Equatable {
         selectedMonth,
         selectedFilter,
         selectedYear,
+        archiveList.length,
+        archiveList,
       ];
 }
 

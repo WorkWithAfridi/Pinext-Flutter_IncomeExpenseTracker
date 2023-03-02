@@ -1,4 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pinext/app/bloc/archive_cubit/archive_cubit.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
 import 'package:pinext/app/models/pinext_transaction_model.dart';
 import 'package:pinext/app/models/pinext_user_model.dart';
@@ -21,6 +24,7 @@ class TransactionHandler {
     required String cardId,
     required bool markedAs,
     required String transactionTag,
+    required BuildContext context,
   }) async {
     String response = "Error";
     try {
@@ -29,7 +33,7 @@ class TransactionHandler {
         return "Couldn't process transaction. Low balance!";
       }
 
-      String transactionId =  Uuid().v4();
+      String transactionId = const Uuid().v4();
       PinextTransactionModel pinextTransactionModel = PinextTransactionModel(
         transactionType: transactionType,
         amount: amount,
@@ -119,6 +123,7 @@ class TransactionHandler {
     } catch (err) {
       response = err.toString();
     }
+    await context.read<ArchiveCubit>().getCurrentMonthTransactionArchive(context);
     return response;
   }
 }

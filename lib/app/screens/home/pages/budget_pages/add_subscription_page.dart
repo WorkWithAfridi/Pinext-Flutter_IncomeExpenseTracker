@@ -384,6 +384,7 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
                                             context.read<AddSubscriptionCubit>().updateSubscription(
                                                   updatedSubscriptionModel,
                                                   true,
+                                                  context,
                                                 );
                                           }
                                         },
@@ -409,6 +410,7 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
                                             context.read<AddSubscriptionCubit>().updateSubscription(
                                                   updatedSubscriptionModel,
                                                   false,
+                                                  context,
                                                 );
                                           }
                                         },

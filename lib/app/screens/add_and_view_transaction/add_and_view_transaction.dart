@@ -691,6 +691,7 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
                                   ? "Expense"
                                   : "Income",
                               transctionTag: state.selectedTag,
+                              context: context,
                             );
                       }
                     }

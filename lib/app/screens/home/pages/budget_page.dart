@@ -684,9 +684,10 @@ class SubscriptionCard extends StatelessWidget {
                           value: subscriptionModel.lastPaidOn.substring(5, 7) == currentMonth,
                           onChanged: (value) async {
                             if (value == true) {
-                              context
-                                  .read<UpdateSubscriptionCubit>()
-                                  .updateSubscriptionStatus(subscriptionModel: subscriptionModel);
+                              context.read<UpdateSubscriptionCubit>().updateSubscriptionStatus(
+                                    subscriptionModel: subscriptionModel,
+                                    context: context,
+                                  );
                             } else {
                               GetCustomSnackbar(
                                 title: "Snap",

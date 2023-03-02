@@ -44,12 +44,14 @@ class ArchiveCubit extends Cubit<ArchiveState> {
         list.add(PinextTransactionModel.fromMap(transaction.data()));
       }
     });
+
+    list.sort((a, b) => a.transactionDate.compareTo(b.transactionDate));
     emit(
       ArchiveInitialState(
         selectedMonth: state.selectedMonth,
         selectedFilter: state.selectedFilter,
         selectedYear: state.selectedYear,
-        archiveList: list,
+        archiveList: list.reversed.toList(),
       ),
     );
     context.read<UserStatisticsCubit>().extractUserStatisticsFromTransactionList(

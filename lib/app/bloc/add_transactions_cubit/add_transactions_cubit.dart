@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:pinext/app/services/handlers/transaction_handler.dart';
 
 part 'add_transactions_state.dart';
@@ -45,6 +46,7 @@ class AddTransactionsCubit extends Cubit<AddTransactionsState> {
     required String details,
     required String transctionType,
     required String transctionTag,
+    required BuildContext context,
   }) async {
     emit(AddTransactionsLoadingState(
       selectedTransactionMode: state.selectedTransactionMode,
@@ -61,6 +63,7 @@ class AddTransactionsCubit extends Cubit<AddTransactionsState> {
       cardId: state.selectedCardNo,
       markedAs: state.markAs,
       transactionTag: transctionTag,
+      context: context,
     );
     if (response == 'Success') {
       emit(AddTransactionsSuccessState(

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:pinext/app/API/firebase_directories.dart';
 import 'package:pinext/app/models/pinext_subscription_model.dart';
 import 'package:pinext/app/services/firebase_services.dart';
@@ -44,6 +45,7 @@ class SubscriptionHandler {
   Future updateSubscription({
     required PinextSubscriptionModel subscriptionModel,
     required bool addTransactionToArchive,
+    required BuildContext context,
   }) async {
     try {
       await FirebaseServices()
@@ -61,6 +63,7 @@ class SubscriptionHandler {
           cardId: subscriptionModel.assignedCardId,
           transactionTag: "Subscription",
           markedAs: true,
+          context: context,
         );
       }
       return "success";

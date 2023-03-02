@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:pinext/app/models/pinext_subscription_model.dart';
 import 'package:pinext/app/services/handlers/subscription_handler.dart';
 
@@ -8,11 +9,15 @@ part 'update_subscription_state.dart';
 class UpdateSubscriptionCubit extends Cubit<UpdateSubscriptionState> {
   UpdateSubscriptionCubit() : super(UpdateSubscriptionDefault());
 
-  updateSubscriptionStatus({required PinextSubscriptionModel subscriptionModel}) async {
+  updateSubscriptionStatus({
+    required PinextSubscriptionModel subscriptionModel,
+    required BuildContext context,
+  }) async {
     subscriptionModel.lastPaidOn = DateTime.now().toString();
     String response = await SubscriptionHandler().updateSubscription(
       subscriptionModel: subscriptionModel,
       addTransactionToArchive: true,
+      context: context,
     );
     if (response == "success") {
       emit(SubscriptionUpdatedSuccessfullyState());
