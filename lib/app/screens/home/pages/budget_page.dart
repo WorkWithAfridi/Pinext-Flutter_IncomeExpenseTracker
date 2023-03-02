@@ -344,15 +344,7 @@ class _GetStatisticsWidget extends StatelessWidget {
               ],
             ),
             const SizedBox(
-              height: 6,
-            ),
-            Container(
-              height: 1,
-              width: getWidth(context),
-              color: customBlackColor.withOpacity(.05),
-            ),
-            const SizedBox(
-              height: 4,
+              height: 12,
             ),
             Text(
               "Summary",
@@ -473,14 +465,6 @@ class _GetStatisticsWidget extends StatelessWidget {
                   amount: netWorth.toString(),
                 );
               },
-            ),
-            const SizedBox(
-              height: 4,
-            ),
-            Container(
-              height: 1,
-              width: getWidth(context),
-              color: customBlackColor.withOpacity(.05),
             ),
             const SizedBox(
               height: 12,
