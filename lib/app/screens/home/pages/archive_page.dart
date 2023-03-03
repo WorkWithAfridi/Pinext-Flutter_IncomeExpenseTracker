@@ -26,18 +26,21 @@ class ArchivePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ArchiveMonthView();
-    // return MultiBlocProvider(
-    //   providers: [
-    //     BlocProvider(
-    //       create: (context) => ArchiveCubit(),
-    //     ),
-    //     BlocProvider(
-    //       create: (context) => ArchiveSearchCubit(),
-    //     ),
-    //   ],
-    //   child: const ArchiveMonthView(),
-    // );
+    // return const ArchiveMonthView();
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => ArchiveCubit(),
+        ),
+        BlocProvider(
+          create: (context) => ArchiveSearchCubit(),
+        ),
+        BlocProvider(
+          create: (context) => UserStatisticsCubit(),
+        ),
+      ],
+      child: const ArchiveMonthView(),
+    );
   }
 }
 
@@ -513,7 +516,9 @@ class TransactionsList extends StatelessWidget {
                                           amount: double.parse(pinextTransactionModel.amount),
                                           isExpense: pinextTransactionModel.transactionType.toString() == "Expense",
                                           tag: pinextTransactionModel.transactionTag,
-                                          tagAmount: double.parse(pinextTransactionModel.amount));
+                                          tagAmount: double.parse(
+                                            pinextTransactionModel.amount,
+                                          ));
                                       if (state.selectedFilter == "All transactions") {
                                         if (searchState.isSearchActive) {
                                           if (pinextTransactionModel.details
@@ -631,50 +636,63 @@ class _GetStatisticsWidget extends StatelessWidget {
                               );
                             },
                           ),
-                          const SizedBox(
-                            height: 4,
-                          ),
-                          Container(
-                            height: 1,
-                            width: getWidth(context),
-                            color: customBlackColor.withOpacity(.05),
-                          ),
-                          const SizedBox(
-                            height: 4,
-                          ),
-                          Builder(
-                            builder: (context) {
-                              final state = context.watch<UserBloc>().state;
-                              final demoBlocState = context.watch<DemoBloc>().state;
+                          BlocBuilder<ArchiveCubit, ArchiveState>(
+                            builder: (context, state) {
+                              var currentMonthTemp = "0${int.parse(currentMonth) + 1}".length > 2
+                                  ? "0${int.parse(currentMonth) + 1}".substring(1, 3)
+                                  : "0${int.parse(currentMonth) + 1}";
+                              return int.parse(state.selectedMonth) == int.parse(currentMonthTemp) - 2
+                                  ? Column(
+                                      children: [
+                                        const SizedBox(
+                                          height: 4,
+                                        ),
+                                        Container(
+                                          height: 1,
+                                          width: getWidth(context),
+                                          color: customBlackColor.withOpacity(.05),
+                                        ),
+                                        const SizedBox(
+                                          height: 4,
+                                        ),
+                                        Builder(
+                                          builder: (context) {
+                                            final state = context.watch<UserBloc>().state;
+                                            final demoBlocState = context.watch<DemoBloc>().state;
 
-                              String totalEarnings = "";
-                              if (state is AuthenticatedUserState) {
-                                totalEarnings = state.monthlyEarnings.toString();
-                              }
-                              return _GetOverviewWidget(
-                                isDemoActive: demoBlocState is DemoEnabledState,
-                                title: "You've earned",
-                                amount: totalEarnings.toString(),
-                              );
-                            },
-                          ),
-                          const SizedBox(
-                            height: 4,
-                          ),
-                          Builder(
-                            builder: (context) {
-                              final state = context.watch<UserBloc>().state;
-                              final demoBlocState = context.watch<DemoBloc>().state;
+                                            String totalEarnings = "";
+                                            if (state is AuthenticatedUserState) {
+                                              totalEarnings = state.monthlyEarnings.toString();
+                                            }
+                                            return _GetOverviewWidget(
+                                              isDemoActive: demoBlocState is DemoEnabledState,
+                                              title: "You've earned",
+                                              amount: totalEarnings.toString(),
+                                            );
+                                          },
+                                        ),
+                                        const SizedBox(
+                                          height: 4,
+                                        ),
+                                        Builder(
+                                          builder: (context) {
+                                            final state = context.watch<UserBloc>().state;
+                                            final demoBlocState = context.watch<DemoBloc>().state;
 
-                              String totalSavings = "";
-                              if (state is AuthenticatedUserState) {
-                                totalSavings = state.monthlySavings.toString();
-                              }
-                              return _GetOverviewWidget(
-                                isDemoActive: demoBlocState is DemoEnabledState,
-                                title: "You've saved",
-                                amount: totalSavings.toString(),
-                              );
+                                            String totalSavings = "";
+                                            if (state is AuthenticatedUserState) {
+                                              totalSavings = state.monthlySavings.toString();
+                                            }
+                                            return _GetOverviewWidget(
+                                              isDemoActive: demoBlocState is DemoEnabledState,
+                                              title: "You've saved",
+                                              amount: totalSavings.toString(),
+                                            );
+                                          },
+                                        ),
+                                      ],
+                                    )
+                                  : const SizedBox.shrink();
                             },
                           ),
                           const SizedBox(

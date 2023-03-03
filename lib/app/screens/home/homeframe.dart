@@ -10,6 +10,7 @@ import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/app_data/custom_transition_page_route/custom_transition_page_route.dart';
 import 'package:pinext/app/app_data/routing/routes.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
+import 'package:pinext/app/bloc/archive_cubit/archive_cubit.dart';
 import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/screens/home/pages/app_settings_screen/app_settings_screen.dart';
@@ -21,7 +22,6 @@ import 'package:pinext/app/services/handlers/card_handler.dart';
 
 import '../../app_data/app_constants/constants.dart';
 import '../../app_data/app_constants/fonts.dart';
-import '../../bloc/archive_cubit/user_statistics_cubit/user_statistics_cubit.dart';
 import '../../bloc/homeframe_cubit/homeframe_page_cubit.dart';
 import '../../services/handlers/app_handler.dart';
 import 'pages/budget_pages/add_subscription_page.dart';
@@ -38,6 +38,8 @@ class _HomeframeState extends State<Homeframe> {
   void initState() {
     super.initState();
     CardHandler().getUserCards();
+
+    context.read<ArchiveCubit>().getCurrentMonthTransactionArchive(context);
     // AppHandler().checkForUpdate(context);
     // showIntroductions();
     //Add introKeys to children widgets
@@ -69,9 +71,6 @@ class _HomeframeState extends State<Homeframe> {
         BlocProvider(
           create: (context) => HomeframeCubit(),
         ),
-        BlocProvider(
-          create: (context) => UserStatisticsCubit(),
-        )
       ],
       child: HomeframeView(),
     );

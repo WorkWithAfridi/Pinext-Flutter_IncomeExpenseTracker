@@ -46,9 +46,9 @@ class Pinext extends StatelessWidget {
         BlocProvider(
           create: (context) => ArchiveCubit(),
         ),
-        BlocProvider(
-          create: (context) => ArchiveSearchCubit(),
-        ),
+        // BlocProvider(
+        //   create: (context) => ArchiveSearchCubit(),
+        // ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

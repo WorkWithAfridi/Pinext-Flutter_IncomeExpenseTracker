@@ -69,7 +69,6 @@ class HomepageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<ArchiveCubit>().getCurrentMonthTransactionArchive(context);
     return SizedBox(
       height: getHeight(context),
       width: getWidth(context),
