@@ -809,8 +809,10 @@ class _GetPastTransactionsWidget extends StatelessWidget {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
+                int listLen = archiveState.archiveList.length > 10 ? 10 : archiveState.archiveList.length;
                 return TransactionDetailsCard(
                   pinextTransactionModel: archiveState.archiveList[index],
+                  isLastIndex: index == listLen - 1,
                 );
               },
             );

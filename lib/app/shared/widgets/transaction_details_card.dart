@@ -13,12 +13,14 @@ import '../../bloc/demoBloc/demo_bloc.dart';
 import '../../models/pinext_transaction_model.dart';
 
 class TransactionDetailsCard extends StatefulWidget {
-  const TransactionDetailsCard({
+  TransactionDetailsCard({
     Key? key,
     required this.pinextTransactionModel,
+    required this.isLastIndex,
   }) : super(key: key);
 
   final PinextTransactionModel pinextTransactionModel;
+  bool isLastIndex;
 
   @override
   State<TransactionDetailsCard> createState() => _TransactionDetailsCardState();
@@ -156,11 +158,13 @@ class _TransactionDetailsCardState extends State<TransactionDetailsCard> {
                 const SizedBox(
                   height: 8,
                 ),
-                Container(
-                  height: 1,
-                  width: getWidth(context),
-                  color: customBlackColor.withOpacity(.05),
-                )
+                widget.isLastIndex
+                    ? const SizedBox.shrink()
+                    : Container(
+                        height: 1,
+                        width: getWidth(context),
+                        color: customBlackColor.withOpacity(.05),
+                      )
               ],
             ),
           );

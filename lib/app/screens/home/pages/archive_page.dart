@@ -510,8 +510,10 @@ class TransactionsList extends StatelessWidget {
                                       PinextTransactionModel pinextTransactionModel = PinextTransactionModel.fromMap(
                                         snapshot.data!.docs[index].data(),
                                       );
-                                      TransactionDetailsCard transactionDetailsCard =
-                                          TransactionDetailsCard(pinextTransactionModel: pinextTransactionModel);
+                                      TransactionDetailsCard transactionDetailsCard = TransactionDetailsCard(
+                                        pinextTransactionModel: pinextTransactionModel,
+                                        isLastIndex: index == snapshot.data!.docs.length - 1,
+                                      );
                                       context.read<UserStatisticsCubit>().updateStatistics(
                                           amount: double.parse(pinextTransactionModel.amount),
                                           isExpense: pinextTransactionModel.transactionType.toString() == "Expense",
