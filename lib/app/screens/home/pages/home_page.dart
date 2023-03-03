@@ -805,7 +805,7 @@ class _GetPastTransactionsWidget extends StatelessWidget {
               );
             }
             return ListView.builder(
-              itemCount: archiveState.archiveList.length,
+              itemCount: archiveState.archiveList.length > 10 ? 10 : archiveState.archiveList.length,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
