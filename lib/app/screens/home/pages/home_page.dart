@@ -360,13 +360,15 @@ class _GetGoalsAndMilestonesWidget extends StatelessWidget {
                           completionAmount =
                               ((double.parse(state.netBalance) / double.parse(pinextGoalModel.amount)) * 100);
                         }
-                        return completionAmount < 100
-                            ? PinextGoalCardMinimized(
-                                pinextGoalModel: pinextGoalModel,
-                                index: index,
-                                showCompletePercentage: true,
-                              )
-                            : const SizedBox.shrink();
+                        return
+                            // completionAmount < 100
+                            //     ?
+                            PinextGoalCardMinimized(
+                          pinextGoalModel: pinextGoalModel,
+                          index: index,
+                          showCompletePercentage: true,
+                        );
+                        // : const SizedBox.shrink();
                       },
                     );
                   }),
