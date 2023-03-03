@@ -747,7 +747,7 @@ class _SaveButton extends StatelessWidget {
                           dateAdded: DateTime.now().toString(),
                           lastPaidOn: lastPaidOn,
                           amount: amount,
-                          subscriptionId: const Uuid().v4(),
+                          subscriptionId: Uuid().v4(),
                           assignedCardId: state.selectedCardNo,
                           automaticallyDeductEnabled: isAutomaticallyPayEnabled,
                           description: description,
