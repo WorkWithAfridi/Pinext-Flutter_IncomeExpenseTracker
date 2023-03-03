@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/custom_transition_page_route/custom_transition_page_route.dart';
+import 'package:pinext/app/app_data/extensions/string_extensions.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/budget_cubit/budget_cubit.dart';
 import 'package:pinext/app/bloc/update_subscription_cubit/update_subscription_cubit.dart';
@@ -616,13 +617,14 @@ class SubscriptionCard extends StatelessWidget {
         child: Container(
           height: kToolbarHeight,
           decoration: BoxDecoration(
+            color: greyColor,
             borderRadius: BorderRadius.circular(
               defaultBorder,
             ),
-            border: Border.all(
-              color: customBlackColor.withOpacity(.2),
-              width: .5,
-            ),
+            // border: Border.all(
+            //   color: customBlackColor.withOpacity(.2),
+            //   width: .5,
+            // ),
           ),
           padding: const EdgeInsets.only(left: defaultPadding, right: 4),
           child: Builder(
@@ -636,9 +638,16 @@ class SubscriptionCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          demoBlocState is DemoEnabledState ? "Subscription name" : subscriptionModel.title,
-                          style: boldTextStyle,
+                          demoBlocState is DemoEnabledState
+                              ? "Subscription name".capitalize()
+                              : subscriptionModel.title.capitalize(),
+                          style: boldTextStyle.copyWith(
+                            fontSize: 18,
+                          ),
                           maxLines: 1,
+                        ),
+                        const SizedBox(
+                          height: 4,
                         ),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -654,7 +663,9 @@ class SubscriptionCard extends StatelessWidget {
                               child: Text(
                                 demoBlocState is DemoEnabledState ? "1000 Tk" : "${subscriptionModel.amount} Tk",
                                 maxLines: 1,
-                                style: boldTextStyle,
+                                style: regularTextStyle.copyWith(
+                                  color: customBlackColor.withOpacity(.7),
+                                ),
                               ),
                             ),
                           ],
@@ -667,11 +678,21 @@ class SubscriptionCard extends StatelessWidget {
                           padding: const EdgeInsets.only(
                             right: defaultPadding - 4,
                           ),
-                          child: Text(
-                            "PAID",
-                            style: boldTextStyle.copyWith(
-                              color: Colors.green,
-                            ),
+                          child: Row(
+                            children: [
+                              Text(
+                                "STATUS: ",
+                                style: boldTextStyle.copyWith(
+                                  color: customDarkBBlueColor,
+                                ),
+                              ),
+                              Text(
+                                "PAID",
+                                style: boldTextStyle.copyWith(
+                                  color: Colors.green,
+                                ),
+                              ),
+                            ],
                           ),
                         )
                       : Checkbox(
@@ -821,15 +842,6 @@ class _GetSubscriptionDetailsWidget extends StatelessWidget {
                               );
                             },
                           ),
-                          // const SizedBox(
-                          //   height: 4,
-                          // ),
-                          // Text(
-                          //   "in ${months[int.parse(currentMonth) - 1]}.",
-                          //   style: regularTextStyle.copyWith(
-                          //     color: customBlackColor.withOpacity(.6),
-                          //   ),
-                          // ),
                         ],
                       ),
                     ),

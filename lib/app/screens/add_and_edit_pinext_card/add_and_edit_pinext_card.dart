@@ -78,10 +78,10 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
     descriptionController = TextEditingController();
     balanceController = TextEditingController();
     if (widget.isEditCardScreen) {
-      titleController.text = widget.isDemoMode ? "Bank" : widget.pinextCardModel!.title.toString();
+      titleController.text = widget.isDemoMode ? "Bank" : widget.pinextCardModel!.title.toString().capitalize();
       descriptionController.text = widget.isDemoMode
           ? "The purpose of lorem ipsum is to create a natural looking block of text (sentence, paragraph, page, etc.) that doesn't distract from the layout."
-          : widget.pinextCardModel!.description.toString();
+          : widget.pinextCardModel!.description.toString().capitalize();
       balanceController.text = widget.isDemoMode ? "55000" : widget.pinextCardModel!.balance.toString();
       isEditCardColor = widget.pinextCardModel!.color;
     }

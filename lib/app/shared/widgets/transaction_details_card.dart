@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:pinext/app/app_data/custom_transition_page_route/custom_transition_page_route.dart';
+import 'package:pinext/app/app_data/extensions/string_extensions.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
 import 'package:pinext/app/screens/add_and_view_transaction/add_and_view_transaction.dart';
 import 'package:pinext/app/services/handlers/card_handler.dart';
@@ -102,11 +103,11 @@ class _TransactionDetailsCardState extends State<TransactionDetailsCard> {
                             overflow: TextOverflow.ellipsis,
                           ),
                           Flexible(
-                            flex: 3,
+                            flex: 4,
                             child: Text(
                               demoBlocState is DemoEnabledState
-                                  ? "a natural looking block of text.".toLowerCase()
-                                  : widget.pinextTransactionModel.details.toLowerCase(),
+                                  ? "a natural looking block of text.".toLowerCase().capitalize()
+                                  : widget.pinextTransactionModel.details.toLowerCase().capitalize(),
                               style: regularTextStyle.copyWith(
                                 color: customBlackColor.withOpacity(.80),
                               ),

@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:pinext/app/app_data/extensions/string_extensions.dart';
 import 'package:pinext/app/services/firebase_services.dart';
 import 'package:pinext/app/services/handlers/card_handler.dart';
 import 'package:pinext/app/services/handlers/user_handler.dart';
@@ -68,7 +69,7 @@ class FileHandler {
                 DateFormat('dd-MM-yyyy').format(DateTime.parse(date)),
               );
           sheet.getRangeByName("B${i + offset}").setText(card.title);
-          sheet.getRangeByName("C${i + offset}").setText(details);
+          sheet.getRangeByName("C${i + offset}").setText(details.capitalize());
           sheet.getRangeByName("D${i + offset}").setText(amount);
           sheet.getRangeByName("E${i + offset}").setText(type == "Income" ? "Deposit" : "Withdrawal");
         }

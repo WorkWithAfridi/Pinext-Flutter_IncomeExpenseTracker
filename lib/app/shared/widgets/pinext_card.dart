@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/app_data/custom_transition_page_route/custom_transition_page_route.dart';
+import 'package:pinext/app/app_data/extensions/string_extensions.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -95,7 +96,8 @@ class PinextCard extends StatelessWidget {
                           child: Text(
                             demoBlocState is DemoEnabledState
                                 ? "The purpose of lorem ipsum is to create a natural looking block of text (sentence, paragraph, page, etc.) that doesn't distract from the layout."
-                                : cardDetails,
+                                    .capitalize()
+                                : cardDetails.capitalize(),
                             style: regularTextStyle.copyWith(
                               color: whiteColor.withOpacity(.4),
                               overflow: TextOverflow.ellipsis,

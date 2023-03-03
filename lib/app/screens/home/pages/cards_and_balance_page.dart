@@ -260,14 +260,15 @@ class CardsAndBalanceView extends StatelessWidget {
                             },
                             onEditButtonClick: () {
                               Navigator.push(
-                                  context,
-                                  CustomTransitionPageRoute(
-                                    childWidget: AddAndEditPinextCardScreen(
-                                      isEditCardScreen: true,
-                                      pinextCardModel: pinextCardModel,
-                                      isDemoMode: demoBlocState is DemoEnabledState,
-                                    ),
-                                  ));
+                                context,
+                                CustomTransitionPageRoute(
+                                  childWidget: AddAndEditPinextCardScreen(
+                                    isEditCardScreen: true,
+                                    pinextCardModel: pinextCardModel,
+                                    isDemoMode: demoBlocState is DemoEnabledState,
+                                  ),
+                                ),
+                              );
                             },
                           );
                         },

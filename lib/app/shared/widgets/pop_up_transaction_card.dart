@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
 import 'package:pinext/app/app_data/app_constants/domentions.dart';
+import 'package:pinext/app/app_data/extensions/string_extensions.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
@@ -19,22 +20,6 @@ void showPinextCardPopup(
     //this right here
     child: Builder(
       builder: (context) {
-        // PinextCardModel cardModel = PinextCardModel(
-        //   cardId: "001",
-        //   title: "Test card title",
-        //   description: "Test card description",
-        //   balance: 1120,
-        //   color: "Dark Blue",
-        //   lastTransactionData: DateTime.now().toString(),
-        // );
-        // PinextTransactionModel transactionModel = PinextTransactionModel(
-        //   transactionType: "Expense",
-        //   amount: "1120",
-        //   details: "Test transaction details",
-        //   cardId: "001",
-        //   transactionDate: DateTime.now().toString(),
-        //   transactionId: "001",
-        // );
         final demoBlocState = context.watch<DemoBloc>().state;
         return Container(
           padding: const EdgeInsets.all(
@@ -73,7 +58,8 @@ void showPinextCardPopup(
                           child: Text(
                             demoBlocState is DemoEnabledState
                                 ? "The purpose of lorem ipsum is to create a natural looking block of text (sentence, paragraph, page, etc.) that doesn't distract from the layout."
-                                : cardModel.description,
+                                    .capitalize()
+                                : cardModel.description.capitalize(),
                             style: regularTextStyle.copyWith(
                               color: whiteColor.withOpacity(.4),
                               overflow: TextOverflow.ellipsis,
