@@ -48,13 +48,6 @@ class SubscriptionHandler {
     required BuildContext context,
   }) async {
     try {
-      await FirebaseServices()
-          .firebaseFirestore
-          .collection(USERS_DIRECTORY)
-          .doc(UserHandler().currentUser.userId)
-          .collection('pinext_subscriptions')
-          .doc(subscriptionModel.subscriptionId)
-          .update(subscriptionModel.toMap());
       if (addTransactionToArchive) {
         await TransactionHandler().addTransaction(
           amount: subscriptionModel.amount,
@@ -66,6 +59,13 @@ class SubscriptionHandler {
           context: context,
         );
       }
+      await FirebaseServices()
+          .firebaseFirestore
+          .collection(USERS_DIRECTORY)
+          .doc(UserHandler().currentUser.userId)
+          .collection('pinext_subscriptions')
+          .doc(subscriptionModel.subscriptionId)
+          .update(subscriptionModel.toMap());
       return 'success';
     } catch (err) {
       return 'error';

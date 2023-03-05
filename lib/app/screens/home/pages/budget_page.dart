@@ -3,25 +3,24 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pinext/app/app_data/app_constants/constants.dart';
+import 'package:pinext/app/app_data/app_constants/domentions.dart';
+import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/app_data/custom_transition_page_route/custom_transition_page_route.dart';
 import 'package:pinext/app/app_data/extensions/string_extensions.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
+import 'package:pinext/app/bloc/archive_cubit/user_statistics_cubit/user_statistics_cubit.dart';
 import 'package:pinext/app/bloc/budget_cubit/budget_cubit.dart';
+import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/bloc/update_subscription_cubit/update_subscription_cubit.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/models/pinext_subscription_model.dart';
 import 'package:pinext/app/screens/home/pages/budget_pages/add_subscription_page.dart';
+import 'package:pinext/app/services/date_time_services.dart';
+import 'package:pinext/app/services/firebase_services.dart';
 import 'package:pinext/app/shared/widgets/budget_estimations.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 import 'package:pinext/app/shared/widgets/info_widget.dart';
-
-import '../../../app_data/app_constants/constants.dart';
-import '../../../app_data/app_constants/domentions.dart';
-import '../../../app_data/app_constants/fonts.dart';
-import '../../../bloc/archive_cubit/user_statistics_cubit/user_statistics_cubit.dart';
-import '../../../bloc/demoBloc/demo_bloc.dart';
-import '../../../services/date_time_services.dart';
-import '../../../services/firebase_services.dart';
 
 class BudgetPage extends StatelessWidget {
   const BudgetPage({super.key});
@@ -51,10 +50,10 @@ class BudgetView extends StatelessWidget {
         BlocListener<UpdateSubscriptionCubit, UpdateSubscriptionState>(
           listener: (context, state) {
             if (state is SubscriptionUpdatedSuccessfullyState) {
-              log("Updating user state");
+              log('Updating user state');
               context.read<UserBloc>().add(RefreshUserStateEvent());
               context.read<UpdateSubscriptionCubit>().resetState();
-              log("resetting");
+              log('resetting');
             }
           },
         ),
@@ -71,11 +70,10 @@ class BudgetView extends StatelessWidget {
                 horizontal: defaultPadding,
               ),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Budget & Subscriptions",
+                    'Budget & Subscriptions',
                     style: boldTextStyle.copyWith(
                       fontSize: 25,
                     ),
@@ -116,10 +114,9 @@ class _GetStatisticsWidget extends StatelessWidget {
         final demoBlocState = context.watch<DemoBloc>().state;
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
-              "Overview",
+              'Overview',
               style: boldTextStyle.copyWith(
                 fontSize: 18,
               ),
@@ -131,7 +128,7 @@ class _GetStatisticsWidget extends StatelessWidget {
               children: [
                 _GetOverviewWidget(
                   isDemoActive: demoBlocState is DemoEnabledState,
-                  title: "Income",
+                  title: 'Income',
                   amount: state.income.toString(),
                 ),
                 const SizedBox(
@@ -147,7 +144,7 @@ class _GetStatisticsWidget extends StatelessWidget {
                 ),
                 _GetOverviewWidget(
                   isDemoActive: demoBlocState is DemoEnabledState,
-                  title: "Food and Groceries",
+                  title: 'Food and Groceries',
                   amount: state.foodAndGroceries.toString(),
                 ),
                 const SizedBox(
@@ -163,7 +160,7 @@ class _GetStatisticsWidget extends StatelessWidget {
                 ),
                 _GetOverviewWidget(
                   isDemoActive: demoBlocState is DemoEnabledState,
-                  title: "Transportation",
+                  title: 'Transportation',
                   amount: state.transportation.toString(),
                 ),
                 const SizedBox(
@@ -179,7 +176,7 @@ class _GetStatisticsWidget extends StatelessWidget {
                 ),
                 _GetOverviewWidget(
                   isDemoActive: demoBlocState is DemoEnabledState,
-                  title: "Housing and Utilities",
+                  title: 'Housing and Utilities',
                   amount: state.transportation.toString(),
                 ),
                 const SizedBox(
@@ -195,7 +192,7 @@ class _GetStatisticsWidget extends StatelessWidget {
                 ),
                 _GetOverviewWidget(
                   isDemoActive: demoBlocState is DemoEnabledState,
-                  title: "Health and Wellness",
+                  title: 'Health and Wellness',
                   amount: state.healthAndWellness.toString(),
                 ),
                 const SizedBox(
@@ -211,7 +208,7 @@ class _GetStatisticsWidget extends StatelessWidget {
                 ),
                 _GetOverviewWidget(
                   isDemoActive: demoBlocState is DemoEnabledState,
-                  title: "Education and Training",
+                  title: 'Education and Training',
                   amount: state.educationAndTraining.toString(),
                 ),
                 const SizedBox(
@@ -227,7 +224,7 @@ class _GetStatisticsWidget extends StatelessWidget {
                 ),
                 _GetOverviewWidget(
                   isDemoActive: demoBlocState is DemoEnabledState,
-                  title: "Entertainment and Leisure",
+                  title: 'Entertainment and Leisure',
                   amount: state.entertainmentAndLeisure.toString(),
                 ),
                 const SizedBox(
@@ -243,7 +240,7 @@ class _GetStatisticsWidget extends StatelessWidget {
                 ),
                 _GetOverviewWidget(
                   isDemoActive: demoBlocState is DemoEnabledState,
-                  title: "Personal Care",
+                  title: 'Personal Care',
                   amount: state.personalCare.toString(),
                 ),
                 const SizedBox(
@@ -259,7 +256,7 @@ class _GetStatisticsWidget extends StatelessWidget {
                 ),
                 _GetOverviewWidget(
                   isDemoActive: demoBlocState is DemoEnabledState,
-                  title: "Clothing and Accessories",
+                  title: 'Clothing and Accessories',
                   amount: state.clothingAndAccessories.toString(),
                 ),
                 const SizedBox(
@@ -275,7 +272,7 @@ class _GetStatisticsWidget extends StatelessWidget {
                 ),
                 _GetOverviewWidget(
                   isDemoActive: demoBlocState is DemoEnabledState,
-                  title: "Gifts and Donations",
+                  title: 'Gifts and Donations',
                   amount: state.giftsAndDonations.toString(),
                 ),
                 const SizedBox(
@@ -291,7 +288,7 @@ class _GetStatisticsWidget extends StatelessWidget {
                 ),
                 _GetOverviewWidget(
                   isDemoActive: demoBlocState is DemoEnabledState,
-                  title: "Miscellaneous",
+                  title: 'Miscellaneous',
                   amount: state.miscellaneous.toString(),
                 ),
                 const SizedBox(
@@ -307,7 +304,7 @@ class _GetStatisticsWidget extends StatelessWidget {
                 ),
                 _GetOverviewWidget(
                   isDemoActive: demoBlocState is DemoEnabledState,
-                  title: "Others",
+                  title: 'Others',
                   amount: state.others.toString(),
                 ),
                 const SizedBox(
@@ -323,7 +320,7 @@ class _GetStatisticsWidget extends StatelessWidget {
                 ),
                 _GetOverviewWidget(
                   isDemoActive: demoBlocState is DemoEnabledState,
-                  title: "Transferred",
+                  title: 'Transferred',
                   amount: state.transfer.toString(),
                 ),
                 const SizedBox(
@@ -339,7 +336,7 @@ class _GetStatisticsWidget extends StatelessWidget {
                 ),
                 _GetOverviewWidget(
                   isDemoActive: demoBlocState is DemoEnabledState,
-                  title: "Subscriptions",
+                  title: 'Subscriptions',
                   amount: state.subscription.toString(),
                 ),
               ],
@@ -348,7 +345,7 @@ class _GetStatisticsWidget extends StatelessWidget {
               height: 12,
             ),
             Text(
-              "Summary",
+              'Summary',
               style: boldTextStyle.copyWith(
                 fontSize: 18,
               ),
@@ -361,7 +358,7 @@ class _GetStatisticsWidget extends StatelessWidget {
                 final demoBlocState = context.watch<DemoBloc>().state;
                 return _GetOverviewWidget(
                   isDemoActive: demoBlocState is DemoEnabledState,
-                  title: "Withdrawals",
+                  title: 'Withdrawals',
                   amount: state.totalExpenses.toString(),
                 );
               },
@@ -382,7 +379,7 @@ class _GetStatisticsWidget extends StatelessWidget {
                 final demoBlocState = context.watch<DemoBloc>().state;
                 return _GetOverviewWidget(
                   isDemoActive: demoBlocState is DemoEnabledState,
-                  title: "Diposits",
+                  title: 'Diposits',
                   amount: state.totalSavings.toString(),
                 );
               },
@@ -403,7 +400,7 @@ class _GetStatisticsWidget extends StatelessWidget {
                 final state = context.watch<UserBloc>().state;
                 final demoBlocState = context.watch<DemoBloc>().state;
 
-                String totalEarnings = "";
+                var totalEarnings = '';
                 if (state is AuthenticatedUserState) {
                   totalEarnings = state.monthlyEarnings.toString();
                 }
@@ -430,7 +427,7 @@ class _GetStatisticsWidget extends StatelessWidget {
                 final state = context.watch<UserBloc>().state;
                 final demoBlocState = context.watch<DemoBloc>().state;
 
-                String totalSavings = "";
+                var totalSavings = '';
                 if (state is AuthenticatedUserState) {
                   totalSavings = state.monthlySavings.toString();
                 }
@@ -456,13 +453,13 @@ class _GetStatisticsWidget extends StatelessWidget {
               builder: (context) {
                 final state = context.watch<UserBloc>().state;
                 final demoBlocState = context.watch<DemoBloc>().state;
-                String netWorth = "";
+                var netWorth = '';
                 if (state is AuthenticatedUserState) {
                   netWorth = state.netBalance.toString();
                 }
                 return _GetOverviewWidget(
                   isDemoActive: demoBlocState is DemoEnabledState,
-                  title: "Current NET. balance",
+                  title: 'Current NET. balance',
                   amount: netWorth.toString(),
                 );
               },
@@ -492,13 +489,13 @@ class _GetOverviewWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          "$title: ",
+          '$title: ',
           style: regularTextStyle.copyWith(
             color: customBlackColor.withOpacity(.80),
           ),
         ),
         Text(
-          isDemoActive ? "100000 Tk" : "$amount Tk.",
+          isDemoActive ? '100000 Tk' : '$amount Tk.',
           style: boldTextStyle.copyWith(
             color: customBlueColor,
           ),
@@ -509,28 +506,25 @@ class _GetOverviewWidget extends StatelessWidget {
 }
 
 class _GetSubscriptionWidget extends StatelessWidget {
-  const _GetSubscriptionWidget({
-    Key? key,
-  }) : super(key: key);
+  const _GetSubscriptionWidget();
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Monthly subscriptions",
+              'Monthly subscriptions',
               style: boldTextStyle.copyWith(
                 fontSize: 20,
               ),
             ),
             InfoWidget(
               infoText:
-                  "Tired of adding repetitive transactions? Try adding subscriptions, subscriptions will automatically deduct (if automatically deduction is set, during set-up process) that amount from your specified card at the beginning of every month!",
+                  'Tired of adding repetitive transactions? Try adding subscriptions, subscriptions will automatically deduct (if automatically deduction is set, during set-up process) that amount from your specified card at the beginning of every month!',
             ),
           ],
         ),
@@ -544,11 +538,11 @@ class _GetSubscriptionWidget extends StatelessWidget {
               .doc(FirebaseServices().getUserId())
               .collection('pinext_subscriptions')
               .orderBy(
-                "dateAdded",
+                'dateAdded',
                 descending: true,
               )
               .snapshots(),
-          builder: ((context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+          builder: (context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
                 child: SizedBox.shrink(),
@@ -556,7 +550,7 @@ class _GetSubscriptionWidget extends StatelessWidget {
             }
             if (snapshot.data!.docs.isEmpty) {
               return Text(
-                "You dont have any active subscriptions at the moment! Please add subscriptions to view them here!",
+                'You dont have any active subscriptions at the moment! Please add subscriptions to view them here!',
                 style: regularTextStyle.copyWith(
                   color: customBlackColor.withOpacity(.4),
                 ),
@@ -564,20 +558,20 @@ class _GetSubscriptionWidget extends StatelessWidget {
             }
             context.read<BudgetCubit>().resetSubscriptionDetailCount();
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5.0),
+              padding: const EdgeInsets.symmetric(horizontal: 5),
               child: ListView.builder(
                 itemCount: snapshot.data!.docs.length > 10 ? 10 : snapshot.data!.docs.length,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: ((context, index) {
-                  PinextSubscriptionModel subscriptionModel = PinextSubscriptionModel.fromMap(
+                itemBuilder: (context, index) {
+                  final subscriptionModel = PinextSubscriptionModel.fromMap(
                     snapshot.data!.docs[index].data(),
                   );
                   return SubscriptionCard(subscriptionModel: subscriptionModel);
-                }),
+                },
               ),
             );
-          }),
+          },
         ),
       ],
     );
@@ -586,9 +580,9 @@ class _GetSubscriptionWidget extends StatelessWidget {
 
 class SubscriptionCard extends StatelessWidget {
   SubscriptionCard({
-    Key? key,
+    super.key,
     required this.subscriptionModel,
-  }) : super(key: key);
+  });
 
   late int date;
   PinextSubscriptionModel subscriptionModel;
@@ -601,7 +595,7 @@ class SubscriptionCard extends StatelessWidget {
       context.read<BudgetCubit>().updateDueAmount(double.parse(subscriptionModel.amount));
     }
     return Padding(
-      padding: const EdgeInsets.only(bottom: 10.0),
+      padding: const EdgeInsets.only(bottom: 10),
       child: GestureDetector(
         onTap: () {
           Navigator.push(
@@ -638,9 +632,7 @@ class SubscriptionCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          demoBlocState is DemoEnabledState
-                              ? "Subscription name".capitalize()
-                              : subscriptionModel.title.capitalize(),
+                          demoBlocState is DemoEnabledState ? 'Subscription name'.capitalize() : subscriptionModel.title.capitalize(),
                           style: boldTextStyle.copyWith(
                             fontSize: 18,
                           ),
@@ -650,18 +642,17 @@ class SubscriptionCard extends StatelessWidget {
                           height: 4,
                         ),
                         Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "Amount : ",
+                              'Amount : ',
                               style: regularTextStyle.copyWith(
                                 color: customBlackColor.withOpacity(.7),
                               ),
                             ),
                             Expanded(
                               child: Text(
-                                demoBlocState is DemoEnabledState ? "1000 Tk" : "${subscriptionModel.amount} Tk",
+                                demoBlocState is DemoEnabledState ? '1000 Tk' : '${subscriptionModel.amount} Tk',
                                 maxLines: 1,
                                 style: regularTextStyle.copyWith(
                                   color: customBlackColor.withOpacity(.7),
@@ -673,52 +664,53 @@ class SubscriptionCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  subscriptionModel.lastPaidOn.substring(5, 7) == currentMonth
-                      ? Padding(
-                          padding: const EdgeInsets.only(
-                            right: defaultPadding - 4,
-                          ),
-                          child: Row(
-                            children: [
-                              Text(
-                                "STATUS: ",
-                                style: boldTextStyle.copyWith(
-                                  color: customDarkBBlueColor,
-                                ),
-                              ),
-                              Text(
-                                "PAID",
-                                style: boldTextStyle.copyWith(
-                                  color: Colors.green,
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
-                      : Checkbox(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(
-                              4,
+                  if (subscriptionModel.lastPaidOn.substring(5, 7) == currentMonth)
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        right: defaultPadding - 4,
+                      ),
+                      child: Row(
+                        children: [
+                          Text(
+                            'STATUS: ',
+                            style: boldTextStyle.copyWith(
+                              color: customDarkBBlueColor,
                             ),
                           ),
-                          activeColor: customBlueColor,
-                          value: subscriptionModel.lastPaidOn.substring(5, 7) == currentMonth,
-                          onChanged: (value) async {
-                            if (value == true) {
-                              context.read<UpdateSubscriptionCubit>().updateSubscriptionStatus(
-                                    subscriptionModel: subscriptionModel,
-                                    context: context,
-                                  );
-                            } else {
-                              GetCustomSnackbar(
-                                title: "Snap",
-                                message: "This subscription has already been processed and added into PINEXT archive!",
-                                snackbarType: SnackbarType.info,
+                          Text(
+                            'PAID',
+                            style: boldTextStyle.copyWith(
+                              color: Colors.green,
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  else
+                    Checkbox(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                          4,
+                        ),
+                      ),
+                      activeColor: customBlueColor,
+                      value: subscriptionModel.lastPaidOn.substring(5, 7) == currentMonth,
+                      onChanged: (value) async {
+                        if (value == true) {
+                          context.read<UpdateSubscriptionCubit>().updateSubscriptionStatus(
+                                subscriptionModel: subscriptionModel,
                                 context: context,
                               );
-                            }
-                          },
-                        )
+                        } else {
+                          GetCustomSnackbar(
+                            title: 'Snap',
+                            message: 'This subscription has already been processed and added into PINEXT archive!',
+                            snackbarType: SnackbarType.info,
+                            context: context,
+                          );
+                        }
+                      },
+                    )
                 ],
               );
             },
@@ -730,9 +722,7 @@ class SubscriptionCard extends StatelessWidget {
 }
 
 class _GetSubscriptionDetailsWidget extends StatelessWidget {
-  const _GetSubscriptionDetailsWidget({
-    Key? key,
-  }) : super(key: key);
+  const _GetSubscriptionDetailsWidget();
 
   @override
   Widget build(BuildContext context) {
@@ -740,7 +730,7 @@ class _GetSubscriptionDetailsWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Subscription details",
+          'Subscription details',
           style: boldTextStyle.copyWith(
             fontSize: 20,
           ),
@@ -765,15 +755,13 @@ class _GetSubscriptionDetailsWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Flexible(
-                    flex: 1,
                     child: Container(
                       color: Colors.transparent,
                       width: double.maxFinite,
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            "Paid",
+                            'Paid',
                             style: regularTextStyle.copyWith(
                               color: customBlackColor.withOpacity(.6),
                             ),
@@ -786,7 +774,7 @@ class _GetSubscriptionDetailsWidget extends StatelessWidget {
                               final state = context.watch<BudgetCubit>().state;
                               final demoBlocState = context.watch<DemoBloc>().state;
                               return Text(
-                                demoBlocState is DemoEnabledState ? "75000 Tk" : "${state.paidAmount} Tk",
+                                demoBlocState is DemoEnabledState ? '75000 Tk' : '${state.paidAmount} Tk',
                                 style: boldTextStyle.copyWith(
                                   fontSize: 20,
                                   color: Colors.green,
@@ -813,15 +801,13 @@ class _GetSubscriptionDetailsWidget extends StatelessWidget {
                     width: 0.2,
                   ),
                   Flexible(
-                    flex: 1,
                     child: Container(
                       color: Colors.transparent,
                       width: double.maxFinite,
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            "Due",
+                            'Due',
                             style: regularTextStyle.copyWith(
                               color: customBlackColor.withOpacity(.6),
                             ),
@@ -834,7 +820,7 @@ class _GetSubscriptionDetailsWidget extends StatelessWidget {
                               final state = context.watch<BudgetCubit>().state;
                               final demoBlocState = context.watch<DemoBloc>().state;
                               return Text(
-                                demoBlocState is DemoEnabledState ? "100000 Tk" : "${state.dueAmount} Tk",
+                                demoBlocState is DemoEnabledState ? '100000 Tk' : '${state.dueAmount} Tk',
                                 style: boldTextStyle.copyWith(
                                   fontSize: 20,
                                   color: Colors.red,

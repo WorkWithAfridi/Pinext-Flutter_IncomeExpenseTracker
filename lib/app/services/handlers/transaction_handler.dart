@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,6 +25,7 @@ class TransactionHandler {
     required String transactionTag,
     required BuildContext context,
   }) async {
+    log('Adding sub transaction');
     var response = 'Error';
     try {
       final pinextCardModel = await CardHandler().getCard(cardId);
@@ -30,7 +33,7 @@ class TransactionHandler {
         return "Couldn't process transaction. Low balance!";
       }
 
-      final transactionId = const Uuid().v4();
+      final transactionId =Uuid().v4();
       final pinextTransactionModel = PinextTransactionModel(
         transactionType: transactionType,
         amount: amount,

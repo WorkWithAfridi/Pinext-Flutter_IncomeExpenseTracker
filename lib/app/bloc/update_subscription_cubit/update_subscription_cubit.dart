@@ -9,17 +9,17 @@ part 'update_subscription_state.dart';
 class UpdateSubscriptionCubit extends Cubit<UpdateSubscriptionState> {
   UpdateSubscriptionCubit() : super(UpdateSubscriptionDefault());
 
-  updateSubscriptionStatus({
+  Future<void> updateSubscriptionStatus({
     required PinextSubscriptionModel subscriptionModel,
     required BuildContext context,
   }) async {
     subscriptionModel.lastPaidOn = DateTime.now().toString();
-    String response = await SubscriptionHandler().updateSubscription(
+    final response = await SubscriptionHandler().updateSubscription(
       subscriptionModel: subscriptionModel,
       addTransactionToArchive: true,
       context: context,
     );
-    if (response == "success") {
+    if (response == 'success') {
       emit(SubscriptionUpdatedSuccessfullyState());
     } else {
       emit(SubscriptionUpdatedErrorState());
