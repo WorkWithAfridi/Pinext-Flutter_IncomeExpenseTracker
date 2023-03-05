@@ -711,7 +711,7 @@ class _GetSavingsForThisMonthWidget extends StatelessWidget {
                           ),
                         ),
                         TextSpan(
-                          text: '${months[int.parse(currentMonth) - 1]}',
+                          text: months[int.parse(currentMonth) - 1],
                           style: boldTextStyle.copyWith(color: customBlackColor),
                         ),
                         TextSpan(
@@ -870,13 +870,10 @@ class _GetYourCardsWidget extends StatelessWidget {
                           snapshot.data!.docs[index].data(),
                         );
 
-                        final color = pinextCardModel.color;
-                        late final cardColor = getColorFromString(color);
-
                         return PinextCard(
                           title: pinextCardModel.title,
                           balance: pinextCardModel.balance,
-                          cardColor: cardColor,
+                          cardColor: pinextCardModel.color,
                           lastTransactionDate: pinextCardModel.lastTransactionData,
                           cardDetails: pinextCardModel.description,
                           cardModel: pinextCardModel,

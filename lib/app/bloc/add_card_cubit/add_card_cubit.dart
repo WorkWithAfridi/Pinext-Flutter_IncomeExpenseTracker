@@ -9,14 +9,14 @@ class AddCardCubit extends Cubit<AddCardState> {
   AddCardCubit()
       : super(
           AddCardDefaultState(
-            balance: 0.00,
-            title: "none",
-            description: "none",
-            color: "none",
+            balance: 0,
+            title: 'none',
+            description: 'none',
+            color: 'none',
           ),
         );
 
-  changeTitle(String newTitle) {
+  void changeTitle(String newTitle) {
     emit(
       AddCardDefaultState(
         title: newTitle,
@@ -27,7 +27,7 @@ class AddCardCubit extends Cubit<AddCardState> {
     );
   }
 
-  changeDescription(String newDescription) {
+  void changeDescription(String newDescription) {
     emit(
       AddCardDefaultState(
         title: state.title,
@@ -38,7 +38,7 @@ class AddCardCubit extends Cubit<AddCardState> {
     );
   }
 
-  changeBalance(double newBalance) {
+  void changeBalance(double newBalance) {
     emit(
       AddCardDefaultState(
         title: state.title,
@@ -49,7 +49,7 @@ class AddCardCubit extends Cubit<AddCardState> {
     );
   }
 
-  changeColor(String color) {
+  void changeColor(String color) {
     log(color);
     emit(
       AddCardDefaultState(
@@ -61,8 +61,8 @@ class AddCardCubit extends Cubit<AddCardState> {
     );
   }
 
-  updateCardDetails(String title, String description, String balance, String color) {
-    if (title.isNotEmpty && description.isNotEmpty && balance.isNotEmpty) {
+  void updateCardDetails(String title, String description, String balance, String color) {
+    if (title.isNotEmpty && balance.isNotEmpty) {
       emit(
         EditCardSuccessState(
           title: title.toString(),
@@ -83,7 +83,7 @@ class AddCardCubit extends Cubit<AddCardState> {
     }
   }
 
-  addCard(String title, String description, String balance, String color) {
+  void addCard(String title, String description, String balance, String color) {
     if (title.isNotEmpty && balance.isNotEmpty) {
       emit(
         AddCardSuccessState(
@@ -105,12 +105,14 @@ class AddCardCubit extends Cubit<AddCardState> {
     }
   }
 
-  reset() {
-    emit(AddCardDefaultState(
-      title: state.title,
-      description: state.description,
-      balance: state.balance,
-      color: state.color,
-    ));
+  void reset() {
+    emit(
+      AddCardDefaultState(
+        title: state.title,
+        description: state.description,
+        balance: state.balance,
+        color: state.color,
+      ),
+    );
   }
 }

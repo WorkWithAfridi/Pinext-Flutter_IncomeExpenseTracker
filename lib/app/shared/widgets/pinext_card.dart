@@ -1,31 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pinext/app/app_data/app_constants/constants.dart';
+import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/app_data/custom_transition_page_route/custom_transition_page_route.dart';
 import 'package:pinext/app/app_data/extensions/string_extensions.dart';
+import 'package:pinext/app/app_data/theme_data/colors.dart';
+import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
+import 'package:pinext/app/screens/add_and_edit_pinext_card/add_and_edit_pinext_card.dart';
 import 'package:timeago/timeago.dart' as timeago;
-
-import '../../app_data/app_constants/constants.dart';
-import '../../app_data/app_constants/domentions.dart';
-import '../../app_data/theme_data/colors.dart';
-import '../../bloc/demoBloc/demo_bloc.dart';
-import '../../screens/add_and_edit_pinext_card/add_and_edit_pinext_card.dart';
 
 class PinextCard extends StatelessWidget {
   PinextCard({
-    Key? key,
+    super.key,
     this.isSelected = false,
-    this.cardColor = customBlueColor,
-    this.title = "Test Title",
+    this.cardColor = 'Midnight Indigo',
+    this.title = 'Test Title',
     this.balance = 0.00,
     this.cardModel,
     required this.cardDetails,
     required this.lastTransactionDate,
-  }) : super(key: key);
+  });
 
   bool isSelected;
-  Color cardColor;
+  String cardColor;
   double balance;
   String title;
   String cardDetails;
@@ -66,9 +65,16 @@ class PinextCard extends StatelessWidget {
           height: 180,
           width: getWidth(context) * .8,
           decoration: BoxDecoration(
-            color: cardColor,
+            // color: cardColor,
             borderRadius: BorderRadius.circular(
               defaultBorder,
+            ),
+            gradient: LinearGradient(
+              colors: GetGradientFromString(
+                cardColor,
+              ),
+              begin: Alignment.bottomLeft,
+              end: Alignment.topRight,
             ),
           ),
           child: Stack(
@@ -83,7 +89,7 @@ class PinextCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          demoBlocState is DemoEnabledState ? "Bank" : title.toString(),
+                          demoBlocState is DemoEnabledState ? 'Bank' : title,
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 20,
@@ -109,7 +115,7 @@ class PinextCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Current balance",
+                              'Current balance',
                               style: TextStyle(
                                 fontWeight: FontWeight.normal,
                                 fontSize: 13,
@@ -120,7 +126,7 @@ class PinextCard extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 Text(
-                                  demoBlocState is DemoEnabledState ? "55000 Tk" : balance.toString(),
+                                  demoBlocState is DemoEnabledState ? '55000 Tk' : balance.toString(),
                                   style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 25,
@@ -130,7 +136,7 @@ class PinextCard extends StatelessWidget {
                                   maxLines: 1,
                                 ),
                                 Text(
-                                  "/",
+                                  '/',
                                   style: TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 25,
@@ -140,7 +146,7 @@ class PinextCard extends StatelessWidget {
                                   maxLines: 1,
                                 ),
                                 Text(
-                                  "Tk",
+                                  'Tk',
                                   style: TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 15,
@@ -165,7 +171,7 @@ class PinextCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Last transaction",
+                          'Last transaction',
                           style: TextStyle(
                             fontWeight: FontWeight.normal,
                             fontSize: 10,
@@ -174,11 +180,11 @@ class PinextCard extends StatelessWidget {
                         ),
                         FittedBox(
                           child: Text(
-                            "${timeago.format(
+                            '${timeago.format(
                               DateTime.parse(
                                 lastTransactionDate,
                               ),
-                            )} ",
+                            )} ',
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 25,
@@ -191,34 +197,36 @@ class PinextCard extends StatelessWidget {
                   )
                 ],
               ),
-              cardModel != null
-                  ? Center(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                            25,
-                          ),
-                          border: Border.all(
-                            color: Colors.white.withOpacity(.1),
-                          ),
-                        ),
-                        padding: const EdgeInsets.all(10),
-                        child: Icon(
-                          Icons.edit_note_rounded,
-                          color: Colors.white.withOpacity(.1),
-                        ),
+              if (cardModel != null)
+                Center(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(
+                        25,
                       ),
-                    )
-                  : const SizedBox.shrink(),
-              isSelected
-                  ? const Center(
-                      child: Icon(
-                        Icons.done,
-                        color: Colors.amber,
-                        size: 50,
+                      border: Border.all(
+                        color: Colors.white.withOpacity(.1),
                       ),
-                    )
-                  : const SizedBox.shrink()
+                    ),
+                    padding: const EdgeInsets.all(10),
+                    child: Icon(
+                      Icons.edit_note_rounded,
+                      color: Colors.white.withOpacity(.1),
+                    ),
+                  ),
+                )
+              else
+                const SizedBox.shrink(),
+              if (isSelected)
+                const Center(
+                  child: Icon(
+                    Icons.done,
+                    color: Colors.amber,
+                    size: 50,
+                  ),
+                )
+              else
+                const SizedBox.shrink()
             ],
           ),
         );

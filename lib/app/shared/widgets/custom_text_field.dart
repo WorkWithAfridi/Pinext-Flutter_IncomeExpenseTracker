@@ -55,7 +55,11 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       keyboardType: widget.textInputType,
       validator: (value) {
         final res = widget.validator(value);
-        return res.toString();
+        if (res == null) {
+          return null;
+        } else {
+          return res.toString();
+        }
       },
       textInputAction: widget.textInputAction,
       onChanged: (value) {

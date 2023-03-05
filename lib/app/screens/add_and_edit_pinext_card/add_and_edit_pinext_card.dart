@@ -236,21 +236,52 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
                           final color = listOfCardColors[index] as String;
-                          late final cardColor = getColorFromString(color);
                           return Padding(
                             padding: const EdgeInsets.only(right: 8),
                             child: GestureDetector(
                               onTap: () {
                                 context.read<AddCardCubit>().changeColor(color);
                               },
-                              child: Container(
-                                height: 35,
-                                width: 35,
-                                decoration: BoxDecoration(
-                                  color: cardColor,
-                                  borderRadius: BorderRadius.circular(35),
-                                ),
-                                alignment: Alignment.center,
+                              child: BlocBuilder<AddCardCubit, AddCardState>(
+                                builder: (context, state) {
+                                  return Stack(
+                                    children: [
+                                      Container(
+                                        height: 35,
+                                        width: 35,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                            35,
+                                          ),
+                                          gradient: LinearGradient(
+                                            colors: GetGradientFromString(
+                                              color,
+                                            ),
+                                          ),
+                                        ),
+                                        alignment: Alignment.center,
+                                      ),
+                                      Container(
+                                        height: 35,
+                                        width: 35,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                            35,
+                                          ),
+                                          color: customBlackColor.withOpacity(.2),
+                                        ),
+                                        alignment: Alignment.center,
+                                        child: state.color == color
+                                            ? const Icon(
+                                                Icons.check,
+                                                size: 18,
+                                                color: whiteColor,
+                                              )
+                                            : const SizedBox.shrink(),
+                                      ),
+                                    ],
+                                  );
+                                },
                               ),
                             ),
                           );
@@ -279,10 +310,10 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                         }
                       },
                       builder: (context, state) {
-                        final color = state.color;
-                        late final cardColor = getColorFromString(color);
+                        // final color = state.color;
+                        // late final cardColor = getColorFromString(color);
                         return PinextCard(
-                          cardColor: widget.isEditCardScreen ? getColorFromString(isEditCardColor!) : cardColor,
+                          cardColor: widget.isEditCardScreen ? isEditCardColor! : state.color,
                           title: widget.isEditCardScreen ? widget.pinextCardModel!.title : 'Example card',
                           balance: widget.isEditCardScreen ? widget.pinextCardModel!.balance : 1233456,
                           lastTransactionDate: widget.isEditCardScreen ? widget.pinextCardModel!.lastTransactionData.toString() : DateTime.now().toString(),

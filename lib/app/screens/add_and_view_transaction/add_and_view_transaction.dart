@@ -805,7 +805,7 @@ class _GetCardListWidget extends StatelessWidget {
                           child: PinextCard(
                             title: pinextCardModel.title,
                             balance: pinextCardModel.balance,
-                            cardColor: cardColor,
+                            cardColor: pinextCardModel.color,
                             isSelected: isViewOnly ? false : state.selectedCardNo == pinextCardModel.cardId,
                             lastTransactionDate: pinextCardModel.lastTransactionData,
                             cardDetails: pinextCardModel.description,

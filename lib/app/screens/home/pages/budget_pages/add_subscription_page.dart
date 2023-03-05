@@ -664,7 +664,7 @@ class _GetCardList extends StatelessWidget {
                       child: PinextCard(
                         title: pinextCardModel.title,
                         balance: pinextCardModel.balance,
-                        cardColor: cardColor,
+                        cardColor: pinextCardModel.color,
                         isSelected: addSubscriptionState.selectedCardNo == pinextCardModel.cardId,
                         lastTransactionDate: pinextCardModel.lastTransactionData,
                         cardDetails: pinextCardModel.description,
