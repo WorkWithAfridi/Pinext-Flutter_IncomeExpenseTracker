@@ -52,9 +52,17 @@ class BudgetView extends StatelessWidget {
             if (state is SubscriptionUpdatedSuccessfullyState) {
               log('Updating user state');
               context.read<UserBloc>().add(RefreshUserStateEvent());
-              context.read<UpdateSubscriptionCubit>().resetState();
               log('resetting');
+            } else if (state is SubscriptionUpdatedErrorState) {
+              GetCustomSnackbar(
+                title: 'Snap',
+                message: state.errorMessage,
+                snackbarType: SnackbarType.error,
+                context: context,
+              );
             }
+
+            context.read<UpdateSubscriptionCubit>().resetState();
           },
         ),
       ],
@@ -697,7 +705,7 @@ class SubscriptionCard extends StatelessWidget {
                       value: subscriptionModel.lastPaidOn.substring(5, 7) == currentMonth,
                       onChanged: (value) async {
                         if (value == true) {
-                          context.read<UpdateSubscriptionCubit>().updateSubscriptionStatus(
+                          await context.read<UpdateSubscriptionCubit>().updateSubscriptionStatus(
                                 subscriptionModel: subscriptionModel,
                                 context: context,
                               );

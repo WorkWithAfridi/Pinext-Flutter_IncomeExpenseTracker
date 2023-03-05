@@ -19,10 +19,14 @@ class UpdateSubscriptionCubit extends Cubit<UpdateSubscriptionState> {
       addTransactionToArchive: true,
       context: context,
     );
-    if (response == 'success') {
+    if (response == 'Success') {
       emit(SubscriptionUpdatedSuccessfullyState());
     } else {
-      emit(SubscriptionUpdatedErrorState());
+      emit(
+        SubscriptionUpdatedErrorState(
+          errorMessage: response,
+        ),
+      );
     }
   }
 
