@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:pinext/app/app_data/app_constants/domentions.dart';
+import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/app_data/custom_transition_page_route/custom_transition_page_route.dart';
 import 'package:pinext/app/app_data/extensions/string_extensions.dart';
+import 'package:pinext/app/app_data/theme_data/colors.dart';
+import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
+import 'package:pinext/app/models/pinext_transaction_model.dart';
 import 'package:pinext/app/screens/add_and_view_transaction/add_and_view_transaction.dart';
 import 'package:pinext/app/services/handlers/card_handler.dart';
-
-import '../../app_data/app_constants/domentions.dart';
-import '../../app_data/app_constants/fonts.dart';
-import '../../app_data/theme_data/colors.dart';
-import '../../bloc/demoBloc/demo_bloc.dart';
-import '../../models/pinext_transaction_model.dart';
+import 'package:pinext/app/shared/widgets/gradient_text.dart';
 
 class TransactionDetailsCard extends StatefulWidget {
   TransactionDetailsCard({
-    Key? key,
+    super.key,
     required this.pinextTransactionModel,
     required this.isLastIndex,
-  }) : super(key: key);
+  });
 
   final PinextTransactionModel pinextTransactionModel;
   bool isLastIndex;
@@ -40,11 +40,11 @@ class _TransactionDetailsCardState extends State<TransactionDetailsCard> {
         Navigator.push(
           context,
           CustomTransitionPageRoute(
-              childWidget: AddAndViewTransactionScreen(
-            isViewOnly: true,
-            isAQuickAction: false,
-            pinextTransactionModel: widget.pinextTransactionModel,
-          )),
+            childWidget: AddAndViewTransactionScreen(
+              isViewOnly: true,
+              pinextTransactionModel: widget.pinextTransactionModel,
+            ),
+          ),
         );
       },
       child: Builder(
@@ -77,25 +77,23 @@ class _TransactionDetailsCardState extends State<TransactionDetailsCard> {
                             flex: 2,
                             child: FutureBuilder(
                               future: CardHandler().getCardData(widget.pinextTransactionModel.cardId),
-                              builder: ((context, snapshot) {
+                              builder: (context, snapshot) {
                                 if (snapshot.hasData) {
-                                  PinextCardModel cardDetails = snapshot.data as PinextCardModel;
-                                  return Text(
-                                    demoBlocState is DemoEnabledState ? "Bank" : cardDetails.title,
-                                    style: boldTextStyle.copyWith(
-                                      color: getColorFromString(cardDetails.color),
+                                  final cardDetails = snapshot.data as PinextCardModel;
+                                  return GradientText(
+                                    demoBlocState is DemoEnabledState ? 'Bank' : cardDetails.title,
+                                    colors: GetGradientFromString(
+                                      cardDetails.color,
                                     ),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
                                   );
                                 } else {
                                   return const SizedBox.shrink();
                                 }
-                              }),
+                              },
                             ),
                           ),
                           Text(
-                            " - ",
+                            ' - ',
                             style: regularTextStyle.copyWith(
                               color: customBlackColor.withOpacity(.80),
                             ),
@@ -106,7 +104,7 @@ class _TransactionDetailsCardState extends State<TransactionDetailsCard> {
                             flex: 4,
                             child: Text(
                               demoBlocState is DemoEnabledState
-                                  ? "a natural looking block of text.".toLowerCase().capitalize()
+                                  ? 'a natural looking block of text.'.toLowerCase().capitalize()
                                   : widget.pinextTransactionModel.details.toLowerCase().capitalize(),
                               style: regularTextStyle.copyWith(
                                 color: customBlackColor.withOpacity(.80),
@@ -126,8 +124,8 @@ class _TransactionDetailsCardState extends State<TransactionDetailsCard> {
                       alignment: Alignment.centerRight,
                       child: Text(
                         widget.pinextTransactionModel.transactionType == 'Expense'
-                            ? "- ${widget.pinextTransactionModel.amount} Tk"
-                            : "+ ${widget.pinextTransactionModel.amount} Tk",
+                            ? '- ${widget.pinextTransactionModel.amount} Tk'
+                            : '+ ${widget.pinextTransactionModel.amount} Tk',
                         style: boldTextStyle.copyWith(
                           color: widget.pinextTransactionModel.transactionType == 'Expense' ? Colors.red : Colors.green,
                         ),
@@ -159,13 +157,14 @@ class _TransactionDetailsCardState extends State<TransactionDetailsCard> {
                 const SizedBox(
                   height: 8,
                 ),
-                widget.isLastIndex
-                    ? const SizedBox.shrink()
-                    : Container(
-                        height: 1,
-                        width: getWidth(context),
-                        color: customBlackColor.withOpacity(.05),
-                      )
+                if (widget.isLastIndex)
+                  const SizedBox.shrink()
+                else
+                  Container(
+                    height: 1,
+                    width: getWidth(context),
+                    color: customBlackColor.withOpacity(.05),
+                  )
               ],
             ),
           );
