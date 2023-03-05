@@ -221,7 +221,7 @@ class PinextCard extends StatelessWidget {
                 const Center(
                   child: Icon(
                     Icons.done,
-                    color: Colors.amber,
+                    color: whiteColor,
                     size: 50,
                   ),
                 )
