@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
-
-import '../../app_data/app_constants/constants.dart';
-import '../../services/authentication_services.dart';
+import 'package:pinext/app/app_data/app_constants/constants.dart';
+import 'package:pinext/app/services/authentication_services.dart';
 
 part 'login_state.dart';
 
@@ -15,11 +14,11 @@ enum LoginTypes {
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(LoginDefaultState());
 
-  resetState() {
+  void resetState() {
     emit(LoginDefaultState());
   }
 
-  loginWithEmailAndPassword({required String email, required String password}) async {
+  Future<void> loginWithEmailAndPassword({required String email, required String password}) async {
     emit(
       LoginWithEmailAndPasswordButtonLoadingState(),
     );
@@ -29,7 +28,7 @@ class LoginCubit extends Cubit<LoginState> {
       ),
     );
     String response = await AuthenticationServices().signInUser(emailAddress: email, password: password);
-    if (response == "Success") {
+    if (response == 'Success') {
       emit(
         LoginSuccessState(),
       );
@@ -42,7 +41,7 @@ class LoginCubit extends Cubit<LoginState> {
     }
   }
 
-  loginWithGoogle() async {
+  Future<void> loginWithGoogle() async {
     emit(LoginWithGoogleButtonLoadingState());
     await Future.delayed(
       const Duration(
@@ -50,7 +49,7 @@ class LoginCubit extends Cubit<LoginState> {
       ),
     );
     String response = await AuthenticationServices().googleSignin();
-    if (response == "Success") {
+    if (response == 'Success') {
       emit(
         LoginSuccessState(),
       );

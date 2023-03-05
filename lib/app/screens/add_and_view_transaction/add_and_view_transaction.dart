@@ -5,33 +5,32 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pinext/app/app_data/app_constants/constants.dart';
 import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/app_data/extensions/string_extensions.dart';
 import 'package:pinext/app/app_data/routing/routes.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/add_transactions_cubit/add_transactions_cubit.dart';
+import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
+import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
+import 'package:pinext/app/models/pinext_card_model.dart';
 import 'package:pinext/app/models/pinext_transaction_model.dart';
+import 'package:pinext/app/services/firebase_services.dart';
 import 'package:pinext/app/services/handlers/user_handler.dart';
 import 'package:pinext/app/shared/widgets/custom_button.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 import 'package:pinext/app/shared/widgets/custom_text_field.dart';
 import 'package:pinext/app/shared/widgets/info_widget.dart';
-
-import '../../app_data/app_constants/constants.dart';
-import '../../bloc/demoBloc/demo_bloc.dart';
-import '../../bloc/userBloc/user_bloc.dart';
-import '../../models/pinext_card_model.dart';
-import '../../services/firebase_services.dart';
-import '../../shared/widgets/pinext_card.dart';
+import 'package:pinext/app/shared/widgets/pinext_card.dart';
 
 class AddAndViewTransactionScreen extends StatelessWidget {
   AddAndViewTransactionScreen({
-    Key? key,
+    super.key,
     this.isAQuickAction = false,
     this.isViewOnly = false,
     this.pinextTransactionModel,
-  }) : super(key: key);
+  });
 
   bool isAQuickAction;
   bool isViewOnly;
@@ -52,11 +51,11 @@ class AddAndViewTransactionScreen extends StatelessWidget {
 
 class AddAndViewTransactionView extends StatefulWidget {
   AddAndViewTransactionView({
-    Key? key,
+    super.key,
     required this.isAQuickAction,
     required this.isViewOnly,
     required this.pinextTransactionModel,
-  }) : super(key: key);
+  });
   bool isAQuickAction;
   bool isViewOnly;
   PinextTransactionModel? pinextTransactionModel;
@@ -134,7 +133,7 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
           ),
         ),
         title: Text(
-          widget.isViewOnly ? "Transaction details" : "Adding a new transaction",
+          widget.isViewOnly ? 'Transaction details' : 'Adding a new transaction',
           style: regularTextStyle,
         ),
       ),
@@ -162,16 +161,17 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
                       ],
                     ),
                   ),
-                  widget.isViewOnly
-                      ? const SizedBox.shrink()
-                      : Column(
-                          children: [
-                            ChooseIfmarkAsOrNot(),
-                            const SizedBox(
-                              height: 12,
-                            ),
-                          ],
+                  if (widget.isViewOnly)
+                    const SizedBox.shrink()
+                  else
+                    Column(
+                      children: [
+                        ChooseIfmarkAsOrNot(),
+                        const SizedBox(
+                          height: 12,
                         ),
+                      ],
+                    ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: defaultPadding,
@@ -180,7 +180,7 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Amount",
+                          'Amount',
                           style: boldTextStyle.copyWith(
                             color: customBlackColor.withOpacity(
                               .6,
@@ -193,10 +193,10 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
                         CustomTextFormField(
                           isEnabled: !widget.isViewOnly,
                           controller: amountController,
-                          hintTitle: "Enter amount...",
+                          hintTitle: 'Enter amount...',
                           textInputType: TextInputType.number,
                           onChanged: (String value) {},
-                          validator: (value) {
+                          validator: (String value) {
                             return InputValidation(value).isCorrectNumber();
                           },
                           suffixButtonAction: () {},
@@ -205,7 +205,7 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
                           height: 12,
                         ),
                         Text(
-                          "Details",
+                          'Details',
                           style: boldTextStyle.copyWith(
                             color: customBlackColor.withOpacity(
                               .6,
@@ -218,12 +218,12 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
                         CustomTextFormField(
                           isEnabled: !widget.isViewOnly,
                           controller: detailsController,
-                          hintTitle: "Enter description...",
+                          hintTitle: 'Enter description...',
                           numberOfLines: 3,
                           onChanged: (String value) {
                             context.read<AddTransactionsCubit>().changeSelectedDescription(value);
                           },
-                          validator: (value) {
+                          validator: (String value) {
                             return InputValidation(value).isNotEmpty();
                           },
                           suffixButtonAction: () {},
@@ -231,26 +231,28 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
                         const SizedBox(
                           height: 12,
                         ),
-                        widget.isViewOnly && widget.pinextTransactionModel!.transactionTag != ""
-                            ? Column(
-                                children: [
-                                  GetTagsList(),
-                                  const SizedBox(
-                                    height: 12,
-                                  ),
-                                ],
-                              )
-                            : const SizedBox.shrink(),
-                        !widget.isViewOnly
-                            ? Column(
-                                children: [
-                                  GetTagsList(),
-                                  const SizedBox(
-                                    height: 12,
-                                  ),
-                                ],
-                              )
-                            : const SizedBox.shrink(),
+                        if (widget.isViewOnly && widget.pinextTransactionModel!.transactionTag != '')
+                          Column(
+                            children: [
+                              GetTagsList(),
+                              const SizedBox(
+                                height: 12,
+                              ),
+                            ],
+                          )
+                        else
+                          const SizedBox.shrink(),
+                        if (!widget.isViewOnly)
+                          Column(
+                            children: [
+                              GetTagsList(),
+                              const SizedBox(
+                                height: 12,
+                              ),
+                            ],
+                          )
+                        else
+                          const SizedBox.shrink(),
                         // Column(
                         //   children: [
                         //     GetTagsList(),
@@ -259,23 +261,24 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
                         //     ),
                         //   ],
                         // ),
-                        widget.isViewOnly
-                            ? Text(
-                                "Card",
-                                style: boldTextStyle.copyWith(
-                                  color: customBlackColor.withOpacity(
-                                    .6,
-                                  ),
-                                ),
-                              )
-                            : Text(
-                                "Select card",
-                                style: boldTextStyle.copyWith(
-                                  color: customBlackColor.withOpacity(
-                                    .6,
-                                  ),
-                                ),
+                        if (widget.isViewOnly)
+                          Text(
+                            'Card',
+                            style: boldTextStyle.copyWith(
+                              color: customBlackColor.withOpacity(
+                                .6,
                               ),
+                            ),
+                          )
+                        else
+                          Text(
+                            'Select card',
+                            style: boldTextStyle.copyWith(
+                              color: customBlackColor.withOpacity(
+                                .6,
+                              ),
+                            ),
+                          ),
                         const SizedBox(
                           height: 8,
                         ),
@@ -291,7 +294,7 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
               const SizedBox(
                 height: 12,
               ),
-              widget.isViewOnly ? const SizedBox.shrink() : AddTransactionButton(),
+              if (widget.isViewOnly) const SizedBox.shrink() else AddTransactionButton(),
               const SizedBox(
                 height: 30,
               ),
@@ -311,7 +314,6 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     const SizedBox(
                       width: 6,
@@ -324,35 +326,32 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
                       },
                     ),
                     GestureDetector(
-                        onTap: () {
-                          context.read<AddTransactionsCubit>().togglemarkAs(state.markAs);
-                        },
-                        child: RichText(
-                          text: TextSpan(
-                            // style: DefaultTextStyle.of(context).style,
-                            style: regularTextStyle.copyWith(
-                              color: customBlackColor.withOpacity(
-                                .6,
+                      onTap: () {
+                        context.read<AddTransactionsCubit>().togglemarkAs(state.markAs);
+                      },
+                      child: RichText(
+                        text: TextSpan(
+                          // style: DefaultTextStyle.of(context).style,
+                          style: regularTextStyle.copyWith(
+                            color: customBlackColor.withOpacity(
+                              .6,
+                            ),
+                          ),
+
+                          children: [
+                            const TextSpan(
+                              text: 'mark as ',
+                            ),
+                            TextSpan(
+                              text: state.selectedTransactionMode == SelectedTransactionMode.income ? 'INCOME' : 'EXPENSE',
+                              style: boldTextStyle.copyWith(
+                                color: state.selectedTransactionMode == SelectedTransactionMode.income ? Colors.green : Colors.red,
                               ),
                             ),
-
-                            children: [
-                              const TextSpan(
-                                text: 'mark as ',
-                              ),
-                              TextSpan(
-                                text: state.selectedTransactionMode == SelectedTransactionMode.income
-                                    ? "INCOME"
-                                    : "EXPENSE",
-                                style: boldTextStyle.copyWith(
-                                  color: state.selectedTransactionMode == SelectedTransactionMode.income
-                                      ? Colors.green
-                                      : Colors.red,
-                                ),
-                              ),
-                            ],
-                          ),
-                        )),
+                          ],
+                        ),
+                      ),
+                    ),
                   ],
                 ),
                 Padding(
@@ -377,7 +376,7 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Transaction type",
+          'Transaction type',
           style: boldTextStyle.copyWith(
             color: customBlackColor.withOpacity(
               .6,
@@ -388,96 +387,87 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
           height: 8,
         ),
         SizedBox(
-            height: 40,
-            child: BlocBuilder<AddTransactionsCubit, AddTransactionsState>(
-              builder: (context, state) {
-                return Row(
-                  children: [
-                    Flexible(
-                      flex: 1,
-                      child: GestureDetector(
-                        onTap: () {
-                          if (!widget.isViewOnly) {
-                            context
-                                .read<AddTransactionsCubit>()
-                                .changeSelectedTransactionMode(SelectedTransactionMode.income);
-                          }
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 10),
-                          child: Container(
-                            height: double.maxFinite,
-                            width: double.maxFinite,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(defaultBorder),
-                              color: state.selectedTransactionMode == SelectedTransactionMode.income
-                                  ? greyColor
-                                  : Colors.transparent,
-                            ),
-                            child: Text(
-                              "Deposit",
-                              style: state.selectedTransactionMode == SelectedTransactionMode.income
-                                  ? boldTextStyle.copyWith(
-                                      color: customBlueColor,
-                                      fontSize: 20,
-                                    )
-                                  : boldTextStyle.copyWith(
-                                      color: customBlackColor.withOpacity(.4),
-                                      fontSize: 20,
-                                    ),
-                            ),
+          height: 40,
+          child: BlocBuilder<AddTransactionsCubit, AddTransactionsState>(
+            builder: (context, state) {
+              return Row(
+                children: [
+                  Flexible(
+                    child: GestureDetector(
+                      onTap: () {
+                        if (!widget.isViewOnly) {
+                          context.read<AddTransactionsCubit>().changeSelectedTransactionMode(SelectedTransactionMode.income);
+                        }
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: Container(
+                          height: double.maxFinite,
+                          width: double.maxFinite,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(defaultBorder),
+                            color: state.selectedTransactionMode == SelectedTransactionMode.income ? greyColor : Colors.transparent,
+                          ),
+                          child: Text(
+                            'Deposit',
+                            style: state.selectedTransactionMode == SelectedTransactionMode.income
+                                ? boldTextStyle.copyWith(
+                                    color: customBlueColor,
+                                    fontSize: 20,
+                                  )
+                                : boldTextStyle.copyWith(
+                                    color: customBlackColor.withOpacity(.4),
+                                    fontSize: 20,
+                                  ),
                           ),
                         ),
                       ),
                     ),
-                    Container(
-                      width: .5,
-                      height: double.maxFinite,
-                      color: customBlackColor.withOpacity(.2),
-                    ),
-                    Flexible(
-                      flex: 1,
-                      child: GestureDetector(
-                        onTap: (() {
-                          if (!widget.isViewOnly) {
-                            context
-                                .read<AddTransactionsCubit>()
-                                .changeSelectedTransactionMode(SelectedTransactionMode.enpense);
-                          }
-                        }),
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: Container(
-                            height: double.maxFinite,
-                            width: double.maxFinite,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(defaultBorder),
-                              color: state.selectedTransactionMode == SelectedTransactionMode.enpense
-                                  ? greyColor
-                                  : Colors.transparent,
-                            ),
-                            child: Text(
-                              "Withdrawal ",
-                              style: state.selectedTransactionMode == SelectedTransactionMode.enpense
-                                  ? boldTextStyle.copyWith(
-                                      color: customBlueColor,
-                                      fontSize: 20,
-                                    )
-                                  : boldTextStyle.copyWith(
-                                      color: customBlackColor.withOpacity(.4),
-                                      fontSize: 20,
-                                    ),
-                            ),
+                  ),
+                  Container(
+                    width: .5,
+                    height: double.maxFinite,
+                    color: customBlackColor.withOpacity(.2),
+                  ),
+                  Flexible(
+                    child: GestureDetector(
+                      onTap: () {
+                        if (!widget.isViewOnly) {
+                          context.read<AddTransactionsCubit>().changeSelectedTransactionMode(SelectedTransactionMode.enpense);
+                        }
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Container(
+                          height: double.maxFinite,
+                          width: double.maxFinite,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(defaultBorder),
+                            color: state.selectedTransactionMode == SelectedTransactionMode.enpense ? greyColor : Colors.transparent,
+                          ),
+                          child: Text(
+                            'Withdrawal ',
+                            style: state.selectedTransactionMode == SelectedTransactionMode.enpense
+                                ? boldTextStyle.copyWith(
+                                    color: customBlueColor,
+                                    fontSize: 20,
+                                  )
+                                : boldTextStyle.copyWith(
+                                    color: customBlackColor.withOpacity(.4),
+                                    fontSize: 20,
+                                  ),
                           ),
                         ),
                       ),
                     ),
-                  ],
-                );
-              },
-            )),
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
       ],
     );
   }
@@ -487,7 +477,7 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Suggestions",
+          'Suggestions',
           style: boldTextStyle.copyWith(
             color: customBlackColor.withOpacity(
               .6,
@@ -505,28 +495,24 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
                   (index) {
                     return GestureDetector(
                       onTap: () {
-                        String selectedDescription = listOfTransactionDetailSuggestions[index].toString();
+                        final selectedDescription = listOfTransactionDetailSuggestions[index].toString();
                         log(selectedDescription);
                         log(state.selectedDescription);
                         if (state.selectedDescription != selectedDescription) {
                           detailsController.text = selectedDescription;
                           context.read<AddTransactionsCubit>().changeSelectedDescription(selectedDescription);
                         } else {
-                          context.read<AddTransactionsCubit>().changeSelectedDescription("none");
+                          context.read<AddTransactionsCubit>().changeSelectedDescription('none');
                         }
                       },
                       child: Chip(
                         label: Text(
                           listOfTransactionDetailSuggestions[index].toString(),
                           style: regularTextStyle.copyWith(
-                            color: listOfTransactionDetailSuggestions[index] == state.selectedDescription
-                                ? whiteColor
-                                : customBlackColor.withOpacity(.6),
+                            color: listOfTransactionDetailSuggestions[index] == state.selectedDescription ? whiteColor : customBlackColor.withOpacity(.6),
                           ),
                         ),
-                        backgroundColor: listOfTransactionDetailSuggestions[index] == state.selectedDescription
-                            ? customBlueColor
-                            : greyColor,
+                        backgroundColor: listOfTransactionDetailSuggestions[index] == state.selectedDescription ? customBlueColor : greyColor,
                       ),
                     );
                   },
@@ -544,7 +530,7 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Tags",
+          'Tags',
           style: boldTextStyle.copyWith(
             color: customBlackColor.withOpacity(
               .6,
@@ -574,22 +560,19 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
                   (index) {
                     return GestureDetector(
                       onTap: () {
-                        String selectedTag = transactionTags[index].toString();
+                        final selectedTag = transactionTags[index].toString();
                         if (state.selectedTag != selectedTag) {
                           context.read<AddTransactionsCubit>().changeSelectedTag(selectedTag);
                         } else {
-                          context.read<AddTransactionsCubit>().changeSelectedTag("");
+                          context.read<AddTransactionsCubit>().changeSelectedTag('');
                         }
                       },
                       child: Chip(
                         label: Text(
                           transactionTags[index].toString(),
                           style: regularTextStyle.copyWith(
-                            color: transactionTags[index] == state.selectedTag
-                                ? whiteColor
-                                : customBlackColor.withOpacity(.6),
-                            fontWeight:
-                                transactionTags[index] == state.selectedTag ? FontWeight.w600 : FontWeight.normal,
+                            color: transactionTags[index] == state.selectedTag ? whiteColor : customBlackColor.withOpacity(.6),
+                            fontWeight: transactionTags[index] == state.selectedTag ? FontWeight.w600 : FontWeight.normal,
                           ),
                         ),
                         backgroundColor: transactionTags[index] == state.selectedTag ? customBlueColor : greyColor,
@@ -624,8 +607,8 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
                   (route) => false,
                 );
                 GetCustomSnackbar(
-                  title: "Transaction added!!",
-                  message: "Your transaction data has been stored.",
+                  title: 'Transaction added!!',
+                  message: 'Your transaction data has been stored.',
                   snackbarType: SnackbarType.success,
                   context: context,
                 );
@@ -634,8 +617,8 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
               context.read<UserBloc>().add(RefreshUserStateEvent());
               Navigator.pop(context);
               GetCustomSnackbar(
-                title: "Transaction added!!",
-                message: "Your transaction data has been stored.",
+                title: 'Transaction added!!',
+                message: 'Your transaction data has been stored.',
                 snackbarType: SnackbarType.success,
                 context: context,
               );
@@ -643,7 +626,7 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
           }
           if (state is AddTransactionsErrorState) {
             GetCustomSnackbar(
-              title: "Snap",
+              title: 'Snap',
               message: state.errorMessage,
               snackbarType: SnackbarType.error,
               context: context,
@@ -654,29 +637,26 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
         builder: (context, state) {
           final demoBlocState = context.watch<DemoBloc>().state;
           return GetCustomButton(
-            title: widget.isViewOnly ? "Update Transaction" : "Add Transaction",
+            title: widget.isViewOnly ? 'Update Transaction' : 'Add Transaction',
             titleColor: whiteColor,
             buttonColor: customBlueColor,
             isLoading: state is AddTransactionsLoadingState ? true : false,
             callBackFunction: () {
               if (demoBlocState is DemoDisabledState) {
                 if (_formKey.currentState!.validate()) {
-                  if (amountController.text.isNotEmpty &&
-                      detailsController.text.isNotEmpty &&
-                      state.selectedCardNo != "none" &&
-                      state.selectedTag != "") {
+                  if (amountController.text.isNotEmpty && detailsController.text.isNotEmpty && state.selectedCardNo != 'none' && state.selectedTag != '') {
                     if (widget.isViewOnly) {
                       GetCustomSnackbar(
-                        title: "Hello",
-                        message: "This function has not yet been deployed! :)",
+                        title: 'Hello',
+                        message: 'This function has not yet been deployed! :)',
                         snackbarType: SnackbarType.info,
                         context: context,
                       );
                     } else {
                       if (state is AddTransactionsLoadingState) {
                         GetCustomSnackbar(
-                          title: "Snap",
-                          message: "A transaction is being processed! Please be patient. :)",
+                          title: 'Snap',
+                          message: 'A transaction is being processed! Please be patient. :)',
                           snackbarType: SnackbarType.error,
                           context: context,
                         );
@@ -687,40 +667,38 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
                         context.read<AddTransactionsCubit>().addTransaction(
                               amount: amountController.text,
                               details: detailsController.text,
-                              transctionType: state.selectedTransactionMode == SelectedTransactionMode.enpense
-                                  ? "Expense"
-                                  : "Income",
+                              transctionType: state.selectedTransactionMode == SelectedTransactionMode.enpense ? 'Expense' : 'Income',
                               transctionTag: state.selectedTag,
                               context: context,
                             );
                       }
                     }
                   } else {
-                    if (state.selectedCardNo == "none") {
+                    if (state.selectedCardNo == 'none') {
                       GetCustomSnackbar(
-                        title: "Error",
-                        message: "Please select a valid card and try again!",
+                        title: 'Error',
+                        message: 'Please select a valid card and try again!',
                         snackbarType: SnackbarType.error,
                         context: context,
                       );
                     } else if (detailsController.text.isEmpty) {
                       GetCustomSnackbar(
-                        title: "Error",
-                        message: "Please enter valid details of the transaction and try again!",
+                        title: 'Error',
+                        message: 'Please enter valid details of the transaction and try again!',
                         snackbarType: SnackbarType.error,
                         context: context,
                       );
                     } else if (amountController.text.isEmpty) {
                       GetCustomSnackbar(
-                        title: "Error",
-                        message: "Please enter valid amount and try again!",
+                        title: 'Error',
+                        message: 'Please enter valid amount and try again!',
                         snackbarType: SnackbarType.error,
                         context: context,
                       );
-                    } else if (state.selectedTag == "") {
+                    } else if (state.selectedTag == '') {
                       GetCustomSnackbar(
-                        title: "Error",
-                        message: "Please enter a valid transaction tag and try again!",
+                        title: 'Error',
+                        message: 'Please enter a valid transaction tag and try again!',
                         snackbarType: SnackbarType.error,
                         context: context,
                       );
@@ -738,10 +716,9 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
 
 class _GetCardListWidget extends StatelessWidget {
   _GetCardListWidget({
-    Key? key,
     required this.isViewOnly,
     this.viewTransactionModel,
-  }) : super(key: key);
+  });
 
   bool isViewOnly;
   PinextTransactionModel? viewTransactionModel;
@@ -762,22 +739,22 @@ class _GetCardListWidget extends StatelessWidget {
               stream: isViewOnly
                   ? FirebaseServices()
                       .firebaseFirestore
-                      .collection("pinext_users")
+                      .collection('pinext_users')
                       .doc(FirebaseServices().getUserId())
-                      .collection("pinext_cards")
+                      .collection('pinext_cards')
                       .where('cardId', isEqualTo: viewTransactionModel!.cardId)
                       .snapshots()
                   : FirebaseServices()
                       .firebaseFirestore
-                      .collection("pinext_users")
+                      .collection('pinext_users')
                       .doc(FirebaseServices().getUserId())
-                      .collection("pinext_cards")
+                      .collection('pinext_cards')
                       .orderBy(
                         'lastTransactionData',
                         descending: true,
                       )
                       .snapshots(),
-              builder: ((context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+              builder: (context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return SizedBox(
                     width: getWidth(context) - defaultPadding,
@@ -792,7 +769,7 @@ class _GetCardListWidget extends StatelessWidget {
                     width: getWidth(context) - defaultPadding * 2,
                     alignment: Alignment.center,
                     child: Text(
-                      "Please add a Pinext card to view your cards list here.",
+                      'Please add a Pinext card to view your cards list here.',
                       style: regularTextStyle.copyWith(
                         color: customBlackColor.withOpacity(.4),
                       ),
@@ -805,13 +782,13 @@ class _GetCardListWidget extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   scrollDirection: Axis.horizontal,
                   itemCount: snapshot.data!.docs.length,
-                  itemBuilder: ((context, index) {
-                    PinextCardModel pinextCardModel = PinextCardModel.fromMap(
+                  itemBuilder: (context, index) {
+                    final pinextCardModel = PinextCardModel.fromMap(
                       snapshot.data!.docs[index].data(),
                     );
 
-                    String color = pinextCardModel.color;
-                    late Color cardColor = getColorFromString(color);
+                    final color = pinextCardModel.color;
+                    late final cardColor = getColorFromString(color);
 
                     return BlocBuilder<AddTransactionsCubit, AddTransactionsState>(
                       builder: (context, state) {
@@ -819,7 +796,7 @@ class _GetCardListWidget extends StatelessWidget {
                           onTap: () {
                             if (!isViewOnly) {
                               if (state.selectedCardNo == pinextCardModel.cardId) {
-                                context.read<AddTransactionsCubit>().selectCard("none");
+                                context.read<AddTransactionsCubit>().selectCard('none');
                               } else {
                                 context.read<AddTransactionsCubit>().selectCard(pinextCardModel.cardId);
                               }
@@ -839,9 +816,9 @@ class _GetCardListWidget extends StatelessWidget {
                         return pinextCardWidget;
                       },
                     );
-                  }),
+                  },
                 );
-              }),
+              },
             ),
             const SizedBox(
               width: defaultPadding - 10,

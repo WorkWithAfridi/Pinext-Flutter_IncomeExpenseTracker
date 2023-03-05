@@ -3,26 +3,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
+import 'package:pinext/app/app_data/app_constants/domentions.dart';
+import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
+import 'package:pinext/app/bloc/archive_cubit/archive_cubit.dart';
 import 'package:pinext/app/bloc/archive_cubit/search_cubit/search_cubit.dart';
+import 'package:pinext/app/bloc/archive_cubit/user_statistics_cubit/user_statistics_cubit.dart';
+import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/models/pinext_transaction_model.dart';
+import 'package:pinext/app/services/date_time_services.dart';
 import 'package:pinext/app/services/firebase_services.dart';
+import 'package:pinext/app/services/handlers/file_handler.dart';
 import 'package:pinext/app/shared/widgets/customYearPicker.dart';
+import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 import 'package:pinext/app/shared/widgets/custom_text_field.dart';
-
-import '../../../app_data/app_constants/domentions.dart';
-import '../../../app_data/app_constants/fonts.dart';
-import '../../../bloc/archive_cubit/archive_cubit.dart';
-import '../../../bloc/archive_cubit/user_statistics_cubit/user_statistics_cubit.dart';
-import '../../../bloc/demoBloc/demo_bloc.dart';
-import '../../../services/date_time_services.dart';
-import '../../../services/handlers/file_handler.dart';
-import '../../../shared/widgets/custom_snackbar.dart';
-import '../../../shared/widgets/transaction_details_card.dart';
+import 'package:pinext/app/shared/widgets/transaction_details_card.dart';
 
 class ArchivePage extends StatelessWidget {
-  const ArchivePage({Key? key}) : super(key: key);
+  const ArchivePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +44,7 @@ class ArchivePage extends StatelessWidget {
 }
 
 class ArchiveMonthView extends StatefulWidget {
-  const ArchiveMonthView({Key? key}) : super(key: key);
+  const ArchiveMonthView({super.key});
 
   @override
   State<ArchiveMonthView> createState() => _ArchiveMonthViewState();
@@ -88,7 +87,7 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Archives",
+                    'Archives',
                     style: boldTextStyle.copyWith(
                       fontSize: 25,
                     ),
@@ -97,27 +96,28 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
                     builder: (context, state) {
                       return GestureDetector(
                         onTap: () {
-                          String selectedMonth = "0${int.parse(state.selectedMonth)}".length > 2
-                              ? "0${int.parse(state.selectedMonth)}".substring(1, 3)
-                              : "0${int.parse(state.selectedMonth)}";
+                          final selectedMonth = '0${int.parse(state.selectedMonth)}'.length > 2
+                              ? '0${int.parse(state.selectedMonth)}'.substring(1, 3)
+                              : '0${int.parse(state.selectedMonth)}';
                           GetCustomSnackbar(
-                            title: "Generating Report",
-                            message: "Your report is being generated, please be patient! :)",
+                            title: 'Generating Report',
+                            message: 'Your report is being generated, please be patient! :)',
                             snackbarType: SnackbarType.info,
                             context: context,
                           );
                           FileHandler().createReportForMonth(
-                              int.parse(
-                                selectedMonth,
-                              ),
-                              context,
-                              state.selectedYear);
+                            int.parse(
+                              selectedMonth,
+                            ),
+                            context,
+                            state.selectedYear,
+                          );
                         },
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Text(
-                              "Generate report",
+                              'Generate report',
                               style: boldTextStyle.copyWith(
                                 fontSize: 18,
                               ),
@@ -146,13 +146,13 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      var selectedDate = DateTime.now();
+                      final selectedDate = DateTime.now();
                       showDialog(
                         context: context,
                         builder: (BuildContext builderContext) {
                           return AlertDialog(
                             title: Text(
-                              "Please select a year to view records from that year.",
+                              'Please select a year to view records from that year.',
                               style: regularTextStyle.copyWith(
                                 fontSize: 16,
                               ),
@@ -161,8 +161,8 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
                               width: 300,
                               height: 300,
                               child: CustomYearPicker(
-                                firstDate: DateTime(DateTime.now().year - 100, 1),
-                                lastDate: DateTime(DateTime.now().year, 1),
+                                firstDate: DateTime(DateTime.now().year - 100),
+                                lastDate: DateTime(DateTime.now().year),
                                 initialDate: DateTime.now(),
                                 selectedDate: selectedDate,
                                 onChanged: (DateTime dateTime) {
@@ -225,7 +225,7 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
                         width: defaultPadding,
                       ),
                       ...List.generate(months.length, (index) {
-                        String currentMonth = months[index];
+                        final currentMonth = months[index] as String;
                         return GestureDetector(
                           onTap: () {
                             context.read<ArchiveCubit>().changeMonth((index).toString());
@@ -233,46 +233,46 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
                             context.read<UserStatisticsCubit>().resetState();
                           },
                           child: Padding(
-                              padding: EdgeInsets.only(right: currentMonth == "December" ? defaultPadding : 8),
-                              child: state.selectedMonth.toString() == (index).toString()
-                                  ? Chip(
-                                      label: Text(
-                                        currentMonth,
-                                        style: regularTextStyle.copyWith(
-                                          fontWeight: FontWeight.w600,
-                                          color: whiteColor,
-                                        ),
+                            padding: EdgeInsets.only(right: currentMonth == 'December' ? defaultPadding : 8),
+                            child: state.selectedMonth.toString() == (index).toString()
+                                ? Chip(
+                                    label: Text(
+                                      currentMonth,
+                                      style: regularTextStyle.copyWith(
+                                        fontWeight: FontWeight.w600,
+                                        color: whiteColor,
                                       ),
-                                      backgroundColor: customBlueColor,
-                                    )
-                                  : Chip(
-                                      elevation: 0,
-                                      label: Text(
-                                        currentMonth,
-                                        style: regularTextStyle.copyWith(
-                                          fontWeight: FontWeight.normal,
-                                          color: customBlackColor.withOpacity(.6),
-                                        ),
+                                    ),
+                                    backgroundColor: customBlueColor,
+                                  )
+                                : Chip(
+                                    elevation: 0,
+                                    label: Text(
+                                      currentMonth,
+                                      style: regularTextStyle.copyWith(
+                                        fontWeight: FontWeight.normal,
+                                        color: customBlackColor.withOpacity(.6),
                                       ),
-                                      backgroundColor: greyColor,
-                                    )
-                              // Container(
-                              //   padding: const EdgeInsets.symmetric(
-                              //     horizontal: 8,
-                              //     vertical: 8,
-                              //   ),
-                              //   decoration: const BoxDecoration(
-                              //     color: Colors.transparent,
-                              //   ),
-                              //   child: Text(
-                              //     currentMonth,
-                              //     style: regularTextStyle.copyWith(
-                              //       fontWeight: FontWeight.normal,
-                              //       color: customBlackColor.withOpacity(.4),
-                              //     ),
-                              //   ),
-                              // ),
-                              ),
+                                    ),
+                                    backgroundColor: greyColor,
+                                  ),
+                            // Container(
+                            //   padding: const EdgeInsets.symmetric(
+                            //     horizontal: 8,
+                            //     vertical: 8,
+                            //   ),
+                            //   decoration: const BoxDecoration(
+                            //     color: Colors.transparent,
+                            //   ),
+                            //   child: Text(
+                            //     currentMonth,
+                            //     style: regularTextStyle.copyWith(
+                            //       fontWeight: FontWeight.normal,
+                            //       color: customBlackColor.withOpacity(.4),
+                            //     ),
+                            //   ),
+                            // ),
+                          ),
                         );
                       }),
                     ],
@@ -290,13 +290,13 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
 
 class TransactionsList extends StatelessWidget {
   TransactionsList({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   List<String> filters = [
-    "All transactions",
-    "Income",
-    "Expenses",
+    'All transactions',
+    'Income',
+    'Expenses',
   ];
 
   TextEditingController searchController = TextEditingController();
@@ -313,13 +313,12 @@ class TransactionsList extends StatelessWidget {
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 BlocBuilder<ArchiveCubit, ArchiveState>(
                   builder: (context, state) {
-                    String selectedMonth = "0${int.parse(state.selectedMonth) + 1}".length > 2
-                        ? "0${int.parse(state.selectedMonth) + 1}".substring(1, 3)
-                        : "0${int.parse(state.selectedMonth) + 1}";
+                    final selectedMonth = '0${int.parse(state.selectedMonth) + 1}'.length > 2
+                        ? '0${int.parse(state.selectedMonth) + 1}'.substring(1, 3)
+                        : '0${int.parse(state.selectedMonth) + 1}';
                     return StreamBuilder(
                       stream: FirebaseServices()
                           .firebaseFirestore
@@ -329,11 +328,11 @@ class TransactionsList extends StatelessWidget {
                           .doc(state.selectedYear)
                           .collection(selectedMonth)
                           .orderBy(
-                            "transactionDate",
+                            'transactionDate',
                             descending: true,
                           )
                           .snapshots(),
-                      builder: ((context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+                      builder: (context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
                         if (snapshot.connectionState == ConnectionState.waiting) {
                           return const Center(
                             child: SizedBox.shrink(),
@@ -349,7 +348,6 @@ class TransactionsList extends StatelessWidget {
                               color: Colors.transparent,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   SizedBox(
                                     height: getHeight(context) / 2,
@@ -390,7 +388,7 @@ class TransactionsList extends StatelessWidget {
                               height: 10,
                             ),
                             Text(
-                              "Transactions",
+                              'Transactions',
                               style: boldTextStyle.copyWith(
                                 fontSize: 18,
                               ),
@@ -410,16 +408,15 @@ class TransactionsList extends StatelessWidget {
                                         (index) {
                                           return GestureDetector(
                                             onTap: () {
-                                              String selectedFilter = filters[index].toString();
-                                              if (state.selectedFilter == selectedFilter &&
-                                                  selectedFilter == "All transactions") {
+                                              final selectedFilter = filters[index].toString();
+                                              if (state.selectedFilter == selectedFilter && selectedFilter == 'All transactions') {
                                                 return;
                                               }
                                               if (state.selectedFilter != selectedFilter) {
                                                 context.read<ArchiveCubit>().changeFilter(selectedFilter);
                                               } else {
                                                 context.read<ArchiveCubit>().changeFilter(
-                                                      "All transactions",
+                                                      'All transactions',
                                                     );
                                               }
                                               context.read<UserStatisticsCubit>().resetState();
@@ -429,16 +426,11 @@ class TransactionsList extends StatelessWidget {
                                               label: Text(
                                                 filters[index].toString(),
                                                 style: regularTextStyle.copyWith(
-                                                  color: filters[index] == state.selectedFilter
-                                                      ? whiteColor
-                                                      : customBlackColor.withOpacity(.6),
-                                                  fontWeight: filters[index] == state.selectedFilter
-                                                      ? FontWeight.w600
-                                                      : FontWeight.normal,
+                                                  color: filters[index] == state.selectedFilter ? whiteColor : customBlackColor.withOpacity(.6),
+                                                  fontWeight: filters[index] == state.selectedFilter ? FontWeight.w600 : FontWeight.normal,
                                                 ),
                                               ),
-                                              backgroundColor:
-                                                  filters[index] == state.selectedFilter ? customBlueColor : greyColor,
+                                              backgroundColor: filters[index] == state.selectedFilter ? customBlueColor : greyColor,
                                             ),
                                           );
                                         },
@@ -473,9 +465,9 @@ class TransactionsList extends StatelessWidget {
                                       ),
                                       CustomTextFormField(
                                         controller: searchController,
-                                        hintTitle: "Search term",
+                                        hintTitle: 'Search term',
                                         showClearSuffix: true,
-                                        onChanged: (searchTerm) {
+                                        onChanged: (String searchTerm) {
                                           context.read<ArchiveSearchCubit>().updateSearchTerm(searchTerm);
                                         },
                                         validator: () {
@@ -483,7 +475,7 @@ class TransactionsList extends StatelessWidget {
                                         },
                                         suffixButtonAction: () {
                                           searchController.clear();
-                                          context.read<ArchiveSearchCubit>().updateSearchTerm("");
+                                          context.read<ArchiveSearchCubit>().updateSearchTerm('');
                                         },
                                       ),
                                       const SizedBox(
@@ -498,58 +490,51 @@ class TransactionsList extends StatelessWidget {
                             BlocBuilder<ArchiveSearchCubit, ArchiveSearchState>(
                               builder: (context, searchState) {
                                 return Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                                  padding: const EdgeInsets.symmetric(horizontal: 5),
                                   child: ListView.builder(
                                     itemCount: snapshot.data!.docs.length,
                                     shrinkWrap: true,
                                     physics: const NeverScrollableScrollPhysics(),
-                                    itemBuilder: ((context, index) {
+                                    itemBuilder: (context, index) {
                                       if (snapshot.data!.docs.isEmpty) {
-                                        return const Text("No data found! :(");
+                                        return const Text('No data found! :(');
                                       }
-                                      PinextTransactionModel pinextTransactionModel = PinextTransactionModel.fromMap(
+                                      final pinextTransactionModel = PinextTransactionModel.fromMap(
                                         snapshot.data!.docs[index].data(),
                                       );
-                                      TransactionDetailsCard transactionDetailsCard = TransactionDetailsCard(
+                                      final transactionDetailsCard = TransactionDetailsCard(
                                         pinextTransactionModel: pinextTransactionModel,
                                         isLastIndex: index == snapshot.data!.docs.length - 1,
                                       );
                                       context.read<UserStatisticsCubit>().updateStatistics(
-                                          amount: double.parse(pinextTransactionModel.amount),
-                                          isExpense: pinextTransactionModel.transactionType.toString() == "Expense",
-                                          tag: pinextTransactionModel.transactionTag,
-                                          tagAmount: double.parse(
-                                            pinextTransactionModel.amount,
-                                          ));
-                                      if (state.selectedFilter == "All transactions") {
+                                            amount: double.parse(pinextTransactionModel.amount),
+                                            isExpense: pinextTransactionModel.transactionType.toString() == 'Expense',
+                                            tag: pinextTransactionModel.transactionTag,
+                                            tagAmount: double.parse(
+                                              pinextTransactionModel.amount,
+                                            ),
+                                          );
+                                      if (state.selectedFilter == 'All transactions') {
                                         if (searchState.isSearchActive) {
-                                          if (pinextTransactionModel.details
-                                              .toLowerCase()
-                                              .contains(searchState.searchTerm.toLowerCase())) {
+                                          if (pinextTransactionModel.details.toLowerCase().contains(searchState.searchTerm.toLowerCase())) {
                                             return transactionDetailsCard;
                                           } else {
                                             return const SizedBox.shrink();
                                           }
                                         }
                                         return transactionDetailsCard;
-                                      } else if (state.selectedFilter == "Income" &&
-                                          pinextTransactionModel.transactionType == "Income") {
+                                      } else if (state.selectedFilter == 'Income' && pinextTransactionModel.transactionType == 'Income') {
                                         if (searchState.isSearchActive) {
-                                          if (pinextTransactionModel.details
-                                              .toLowerCase()
-                                              .contains(searchState.searchTerm.toLowerCase())) {
+                                          if (pinextTransactionModel.details.toLowerCase().contains(searchState.searchTerm.toLowerCase())) {
                                             return transactionDetailsCard;
                                           } else {
                                             return const SizedBox.shrink();
                                           }
                                         }
                                         return transactionDetailsCard;
-                                      } else if (state.selectedFilter == "Expenses" &&
-                                          pinextTransactionModel.transactionType == "Expense") {
+                                      } else if (state.selectedFilter == 'Expenses' && pinextTransactionModel.transactionType == 'Expense') {
                                         if (searchState.isSearchActive) {
-                                          if (pinextTransactionModel.details
-                                              .toLowerCase()
-                                              .contains(searchState.searchTerm.toLowerCase())) {
+                                          if (pinextTransactionModel.details.toLowerCase().contains(searchState.searchTerm.toLowerCase())) {
                                             return transactionDetailsCard;
                                           } else {
                                             return const SizedBox.shrink();
@@ -558,14 +543,14 @@ class TransactionsList extends StatelessWidget {
                                         return transactionDetailsCard;
                                       }
                                       return const SizedBox.shrink();
-                                    }),
+                                    },
                                   ),
                                 );
                               },
                             ),
                           ],
                         );
-                      }),
+                      },
                     );
                   },
                 ),
@@ -601,13 +586,12 @@ class _GetStatisticsWidget extends StatelessWidget {
                     ? const SizedBox.shrink()
                     : Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           const SizedBox(
                             height: 12,
                           ),
                           Text(
-                            "Summary",
+                            'Summary',
                             style: boldTextStyle.copyWith(
                               fontSize: 18,
                             ),
@@ -620,7 +604,7 @@ class _GetStatisticsWidget extends StatelessWidget {
                               final demoBlocState = context.watch<DemoBloc>().state;
                               return _GetOverviewWidget(
                                 isDemoActive: demoBlocState is DemoEnabledState,
-                                title: "Withdrawals",
+                                title: 'Withdrawals',
                                 amount: state.totalExpenses.toString(),
                               );
                             },
@@ -641,16 +625,16 @@ class _GetStatisticsWidget extends StatelessWidget {
                               final demoBlocState = context.watch<DemoBloc>().state;
                               return _GetOverviewWidget(
                                 isDemoActive: demoBlocState is DemoEnabledState,
-                                title: "Diposits",
+                                title: 'Diposits',
                                 amount: state.totalSavings.toString(),
                               );
                             },
                           ),
                           BlocBuilder<ArchiveCubit, ArchiveState>(
                             builder: (context, state) {
-                              var currentMonthTemp = "0${int.parse(currentMonth) + 1}".length > 2
-                                  ? "0${int.parse(currentMonth) + 1}".substring(1, 3)
-                                  : "0${int.parse(currentMonth) + 1}";
+                              final currentMonthTemp = '0${int.parse(currentMonth) + 1}'.length > 2
+                                  ? '0${int.parse(currentMonth) + 1}'.substring(1, 3)
+                                  : '0${int.parse(currentMonth) + 1}';
                               return int.parse(state.selectedMonth) == int.parse(currentMonthTemp) - 2
                                   ? Column(
                                       children: [
@@ -670,7 +654,7 @@ class _GetStatisticsWidget extends StatelessWidget {
                                             final state = context.watch<UserBloc>().state;
                                             final demoBlocState = context.watch<DemoBloc>().state;
 
-                                            String totalEarnings = "";
+                                            var totalEarnings = '';
                                             if (state is AuthenticatedUserState) {
                                               totalEarnings = state.monthlyEarnings.toString();
                                             }
@@ -697,7 +681,7 @@ class _GetStatisticsWidget extends StatelessWidget {
                                             final state = context.watch<UserBloc>().state;
                                             final demoBlocState = context.watch<DemoBloc>().state;
 
-                                            String totalSavings = "";
+                                            var totalSavings = '';
                                             if (state is AuthenticatedUserState) {
                                               totalSavings = state.monthlySavings.toString();
                                             }
@@ -728,13 +712,13 @@ class _GetStatisticsWidget extends StatelessWidget {
                             builder: (context) {
                               final state = context.watch<UserBloc>().state;
                               final demoBlocState = context.watch<DemoBloc>().state;
-                              String netWorth = "";
+                              var netWorth = '';
                               if (state is AuthenticatedUserState) {
                                 netWorth = state.netBalance.toString();
                               }
                               return _GetOverviewWidget(
                                 isDemoActive: demoBlocState is DemoEnabledState,
-                                title: "Current NET. balance",
+                                title: 'Current NET. balance',
                                 amount: netWorth.toString(),
                               );
                             },
@@ -758,22 +742,20 @@ class _GetTransactionHistryOverviewWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Builder(
       builder: (context) {
-        var archiveState = context.watch<ArchiveCubit>().state;
-        var state = context.watch<UserStatisticsCubit>().state;
+        final archiveState = context.watch<ArchiveCubit>().state;
+        final state = context.watch<UserStatisticsCubit>().state;
         final demoBlocState = context.watch<DemoBloc>().state;
-        var currentMonthTemp = "0${int.parse(currentMonth) + 1}".length > 2
-            ? "0${int.parse(currentMonth) + 1}".substring(1, 3)
-            : "0${int.parse(currentMonth) + 1}";
+        final currentMonthTemp =
+            '0${int.parse(currentMonth) + 1}'.length > 2 ? '0${int.parse(currentMonth) + 1}'.substring(1, 3) : '0${int.parse(currentMonth) + 1}';
         return int.parse(archiveState.selectedMonth) != int.parse(currentMonthTemp) - 2
             ? Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   const SizedBox(
                     height: 12,
                   ),
                   Text(
-                    "Overview",
+                    'Overview',
                     style: boldTextStyle.copyWith(
                       fontSize: 18,
                     ),
@@ -785,7 +767,7 @@ class _GetTransactionHistryOverviewWidget extends StatelessWidget {
                     children: [
                       _GetOverviewWidget(
                         isDemoActive: demoBlocState is DemoEnabledState,
-                        title: "Income",
+                        title: 'Income',
                         amount: state.income.toString(),
                       ),
                       const SizedBox(
@@ -801,7 +783,7 @@ class _GetTransactionHistryOverviewWidget extends StatelessWidget {
                       ),
                       _GetOverviewWidget(
                         isDemoActive: demoBlocState is DemoEnabledState,
-                        title: "Food and Groceries",
+                        title: 'Food and Groceries',
                         amount: state.foodAndGroceries.toString(),
                       ),
                       const SizedBox(
@@ -817,7 +799,7 @@ class _GetTransactionHistryOverviewWidget extends StatelessWidget {
                       ),
                       _GetOverviewWidget(
                         isDemoActive: demoBlocState is DemoEnabledState,
-                        title: "Transportation",
+                        title: 'Transportation',
                         amount: state.transportation.toString(),
                       ),
                       const SizedBox(
@@ -833,7 +815,7 @@ class _GetTransactionHistryOverviewWidget extends StatelessWidget {
                       ),
                       _GetOverviewWidget(
                         isDemoActive: demoBlocState is DemoEnabledState,
-                        title: "Housing and Utilities",
+                        title: 'Housing and Utilities',
                         amount: state.transportation.toString(),
                       ),
                       const SizedBox(
@@ -849,7 +831,7 @@ class _GetTransactionHistryOverviewWidget extends StatelessWidget {
                       ),
                       _GetOverviewWidget(
                         isDemoActive: demoBlocState is DemoEnabledState,
-                        title: "Health and Wellness",
+                        title: 'Health and Wellness',
                         amount: state.healthAndWellness.toString(),
                       ),
                       const SizedBox(
@@ -865,7 +847,7 @@ class _GetTransactionHistryOverviewWidget extends StatelessWidget {
                       ),
                       _GetOverviewWidget(
                         isDemoActive: demoBlocState is DemoEnabledState,
-                        title: "Education and Training",
+                        title: 'Education and Training',
                         amount: state.educationAndTraining.toString(),
                       ),
                       const SizedBox(
@@ -881,7 +863,7 @@ class _GetTransactionHistryOverviewWidget extends StatelessWidget {
                       ),
                       _GetOverviewWidget(
                         isDemoActive: demoBlocState is DemoEnabledState,
-                        title: "Entertainment and Leisure",
+                        title: 'Entertainment and Leisure',
                         amount: state.entertainmentAndLeisure.toString(),
                       ),
                       const SizedBox(
@@ -897,7 +879,7 @@ class _GetTransactionHistryOverviewWidget extends StatelessWidget {
                       ),
                       _GetOverviewWidget(
                         isDemoActive: demoBlocState is DemoEnabledState,
-                        title: "Personal Care",
+                        title: 'Personal Care',
                         amount: state.personalCare.toString(),
                       ),
                       const SizedBox(
@@ -913,7 +895,7 @@ class _GetTransactionHistryOverviewWidget extends StatelessWidget {
                       ),
                       _GetOverviewWidget(
                         isDemoActive: demoBlocState is DemoEnabledState,
-                        title: "Clothing and Accessories",
+                        title: 'Clothing and Accessories',
                         amount: state.clothingAndAccessories.toString(),
                       ),
                       const SizedBox(
@@ -929,7 +911,7 @@ class _GetTransactionHistryOverviewWidget extends StatelessWidget {
                       ),
                       _GetOverviewWidget(
                         isDemoActive: demoBlocState is DemoEnabledState,
-                        title: "Gifts and Donations",
+                        title: 'Gifts and Donations',
                         amount: state.giftsAndDonations.toString(),
                       ),
                       const SizedBox(
@@ -945,7 +927,7 @@ class _GetTransactionHistryOverviewWidget extends StatelessWidget {
                       ),
                       _GetOverviewWidget(
                         isDemoActive: demoBlocState is DemoEnabledState,
-                        title: "Miscellaneous",
+                        title: 'Miscellaneous',
                         amount: state.miscellaneous.toString(),
                       ),
                       const SizedBox(
@@ -961,7 +943,7 @@ class _GetTransactionHistryOverviewWidget extends StatelessWidget {
                       ),
                       _GetOverviewWidget(
                         isDemoActive: demoBlocState is DemoEnabledState,
-                        title: "Others",
+                        title: 'Others',
                         amount: state.others.toString(),
                       ),
                       const SizedBox(
@@ -977,7 +959,7 @@ class _GetTransactionHistryOverviewWidget extends StatelessWidget {
                       ),
                       _GetOverviewWidget(
                         isDemoActive: demoBlocState is DemoEnabledState,
-                        title: "Transferred",
+                        title: 'Transferred',
                         amount: state.transfer.toString(),
                       ),
                       const SizedBox(
@@ -993,7 +975,7 @@ class _GetTransactionHistryOverviewWidget extends StatelessWidget {
                       ),
                       _GetOverviewWidget(
                         isDemoActive: demoBlocState is DemoEnabledState,
-                        title: "Subscriptions",
+                        title: 'Subscriptions',
                         amount: state.subscription.toString(),
                       ),
                     ],
@@ -1021,13 +1003,13 @@ class _GetOverviewWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          "$title: ",
+          '$title: ',
           style: regularTextStyle.copyWith(
             color: customBlackColor.withOpacity(.80),
           ),
         ),
         Text(
-          isDemoActive ? "100000 Tk" : "$amount Tk.",
+          isDemoActive ? '100000 Tk' : '$amount Tk.',
           style: boldTextStyle.copyWith(
             color: customBlueColor,
           ),

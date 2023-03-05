@@ -6,14 +6,14 @@ import 'package:pinext/app/services/handlers/transaction_handler.dart';
 import 'package:pinext/app/services/handlers/user_handler.dart';
 
 class SubscriptionHandler {
+  factory SubscriptionHandler() => _subscriptionServices;
   SubscriptionHandler._internal();
   static final SubscriptionHandler _subscriptionServices = SubscriptionHandler._internal();
-  factory SubscriptionHandler() => _subscriptionServices;
 
-  Future addSubscription({
+  Future<String> addSubscription({
     required PinextSubscriptionModel subscriptionModel,
   }) async {
-    String response = "error";
+    var response = 'error';
     try {
       await FirebaseServices()
           .firebaseFirestore
@@ -22,14 +22,14 @@ class SubscriptionHandler {
           .collection('pinext_subscriptions')
           .doc(subscriptionModel.subscriptionId)
           .set(subscriptionModel.toMap());
-      response = "success";
+      response = 'success';
     } catch (err) {
-      response = "error";
+      response = 'error';
     }
     return response;
   }
 
-  removeSubscription({
+  Future<void> removeSubscription({
     required PinextSubscriptionModel subscriptionModel,
   }) async {
     await FirebaseServices()
@@ -42,7 +42,7 @@ class SubscriptionHandler {
     return;
   }
 
-  Future updateSubscription({
+  Future<String> updateSubscription({
     required PinextSubscriptionModel subscriptionModel,
     required bool addTransactionToArchive,
     required BuildContext context,
@@ -52,23 +52,23 @@ class SubscriptionHandler {
           .firebaseFirestore
           .collection(USERS_DIRECTORY)
           .doc(UserHandler().currentUser.userId)
-          .collection("pinext_subscriptions")
+          .collection('pinext_subscriptions')
           .doc(subscriptionModel.subscriptionId)
           .update(subscriptionModel.toMap());
       if (addTransactionToArchive) {
         await TransactionHandler().addTransaction(
           amount: subscriptionModel.amount,
           description: subscriptionModel.title,
-          transactionType: "Expense",
+          transactionType: 'Expense',
           cardId: subscriptionModel.assignedCardId,
-          transactionTag: "Subscription",
+          transactionTag: 'Subscription',
           markedAs: true,
           context: context,
         );
       }
-      return "success";
+      return 'success';
     } catch (err) {
-      return "error";
+      return 'error';
     }
   }
 }

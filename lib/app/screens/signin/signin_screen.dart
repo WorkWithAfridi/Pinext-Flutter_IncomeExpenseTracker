@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pinext/app/app_data/app_constants/constants.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/app_data/extensions/string_extensions.dart';
 import 'package:pinext/app/app_data/routing/routes.dart';
+import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/signin_cubit/login_cubit.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/services/authentication_services.dart';
+import 'package:pinext/app/shared/widgets/custom_button.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
-
-import '../../app_data/app_constants/constants.dart';
-import '../../app_data/theme_data/colors.dart';
-import '../../shared/widgets/custom_button.dart';
-import '../../shared/widgets/custom_text_field.dart';
+import 'package:pinext/app/shared/widgets/custom_text_field.dart';
 
 class SigninScreen extends StatelessWidget {
-  const SigninScreen({Key? key}) : super(key: key);
+  const SigninScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +25,7 @@ class SigninScreen extends StatelessWidget {
 }
 
 class SigninScreenView extends StatefulWidget {
-  const SigninScreenView({Key? key}) : super(key: key);
+  const SigninScreenView({super.key});
 
   @override
   State<SigninScreenView> createState() => _SigninScreenViewState();
@@ -57,7 +56,7 @@ class _SigninScreenViewState extends State<SigninScreenView> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "",
+          '',
           style: regularTextStyle.copyWith(
             fontSize: 16,
           ),
@@ -77,14 +76,14 @@ class _SigninScreenViewState extends State<SigninScreenView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Sign In\nTo PINEXT",
+                  'Sign In\nTo PINEXT',
                   style: boldTextStyle.copyWith(fontSize: 30),
                 ),
                 const SizedBox(
                   height: 4,
                 ),
                 Text(
-                  "Please sign in with your email and password\nto continue using the app.",
+                  'Please sign in with your email and password\nto continue using the app.',
                   style: regularTextStyle.copyWith(
                     fontSize: 14,
                     color: customBlackColor.withOpacity(.6),
@@ -95,7 +94,7 @@ class _SigninScreenViewState extends State<SigninScreenView> {
                 ),
                 CustomTextFormField(
                   controller: emailController,
-                  hintTitle: "Email address",
+                  hintTitle: 'Email address',
                   onChanged: (String value) {},
                   validator: (value) {
                     return InputValidation(value.toString()).isCorrectEmailAddress();
@@ -107,10 +106,10 @@ class _SigninScreenViewState extends State<SigninScreenView> {
                 ),
                 CustomTextFormField(
                   controller: passwordController,
-                  hintTitle: "Password",
+                  hintTitle: 'Password',
                   isPassword: true,
                   onChanged: (String value) {},
-                  validator: (value) {
+                  validator: (String value) {
                     return InputValidation(value).isNotEmpty();
                   },
                   suffixButtonAction: () {},
@@ -122,104 +121,104 @@ class _SigninScreenViewState extends State<SigninScreenView> {
                   alignment: Alignment.bottomRight,
                   child: GestureDetector(
                     onTap: () {
-                      TextEditingController resetEmailController = TextEditingController();
+                      final resetEmailController = TextEditingController();
                       final emailFormKey = GlobalKey<FormState>();
                       showDialog(
-                          context: context,
-                          builder: (dialogContext) {
-                            return AlertDialog(
-                              title: Text(
-                                'Find your Pinext account',
-                                style: boldTextStyle.copyWith(
-                                  fontSize: 16,
-                                  color: customBlackColor.withOpacity(.85),
-                                ),
+                        context: context,
+                        builder: (dialogContext) {
+                          return AlertDialog(
+                            title: Text(
+                              'Find your Pinext account',
+                              style: boldTextStyle.copyWith(
+                                fontSize: 16,
+                                color: customBlackColor.withOpacity(.85),
                               ),
-                              content: SingleChildScrollView(
-                                child: ListBody(
-                                  children: [
-                                    Text(
-                                      "Enter the email associated with your account and we'll sent you a reset link. :)",
-                                      style: regularTextStyle.copyWith(
-                                        color: customBlackColor.withOpacity(.5),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 8,
-                                    ),
-                                    Form(
-                                      key: emailFormKey,
-                                      child: CustomTextFormField(
-                                        controller: resetEmailController,
-                                        hintTitle: "Email",
-                                        onChanged: (value) {},
-                                        validator: (value) {
-                                          return InputValidation(value).isCorrectEmailAddress();
-                                        },
-                                        suffixButtonAction: () {},
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(defaultBorder),
-                              ),
-                              actions: <Widget>[
-                                TextButton(
-                                  child: Text(
-                                    'Cancel',
-                                    style: boldTextStyle.copyWith(
-                                      color: customBlackColor.withOpacity(
-                                        .8,
-                                      ),
+                            ),
+                            content: SingleChildScrollView(
+                              child: ListBody(
+                                children: [
+                                  Text(
+                                    "Enter the email associated with your account and we'll sent you a reset link. :)",
+                                    style: regularTextStyle.copyWith(
+                                      color: customBlackColor.withOpacity(.5),
                                     ),
                                   ),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                  Form(
+                                    key: emailFormKey,
+                                    child: CustomTextFormField(
+                                      controller: resetEmailController,
+                                      hintTitle: 'Email',
+                                      onChanged: (value) {},
+                                      validator: (String value) {
+                                        return InputValidation(value).isCorrectEmailAddress();
+                                      },
+                                      suffixButtonAction: () {},
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(defaultBorder),
+                            ),
+                            actions: <Widget>[
+                              TextButton(
+                                child: Text(
+                                  'Cancel',
+                                  style: boldTextStyle.copyWith(
+                                    color: customBlackColor.withOpacity(
+                                      .8,
+                                    ),
+                                  ),
                                 ),
-                                TextButton(
-                                  child: const Text('Reset password'),
-                                  onPressed: () async {
-                                    if (emailFormKey.currentState!.validate()) {
-                                      if (resetEmailController.text.isNotEmpty) {
-                                        String response = await AuthenticationServices()
-                                            .resetPassword(email: resetEmailController.text);
-                                        Navigator.pop(dialogContext);
-                                        if (response == "Success") {
-                                          GetCustomSnackbar(
-                                            title: "We sent you a code",
-                                            message: "Please check your email to reset your password.",
-                                            snackbarType: SnackbarType.info,
-                                            context: context,
-                                          );
-                                        } else {
-                                          GetCustomSnackbar(
-                                            title: "Snap",
-                                            message: response,
-                                            snackbarType: SnackbarType.info,
-                                            context: context,
-                                          );
-                                        }
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                              TextButton(
+                                child: const Text('Reset password'),
+                                onPressed: () async {
+                                  if (emailFormKey.currentState!.validate()) {
+                                    if (resetEmailController.text.isNotEmpty) {
+                                      final response = await AuthenticationServices().resetPassword(email: resetEmailController.text);
+                                      Navigator.pop(dialogContext);
+                                      if (response == 'Success') {
+                                        GetCustomSnackbar(
+                                          title: 'We sent you a code',
+                                          message: 'Please check your email to reset your password.',
+                                          snackbarType: SnackbarType.info,
+                                          context: context,
+                                        );
                                       } else {
                                         GetCustomSnackbar(
-                                          title: "Snap",
-                                          message: "We need your email in order to reset your password!",
+                                          title: 'Snap',
+                                          message: response,
                                           snackbarType: SnackbarType.info,
                                           context: context,
                                         );
                                       }
+                                    } else {
+                                      GetCustomSnackbar(
+                                        title: 'Snap',
+                                        message: 'We need your email in order to reset your password!',
+                                        snackbarType: SnackbarType.info,
+                                        context: context,
+                                      );
                                     }
-                                  },
-                                ),
-                              ],
-                              actionsPadding: dialogButtonPadding,
-                            );
-                          });
+                                  }
+                                },
+                              ),
+                            ],
+                            actionsPadding: dialogButtonPadding,
+                          );
+                        },
+                      );
                     },
                     child: Text(
-                      "Forgot password?",
+                      'Forgot password?',
                       style: boldTextStyle.copyWith(
                         fontSize: 14,
                         color: customBlueColor,
@@ -247,7 +246,7 @@ class _SigninScreenViewState extends State<SigninScreenView> {
                       }
                       if (state is LoginErrorState) {
                         GetCustomSnackbar(
-                          title: "Snap",
+                          title: 'Snap',
                           message: state.errorMessage,
                           snackbarType: SnackbarType.error,
                           context: context,
@@ -257,7 +256,7 @@ class _SigninScreenViewState extends State<SigninScreenView> {
                     },
                     builder: (context, state) {
                       return GetCustomButton(
-                        title: "Sign In",
+                        title: 'Sign In',
                         titleColor: whiteColor,
                         buttonColor: customBlueColor,
                         isLoading: state is LoginWithEmailAndPasswordButtonLoadingState,
@@ -270,8 +269,8 @@ class _SigninScreenViewState extends State<SigninScreenView> {
                                   );
                             } else {
                               GetCustomSnackbar(
-                                title: "Snap",
-                                message: "We need your email and password in order to sign you in!",
+                                title: 'Snap',
+                                message: 'We need your email and password in order to sign you in!',
                                 snackbarType: SnackbarType.info,
                                 context: context,
                               );
@@ -314,7 +313,7 @@ class _SigninScreenViewState extends State<SigninScreenView> {
                           ),
                         ),
                         TextSpan(
-                          text: "Sign up using email.",
+                          text: 'Sign up using email.',
                           style: boldTextStyle.copyWith(
                             fontSize: 14,
                             color: customBlueColor,

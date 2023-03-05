@@ -5,13 +5,13 @@ import 'package:pinext/app/bloc/signin_cubit/login_cubit.dart';
 import 'package:pinext/app/shared/widgets/custom_button.dart';
 
 class SocialsButton extends StatelessWidget {
-  SocialsButton({Key? key}) : super(key: key);
+  SocialsButton({super.key});
   List socialButtons = [
     // "appleId",
     // "facebook",
-    "google",
+    'google',
   ];
-  var radius = 50.00;
+  double radius = 50;
 
   @override
   Widget build(BuildContext context) {
@@ -25,23 +25,22 @@ class SocialsButton extends StatelessWidget {
             removeBottom: true,
             child: ListView.builder(
               shrinkWrap: true,
-              scrollDirection: Axis.vertical,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: socialButtons.length,
               itemBuilder: (context, index) {
                 // "appleId",
                 // "facebook",
                 // "google",
-                String social = socialButtons[index];
+                final social = socialButtons[index] as String;
                 IconData icon;
                 Color backgroundColor;
-                if (social == "appleId") {
+                if (social == 'appleId') {
                   icon = Icons.apple;
                   backgroundColor = Colors.black;
-                } else if (social == "facebook") {
+                } else if (social == 'facebook') {
                   icon = Icons.facebook;
                   backgroundColor = Colors.blue[900]!;
-                } else if (social == "google") {
+                } else if (social == 'google') {
                   icon = FontAwesomeIcons.google;
                   backgroundColor = Colors.orange[900]!;
                 } else {
@@ -49,17 +48,16 @@ class SocialsButton extends StatelessWidget {
                   backgroundColor = Colors.pink;
                 }
                 return GetCustomButton(
-                  title: "Signin with Google",
+                  title: 'Signin with Google',
                   titleColor: Colors.white,
                   isLoading: state is LoginWithGoogleButtonLoadingState,
                   buttonColor: Colors.black,
                   callBackFunction: () {
-                    if (social == "google") {
+                    if (social == 'google') {
                       context.read<LoginCubit>().loginWithGoogle();
                     }
                   },
                   icon: icon,
-                  iconColor: Colors.white,
                 );
               },
             ),

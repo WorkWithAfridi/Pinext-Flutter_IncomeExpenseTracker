@@ -3,18 +3,17 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
+import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/app_data/extensions/string_extensions.dart';
+import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/add_goal_cubit/add_goal_cubit.dart';
 import 'package:pinext/app/bloc/signup_cubit/signin_cubit_cubit.dart';
 import 'package:pinext/app/models/pinext_goal_model.dart';
+import 'package:pinext/app/shared/widgets/custom_button.dart';
+import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
+import 'package:pinext/app/shared/widgets/custom_text_field.dart';
 import 'package:pinext/app/shared/widgets/info_widget.dart';
 import 'package:uuid/uuid.dart';
-
-import '../../app_data/app_constants/fonts.dart';
-import '../../app_data/theme_data/colors.dart';
-import '../../shared/widgets/custom_button.dart';
-import '../../shared/widgets/custom_snackbar.dart';
-import '../../shared/widgets/custom_text_field.dart';
 
 class AddAndEditGoalsAndMilestoneScreen extends StatelessWidget {
   AddAndEditGoalsAndMilestoneScreen({
@@ -106,69 +105,72 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
           ),
         ),
         title: Text(
-          widget.editingGoal ? "Editing goal" : "Adding a new goal",
+          widget.editingGoal ? 'Editing goal' : 'Adding a new goal',
           style: regularTextStyle,
         ),
         centerTitle: true,
         actions: [
-          widget.editingGoal
-              ? IconButton(
-                  onPressed: () {
-                    showDialog(
-                        context: context,
-                        builder: (dialogContext) {
-                          return AlertDialog(
-                            title: Text(
-                              'Delete milestone?',
-                              style: boldTextStyle.copyWith(
-                                fontSize: 20,
+          if (widget.editingGoal)
+            IconButton(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (dialogContext) {
+                    return AlertDialog(
+                      title: Text(
+                        'Delete milestone?',
+                        style: boldTextStyle.copyWith(
+                          fontSize: 20,
+                        ),
+                      ),
+                      content: SingleChildScrollView(
+                        child: ListBody(
+                          children: [
+                            Text(
+                              "You're about to delete this milestone from your pinext account! Are you sure you want to do that??",
+                              style: regularTextStyle,
+                            ),
+                          ],
+                        ),
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(defaultBorder),
+                      ),
+                      actions: <Widget>[
+                        TextButton(
+                          child: Text(
+                            'Cancel',
+                            style: boldTextStyle.copyWith(
+                              color: customBlackColor.withOpacity(
+                                .8,
                               ),
                             ),
-                            content: SingleChildScrollView(
-                              child: ListBody(
-                                children: [
-                                  Text(
-                                    "You're about to delete this milestone from your pinext account! Are you sure you want to do that??",
-                                    style: regularTextStyle,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(defaultBorder),
-                            ),
-                            actions: <Widget>[
-                              TextButton(
-                                child: Text(
-                                  'Cancel',
-                                  style: boldTextStyle.copyWith(
-                                    color: customBlackColor.withOpacity(
-                                      .8,
-                                    ),
-                                  ),
-                                ),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                              TextButton(
-                                child: const Text('Approve'),
-                                onPressed: () {
-                                  context.read<AddGoalCubit>().deleteGoal(widget.pinextGoalModel!);
-                                  Navigator.pop(dialogContext);
-                                },
-                              ),
-                            ],
-                            actionsPadding: dialogButtonPadding,
-                          );
-                        });
+                          ),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                        TextButton(
+                          child: const Text('Approve'),
+                          onPressed: () {
+                            context.read<AddGoalCubit>().deleteGoal(widget.pinextGoalModel!);
+                            Navigator.pop(dialogContext);
+                          },
+                        ),
+                      ],
+                      actionsPadding: dialogButtonPadding,
+                    );
                   },
-                  icon: const Icon(
-                    Icons.delete,
-                    color: Colors.red,
-                    size: 18,
-                  ))
-              : const SizedBox.shrink()
+                );
+              },
+              icon: const Icon(
+                Icons.delete,
+                color: Colors.red,
+                size: 18,
+              ),
+            )
+          else
+            const SizedBox.shrink()
         ],
       ),
       body: SingleChildScrollView(
@@ -180,17 +182,16 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
               horizontal: defaultPadding,
             ),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Pinext",
+                  'Pinext',
                   style: regularTextStyle.copyWith(
                     color: customBlackColor.withOpacity(.6),
                   ),
                 ),
                 Text(
-                  "Goals & Milestones",
+                  'Goals & Milestones',
                   style: boldTextStyle.copyWith(
                     fontSize: 25,
                   ),
@@ -202,11 +203,11 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "What are your saving up for?",
+                      'What are your saving up for?',
                       style: boldTextStyle,
                     ),
                     InfoWidget(
-                      infoText: "This will be the title of you goal or milestone.",
+                      infoText: 'This will be the title of you goal or milestone.',
                     ),
                   ],
                 ),
@@ -215,8 +216,7 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                 ),
                 CustomTextFormField(
                   controller: titleController,
-                  hintTitle: "Ex:  a new bike....",
-                  textInputType: TextInputType.text,
+                  hintTitle: 'Ex:  a new bike....',
                   onChanged: (String value) {},
                   validator: (value) {
                     if (value.toString().isNotEmpty) {
@@ -234,11 +234,11 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Amount",
+                      'Amount',
                       style: boldTextStyle,
                     ),
                     InfoWidget(
-                      infoText: "This is the amount you need to save to achieve/ complete your goal/ milestone.",
+                      infoText: 'This is the amount you need to save to achieve/ complete your goal/ milestone.',
                     ),
                   ],
                 ),
@@ -247,10 +247,10 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                 ),
                 CustomTextFormField(
                   controller: amountController,
-                  hintTitle: "Ex: 400,000Tk",
+                  hintTitle: 'Ex: 400,000Tk',
                   textInputType: TextInputType.number,
                   onChanged: (String value) {},
-                  validator: (value) {
+                  validator: (String value) {
                     return InputValidation(value).isCorrectNumber();
                   },
                   suffixButtonAction: () {},
@@ -259,7 +259,7 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                   height: 12,
                 ),
                 Text(
-                  "Detailed Description",
+                  'Detailed Description',
                   style: boldTextStyle,
                 ),
                 const SizedBox(
@@ -268,8 +268,7 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                 CustomTextFormField(
                   controller: descriptionController,
                   numberOfLines: 5,
-                  hintTitle: "Ex: Buying a new bike",
-                  textInputType: TextInputType.text,
+                  hintTitle: 'Ex: Buying a new bike',
                   onChanged: (String value) {},
                   validator: (value) {
                     // return InputValidation(value).isCorrectNumber();
@@ -285,26 +284,26 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                     if (state is AddGoalSuccessState) {
                       Navigator.pop(context);
                       GetCustomSnackbar(
-                        title: "Pinext Goal added!!",
-                        message: "A new goal has been added.",
+                        title: 'Pinext Goal added!!',
+                        message: 'A new goal has been added.',
                         snackbarType: SnackbarType.success,
                         context: context,
                       );
                     } else if (state is AddGoalErrorState) {
-                      log("An error occurred while trying to add a new goal!");
+                      log('An error occurred while trying to add a new goal!');
                     } else if (state is UpdateGoalSuccessState) {
                       Navigator.pop(context);
                       GetCustomSnackbar(
-                        title: "Pinext Goal updated!!",
-                        message: "Your goal has been updated",
+                        title: 'Pinext Goal updated!!',
+                        message: 'Your goal has been updated',
                         snackbarType: SnackbarType.success,
                         context: context,
                       );
                     } else if (state is DeleteGoalSuccessState) {
                       Navigator.pop(context);
                       GetCustomSnackbar(
-                        title: "Pinext Goal Deleted",
-                        message: "Your goal has been achieved!",
+                        title: 'Pinext Goal Deleted',
+                        message: 'Your goal has been achieved!',
                         snackbarType: SnackbarType.success,
                         context: context,
                       );
@@ -312,7 +311,7 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                   },
                   builder: (addGoalContext, state) {
                     return GetCustomButton(
-                      title: widget.editingGoal ? "Update" : "Add",
+                      title: widget.editingGoal ? 'Update' : 'Add',
                       titleColor: whiteColor,
                       buttonColor: customBlueColor,
                       isLoading: state is AddGoalLoadingState,
@@ -323,7 +322,7 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                         // }
                         if (_formKey.currentState!.validate()) {
                           if (widget.addingNewGoalDuringSignupProcess) {
-                            PinextGoalModel pinextGoalModel = PinextGoalModel(
+                            final pinextGoalModel = PinextGoalModel(
                               title: titleController.text,
                               amount: amountController.text,
                               description: descriptionController.text,
@@ -332,7 +331,7 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                             context.read<SigninCubit>().addGoal(pinextGoalModel);
                             Navigator.pop(context);
                           } else if (widget.addingNewGoal) {
-                            PinextGoalModel pinextGoalModel = PinextGoalModel(
+                            final pinextGoalModel = PinextGoalModel(
                               title: titleController.text,
                               amount: amountController.text,
                               description: descriptionController.text,
@@ -340,7 +339,7 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                             );
                             addGoalContext.read<AddGoalCubit>().addGoal(pinextGoalModel);
                           } else if (widget.editingGoal) {
-                            PinextGoalModel pinextGoalModel = PinextGoalModel(
+                            final pinextGoalModel = PinextGoalModel(
                               title: titleController.text,
                               amount: amountController.text,
                               description: descriptionController.text,

@@ -71,14 +71,13 @@ class PinextUserModel {
       currentMonth: map['currentMonth'] as String,
       currentWeekOfTheYear: map['currentWeekOfTheYear'] as String,
       currentYear: map['currentYear'] as String,
-      monthlyEarnings: map['monthlyEarnings'] ?? "0000",
+      monthlyEarnings: (map['monthlyEarnings'] ?? '0000') as String,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory PinextUserModel.fromJson(String source) =>
-      PinextUserModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory PinextUserModel.fromJson(String source) => PinextUserModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {

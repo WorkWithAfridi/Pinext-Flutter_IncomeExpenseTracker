@@ -48,7 +48,6 @@ class SigninSuccessState extends SigninState {
 }
 
 class SigninErrorState extends SigninState {
-  String errorMessage;
   SigninErrorState(
     super.cards,
     super.numberOfCardsStored,
@@ -56,4 +55,5 @@ class SigninErrorState extends SigninState {
     super.goals,
     super.numberOfGoalsStored,
   );
+  String errorMessage;
 }

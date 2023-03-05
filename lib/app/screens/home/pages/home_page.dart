@@ -1,30 +1,30 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pinext/app/app_data/app_constants/constants.dart';
+import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
+import 'package:pinext/app/app_data/custom_transition_page_route/custom_transition_page_route.dart';
+import 'package:pinext/app/app_data/theme_data/colors.dart';
+import 'package:pinext/app/bloc/archive_cubit/archive_cubit.dart';
+import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
+import 'package:pinext/app/bloc/homeframe_cubit/homeframe_page_cubit.dart';
+import 'package:pinext/app/bloc/homepage_cubit/homepage_cubit.dart';
+import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
 import 'package:pinext/app/models/pinext_goal_model.dart';
+import 'package:pinext/app/models/pinext_transaction_model.dart';
 import 'package:pinext/app/screens/goals_and_milestones/view_goals_and_milestones_screen.dart';
+import 'package:pinext/app/services/date_time_services.dart';
 import 'package:pinext/app/services/firebase_services.dart';
+import 'package:pinext/app/shared/widgets/budget_estimations.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
+import 'package:pinext/app/shared/widgets/pinext_card.dart';
 import 'package:pinext/app/shared/widgets/pinext_goal_minimized.dart';
-
-import '../../../app_data/app_constants/constants.dart';
-import '../../../app_data/app_constants/domentions.dart';
-import '../../../app_data/custom_transition_page_route/custom_transition_page_route.dart';
-import '../../../app_data/theme_data/colors.dart';
-import '../../../bloc/archive_cubit/archive_cubit.dart';
-import '../../../bloc/demoBloc/demo_bloc.dart';
-import '../../../bloc/homeframe_cubit/homeframe_page_cubit.dart';
-import '../../../bloc/homepage_cubit/homepage_cubit.dart';
-import '../../../bloc/userBloc/user_bloc.dart';
-import '../../../services/date_time_services.dart';
-import '../../../shared/widgets/budget_estimations.dart';
-import '../../../shared/widgets/pinext_card.dart';
-import '../../../shared/widgets/transaction_details_card.dart';
+import 'package:pinext/app/shared/widgets/transaction_details_card.dart';
 
 class Homepage extends StatelessWidget {
-  const Homepage({Key? key}) : super(key: key);
+  const Homepage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -41,30 +41,30 @@ class Homepage extends StatelessWidget {
 
 class HomepageView extends StatelessWidget {
   HomepageView({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final List homepageFilters = ['Overview', 'Daily', 'Weekly', 'Monthly', 'Yearly'];
 
   Map<String, double> demoData = {
-    "Office fare": 50,
-    "Lunch": 150,
-    "Snacks": 100,
-    "Hangout": 80,
+    'Office fare': 50,
+    'Lunch': 150,
+    'Snacks': 100,
+    'Hangout': 80,
   };
 
   String getGreetings() {
-    int currentHour = DateTime.now().hour;
+    final currentHour = DateTime.now().hour;
     if (currentHour > 0 && currentHour <= 5) {
-      return "Hello,";
+      return 'Hello,';
     } else if (currentHour > 5 && currentHour <= 11) {
-      return "Good morning,";
+      return 'Good morning,';
     } else if (currentHour > 11 && currentHour <= 18) {
-      return "Good afternoon,";
+      return 'Good afternoon,';
     } else if (currentHour > 18 && currentHour <= 24) {
-      return "Good evening,";
+      return 'Good evening,';
     }
-    return "Hello";
+    return 'Hello';
   }
 
   @override
@@ -92,11 +92,11 @@ class HomepageView extends StatelessWidget {
                   ),
                   Builder(
                     builder: (context) {
-                      var state = context.watch<UserBloc>().state;
-                      var demoBlocState = context.watch<DemoBloc>().state;
+                      final state = context.watch<UserBloc>().state;
+                      final demoBlocState = context.watch<DemoBloc>().state;
                       if (state is AuthenticatedUserState) {
                         return Text(
-                          demoBlocState is DemoEnabledState ? "Kyoto" : state.username,
+                          demoBlocState is DemoEnabledState ? 'Kyoto' : state.username,
                           style: cursiveTextStyle.copyWith(
                             fontSize: 30,
                             color: customBlackColor.withOpacity(.8),
@@ -192,9 +192,7 @@ class HomepageView extends StatelessWidget {
 }
 
 class _GetBalanceWidget extends StatelessWidget {
-  const _GetBalanceWidget({
-    Key? key,
-  }) : super(key: key);
+  const _GetBalanceWidget();
 
   @override
   Widget build(BuildContext context) {
@@ -204,7 +202,7 @@ class _GetBalanceWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Balance",
+            'Balance',
             style: boldTextStyle.copyWith(
               fontSize: 20,
             ),
@@ -224,10 +222,9 @@ class _GetBalanceWidget extends StatelessWidget {
               ),
             ),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  "Your current NET. balance is",
+                  'Your current NET. balance is',
                   style: regularTextStyle,
                 ),
                 const SizedBox(
@@ -239,14 +236,14 @@ class _GetBalanceWidget extends StatelessWidget {
                     final demoBlocState = context.watch<DemoBloc>().state;
                     if (state is AuthenticatedUserState) {
                       return Text(
-                        demoBlocState is DemoEnabledState ? "750000 Tk" : "${state.netBalance} Tk",
+                        demoBlocState is DemoEnabledState ? '750000 Tk' : '${state.netBalance} Tk',
                         style: boldTextStyle.copyWith(
                           fontSize: 25,
                         ),
                       );
                     }
                     return Text(
-                      "Loading...",
+                      'Loading...',
                       style: boldTextStyle.copyWith(
                         fontSize: 20,
                       ),
@@ -269,9 +266,7 @@ class _GetBalanceWidget extends StatelessWidget {
 }
 
 class _GetGoalsAndMilestonesWidget extends StatelessWidget {
-  const _GetGoalsAndMilestonesWidget({
-    Key? key,
-  }) : super(key: key);
+  const _GetGoalsAndMilestonesWidget();
 
   @override
   Widget build(BuildContext context) {
@@ -282,7 +277,7 @@ class _GetGoalsAndMilestonesWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Goals & milestones",
+              'Goals & milestones',
               style: boldTextStyle.copyWith(
                 fontSize: 20,
               ),
@@ -297,7 +292,7 @@ class _GetGoalsAndMilestonesWidget extends StatelessWidget {
                 );
               },
               child: Text(
-                "View all",
+                'View all',
                 style: regularTextStyle.copyWith(
                   fontSize: 14,
                   color: customBlackColor.withOpacity(.6),
@@ -310,13 +305,8 @@ class _GetGoalsAndMilestonesWidget extends StatelessWidget {
           height: 6,
         ),
         StreamBuilder(
-          stream: FirebaseServices()
-              .firebaseFirestore
-              .collection('pinext_users')
-              .doc(FirebaseServices().getUserId())
-              .collection('pinext_goals')
-              .snapshots(),
-          builder: ((context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+          stream: FirebaseServices().firebaseFirestore.collection('pinext_users').doc(FirebaseServices().getUserId()).collection('pinext_goals').snapshots(),
+          builder: (context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
                 child: SizedBox.shrink(),
@@ -324,7 +314,7 @@ class _GetGoalsAndMilestonesWidget extends StatelessWidget {
             }
             if (snapshot.data!.docs.isEmpty) {
               return Text(
-                "404 - No record found!",
+                '404 - No record found!',
                 style: regularTextStyle.copyWith(
                   color: customBlackColor.withOpacity(.4),
                 ),
@@ -337,28 +327,27 @@ class _GetGoalsAndMilestonesWidget extends StatelessWidget {
                   itemCount: snapshot.data!.docs.length > 5 ? 5 : snapshot.data!.docs.length,
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: ((context, index) {
+                  itemBuilder: (context, index) {
                     if (snapshot.data!.docs.isEmpty) {
-                      return const Text("No data found! :(");
+                      return const Text('No data found! :(');
                     }
                     if (snapshot.data!.docs.isEmpty) {
                       return Text(
-                        "No data found! :(",
+                        'No data found! :(',
                         style: regularTextStyle.copyWith(
                           color: customBlackColor.withOpacity(.4),
                         ),
                       );
                     }
 
-                    PinextGoalModel pinextGoalModel = PinextGoalModel.fromMap(
+                    final pinextGoalModel = PinextGoalModel.fromMap(
                       snapshot.data!.docs[index].data(),
                     );
                     return BlocBuilder<UserBloc, UserState>(
                       builder: (context, state) {
-                        double completionAmount = 0;
+                        var completionAmount = 0;
                         if (state is AuthenticatedUserState) {
-                          completionAmount =
-                              ((double.parse(state.netBalance) / double.parse(pinextGoalModel.amount)) * 100);
+                          completionAmount = ((double.parse(state.netBalance) / double.parse(pinextGoalModel.amount)) * 100).toInt();
                         }
                         return
                             // completionAmount < 100
@@ -371,11 +360,11 @@ class _GetGoalsAndMilestonesWidget extends StatelessWidget {
                         // : const SizedBox.shrink();
                       },
                     );
-                  }),
+                  },
                 )
               ],
             );
-          }),
+          },
         ),
       ],
     );
@@ -383,9 +372,7 @@ class _GetGoalsAndMilestonesWidget extends StatelessWidget {
 }
 
 class _GetExpensesWidget extends StatelessWidget {
-  const _GetExpensesWidget({
-    Key? key,
-  }) : super(key: key);
+  const _GetExpensesWidget();
 
   @override
   Widget build(BuildContext context) {
@@ -393,7 +380,7 @@ class _GetExpensesWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Expenses",
+          'Expenses',
           style: boldTextStyle.copyWith(
             fontSize: 20,
           ),
@@ -409,7 +396,6 @@ class _GetExpensesWidget extends StatelessWidget {
               return Row(
                 children: [
                   Flexible(
-                    flex: 1,
                     child: Container(
                       height: 100,
                       padding: const EdgeInsets.all(
@@ -423,12 +409,11 @@ class _GetExpensesWidget extends StatelessWidget {
                         color: customBlackColor,
                       ),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           FittedBox(
                             child: Text(
-                              demoBlocState is DemoEnabledState ? "- 3600 Tk" : "- ${state.dailyExpenses} Tk",
+                              demoBlocState is DemoEnabledState ? '- 3600 Tk' : '- ${state.dailyExpenses} Tk',
                               style: boldTextStyle.copyWith(
                                 fontSize: 25,
                                 color: whiteColor,
@@ -436,7 +421,7 @@ class _GetExpensesWidget extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            "Today",
+                            'Today',
                             style: boldTextStyle.copyWith(
                               fontWeight: FontWeight.w600,
                               color: whiteColor.withOpacity(.8),
@@ -464,12 +449,11 @@ class _GetExpensesWidget extends StatelessWidget {
                         color: customBlueColor,
                       ),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           FittedBox(
                             child: Text(
-                              demoBlocState is DemoEnabledState ? "- 10000 Tk" : "- ${state.weeklyExpenses} Tk",
+                              demoBlocState is DemoEnabledState ? '- 10000 Tk' : '- ${state.weeklyExpenses} Tk',
                               style: boldTextStyle.copyWith(
                                 fontSize: 25,
                                 color: whiteColor.withOpacity(.8),
@@ -477,7 +461,7 @@ class _GetExpensesWidget extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            "This week",
+                            'This week',
                             style: boldTextStyle.copyWith(
                               fontWeight: FontWeight.w600,
                               color: whiteColor,
@@ -509,7 +493,6 @@ class _GetExpensesWidget extends StatelessWidget {
             ),
           ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
                 "You've spend",
@@ -526,14 +509,14 @@ class _GetExpensesWidget extends StatelessWidget {
                   final demoBlocState = context.watch<DemoBloc>().state;
                   if (state is AuthenticatedUserState) {
                     return Text(
-                      demoBlocState is DemoEnabledState ? "- 25000 Tk" : "- ${state.monthlyExpenses} Tk",
+                      demoBlocState is DemoEnabledState ? '- 25000 Tk' : '- ${state.monthlyExpenses} Tk',
                       style: boldTextStyle.copyWith(
                         fontSize: 20,
                       ),
                     );
                   }
                   return Text(
-                    "Loading...",
+                    'Loading...',
                     style: boldTextStyle.copyWith(
                       fontSize: 25,
                       color: whiteColor.withOpacity(.8),
@@ -545,7 +528,7 @@ class _GetExpensesWidget extends StatelessWidget {
                 height: 4,
               ),
               Text(
-                "in ${months[int.parse(currentMonth) - 1]}.",
+                'in ${months[int.parse(currentMonth) - 1]}.',
                 style: regularTextStyle.copyWith(
                   color: customBlackColor.withOpacity(.6),
                 ),
@@ -559,9 +542,7 @@ class _GetExpensesWidget extends StatelessWidget {
 }
 
 class _GetSavingsForThisMonthWidget extends StatelessWidget {
-  const _GetSavingsForThisMonthWidget({
-    Key? key,
-  }) : super(key: key);
+  const _GetSavingsForThisMonthWidget();
 
   @override
   Widget build(BuildContext context) {
@@ -569,7 +550,7 @@ class _GetSavingsForThisMonthWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Savings",
+          'Savings',
           style: boldTextStyle.copyWith(
             fontSize: 20,
           ),
@@ -594,12 +575,10 @@ class _GetSavingsForThisMonthWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Flexible(
-                    flex: 1,
                     child: Container(
                       color: Colors.transparent,
                       width: double.maxFinite,
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
                             "You've saved",
@@ -617,14 +596,14 @@ class _GetSavingsForThisMonthWidget extends StatelessWidget {
                               final demoBlocState = context.watch<DemoBloc>().state;
                               if (state is AuthenticatedUserState) {
                                 return Text(
-                                  demoBlocState is DemoEnabledState ? "75000 Tk" : "${state.monthlySavings} Tk",
+                                  demoBlocState is DemoEnabledState ? '75000 Tk' : '${state.monthlySavings} Tk',
                                   style: boldTextStyle.copyWith(
                                     fontSize: 20,
                                   ),
                                 );
                               }
                               return Text(
-                                "Loading...",
+                                'Loading...',
                                 style: boldTextStyle.copyWith(
                                   fontSize: 20,
                                 ),
@@ -650,12 +629,10 @@ class _GetSavingsForThisMonthWidget extends StatelessWidget {
                     width: 0.2,
                   ),
                   Flexible(
-                    flex: 1,
                     child: Container(
                       color: Colors.transparent,
                       width: double.maxFinite,
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
                             "You've earned",
@@ -672,16 +649,14 @@ class _GetSavingsForThisMonthWidget extends StatelessWidget {
                               final demoBlocState = context.watch<DemoBloc>().state;
                               if (state is AuthenticatedUserState) {
                                 return Text(
-                                  demoBlocState is DemoEnabledState
-                                      ? "100000 Tk"
-                                      : "${state.monthlyEarnings == "" ? "0000" : state.monthlyEarnings} Tk",
+                                  demoBlocState is DemoEnabledState ? '100000 Tk' : "${state.monthlyEarnings == "" ? "0000" : state.monthlyEarnings} Tk",
                                   style: boldTextStyle.copyWith(
                                     fontSize: 20,
                                   ),
                                 );
                               }
                               return Text(
-                                "Loading...",
+                                'Loading...',
                                 style: boldTextStyle.copyWith(
                                   fontSize: 20,
                                 ),
@@ -710,13 +685,11 @@ class _GetSavingsForThisMonthWidget extends StatelessWidget {
                 builder: (context) {
                   final state = context.watch<UserBloc>().state;
                   final demoBlocState = context.watch<DemoBloc>().state;
-                  String amount = "";
+                  var amount = '';
                   if (state is AuthenticatedUserState) {
-                    amount = state.monthlyEarnings == "0"
-                        ? "0"
-                        : ((double.parse(state.monthlySavings) / double.parse(state.monthlyEarnings)) * 100)
-                            .ceil()
-                            .toString();
+                    amount = state.monthlyEarnings == '0'
+                        ? '0'
+                        : ((double.parse(state.monthlySavings) / double.parse(state.monthlyEarnings)) * 100).ceil().toString();
                   }
                   return RichText(
                     text: TextSpan(
@@ -728,21 +701,21 @@ class _GetSavingsForThisMonthWidget extends StatelessWidget {
                           ),
                         ),
                         TextSpan(
-                          text: demoBlocState is DemoEnabledState ? "75%" : "$amount%",
+                          text: demoBlocState is DemoEnabledState ? '75%' : '$amount%',
                           style: boldTextStyle.copyWith(color: customBlackColor),
                         ),
                         TextSpan(
-                          text: " of your earnings in ",
+                          text: ' of your earnings in ',
                           style: regularTextStyle.copyWith(
                             color: customBlackColor.withOpacity(.6),
                           ),
                         ),
                         TextSpan(
-                          text: "${months[int.parse(currentMonth) - 1]}",
+                          text: '${months[int.parse(currentMonth) - 1]}',
                           style: boldTextStyle.copyWith(color: customBlackColor),
                         ),
                         TextSpan(
-                          text: ".",
+                          text: '.',
                           style: regularTextStyle.copyWith(
                             color: customBlackColor.withOpacity(.6),
                           ),
@@ -761,9 +734,7 @@ class _GetSavingsForThisMonthWidget extends StatelessWidget {
 }
 
 class _GetPastTransactionsWidget extends StatelessWidget {
-  const _GetPastTransactionsWidget({
-    Key? key,
-  }) : super(key: key);
+  const _GetPastTransactionsWidget();
 
   @override
   Widget build(BuildContext context) {
@@ -774,7 +745,7 @@ class _GetPastTransactionsWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Last 10 transactions",
+              'Last 10 transactions',
               style: boldTextStyle.copyWith(
                 fontSize: 20,
               ),
@@ -784,7 +755,7 @@ class _GetPastTransactionsWidget extends StatelessWidget {
                 context.read<HomeframeCubit>().changeHomeframePage(1);
               },
               child: Text(
-                "View all",
+                'View all',
                 style: regularTextStyle.copyWith(
                   fontSize: 14,
                   color: customBlackColor.withOpacity(.6),
@@ -800,7 +771,7 @@ class _GetPastTransactionsWidget extends StatelessWidget {
           builder: (context, archiveState) {
             if (archiveState.archiveList.isEmpty) {
               return Text(
-                "404 - No record found!",
+                '404 - No record found!',
                 style: regularTextStyle.copyWith(
                   color: customBlackColor.withOpacity(.4),
                 ),
@@ -811,9 +782,9 @@ class _GetPastTransactionsWidget extends StatelessWidget {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
-                int listLen = archiveState.archiveList.length > 10 ? 10 : archiveState.archiveList.length;
+                final listLen = archiveState.archiveList.length > 10 ? 10 : archiveState.archiveList.length;
                 return TransactionDetailsCard(
-                  pinextTransactionModel: archiveState.archiveList[index],
+                  pinextTransactionModel: archiveState.archiveList[index] as PinextTransactionModel,
                   isLastIndex: index == listLen - 1,
                 );
               },
@@ -826,9 +797,7 @@ class _GetPastTransactionsWidget extends StatelessWidget {
 }
 
 class _GetYourCardsWidget extends StatelessWidget {
-  const _GetYourCardsWidget({
-    Key? key,
-  }) : super(key: key);
+  const _GetYourCardsWidget();
 
   @override
   Widget build(BuildContext context) {
@@ -845,7 +814,7 @@ class _GetYourCardsWidget extends StatelessWidget {
                 height: 8,
               ),
               Text(
-                "Your Cards",
+                'Your Cards',
                 style: boldTextStyle.copyWith(
                   fontSize: 20,
                 ),
@@ -867,15 +836,15 @@ class _GetYourCardsWidget extends StatelessWidget {
               StreamBuilder(
                 stream: FirebaseServices()
                     .firebaseFirestore
-                    .collection("pinext_users")
+                    .collection('pinext_users')
                     .doc(FirebaseServices().getUserId())
-                    .collection("pinext_cards")
+                    .collection('pinext_cards')
                     .orderBy(
                       'lastTransactionData',
                       descending: true,
                     )
                     .snapshots(),
-                builder: ((context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+                builder: (context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
                       child: SizedBox.shrink(),
@@ -883,7 +852,7 @@ class _GetYourCardsWidget extends StatelessWidget {
                   }
                   if (snapshot.data!.docs.isEmpty) {
                     return Text(
-                      "Please add a Pinext card to view your cards details here.",
+                      'Please add a Pinext card to view your cards details here.',
                       style: regularTextStyle.copyWith(
                         color: customBlackColor.withOpacity(.4),
                       ),
@@ -896,13 +865,13 @@ class _GetYourCardsWidget extends StatelessWidget {
                       physics: const NeverScrollableScrollPhysics(),
                       scrollDirection: Axis.horizontal,
                       itemCount: snapshot.data!.docs.length,
-                      itemBuilder: ((context, index) {
-                        PinextCardModel pinextCardModel = PinextCardModel.fromMap(
+                      itemBuilder: (context, index) {
+                        final pinextCardModel = PinextCardModel.fromMap(
                           snapshot.data!.docs[index].data(),
                         );
 
-                        String color = pinextCardModel.color;
-                        late Color cardColor = getColorFromString(color);
+                        final color = pinextCardModel.color;
+                        late final cardColor = getColorFromString(color);
 
                         return PinextCard(
                           title: pinextCardModel.title,
@@ -912,10 +881,10 @@ class _GetYourCardsWidget extends StatelessWidget {
                           cardDetails: pinextCardModel.description,
                           cardModel: pinextCardModel,
                         );
-                      }),
+                      },
                     ),
                   );
-                }),
+                },
               ),
               const SizedBox(
                 width: defaultPadding - 10,
@@ -930,10 +899,10 @@ class _GetYourCardsWidget extends StatelessWidget {
 
 class MenuFilterPill extends StatelessWidget {
   MenuFilterPill({
-    Key? key,
+    super.key,
     required this.filtertitle,
     required this.selectedFilter,
-  }) : super(key: key);
+  });
 
   String filtertitle;
   String selectedFilter;
@@ -944,10 +913,10 @@ class MenuFilterPill extends StatelessWidget {
       padding: const EdgeInsets.only(right: 10),
       child: GestureDetector(
         onTap: () {
-          if (filtertitle != "Overview") {
+          if (filtertitle != 'Overview') {
             GetCustomSnackbar(
-              title: "Snap",
-              message: "The section is still under development.\nAnd will be updated at a later date!",
+              title: 'Snap',
+              message: 'The section is still under development.\nAnd will be updated at a later date!',
               snackbarType: SnackbarType.info,
               context: context,
             );

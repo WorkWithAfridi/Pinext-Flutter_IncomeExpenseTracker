@@ -1,27 +1,26 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:pinext/app/API/firebase_directories.dart';
+import 'package:pinext/app/app_data/appVersion.dart';
+import 'package:pinext/app/app_data/app_constants/constants.dart';
+import 'package:pinext/app/app_data/app_constants/fonts.dart';
+import 'package:pinext/app/app_data/theme_data/colors.dart';
+import 'package:pinext/app/services/firebase_services.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../API/firebase_directories.dart';
-import '../../app_data/appVersion.dart';
-import '../../app_data/app_constants/constants.dart';
-import '../../app_data/app_constants/fonts.dart';
-import '../../app_data/theme_data/colors.dart';
-import '../firebase_services.dart';
-
 class AppHandler {
+  factory AppHandler() => _appHandler;
   AppHandler._internal();
   static final AppHandler _appHandler = AppHandler._internal();
-  factory AppHandler() => _appHandler;
 
-  checkIfFirstBoot() async {
+  Future<bool> checkIfFirstBoot() async {
     final storageBox = await SharedPreferences.getInstance();
-    var isFirstBoot = storageBox.getBool("isFirstBoot");
+    var isFirstBoot = storageBox.getBool('isFirstBoot');
     if (isFirstBoot == null) {
       isFirstBoot = false;
-      storageBox.setBool("isFirstBoot", isFirstBoot);
+      await storageBox.setBool('isFirstBoot', isFirstBoot);
       return !isFirstBoot;
     } else {
       return isFirstBoot;
@@ -35,13 +34,12 @@ class AppHandler {
     //   snackbarType: SnackbarType.info,
     //   context: context,
     // );
-    Future.delayed(const Duration(milliseconds: 500)).then((value) async {
-      DocumentSnapshot appDataSnapShot =
-          await FirebaseServices().firebaseFirestore.collection(APPDATA_DIRECTORY).doc(APPVERSION_DIRECTORY).get();
-      String currentAvailableAppVersion = (appDataSnapShot.data() as Map<String, dynamic>)["appVersion"];
+    await Future.delayed(const Duration(milliseconds: 500)).then((value) async {
+      DocumentSnapshot appDataSnapShot = await FirebaseServices().firebaseFirestore.collection(APPDATA_DIRECTORY).doc(APPVERSION_DIRECTORY).get();
+      final currentAvailableAppVersion = (appDataSnapShot.data() as Map<String, dynamic>)['appVersion'] as String;
       // log(currentAvailableAppVersion);
       if (currentAvailableAppVersion != appVersion) {
-        showDialog(
+        await showDialog(
           context: context,
           builder: (context) {
             return AlertDialog(
@@ -55,7 +53,7 @@ class AppHandler {
                 child: ListBody(
                   children: [
                     Text(
-                      "A new version of the app is available. Would you like to download it now?",
+                      'A new version of the app is available. Would you like to download it now?',
                       style: regularTextStyle,
                     ),
                   ],
@@ -82,7 +80,7 @@ class AppHandler {
                   child: const Text('Download'),
                   onPressed: () async {
                     // String url = "https://drive.google.com/drive/folders/1Z-fPUf9SbRhjLuHZsv87LCJxbRI3bJQT?usp=sharing";
-                    String url = "https://drive.google.com/drive/folders/1Z-fPUf9SbRhjLuHZsv87LCJxbRI3bJQT?usp=sharing";
+                    const url = 'https://drive.google.com/drive/folders/1Z-fPUf9SbRhjLuHZsv87LCJxbRI3bJQT?usp=sharing';
                     // bool isiOS = Platform.isIOS;
                     if (await canLaunchUrl(Uri.parse(url))) {
                       await launchUrl(
@@ -91,8 +89,8 @@ class AppHandler {
                       Navigator.of(context).pop();
                     } else {
                       GetCustomSnackbar(
-                        title: "Snap",
-                        message: "An error occurred! Please try again later",
+                        title: 'Snap',
+                        message: 'An error occurred! Please try again later',
                         snackbarType: SnackbarType.error,
                         context: context,
                       );
@@ -107,7 +105,7 @@ class AppHandler {
         );
       } else {
         GetCustomSnackbar(
-          title: "App Version v$appVersion",
+          title: 'App Version v$appVersion',
           message: "You're currently on the latest build of the app! :D",
           snackbarType: SnackbarType.info,
           context: context,
@@ -119,7 +117,7 @@ class AppHandler {
   requestNewFuture(BuildContext context) {
     _sendEmail(
       context,
-      "PINEXT: REQUESTING NEW FUTURE!",
+      'PINEXT: REQUESTING NEW FUTURE!',
       "Enter a detailed description of the future you're requesting!",
     );
   }
@@ -127,8 +125,8 @@ class AppHandler {
   writeReview(BuildContext context) {
     _sendEmail(
       context,
-      "PINEXT: REVIEW",
-      "Enter your review here! :D ",
+      'PINEXT: REVIEW',
+      'Enter your review here! :D ',
     );
   }
 
@@ -173,7 +171,7 @@ class AppHandler {
             TextButton(
               child: const Text('Send mail'),
               onPressed: () {
-                _sendEmail(context, "PINEXT - BUG REPORT", "Please enter your description and scenario here!");
+                _sendEmail(context, 'PINEXT - BUG REPORT', 'Please enter your description and scenario here!');
                 Navigator.of(context).pop();
               },
             ),
@@ -185,16 +183,14 @@ class AppHandler {
   }
 
   _sendEmail(BuildContext context, String subject, String body) async {
-    final Uri email = Uri(
-        scheme: "mailto",
-        path: "khondakarafridi35@gmail.com",
-        query: "subject=${Uri.encodeComponent(subject)}&body=${Uri.encodeComponent(body)}");
+    final email =
+        Uri(scheme: 'mailto', path: 'khondakarafridi35@gmail.com', query: 'subject=${Uri.encodeComponent(subject)}&body=${Uri.encodeComponent(body)}');
     if (await canLaunchUrl(email)) {
       await launchUrl(email);
     } else {
       GetCustomSnackbar(
-        title: "Snap",
-        message: "An error occurred! Please try again later",
+        title: 'Snap',
+        message: 'An error occurred! Please try again later',
         snackbarType: SnackbarType.error,
         context: context,
       );
@@ -203,7 +199,7 @@ class AppHandler {
   }
 
   openPortfolio(BuildContext context) async {
-    String url = "https://sites.google.com/view/workwithafridi";
+    const url = 'https://sites.google.com/view/workwithafridi';
     if (await canLaunchUrl(Uri.parse(url))) {
       await launchUrl(
         Uri.parse(url),
@@ -211,8 +207,8 @@ class AppHandler {
       Navigator.of(context).pop();
     } else {
       GetCustomSnackbar(
-        title: "Snap",
-        message: "An error occurred! Please try again later",
+        title: 'Snap',
+        message: 'An error occurred! Please try again later',
         snackbarType: SnackbarType.error,
         context: context,
       );

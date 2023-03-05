@@ -19,27 +19,31 @@ class SigninCubit extends Cubit<SigninState> {
           ),
         );
 
-  reset() {
-    emit(SigninDefaultState(
-      const [],
-      0,
-      const [],
-      0,
-    ));
+  void reset() {
+    emit(
+      SigninDefaultState(
+        const [],
+        0,
+        const [],
+        0,
+      ),
+    );
   }
 
-  addCard(PinextCardModel card) {
-    List<PinextCardModel> userCards = [...state.cards, card];
-    emit(SigninDefaultState(
-      userCards,
-      userCards.length,
-      state.goals,
-      state.numberOfGoalsStored,
-    ));
+  void addCard(PinextCardModel card) {
+    final userCards = <PinextCardModel>[...state.cards, card];
+    emit(
+      SigninDefaultState(
+        userCards,
+        userCards.length,
+        state.goals,
+        state.numberOfGoalsStored,
+      ),
+    );
   }
 
-  addGoal(PinextGoalModel goal) {
-    List<PinextGoalModel> userGoals = [
+  void addGoal(PinextGoalModel goal) {
+    final userGoals = <PinextGoalModel>[
       ...state.goals,
       goal,
     ];
@@ -53,10 +57,10 @@ class SigninCubit extends Cubit<SigninState> {
     );
   }
 
-  removeCard(int cardIndex) {
+  void removeCard(int cardIndex) {
     log(cardIndex.toString());
     log(state.cards.length.toString());
-    var cardList = state.cards;
+    final cardList = state.cards;
     cardList.removeAt(cardIndex);
     log(cardList.length.toString());
     emit(
@@ -69,10 +73,10 @@ class SigninCubit extends Cubit<SigninState> {
     );
   }
 
-  removeGoal(int goalIndex) {
+  void removeGoal(int goalIndex) {
     log(goalIndex.toString());
     log(state.goals.length.toString());
-    var goalsList = state.goals;
+    final goalsList = state.goals;
     goalsList.removeAt(goalIndex);
     log(goalsList.length.toString());
     emit(
@@ -85,7 +89,7 @@ class SigninCubit extends Cubit<SigninState> {
     );
   }
 
-  signupUser({
+  Future<void> signupUser({
     required String emailAddress,
     required String password,
     required String username,
@@ -95,12 +99,14 @@ class SigninCubit extends Cubit<SigninState> {
     required String budgetSpentSoFar,
     required List<PinextGoalModel> pinextGoals,
   }) async {
-    emit(SigninLoadingState(
-      state.cards,
-      state.cards.length,
-      state.goals,
-      state.goals.length,
-    ));
+    emit(
+      SigninLoadingState(
+        state.cards,
+        state.cards.length,
+        state.goals,
+        state.goals.length,
+      ),
+    );
     await Future.delayed(const Duration(seconds: 1));
     String result = await AuthenticationServices().signupUserUsingEmailAndPassword(
       emailAddress: emailAddress,
@@ -112,13 +118,15 @@ class SigninCubit extends Cubit<SigninState> {
       budgetSpentSoFar: budgetSpentSoFar,
       pinextGoals: pinextGoals,
     );
-    if (result == "Success") {
-      emit(SigninSuccessState(
-        state.cards,
-        state.cards.length,
-        state.goals,
-        state.goals.length,
-      ));
+    if (result == 'Success') {
+      emit(
+        SigninSuccessState(
+          state.cards,
+          state.cards.length,
+          state.goals,
+          state.goals.length,
+        ),
+      );
     } else {
       emit(
         SigninErrorState(

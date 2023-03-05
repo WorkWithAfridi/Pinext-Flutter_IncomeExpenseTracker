@@ -1,30 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:pinext/app/app_data/app_constants/constants.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
-
-import '../../app_data/app_constants/constants.dart';
-import '../../app_data/theme_data/colors.dart';
+import 'package:pinext/app/app_data/theme_data/colors.dart';
 
 class CustomTextFormField extends StatefulWidget {
+  CustomTextFormField({
+    super.key,
+    required this.controller,
+    required this.hintTitle,
+    this.numberOfLines = 1,
+    this.isPassword = false,
+    this.textInputType = TextInputType.text,
+    required this.onChanged,
+    required this.validator,
+    this.showClearSuffix = false,
+    required this.suffixButtonAction,
+    this.isEnabled = true,
+    this.textInputAction = TextInputAction.next,
+  });
   final String hintTitle;
   final TextEditingController controller;
   final bool isPassword;
   int numberOfLines;
   TextInputType textInputType;
-
-  CustomTextFormField(
-      {Key? key,
-      required this.controller,
-      required this.hintTitle,
-      this.numberOfLines = 1,
-      this.isPassword = false,
-      this.textInputType = TextInputType.text,
-      required this.onChanged,
-      required this.validator,
-      this.showClearSuffix = false,
-      required this.suffixButtonAction,
-      this.isEnabled = true,
-      this.textInputAction = TextInputAction.next,})
-      : super(key: key);
 
   Function onChanged;
   Function validator;
@@ -56,12 +54,13 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       maxLines: widget.numberOfLines,
       keyboardType: widget.textInputType,
       validator: (value) {
-        return widget.validator(value);
+        final res = widget.validator(value);
+        return res.toString();
       },
       textInputAction: widget.textInputAction,
-      onChanged: ((value) {
+      onChanged: (value) {
         widget.onChanged(value);
-      }),
+      },
       decoration: InputDecoration(
         suffixIcon: widget.showClearSuffix
             ? clearSuffixIconButton()
@@ -127,7 +126,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         });
       },
       child: Padding(
-        padding: const EdgeInsets.only(right: 8.0),
+        padding: const EdgeInsets.only(right: 8),
         child: Icon(
           shoWPassword ? Icons.visibility : Icons.visibility_off,
           color: customBlackColor.withOpacity(.6),
@@ -143,7 +142,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         widget.suffixButtonAction();
       },
       child: Padding(
-        padding: const EdgeInsets.only(right: 8.0),
+        padding: const EdgeInsets.only(right: 8),
         child: Icon(
           Icons.clear,
           color: customBlackColor.withOpacity(.6),

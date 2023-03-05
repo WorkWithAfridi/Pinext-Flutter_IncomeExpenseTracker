@@ -2,37 +2,34 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pinext/app/app_data/app_constants/constants.dart';
+import 'package:pinext/app/app_data/app_constants/domentions.dart';
+import 'package:pinext/app/app_data/app_constants/fonts.dart';
+import 'package:pinext/app/app_data/custom_transition_page_route/custom_transition_page_route.dart';
 import 'package:pinext/app/app_data/extensions/string_extensions.dart';
-import 'package:pinext/app/models/pinext_goal_model.dart';
+import 'package:pinext/app/app_data/routing/routes.dart';
+import 'package:pinext/app/app_data/theme_data/colors.dart';
+import 'package:pinext/app/bloc/signup_cubit/signin_cubit_cubit.dart';
+import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
+import 'package:pinext/app/screens/add_and_edit_pinext_card/add_and_edit_pinext_card.dart';
 import 'package:pinext/app/screens/goals_and_milestones/add_and_edit_goal_and_milestone_screen.dart';
+import 'package:pinext/app/shared/widgets/custom_button.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
+import 'package:pinext/app/shared/widgets/custom_text_field.dart';
 import 'package:pinext/app/shared/widgets/info_widget.dart';
 import 'package:pinext/app/shared/widgets/pinext_card_minimized.dart';
-
-import '../../../app_data/app_constants/constants.dart';
-import '../../../app_data/app_constants/domentions.dart';
-import '../../../app_data/app_constants/fonts.dart';
-import '../../../app_data/custom_transition_page_route/custom_transition_page_route.dart';
-import '../../../app_data/routing/routes.dart';
-import '../../../app_data/theme_data/colors.dart';
-import '../../../bloc/signup_cubit/signin_cubit_cubit.dart';
-import '../../../bloc/userBloc/user_bloc.dart';
-import '../../../models/pinext_card_model.dart';
-import '../../../shared/widgets/custom_button.dart';
-import '../../../shared/widgets/custom_text_field.dart';
-import '../../../shared/widgets/pinext_goal_minimized.dart';
-import '../../add_and_edit_pinext_card/add_and_edit_pinext_card.dart';
+import 'package:pinext/app/shared/widgets/pinext_goal_minimized.dart';
 
 class CardsAndBalancesRegistrationPage extends StatelessWidget {
   CardsAndBalancesRegistrationPage({
-    Key? key,
+    super.key,
     required this.monthlyBudgetController,
     required this.budgetSpentSoFarController,
     required this.emailController,
     required this.userNameController,
     required this.passwordController,
     required this.pageController,
-  }) : super(key: key);
+  });
 
   TextEditingController userNameController;
   TextEditingController emailController;
@@ -58,13 +55,13 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Pinext",
+                'Pinext',
                 style: regularTextStyle.copyWith(
                   color: customBlackColor.withOpacity(.6),
                 ),
               ),
               Text(
-                "Cards and Balances",
+                'Cards and Balances',
                 style: boldTextStyle.copyWith(
                   fontSize: 25,
                 ),
@@ -88,10 +85,9 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          "Your NET. Balance is",
+                          'Your NET. Balance is',
                           style: boldTextStyle.copyWith(
                             color: customBlackColor.withOpacity(.6),
                             fontSize: 16,
@@ -103,7 +99,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                         BlocBuilder<SigninCubit, SigninState>(
                           builder: (context, state) {
                             netBalance = 0;
-                            for (PinextCardModel card in state.cards) {
+                            for (final card in state.cards) {
                               netBalance += double.parse(card.balance.toString());
                             }
                             return Text(
@@ -119,7 +115,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                           height: 8,
                         ),
                         Text(
-                          "Taka",
+                          'Taka',
                           style: boldTextStyle.copyWith(
                             color: customBlackColor.withOpacity(.6),
                             fontSize: 16,
@@ -132,7 +128,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                     top: defaultPadding,
                     right: defaultPadding,
                     child: InfoWidget(
-                      infoText: "Please add PINEXT cards to see your updated NET balance!",
+                      infoText: 'Please add PINEXT cards to see your updated NET balance!',
                     ),
                   )
                 ],
@@ -144,7 +140,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Monthly Budget",
+                    'Monthly Budget',
                     style: boldTextStyle,
                   ),
                   InfoWidget(
@@ -157,10 +153,10 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
               ),
               CustomTextFormField(
                 controller: monthlyBudgetController,
-                hintTitle: "Enter your monthly budget",
+                hintTitle: 'Enter your monthly budget',
                 textInputType: TextInputType.number,
                 onChanged: (String value) {},
-                validator: (value) {
+                validator: (String value) {
                   return InputValidation(value).isCorrectNumber();
                 },
                 suffixButtonAction: () {},
@@ -169,7 +165,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                 height: 16,
               ),
               Text(
-                "And how much of that have you spent so far?",
+                'And how much of that have you spent so far?',
                 style: boldTextStyle,
               ),
               const SizedBox(
@@ -177,10 +173,10 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
               ),
               CustomTextFormField(
                 controller: budgetSpentSoFarController,
-                hintTitle: "Budget spent so far...",
+                hintTitle: 'Budget spent so far...',
                 textInputType: TextInputType.number,
                 onChanged: (String value) {},
-                validator: (value) {
+                validator: (String value) {
                   return InputValidation(value).isCorrectNumber();
                 },
                 suffixButtonAction: () {},
@@ -189,7 +185,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                 height: 12,
               ),
               Text(
-                "Manage Cards",
+                'Manage Cards',
                 style: boldTextStyle,
               ),
               const SizedBox(
@@ -200,14 +196,15 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      state.cards.isEmpty
-                          ? Text(
-                              "Please add a card/'s to continue with the registration process!",
-                              style: regularTextStyle.copyWith(
-                                color: customBlackColor.withOpacity(.4),
-                              ),
-                            )
-                          : const SizedBox.shrink(),
+                      if (state.cards.isEmpty)
+                        Text(
+                          "Please add a card/'s to continue with the registration process!",
+                          style: regularTextStyle.copyWith(
+                            color: customBlackColor.withOpacity(.4),
+                          ),
+                        )
+                      else
+                        const SizedBox.shrink(),
                       MediaQuery.removePadding(
                         context: context,
                         removeBottom: true,
@@ -215,9 +212,9 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                           itemCount: state.cards.length,
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: ((context, index) {
+                          itemBuilder: (context, index) {
                             log('creating list');
-                            PinextCardModel pinextCardModel = state.cards[index];
+                            final pinextCardModel = state.cards[index];
                             return PinextCardMinimized(
                               onDeleteButtonClick: () {
                                 log('button pressed');
@@ -228,7 +225,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                               },
                               pinextCardModel: pinextCardModel,
                             );
-                          }),
+                          },
                         ),
                       ),
                     ],
@@ -242,12 +239,11 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Add a new card",
+                    'Add a new card',
                     style: boldTextStyle,
                   ),
                   InfoWidget(
-                    infoText:
-                        "You will be using these cards to keep a track on your money sources, be either income or expenses.",
+                    infoText: 'You will be using these cards to keep a track on your money sources, be either income or expenses.',
                   ),
                 ],
               ),
@@ -257,12 +253,13 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
               GestureDetector(
                 onTap: () {
                   Navigator.push(
-                      context,
-                      CustomTransitionPageRoute(
-                        childWidget: AddAndEditPinextCardScreen(
-                          addCardForSignUpProcess: true,
-                        ),
-                      ));
+                    context,
+                    CustomTransitionPageRoute(
+                      childWidget: AddAndEditPinextCardScreen(
+                        addCardForSignUpProcess: true,
+                      ),
+                    ),
+                  );
                 },
                 child: Container(
                   height: 100,
@@ -298,7 +295,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                         width: 8,
                       ),
                       Text(
-                        "Add a new card",
+                        'Add a new card',
                         style: boldTextStyle.copyWith(
                           color: customBlackColor.withOpacity(.4),
                         ),
@@ -311,7 +308,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                 height: 16,
               ),
               Text(
-                "Manage Goals",
+                'Manage Goals',
                 style: boldTextStyle,
               ),
               const SizedBox(
@@ -322,14 +319,15 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      state.goals.isEmpty
-                          ? Text(
-                              "Add goals and milestones to view them here! You dont necessarily need them, for the registration process.",
-                              style: regularTextStyle.copyWith(
-                                color: customBlackColor.withOpacity(.4),
-                              ),
-                            )
-                          : const SizedBox.shrink(),
+                      if (state.goals.isEmpty)
+                        Text(
+                          'Add goals and milestones to view them here! You dont necessarily need them, for the registration process.',
+                          style: regularTextStyle.copyWith(
+                            color: customBlackColor.withOpacity(.4),
+                          ),
+                        )
+                      else
+                        const SizedBox.shrink(),
                       MediaQuery.removePadding(
                         context: context,
                         removeBottom: true,
@@ -337,15 +335,15 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                           itemCount: state.goals.length,
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: ((context, index) {
+                          itemBuilder: (context, index) {
                             log('creating list');
-                            PinextGoalModel pinextGoalModel = state.goals[index];
+                            final pinextGoalModel = state.goals[index];
                             return PinextGoalCardMinimized(
                               pinextGoalModel: pinextGoalModel,
                               index: index,
                               showCompletePercentage: false,
                             );
-                          }),
+                          },
                         ),
                       ),
                     ],
@@ -359,12 +357,12 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Add goals/ milestones",
+                    'Add goals/ milestones',
                     style: boldTextStyle,
                   ),
                   InfoWidget(
                     infoText:
-                        "These will be your goals and milestones for the coming months, years and so on. Once you save up to them, your goals will be archived and you can add new goals.",
+                        'These will be your goals and milestones for the coming months, years and so on. Once you save up to them, your goals will be archived and you can add new goals.',
                   ),
                 ],
               ),
@@ -419,7 +417,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                         width: 8,
                       ),
                       Text(
-                        "Add a goal/ milestone",
+                        'Add a goal/ milestone',
                         style: boldTextStyle.copyWith(
                           color: customBlackColor.withOpacity(.4),
                         ),
@@ -445,7 +443,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                   listener: (context, state) {
                     if (state is SigninErrorState) {
                       GetCustomSnackbar(
-                        title: "Snap, an error occurred!",
+                        title: 'Snap, an error occurred!',
                         message: state.errorMessage,
                         snackbarType: SnackbarType.success,
                         context: context,
@@ -459,7 +457,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                   },
                   builder: (context, state) {
                     return GetCustomButton(
-                      title: "Register",
+                      title: 'Register',
                       titleColor: whiteColor,
                       buttonColor: customBlueColor,
                       isLoading: state is SigninLoadingState,
@@ -480,8 +478,8 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                                 );
                           } else {
                             GetCustomSnackbar(
-                              title: "....",
-                              message: "You need to fill up the form to create an account.",
+                              title: '....',
+                              message: 'You need to fill up the form to create an account.',
                               snackbarType: SnackbarType.info,
                               context: context,
                             );
@@ -496,10 +494,9 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                 height: 8,
               ),
               GetCustomButton(
-                title: "Back",
+                title: 'Back',
                 titleColor: whiteColor,
                 buttonColor: customBlackColor,
-                isLoading: false,
                 callBackFunction: () {
                   pageController.jumpToPage(
                     0,

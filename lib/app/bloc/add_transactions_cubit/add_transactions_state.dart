@@ -50,7 +50,6 @@ class AddTransactionsSuccessState extends AddTransactionsState {
 }
 
 class AddTransactionsErrorState extends AddTransactionsState {
-  String errorMessage;
   AddTransactionsErrorState({
     required super.selectedTransactionMode,
     required super.selectedCardNo,
@@ -59,6 +58,7 @@ class AddTransactionsErrorState extends AddTransactionsState {
     required super.markAs,
     required this.errorMessage,
   });
+  String errorMessage;
 }
 
 class AddTransactionsLoadingState extends AddTransactionsState {

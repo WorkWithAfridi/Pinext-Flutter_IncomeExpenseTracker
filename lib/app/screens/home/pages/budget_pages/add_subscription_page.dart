@@ -68,11 +68,10 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
     // TODO: implement initState
     super.initState();
     if (widget.isEdit) {
-      var demoState = context.read<DemoBloc>().state;
-      titleController.text = demoState is DemoEnabledState ? "Subscription name" : widget.subscriptionModel!.title;
-      descriptionController.text =
-          demoState is DemoEnabledState ? "a natural looking block of text." : widget.subscriptionModel!.description;
-      amountController.text = demoState is DemoEnabledState ? "1000" : widget.subscriptionModel!.amount;
+      final demoState = context.read<DemoBloc>().state;
+      titleController.text = demoState is DemoEnabledState ? 'Subscription name' : widget.subscriptionModel!.title;
+      descriptionController.text = demoState is DemoEnabledState ? 'a natural looking block of text.' : widget.subscriptionModel!.description;
+      amountController.text = demoState is DemoEnabledState ? '1000' : widget.subscriptionModel!.amount;
     }
   }
 
@@ -85,28 +84,28 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
     return MultiBlocListener(
       listeners: [
         BlocListener<AddSubscriptionCubit, AddSubscriptionState>(
-          listener: ((context, state) async {
+          listener: (context, state) async {
             if (state is AddSubscriptionSuccessState) {
               context.read<UserBloc>().add(RefreshUserStateEvent());
               Navigator.pop(context);
               GetCustomSnackbar(
-                title: "Subscription added!!",
-                message: "A new subscription has been added!",
+                title: 'Subscription added!!',
+                message: 'A new subscription has been added!',
                 snackbarType: SnackbarType.success,
                 context: context,
               );
             } else if (state is AddSubscriptionErrorState) {
               GetCustomSnackbar(
-                title: "Snap",
-                message: "An error occurred while trying to add your subscription.",
+                title: 'Snap',
+                message: 'An error occurred while trying to add your subscription.',
                 snackbarType: SnackbarType.error,
                 context: context,
               );
               context.read<AddSubscriptionCubit>().resetState();
             } else if (state is SubscriptionFailedToUpdateState) {
               GetCustomSnackbar(
-                title: "Snap",
-                message: "An error occurred while updating your subscrition. :(",
+                title: 'Snap',
+                message: 'An error occurred while updating your subscrition. :(',
                 snackbarType: SnackbarType.error,
                 context: context,
               );
@@ -115,13 +114,13 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
               context.read<UserBloc>().add(RefreshUserStateEvent());
               Navigator.pop(context);
               GetCustomSnackbar(
-                title: "Updated",
-                message: "Your subscription has been updated!",
+                title: 'Updated',
+                message: 'Your subscription has been updated!',
                 snackbarType: SnackbarType.success,
                 context: context,
               );
             }
-          }),
+          },
         ),
       ],
       child: Scaffold(
@@ -136,7 +135,7 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
             ),
           ),
           title: Text(
-            "Adding a new subscription",
+            'Adding a new subscription',
             style: regularTextStyle,
           ),
         ),
@@ -149,7 +148,6 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
               key: _formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(
@@ -157,13 +155,12 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         const SizedBox(
                           height: 12,
                         ),
                         Text(
-                          "Title *",
+                          'Title *',
                           style: boldTextStyle.copyWith(
                             color: customBlackColor.withOpacity(
                               .6,
@@ -176,8 +173,7 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
                         CustomTextFormField(
                           isEnabled: !widget.isEdit,
                           controller: titleController,
-                          hintTitle: "Ex: Netflix subscription",
-                          textInputType: TextInputType.text,
+                          hintTitle: 'Ex: Netflix subscription',
                           onChanged: (String value) {},
                           validator: (String value) {
                             return InputValidation(value).isNotEmpty();
@@ -188,7 +184,7 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
                           height: 12,
                         ),
                         Text(
-                          "Description",
+                          'Description',
                           style: boldTextStyle.copyWith(
                             color: customBlackColor.withOpacity(
                               .6,
@@ -202,8 +198,7 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
                           isEnabled: !widget.isEdit,
                           numberOfLines: 4,
                           controller: descriptionController,
-                          hintTitle: "",
-                          textInputType: TextInputType.text,
+                          hintTitle: '',
                           onChanged: (String value) {},
                           validator: (String value) {
                             return null;
@@ -214,7 +209,7 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
                           height: 12,
                         ),
                         Text(
-                          "Amount *",
+                          'Amount *',
                           style: boldTextStyle.copyWith(
                             color: customBlackColor.withOpacity(
                               .6,
@@ -226,9 +221,8 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
                         ),
                         CustomTextFormField(
                           isEnabled: !widget.isEdit,
-                          numberOfLines: 1,
                           controller: amountController,
-                          hintTitle: "Ex: 1200",
+                          hintTitle: 'Ex: 1200',
                           textInputType: TextInputType.number,
                           onChanged: (String value) {},
                           validator: (String value) {
@@ -256,7 +250,7 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
                         Row(
                           children: [
                             Text(
-                              "Automatically add transaction",
+                              'Automatically add transaction',
                               style: boldTextStyle.copyWith(
                                 color: customBlackColor.withOpacity(
                                   .6,
@@ -268,7 +262,7 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
                             ),
                             InfoWidget(
                               infoText:
-                                  "Enabling this option will automatically deduct the subscription amount at the start of every month, from the selected card!",
+                                  'Enabling this option will automatically deduct the subscription amount at the start of every month, from the selected card!',
                             ),
                           ],
                         ),
@@ -297,10 +291,9 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          !widget.isEdit ? "Select card *" : "Selected card",
+                          !widget.isEdit ? 'Select card *' : 'Selected card',
                           style: boldTextStyle.copyWith(
                             color: customBlackColor.withOpacity(
                               .6,
@@ -317,121 +310,120 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
                     isEdit: widget.isEdit,
                     subscriptionModel: widget.subscriptionModel,
                   ),
-                  widget.isEdit ? const SizedBox.shrink() : const _GetAlreadyPaidWidget(),
-                  widget.isEdit
-                      ? widget.subscriptionModel!.lastPaidOn.substring(5, 7) == currentMonth
-                          ? Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const SizedBox(
-                                    height: 12,
-                                  ),
-                                  Text(
-                                    "Status",
-                                    style: boldTextStyle.copyWith(
-                                      color: customBlackColor.withOpacity(
-                                        .6,
-                                      ),
+                  if (widget.isEdit) const SizedBox.shrink() else const _GetAlreadyPaidWidget(),
+                  if (widget.isEdit)
+                    widget.subscriptionModel!.lastPaidOn.substring(5, 7) == currentMonth
+                        ? Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(
+                                  height: 12,
+                                ),
+                                Text(
+                                  'Status',
+                                  style: boldTextStyle.copyWith(
+                                    color: customBlackColor.withOpacity(
+                                      .6,
                                     ),
                                   ),
-                                  const SizedBox(
-                                    height: 8,
-                                  ),
-                                  GetCustomButton(
-                                    title: "Marked as paid",
-                                    titleColor: whiteColor,
-                                    buttonColor: customBlueColor,
-                                    callBackFunction: () {},
-                                  ),
-                                ],
-                              ),
-                            )
-                          : Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const SizedBox(
-                                    height: 12,
-                                  ),
-                                  Text(
-                                    "Status",
-                                    style: boldTextStyle.copyWith(
-                                      color: customBlackColor.withOpacity(
-                                        .6,
-                                      ),
+                                ),
+                                const SizedBox(
+                                  height: 8,
+                                ),
+                                GetCustomButton(
+                                  title: 'Marked as paid',
+                                  titleColor: whiteColor,
+                                  buttonColor: customBlueColor,
+                                  callBackFunction: () {},
+                                ),
+                              ],
+                            ),
+                          )
+                        : Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(
+                                  height: 12,
+                                ),
+                                Text(
+                                  'Status',
+                                  style: boldTextStyle.copyWith(
+                                    color: customBlackColor.withOpacity(
+                                      .6,
                                     ),
                                   ),
-                                  const SizedBox(
-                                    height: 8,
-                                  ),
-                                  BlocBuilder<AddSubscriptionCubit, AddSubscriptionState>(
-                                    builder: (context, state) {
-                                      return GetCustomButton(
-                                        title: "Mark as paid and add transaction to archive",
-                                        titleColor: whiteColor,
-                                        buttonColor: customBlueColor,
-                                        isLoading:
-                                            state is UpdateSubscriptionMarkAsPaidAndAddTransactionButtonLoadingState,
-                                        callBackFunction: () {
-                                          var demoState = context.read<DemoBloc>().state;
-                                          if (demoState is DemoDisabledState) {
-                                            PinextSubscriptionModel updatedSubscriptionModel =
-                                                widget.subscriptionModel!;
-                                            updatedSubscriptionModel.lastPaidOn = DateTime.now().toString();
-                                            context.read<AddSubscriptionCubit>().updateSubscription(
-                                                  updatedSubscriptionModel,
-                                                  true,
-                                                  context,
-                                                );
-                                          }
-                                        },
-                                      );
-                                    },
-                                  ),
-                                  const SizedBox(
-                                    height: 8,
-                                  ),
-                                  BlocBuilder<AddSubscriptionCubit, AddSubscriptionState>(
-                                    builder: (context, state) {
-                                      return GetCustomButton(
-                                        title: "Mark as paid",
-                                        titleColor: whiteColor,
-                                        isLoading: state is UpdateSubscriptionMarkAsPaidButtonLoadingState,
-                                        buttonColor: customBlueColor,
-                                        callBackFunction: () {
-                                          var demoState = context.read<DemoBloc>().state;
-                                          if (demoState is DemoDisabledState) {
-                                            PinextSubscriptionModel updatedSubscriptionModel =
-                                                widget.subscriptionModel!;
-                                            updatedSubscriptionModel.lastPaidOn = DateTime.now().toString();
-                                            context.read<AddSubscriptionCubit>().updateSubscription(
-                                                  updatedSubscriptionModel,
-                                                  false,
-                                                  context,
-                                                );
-                                          }
-                                        },
-                                      );
-                                    },
-                                  ),
-                                ],
-                              ),
-                            )
-                      : const SizedBox.shrink(),
+                                ),
+                                const SizedBox(
+                                  height: 8,
+                                ),
+                                BlocBuilder<AddSubscriptionCubit, AddSubscriptionState>(
+                                  builder: (context, state) {
+                                    return GetCustomButton(
+                                      title: 'Mark as paid and add transaction to archive',
+                                      titleColor: whiteColor,
+                                      buttonColor: customBlueColor,
+                                      isLoading: state is UpdateSubscriptionMarkAsPaidAndAddTransactionButtonLoadingState,
+                                      callBackFunction: () {
+                                        final demoState = context.read<DemoBloc>().state;
+                                        if (demoState is DemoDisabledState) {
+                                          final updatedSubscriptionModel = widget.subscriptionModel!;
+                                          updatedSubscriptionModel.lastPaidOn = DateTime.now().toString();
+                                          context.read<AddSubscriptionCubit>().updateSubscription(
+                                                updatedSubscriptionModel,
+                                                true,
+                                                context,
+                                              );
+                                        }
+                                      },
+                                    );
+                                  },
+                                ),
+                                const SizedBox(
+                                  height: 8,
+                                ),
+                                BlocBuilder<AddSubscriptionCubit, AddSubscriptionState>(
+                                  builder: (context, state) {
+                                    return GetCustomButton(
+                                      title: 'Mark as paid',
+                                      titleColor: whiteColor,
+                                      isLoading: state is UpdateSubscriptionMarkAsPaidButtonLoadingState,
+                                      buttonColor: customBlueColor,
+                                      callBackFunction: () {
+                                        final demoState = context.read<DemoBloc>().state;
+                                        if (demoState is DemoDisabledState) {
+                                          final updatedSubscriptionModel = widget.subscriptionModel!;
+                                          updatedSubscriptionModel.lastPaidOn = DateTime.now().toString();
+                                          context.read<AddSubscriptionCubit>().updateSubscription(
+                                                updatedSubscriptionModel,
+                                                false,
+                                                context,
+                                              );
+                                        }
+                                      },
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
+                          )
+                  else
+                    const SizedBox.shrink(),
                   const SizedBox(
                     height: 12,
                   ),
-                  widget.isEdit
-                      ? const SizedBox.shrink()
-                      : _SaveButton(
-                          titleController: titleController,
-                          descriptionController: descriptionController,
-                          amountController: amountController,
-                          formKey: _formKey,
-                        ),
+                  if (widget.isEdit)
+                    const SizedBox.shrink()
+                  else
+                    _SaveButton(
+                      titleController: titleController,
+                      descriptionController: descriptionController,
+                      amountController: amountController,
+                      formKey: _formKey,
+                    ),
                   const SizedBox(
                     height: 30,
                   ),
@@ -461,7 +453,7 @@ class _GetAlreadyPaidWidget extends StatelessWidget {
             height: 12,
           ),
           Text(
-            "Already paid? *",
+            'Already paid? *',
             style: boldTextStyle.copyWith(
               color: customBlackColor.withOpacity(
                 .6,
@@ -482,7 +474,6 @@ class _GetAlreadyPaidWidget extends StatelessWidget {
               ),
             ),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
@@ -496,7 +487,7 @@ class _GetAlreadyPaidWidget extends StatelessWidget {
                     ),
                     Expanded(
                       child: Text(
-                        "Have you already added this transaction into PINEXT Archive for ${months[int.parse(currentMonth) - 1]}  ?",
+                        'Have you already added this transaction into PINEXT Archive for ${months[int.parse(currentMonth) - 1]}  ?',
                         style: regularTextStyle.copyWith(
                           color: customBlackColor.withOpacity(
                             .8,
@@ -515,10 +506,9 @@ class _GetAlreadyPaidWidget extends StatelessWidget {
                     return Row(
                       children: [
                         Flexible(
-                          flex: 1,
                           child: GestureDetector(
                             onTap: () {
-                              context.read<AddSubscriptionCubit>().changeAlreadyPaidStatus("NO");
+                              context.read<AddSubscriptionCubit>().changeAlreadyPaidStatus('NO');
                             },
                             child: Container(
                               height: kToolbarHeight - 8,
@@ -527,16 +517,16 @@ class _GetAlreadyPaidWidget extends StatelessWidget {
                                 border: Border.all(
                                   color: Colors.red,
                                 ),
-                                color: state.alreadyPaid == "NO" ? Colors.red[200] : Colors.transparent,
+                                color: state.alreadyPaid == 'NO' ? Colors.red[200] : Colors.transparent,
                                 borderRadius: BorderRadius.circular(
                                   defaultBorder,
                                 ),
                               ),
                               alignment: Alignment.center,
                               child: Text(
-                                "NO",
+                                'NO',
                                 style: boldTextStyle.copyWith(
-                                  color: state.alreadyPaid == "NO" ? whiteColor : Colors.red,
+                                  color: state.alreadyPaid == 'NO' ? whiteColor : Colors.red,
                                 ),
                               ),
                             ),
@@ -546,10 +536,9 @@ class _GetAlreadyPaidWidget extends StatelessWidget {
                           width: 8,
                         ),
                         Flexible(
-                          flex: 1,
                           child: GestureDetector(
                             onTap: () {
-                              context.read<AddSubscriptionCubit>().changeAlreadyPaidStatus("YES");
+                              context.read<AddSubscriptionCubit>().changeAlreadyPaidStatus('YES');
                             },
                             child: Container(
                               height: kToolbarHeight - 8,
@@ -558,17 +547,16 @@ class _GetAlreadyPaidWidget extends StatelessWidget {
                                 border: Border.all(
                                   color: customBlueColor,
                                 ),
-                                color:
-                                    state.alreadyPaid == "YES" ? customBlueColor.withOpacity(.5) : Colors.transparent,
+                                color: state.alreadyPaid == 'YES' ? customBlueColor.withOpacity(.5) : Colors.transparent,
                                 borderRadius: BorderRadius.circular(
                                   defaultBorder,
                                 ),
                               ),
                               alignment: Alignment.center,
                               child: Text(
-                                "YES",
+                                'YES',
                                 style: boldTextStyle.copyWith(
-                                  color: state.alreadyPaid == "YES" ? whiteColor : customBlueColor,
+                                  color: state.alreadyPaid == 'YES' ? whiteColor : customBlueColor,
                                 ),
                               ),
                             ),
@@ -612,9 +600,9 @@ class _GetCardList extends StatelessWidget {
               stream: isEdit
                   ? FirebaseServices()
                       .firebaseFirestore
-                      .collection("pinext_users")
+                      .collection('pinext_users')
                       .doc(FirebaseServices().getUserId())
-                      .collection("pinext_cards")
+                      .collection('pinext_cards')
                       .where(
                         'cardId',
                         isEqualTo: subscriptionModel!.assignedCardId,
@@ -622,15 +610,15 @@ class _GetCardList extends StatelessWidget {
                       .snapshots()
                   : FirebaseServices()
                       .firebaseFirestore
-                      .collection("pinext_users")
+                      .collection('pinext_users')
                       .doc(FirebaseServices().getUserId())
-                      .collection("pinext_cards")
+                      .collection('pinext_cards')
                       .orderBy(
                         'lastTransactionData',
                         descending: true,
                       )
                       .snapshots(),
-              builder: ((context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+              builder: (context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
                 final addSubscriptionState = context.watch<AddSubscriptionCubit>().state;
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return SizedBox(
@@ -646,7 +634,7 @@ class _GetCardList extends StatelessWidget {
                     width: getWidth(context) - defaultPadding * 2,
                     alignment: Alignment.center,
                     child: Text(
-                      "Please add a Pinext card to view your cards list here.",
+                      'Please add a Pinext card to view your cards list here.',
                       style: regularTextStyle.copyWith(
                         color: customBlackColor.withOpacity(.4),
                       ),
@@ -659,13 +647,13 @@ class _GetCardList extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   scrollDirection: Axis.horizontal,
                   itemCount: snapshot.data!.docs.length,
-                  itemBuilder: ((context, index) {
-                    PinextCardModel pinextCardModel = PinextCardModel.fromMap(
+                  itemBuilder: (context, index) {
+                    final pinextCardModel = PinextCardModel.fromMap(
                       snapshot.data!.docs[index].data(),
                     );
 
-                    String color = pinextCardModel.color;
-                    late Color cardColor = getColorFromString(color);
+                    final color = pinextCardModel.color;
+                    late final cardColor = getColorFromString(color);
 
                     return GestureDetector(
                       onTap: () {
@@ -683,9 +671,9 @@ class _GetCardList extends StatelessWidget {
                         // cardModel: pinextCardModel,
                       ),
                     );
-                  }),
+                  },
                 );
-              }),
+              },
             ),
             const SizedBox(
               width: defaultPadding - 10,
@@ -721,44 +709,44 @@ class _SaveButton extends StatelessWidget {
         builder: (context, state) {
           final demoState = context.watch<DemoBloc>().state;
           return GetCustomButton(
-            title: "Save Subscription",
+            title: 'Save Subscription',
             titleColor: whiteColor,
             isLoading: state is AddSubscriptionLoadingState,
             buttonColor: customBlueColor,
             callBackFunction: () {
               if (demoState is DemoDisabledState) {
-                if (formKey.currentState!.validate() && state.alreadyPaid != "" && state.selectedCardNo != "") {
-                  String title = titleController.text.toLowerCase();
-                  String description = descriptionController.text.toLowerCase();
-                  String amount = amountController.text;
-                  bool isAutomaticallyPayEnabled = state.automaticallyPayActivated;
+                if (formKey.currentState!.validate() as bool && (state.alreadyPaid != '') && (state.selectedCardNo != '')) {
+                  final title = titleController.text.toLowerCase();
+                  final description = descriptionController.text.toLowerCase();
+                  final amount = amountController.text;
+                  final isAutomaticallyPayEnabled = state.automaticallyPayActivated;
 
-                  var date = DateTime.now();
-                  var lastMonthDate = "";
+                  final date = DateTime.now();
+                  var lastMonthDate = '';
                   if (date.month - 1 <= 0) {
                     lastMonthDate = DateTime(date.year - 1, 12, date.day).toString();
                   } else {
                     lastMonthDate = DateTime(date.year, date.month - 1, date.day).toString();
                   }
-                  String lastPaidOn = state.alreadyPaid == "YES" ? date.toString() : lastMonthDate.toString();
+                  final lastPaidOn = state.alreadyPaid == 'YES' ? date.toString() : lastMonthDate.toString();
 
                   context.read<AddSubscriptionCubit>().addSubscription(
                         PinextSubscriptionModel(
                           dateAdded: DateTime.now().toString(),
                           lastPaidOn: lastPaidOn,
                           amount: amount,
-                          subscriptionId: Uuid().v4(),
+                          subscriptionId: const Uuid().v4(),
                           assignedCardId: state.selectedCardNo,
                           automaticallyDeductEnabled: isAutomaticallyPayEnabled,
                           description: description,
                           title: title,
-                          transactionId: "",
+                          transactionId: '',
                         ),
                       );
                 } else {
                   GetCustomSnackbar(
-                    title: "ERROR",
-                    message: "Please input all the required fields and try again!",
+                    title: 'ERROR',
+                    message: 'Please input all the required fields and try again!',
                     snackbarType: SnackbarType.error,
                     context: context,
                   );

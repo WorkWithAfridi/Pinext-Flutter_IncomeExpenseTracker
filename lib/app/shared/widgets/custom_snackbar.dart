@@ -2,9 +2,8 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:elegant_notification/elegant_notification.dart';
 import 'package:elegant_notification/resources/arrays.dart';
 import 'package:flutter/material.dart';
-
-import '../../app_data/app_constants/domentions.dart';
-import '../../app_data/app_constants/fonts.dart';
+import 'package:pinext/app/app_data/app_constants/domentions.dart';
+import 'package:pinext/app/app_data/app_constants/fonts.dart';
 
 enum SnackbarType {
   error,
@@ -12,29 +11,29 @@ enum SnackbarType {
   success,
 }
 
-GetCustomSnackbar({
+void GetCustomSnackbar({
   required String title,
   required String message,
   required SnackbarType snackbarType,
   required BuildContext context,
 }) {
-  const AnimationType snackbarAnimationType = AnimationType.fromTop;
-  const Duration snackbarToastDuration = Duration(
+  const snackbarAnimationType = AnimationType.fromTop;
+  const snackbarToastDuration = Duration(
     seconds: 3,
   );
-  const Duration snackbarAnimationDuration = Duration(
+  const snackbarAnimationDuration = Duration(
     milliseconds: 150,
   );
   const isSnackbarDismissible = false;
-  Text titleText = Text(
+  final titleText = Text(
     title,
     style: boldTextStyle,
   );
-  Text messageText = Text(
+  final messageText = Text(
     message,
     style: regularTextStyle,
   );
-  double width = getWidth(context) - 50;
+  final width = getWidth(context) - 50;
 
   late AwesomeSnackbarContent snackbarContent;
   if (snackbarType == SnackbarType.success) {
@@ -43,8 +42,6 @@ GetCustomSnackbar({
       description: messageText,
       width: width,
       animationDuration: snackbarAnimationDuration,
-      toastDuration: snackbarToastDuration,
-      autoDismiss: true,
     ).show(context);
   } else if (snackbarType == SnackbarType.info) {
     ElegantNotification.info(
@@ -52,8 +49,6 @@ GetCustomSnackbar({
       description: messageText,
       width: width,
       animationDuration: snackbarAnimationDuration,
-      toastDuration: snackbarToastDuration,
-      autoDismiss: true,
     ).show(context);
   } else if (snackbarType == SnackbarType.error) {
     ElegantNotification.error(
@@ -61,8 +56,6 @@ GetCustomSnackbar({
       description: messageText,
       width: width,
       animationDuration: snackbarAnimationDuration,
-      toastDuration: snackbarToastDuration,
-      autoDismiss: true,
     ).show(context);
   }
 }

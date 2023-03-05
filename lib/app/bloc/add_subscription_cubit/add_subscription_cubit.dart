@@ -11,16 +11,16 @@ class AddSubscriptionCubit extends Cubit<AddSubscriptionState> {
       : super(
           AddSubscriptionDefaultState(
             automaticallyPayActivated: false,
-            selectedCardNo: "",
-            alreadyPaid: "",
+            selectedCardNo: '',
+            alreadyPaid: '',
           ),
         );
 
-  selectCard(String selectedCardNo) {
+  void selectCard(String selectedCardNo) {
     if (state.selectedCardNo == selectedCardNo) {
       emit(
         AddSubscriptionDefaultState(
-          selectedCardNo: "",
+          selectedCardNo: '',
           automaticallyPayActivated: state.automaticallyPayActivated,
           alreadyPaid: state.alreadyPaid,
         ),
@@ -36,7 +36,7 @@ class AddSubscriptionCubit extends Cubit<AddSubscriptionState> {
     }
   }
 
-  toogleAutomaticallyPaySwitch(bool value) {
+  void toogleAutomaticallyPaySwitch(bool value) {
     emit(
       AddSubscriptionDefaultState(
         selectedCardNo: state.selectedCardNo,
@@ -46,7 +46,7 @@ class AddSubscriptionCubit extends Cubit<AddSubscriptionState> {
     );
   }
 
-  addSubscription(
+  Future<void> addSubscription(
     PinextSubscriptionModel pinextSubscriptionModel,
   ) async {
     emit(
@@ -59,8 +59,8 @@ class AddSubscriptionCubit extends Cubit<AddSubscriptionState> {
     await Future.delayed(
       const Duration(seconds: 1),
     );
-    String response = await SubscriptionHandler().addSubscription(subscriptionModel: pinextSubscriptionModel);
-    if (response == "success") {
+    final response = await SubscriptionHandler().addSubscription(subscriptionModel: pinextSubscriptionModel);
+    if (response == 'success') {
       emit(
         AddSubscriptionSuccessState(
           automaticallyPayActivated: pinextSubscriptionModel.automaticallyDeductEnabled,
@@ -79,7 +79,7 @@ class AddSubscriptionCubit extends Cubit<AddSubscriptionState> {
     }
   }
 
-  updateSubscription(
+  Future<void> updateSubscription(
     PinextSubscriptionModel subscriptionModel,
     bool addTransactionToArchive,
     BuildContext context,
@@ -88,47 +88,47 @@ class AddSubscriptionCubit extends Cubit<AddSubscriptionState> {
       emit(
         UpdateSubscriptionMarkAsPaidAndAddTransactionButtonLoadingState(
           automaticallyPayActivated: subscriptionModel.automaticallyDeductEnabled,
-          selectedCardNo: "",
-          alreadyPaid: "",
+          selectedCardNo: '',
+          alreadyPaid: '',
         ),
       );
     } else {
       emit(
         UpdateSubscriptionMarkAsPaidButtonLoadingState(
           automaticallyPayActivated: subscriptionModel.automaticallyDeductEnabled,
-          selectedCardNo: "",
-          alreadyPaid: "",
+          selectedCardNo: '',
+          alreadyPaid: '',
         ),
       );
     }
     await Future.delayed(
       const Duration(seconds: 1),
     );
-    String response = await SubscriptionHandler().updateSubscription(
+    final response = await SubscriptionHandler().updateSubscription(
       subscriptionModel: subscriptionModel,
       addTransactionToArchive: addTransactionToArchive,
       context: context,
     );
-    if (response == "success") {
+    if (response == 'success') {
       emit(
         SubscriptionSuccessfullyUpdatedState(
           automaticallyPayActivated: subscriptionModel.automaticallyDeductEnabled,
-          selectedCardNo: "",
-          alreadyPaid: "",
+          selectedCardNo: '',
+          alreadyPaid: '',
         ),
       );
     } else {
       emit(
         SubscriptionFailedToUpdateState(
           automaticallyPayActivated: subscriptionModel.automaticallyDeductEnabled,
-          selectedCardNo: "",
-          alreadyPaid: "",
+          selectedCardNo: '',
+          alreadyPaid: '',
         ),
       );
     }
   }
 
-  changeAlreadyPaidStatus(String status) {
+  void changeAlreadyPaidStatus(String status) {
     emit(
       AddSubscriptionDefaultState(
         selectedCardNo: state.selectedCardNo,
@@ -138,7 +138,7 @@ class AddSubscriptionCubit extends Cubit<AddSubscriptionState> {
     );
   }
 
-  resetState() {
+  void resetState() {
     emit(
       AddSubscriptionDefaultState(
         automaticallyPayActivated: state.automaticallyPayActivated,

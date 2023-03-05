@@ -8,14 +8,14 @@ class ArchiveSearchCubit extends Cubit<ArchiveSearchState> {
       : super(
           ArchiveSearchDefaultState(
             isSearchActive: false,
-            searchTerm: "",
+            searchTerm: '',
           ),
         );
   toogleSearch() {
     emit(
       ArchiveSearchDefaultState(
         isSearchActive: !state.isSearchActive,
-        searchTerm: "",
+        searchTerm: '',
       ),
     );
   }
@@ -24,7 +24,7 @@ class ArchiveSearchCubit extends Cubit<ArchiveSearchState> {
     emit(
       ArchiveSearchDefaultState(
         isSearchActive: false,
-        searchTerm: "",
+        searchTerm: '',
       ),
     );
   }

@@ -39,14 +39,13 @@ class PinextTransactionModel {
       cardId: map['cardId'] as String,
       transactionDate: map['transactionDate'] as String,
       transactionId: map['transactionId'] as String,
-      transactionTag: map['transactionTag'] ?? "",
+      transactionTag: (map['transactionTag'] ?? '') as String,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory PinextTransactionModel.fromJson(String source) =>
-      PinextTransactionModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory PinextTransactionModel.fromJson(String source) => PinextTransactionModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
@@ -55,18 +54,18 @@ class PinextTransactionModel {
 }
 
 List<String> transactionTags = [
-  "Income",
-  "Food and Groceries",
-  "Transportation",
-  "Housing and Utilities",
-  "Health and Wellness",
-  "Education and Training",
-  "Entertainment and Leisure",
-  "Personal Care",
-  "Clothing and Accessories",
-  "Gifts and Donations",
-  "Miscellaneous",
-  "Others",
-  "Transfer",
-  "Subscription"
+  'Income',
+  'Food and Groceries',
+  'Transportation',
+  'Housing and Utilities',
+  'Health and Wellness',
+  'Education and Training',
+  'Entertainment and Leisure',
+  'Personal Care',
+  'Clothing and Accessories',
+  'Gifts and Donations',
+  'Miscellaneous',
+  'Others',
+  'Transfer',
+  'Subscription'
 ];

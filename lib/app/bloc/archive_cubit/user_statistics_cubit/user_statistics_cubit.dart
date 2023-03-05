@@ -3,8 +3,7 @@ import 'dart:developer';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../models/pinext_transaction_model.dart';
+import 'package:pinext/app/models/pinext_transaction_model.dart';
 
 part 'user_statistics_state.dart';
 
@@ -33,66 +32,66 @@ class UserStatisticsCubit extends Cubit<UserStatisticsState> {
           ),
         );
 
-  updateStatistics({
+  void updateStatistics({
     required double amount,
     required bool isExpense,
     required String tag,
     required double tagAmount,
   }) {
-    double totalExpenses = 0;
-    double totalSavings = 0;
-    double outcome = 0;
+    var totalExpenses = 0;
+    var totalSavings = 0;
+    var outcome = 0;
     if (isExpense) {
-      totalExpenses = state.totalExpenses + amount;
-      totalSavings = state.totalSavings;
-      log("Is an expense");
+      totalExpenses = (state.totalExpenses + amount).toInt();
+      totalSavings = state.totalSavings.toInt();
+      log('Is an expense');
     } else {
-      totalSavings = state.totalSavings + amount;
-      totalExpenses = state.totalExpenses;
-      log("Is a Income");
+      totalSavings = (state.totalSavings + amount).toInt();
+      totalExpenses = state.totalExpenses.toInt();
+      log('Is a Income');
     }
 
     switch (tag) {
-      case "Income":
+      case 'Income':
         state.income = state.income + tagAmount;
         break;
-      case "Food and Groceries":
+      case 'Food and Groceries':
         state.foodAndGroceries = state.foodAndGroceries + tagAmount;
         break;
-      case "Transportation":
+      case 'Transportation':
         state.transportation = state.transportation + tagAmount;
         break;
-      case "Housing and Utilities":
+      case 'Housing and Utilities':
         state.housingAndUtilities = state.housingAndUtilities + tagAmount;
         break;
-      case "Health and Wellness":
+      case 'Health and Wellness':
         state.healthAndWellness = state.healthAndWellness + tagAmount;
         break;
-      case "Education and Training":
+      case 'Education and Training':
         state.educationAndTraining = state.educationAndTraining + tagAmount;
         break;
-      case "Entertainment and Leisure":
+      case 'Entertainment and Leisure':
         state.educationAndTraining = state.educationAndTraining + tagAmount;
         break;
-      case "Personal Care":
+      case 'Personal Care':
         state.personalCare = state.personalCare + tagAmount;
         break;
-      case "Clothing and Accessories":
+      case 'Clothing and Accessories':
         state.clothingAndAccessories = state.clothingAndAccessories + tagAmount;
         break;
-      case "Gifts and Donations":
+      case 'Gifts and Donations':
         state.giftsAndDonations = state.giftsAndDonations + tagAmount;
         break;
-      case "Miscellaneous":
+      case 'Miscellaneous':
         state.miscellaneous = state.miscellaneous + tagAmount;
         break;
-      case "Others":
+      case 'Others':
         state.others = state.others + tagAmount;
         break;
-      case "Transfer":
+      case 'Transfer':
         state.transfer = state.transfer + tagAmount;
         break;
-      case "Subscription":
+      case 'Subscription':
         state.subscription = state.subscription + tagAmount;
         break;
     }
@@ -101,9 +100,9 @@ class UserStatisticsCubit extends Cubit<UserStatisticsState> {
 
     emit(
       UserStatisticsDefaultState(
-        totalExpenses: totalExpenses,
-        totalSavings: totalSavings,
-        outcome: outcome,
+        totalExpenses: totalExpenses.toDouble(),
+        totalSavings: totalSavings.toDouble(),
+        outcome: outcome.toDouble(),
         noDataFound: false,
         income: state.income,
         foodAndGroceries: state.foodAndGroceries,
@@ -123,23 +122,23 @@ class UserStatisticsCubit extends Cubit<UserStatisticsState> {
     );
   }
 
-  extractUserStatisticsFromTransactionList(
+  void extractUserStatisticsFromTransactionList(
     BuildContext context,
-    List transactionList,
+    List<PinextTransactionModel> transactionList,
   ) {
     log(transactionList.toString());
     resetState();
-    for (PinextTransactionModel transaction in transactionList) {
+    for (final transaction in transactionList) {
       updateStatistics(
         amount: double.parse(transaction.amount),
-        isExpense: transaction.transactionType == "Expense",
+        isExpense: transaction.transactionType == 'Expense',
         tag: transaction.transactionTag,
         tagAmount: double.parse(transaction.amount),
       );
     }
   }
 
-  resetState() {
+  void resetState() {
     emit(
       UserStatisticsDefaultState(
         totalExpenses: 0,
@@ -164,7 +163,7 @@ class UserStatisticsCubit extends Cubit<UserStatisticsState> {
     );
   }
 
-  noDataFound(bool status) {
+  void noDataFound(bool status) {
     emit(
       UserStatisticsDefaultState(
         totalExpenses: 0,

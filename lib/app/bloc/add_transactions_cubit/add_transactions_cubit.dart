@@ -10,14 +10,14 @@ class AddTransactionsCubit extends Cubit<AddTransactionsState> {
       : super(
           AddTransactionsDefaultState(
             selectedTransactionMode: SelectedTransactionMode.enpense,
-            selectedCardNo: "none",
-            selectedDescription: "none",
+            selectedCardNo: 'none',
+            selectedDescription: 'none',
             markAs: true,
-            selectedTag: "",
+            selectedTag: '',
           ),
         );
 
-  changeSelectedTransactionMode(SelectedTransactionMode selectedTransactionMode) {
+  void changeSelectedTransactionMode(SelectedTransactionMode selectedTransactionMode) {
     emit(
       AddTransactionsDefaultState(
         selectedTransactionMode: selectedTransactionMode,
@@ -29,7 +29,7 @@ class AddTransactionsCubit extends Cubit<AddTransactionsState> {
     );
   }
 
-  togglemarkAs(value) {
+  void togglemarkAs(value) {
     emit(
       AddTransactionsDefaultState(
         selectedTransactionMode: state.selectedTransactionMode,
@@ -41,22 +41,24 @@ class AddTransactionsCubit extends Cubit<AddTransactionsState> {
     );
   }
 
-  addTransaction({
+  Future<void> addTransaction({
     required String amount,
     required String details,
     required String transctionType,
     required String transctionTag,
     required BuildContext context,
   }) async {
-    emit(AddTransactionsLoadingState(
-      selectedTransactionMode: state.selectedTransactionMode,
-      selectedCardNo: state.selectedCardNo,
-      selectedDescription: state.selectedDescription,
-      markAs: state.markAs,
-      selectedTag: state.selectedTag,
-    ));
+    emit(
+      AddTransactionsLoadingState(
+        selectedTransactionMode: state.selectedTransactionMode,
+        selectedCardNo: state.selectedCardNo,
+        selectedDescription: state.selectedDescription,
+        markAs: state.markAs,
+        selectedTag: state.selectedTag,
+      ),
+    );
     await Future.delayed(const Duration(seconds: 1));
-    String response = await TransactionHandler().addTransaction(
+    final response = await TransactionHandler().addTransaction(
       amount: amount,
       description: details,
       transactionType: transctionType,
@@ -66,72 +68,81 @@ class AddTransactionsCubit extends Cubit<AddTransactionsState> {
       context: context,
     );
     if (response == 'Success') {
-      emit(AddTransactionsSuccessState(
-        selectedTransactionMode: state.selectedTransactionMode,
-        selectedCardNo: state.selectedCardNo,
-        selectedDescription: state.selectedDescription,
-        markAs: state.markAs,
-        selectedTag: state.selectedTag,
-      ));
+      emit(
+        AddTransactionsSuccessState(
+          selectedTransactionMode: state.selectedTransactionMode,
+          selectedCardNo: state.selectedCardNo,
+          selectedDescription: state.selectedDescription,
+          markAs: state.markAs,
+          selectedTag: state.selectedTag,
+        ),
+      );
     } else {
-      emit(AddTransactionsErrorState(
-        selectedTransactionMode: state.selectedTransactionMode,
-        selectedCardNo: state.selectedCardNo,
-        errorMessage: response,
-        selectedDescription: state.selectedDescription,
-        markAs: state.markAs,
-        selectedTag: state.selectedTag,
-      ));
+      emit(
+        AddTransactionsErrorState(
+          selectedTransactionMode: state.selectedTransactionMode,
+          selectedCardNo: state.selectedCardNo,
+          errorMessage: response,
+          selectedDescription: state.selectedDescription,
+          markAs: state.markAs,
+          selectedTag: state.selectedTag,
+        ),
+      );
     }
   }
 
-  selectCard(String selectedCardNo) {
-    emit(AddTransactionsDefaultState(
-      selectedCardNo: selectedCardNo,
-      selectedTransactionMode: state.selectedTransactionMode,
-      selectedDescription: state.selectedDescription,
-      markAs: state.markAs,
-      selectedTag: state.selectedTag,
-    ));
+  void selectCard(String selectedCardNo) {
+    emit(
+      AddTransactionsDefaultState(
+        selectedCardNo: selectedCardNo,
+        selectedTransactionMode: state.selectedTransactionMode,
+        selectedDescription: state.selectedDescription,
+        markAs: state.markAs,
+        selectedTag: state.selectedTag,
+      ),
+    );
   }
 
-  reset() {
-    emit(AddTransactionsDefaultState(
-      selectedTransactionMode: state.selectedTransactionMode,
-      selectedCardNo: state.selectedCardNo,
-      selectedDescription: state.selectedDescription,
-      markAs: state.markAs,
-      selectedTag: state.selectedTag,
-    ));
+  void reset() {
+    emit(
+      AddTransactionsDefaultState(
+        selectedTransactionMode: state.selectedTransactionMode,
+        selectedCardNo: state.selectedCardNo,
+        selectedDescription: state.selectedDescription,
+        markAs: state.markAs,
+        selectedTag: state.selectedTag,
+      ),
+    );
   }
 
-  changeSelectedDescription(String selectedDescription) {
-    emit(AddTransactionsDefaultState(
-      selectedTransactionMode: state.selectedTransactionMode,
-      selectedCardNo: state.selectedCardNo,
-      selectedDescription: selectedDescription,
-      markAs: state.markAs,
-      selectedTag: state.selectedTag,
-    ));
+  void changeSelectedDescription(String selectedDescription) {
+    emit(
+      AddTransactionsDefaultState(
+        selectedTransactionMode: state.selectedTransactionMode,
+        selectedCardNo: state.selectedCardNo,
+        selectedDescription: selectedDescription,
+        markAs: state.markAs,
+        selectedTag: state.selectedTag,
+      ),
+    );
   }
 
-  changeSelectedTag(String selectedTag) {
-    if (selectedTag == "Income") {
+  void changeSelectedTag(String selectedTag) {
+    if (selectedTag == 'Income') {
       changeSelectedTransactionMode(SelectedTransactionMode.income);
-    } else if (selectedTag == "Others" ||
-        selectedTag == "Transfer" ||
-        selectedTag == "Miscellaneous" ||
-        selectedTag == "") {
+    } else if (selectedTag == 'Others' || selectedTag == 'Transfer' || selectedTag == 'Miscellaneous' || selectedTag == '') {
       changeSelectedTransactionMode(state.selectedTransactionMode);
     } else {
       changeSelectedTransactionMode(SelectedTransactionMode.enpense);
     }
-    emit(AddTransactionsDefaultState(
-      selectedTransactionMode: state.selectedTransactionMode,
-      selectedCardNo: state.selectedCardNo,
-      selectedDescription: state.selectedDescription,
-      markAs: state.markAs,
-      selectedTag: selectedTag,
-    ));
+    emit(
+      AddTransactionsDefaultState(
+        selectedTransactionMode: state.selectedTransactionMode,
+        selectedCardNo: state.selectedCardNo,
+        selectedDescription: state.selectedDescription,
+        markAs: state.markAs,
+        selectedTag: selectedTag,
+      ),
+    );
   }
 }
