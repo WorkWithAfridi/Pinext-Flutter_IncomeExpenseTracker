@@ -105,7 +105,7 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
             } else if (state is SubscriptionFailedToUpdateState) {
               GetCustomSnackbar(
                 title: 'Snap',
-                message: 'An error occurred while updating your subscrition. :(',
+                message: state.errorMessage,
                 snackbarType: SnackbarType.error,
                 context: context,
               );

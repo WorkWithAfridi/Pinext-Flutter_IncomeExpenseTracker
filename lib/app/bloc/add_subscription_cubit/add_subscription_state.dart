@@ -60,10 +60,12 @@ class SubscriptionSuccessfullyUpdatedState extends AddSubscriptionState {
 }
 
 class SubscriptionFailedToUpdateState extends AddSubscriptionState {
+  String errorMessage;
   SubscriptionFailedToUpdateState({
     required super.automaticallyPayActivated,
     required super.selectedCardNo,
     required super.alreadyPaid,
+    required this.errorMessage,
   });
 }
 

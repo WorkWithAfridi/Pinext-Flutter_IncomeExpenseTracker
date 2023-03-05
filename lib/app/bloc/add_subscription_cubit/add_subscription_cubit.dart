@@ -109,7 +109,7 @@ class AddSubscriptionCubit extends Cubit<AddSubscriptionState> {
       addTransactionToArchive: addTransactionToArchive,
       context: context,
     );
-    if (response == 'success') {
+    if (response == 'Success') {
       emit(
         SubscriptionSuccessfullyUpdatedState(
           automaticallyPayActivated: subscriptionModel.automaticallyDeductEnabled,
@@ -123,6 +123,7 @@ class AddSubscriptionCubit extends Cubit<AddSubscriptionState> {
           automaticallyPayActivated: subscriptionModel.automaticallyDeductEnabled,
           selectedCardNo: '',
           alreadyPaid: '',
+          errorMessage: response,
         ),
       );
     }
