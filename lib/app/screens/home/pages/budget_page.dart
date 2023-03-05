@@ -565,19 +565,16 @@ class _GetSubscriptionWidget extends StatelessWidget {
               );
             }
             context.read<BudgetCubit>().resetSubscriptionDetailCount();
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5),
-              child: ListView.builder(
-                itemCount: snapshot.data!.docs.length > 10 ? 10 : snapshot.data!.docs.length,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  final subscriptionModel = PinextSubscriptionModel.fromMap(
-                    snapshot.data!.docs[index].data(),
-                  );
-                  return SubscriptionCard(subscriptionModel: subscriptionModel);
-                },
-              ),
+            return ListView.builder(
+              itemCount: snapshot.data!.docs.length > 10 ? 10 : snapshot.data!.docs.length,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                final subscriptionModel = PinextSubscriptionModel.fromMap(
+                  snapshot.data!.docs[index].data(),
+                );
+                return SubscriptionCard(subscriptionModel: subscriptionModel);
+              },
             );
           },
         ),
