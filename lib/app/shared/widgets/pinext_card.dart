@@ -89,7 +89,7 @@ class PinextCard extends StatelessWidget {
               height: 180,
               width: getWidth(context) * .9,
               decoration: BoxDecoration(
-                color: Colors.black.withOpacity(.3),
+                color: Colors.black.withOpacity(.25),
                 borderRadius: BorderRadius.circular(
                   defaultBorder,
                 ),

@@ -70,7 +70,11 @@ void showPinextCardPopup(
                   borderRadius: BorderRadius.circular(
                     defaultBorder,
                   ),
+                  border: Border.all(
+                    color: whiteColor,
+                  ),
                 ),
+                margin: const EdgeInsets.all(4),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

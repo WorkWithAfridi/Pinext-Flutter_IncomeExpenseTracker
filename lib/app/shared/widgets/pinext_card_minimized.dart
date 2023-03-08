@@ -7,6 +7,7 @@ import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
 import 'package:pinext/app/shared/widgets/animated_counter_text_widget.dart';
+import 'package:pinext/app/shared/widgets/gradient_text.dart';
 import 'package:pinext/app/shared/widgets/pop_up_transaction_card.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -62,12 +63,15 @@ class PinextCardMinimized extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
+                          GradientText(
                             demoBlocState is DemoEnabledState ? 'Bank' : pinextCardModel.title,
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
                               color: customBlackColor,
+                            ),
+                            colors: GetGradientFromString(
+                              pinextCardModel.color,
                             ),
                           ),
                           Container(
