@@ -60,195 +60,212 @@ class PinextCard extends StatelessWidget {
     return Builder(
       builder: (context) {
         final demoBlocState = context.watch<DemoBloc>().state;
-        return Container(
-          padding: const EdgeInsets.all(
-            15,
-          ),
-          height: 180,
-          width: getWidth(context) * .9,
-          decoration: BoxDecoration(
-            // color: cardColor,
-            borderRadius: BorderRadius.circular(
-              defaultBorder,
-            ),
-            gradient: LinearGradient(
-              colors: GetGradientFromString(
-                cardColor,
+        return Stack(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(
+                15,
               ),
-              begin: Alignment.bottomLeft,
-              end: Alignment.topRight,
+              height: 180,
+              width: getWidth(context) * .9,
+              decoration: BoxDecoration(
+                // color: cardColor,
+                borderRadius: BorderRadius.circular(
+                  defaultBorder,
+                ),
+                gradient: LinearGradient(
+                  colors: GetGradientFromString(
+                    cardColor,
+                  ),
+                  begin: Alignment.bottomLeft,
+                  end: Alignment.topRight,
+                ),
+              ),
             ),
-          ),
-          child: Stack(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.end,
+            Container(
+              padding: const EdgeInsets.all(
+                15,
+              ),
+              height: 180,
+              width: getWidth(context) * .9,
+              decoration: BoxDecoration(
+                color: Colors.black.withOpacity(.3),
+                borderRadius: BorderRadius.circular(
+                  defaultBorder,
+                ),
+              ),
+              child: Stack(
                 children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          demoBlocState is DemoEnabledState ? 'Bank' : title,
-                          style: const TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.w600,
-                            color: whiteColor,
-                            fontFamily: 'CardTitle',
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                        ),
-                        if (cardId != '')
-                          Text(
-                            cardId.substring(0, 16),
-                            style: TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.w600,
-                              color: whiteColor.withOpacity(.8),
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                          )
-                        else
-                          const SizedBox.shrink(),
-                        const SizedBox(
-                          height: 4,
-                        ),
-                        Expanded(
-                          child: Text(
-                            demoBlocState is DemoEnabledState
-                                ? "The purpose of lorem ipsum is to create a natural looking block of text (sentence, paragraph, page, etc.) that doesn't distract from the layout."
-                                    .capitalize()
-                                : cardDetails.capitalize(),
-                            style: regularTextStyle.copyWith(
-                              color: whiteColor.withOpacity(.4),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              demoBlocState is DemoEnabledState ? 'Bank' : title,
+                              style: const TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.w600,
+                                color: whiteColor,
+                                fontFamily: 'CardTitle',
+                              ),
                               overflow: TextOverflow.ellipsis,
-                              fontSize: 12,
+                              maxLines: 1,
                             ),
-                            maxLines: 2,
-                          ),
+                            if (cardId != '')
+                              Text(
+                                cardId.substring(0, 16),
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w600,
+                                  color: whiteColor.withOpacity(.8),
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                              )
+                            else
+                              const SizedBox.shrink(),
+                            const SizedBox(
+                              height: 4,
+                            ),
+                            Expanded(
+                              child: Text(
+                                demoBlocState is DemoEnabledState
+                                    ? "The purpose of lorem ipsum is to create a natural looking block of text (sentence, paragraph, page, etc.) that doesn't distract from the layout."
+                                        .capitalize()
+                                    : cardDetails.capitalize(),
+                                style: regularTextStyle.copyWith(
+                                  color: whiteColor.withOpacity(.4),
+                                  overflow: TextOverflow.ellipsis,
+                                  fontSize: 12,
+                                ),
+                                maxLines: 2,
+                              ),
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Current balance',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 13,
+                                    color: whiteColor.withOpacity(.6),
+                                  ),
+                                ),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      demoBlocState is DemoEnabledState ? '55000 Tk' : balance.toString(),
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 25,
+                                        color: whiteColor,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
+                                    ),
+                                    Text(
+                                      '/',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 25,
+                                        color: whiteColor.withOpacity(.4),
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
+                                    ),
+                                    Text(
+                                      'Tk',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 15,
+                                        color: whiteColor.withOpacity(.4),
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            )
+                          ],
                         ),
-                        Column(
+                      ),
+                      const SizedBox(
+                        width: 16,
+                      ),
+                      RotatedBox(
+                        quarterTurns: 3,
+                        child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Current balance',
+                              'Last transaction',
                               style: TextStyle(
                                 fontWeight: FontWeight.normal,
-                                fontSize: 13,
+                                fontSize: 10,
                                 color: whiteColor.withOpacity(.6),
                               ),
                             ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Text(
-                                  demoBlocState is DemoEnabledState ? '55000 Tk' : balance.toString(),
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 25,
-                                    color: whiteColor,
+                            FittedBox(
+                              child: Text(
+                                '${timeago.format(
+                                  DateTime.parse(
+                                    lastTransactionDate,
                                   ),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
+                                )} ',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 25,
+                                  color: whiteColor,
                                 ),
-                                Text(
-                                  '/',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 25,
-                                    color: whiteColor.withOpacity(.4),
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                ),
-                                Text(
-                                  'Tk',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 15,
-                                    color: whiteColor.withOpacity(.4),
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                ),
-                              ],
+                              ),
                             ),
                           ],
-                        )
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 16,
-                  ),
-                  RotatedBox(
-                    quarterTurns: 3,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Last transaction',
-                          style: TextStyle(
-                            fontWeight: FontWeight.normal,
-                            fontSize: 10,
-                            color: whiteColor.withOpacity(.6),
-                          ),
                         ),
-                        FittedBox(
-                          child: Text(
-                            '${timeago.format(
-                              DateTime.parse(
-                                lastTransactionDate,
-                              ),
-                            )} ',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 25,
-                              color: whiteColor,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
+                      )
+                    ],
+                  ),
+                  // if (cardModel != null)
+                  //   Center(
+                  //     child: Container(
+                  //       decoration: BoxDecoration(
+                  //         borderRadius: BorderRadius.circular(
+                  //           25,
+                  //         ),
+                  //         border: Border.all(
+                  //           color: Colors.white.withOpacity(.1),
+                  //         ),
+                  //       ),
+                  //       padding: const EdgeInsets.all(10),
+                  //       child: Icon(
+                  //         Icons.edit_note_rounded,
+                  //         color: Colors.white.withOpacity(.1),
+                  //       ),
+                  //     ),
+                  //   )
+                  // else
+                  //   const SizedBox.shrink(),
+                  if (isSelected)
+                    const Center(
+                      child: Icon(
+                        Icons.done,
+                        color: whiteColor,
+                        size: 50,
+                      ),
+                    )
+                  else
+                    const SizedBox.shrink()
                 ],
               ),
-              // if (cardModel != null)
-              //   Center(
-              //     child: Container(
-              //       decoration: BoxDecoration(
-              //         borderRadius: BorderRadius.circular(
-              //           25,
-              //         ),
-              //         border: Border.all(
-              //           color: Colors.white.withOpacity(.1),
-              //         ),
-              //       ),
-              //       padding: const EdgeInsets.all(10),
-              //       child: Icon(
-              //         Icons.edit_note_rounded,
-              //         color: Colors.white.withOpacity(.1),
-              //       ),
-              //     ),
-              //   )
-              // else
-              //   const SizedBox.shrink(),
-              if (isSelected)
-                const Center(
-                  child: Icon(
-                    Icons.done,
-                    color: whiteColor,
-                    size: 50,
-                  ),
-                )
-              else
-                const SizedBox.shrink()
-            ],
-          ),
+            ),
+          ],
         );
       },
     );
