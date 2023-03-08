@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pinext/app/app_data/app_constants/constants.dart';
+import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
+import 'package:pinext/app/app_data/theme_data/colors.dart';
+import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
+import 'package:pinext/app/models/pinext_card_model.dart';
 import 'package:pinext/app/shared/widgets/animated_counter_text_widget.dart';
 import 'package:pinext/app/shared/widgets/pop_up_transaction_card.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-import '../../app_data/app_constants/constants.dart';
-import '../../app_data/app_constants/domentions.dart';
-import '../../app_data/theme_data/colors.dart';
-import '../../bloc/demoBloc/demo_bloc.dart';
-import '../../models/pinext_card_model.dart';
-
 class PinextCardMinimized extends StatelessWidget {
   PinextCardMinimized({
-    Key? key,
+    super.key,
     required this.pinextCardModel,
     required this.onDeleteButtonClick,
     required this.onEditButtonClick,
-  }) : super(key: key);
+  });
 
   final PinextCardModel pinextCardModel;
 
@@ -64,7 +63,7 @@ class PinextCardMinimized extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            demoBlocState is DemoEnabledState ? "Bank" : pinextCardModel.title,
+                            demoBlocState is DemoEnabledState ? 'Bank' : pinextCardModel.title,
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
@@ -80,7 +79,7 @@ class PinextCardMinimized extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Current balance",
+                                'Current balance',
                                 style: TextStyle(
                                   fontWeight: FontWeight.normal,
                                   fontSize: 10,
@@ -93,9 +92,7 @@ class PinextCardMinimized extends StatelessWidget {
                                 children: [
                                   AnimatedCounterTextWidget(
                                     begin: 0,
-                                    end: demoBlocState is DemoEnabledState
-                                        ? 55000.0
-                                        : double.parse(pinextCardModel.balance.toString()),
+                                    end: demoBlocState is DemoEnabledState ? 55000.0 : double.parse(pinextCardModel.balance.toString()),
                                     maxLines: 1,
                                     precision: 2,
                                     style: boldTextStyle.copyWith(
@@ -135,10 +132,9 @@ class PinextCardMinimized extends StatelessWidget {
                       RotatedBox(
                         quarterTurns: 3,
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
-                              "Last transaction",
+                              'Last transaction',
                               style: TextStyle(
                                 fontWeight: FontWeight.normal,
                                 fontSize: 10,
@@ -147,11 +143,11 @@ class PinextCardMinimized extends StatelessWidget {
                             ),
                             FittedBox(
                               child: Text(
-                                "  ${timeago.format(
+                                '  ${timeago.format(
                                   DateTime.parse(
                                     pinextCardModel.lastTransactionData,
                                   ),
-                                )}  ",
+                                )}  ',
                                 style: regularTextStyle,
                               ),
                             ),

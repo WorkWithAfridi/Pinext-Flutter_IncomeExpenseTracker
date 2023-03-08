@@ -4,25 +4,24 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/API/firebase_directories.dart';
+import 'package:pinext/app/app_data/app_constants/constants.dart';
+import 'package:pinext/app/app_data/app_constants/domentions.dart';
+import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/app_data/custom_transition_page_route/custom_transition_page_route.dart';
+import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/cards_and_balances_cubit/cards_and_balances_cubit.dart';
+import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
+import 'package:pinext/app/models/pinext_card_model.dart';
+import 'package:pinext/app/screens/add_and_edit_pinext_card/add_and_edit_pinext_card.dart';
 import 'package:pinext/app/screens/edit_net_balance_screen.dart';
+import 'package:pinext/app/services/firebase_services.dart';
 import 'package:pinext/app/shared/widgets/animated_counter_text_widget.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
-
-import '../../../app_data/app_constants/constants.dart';
-import '../../../app_data/app_constants/domentions.dart';
-import '../../../app_data/app_constants/fonts.dart';
-import '../../../app_data/theme_data/colors.dart';
-import '../../../bloc/demoBloc/demo_bloc.dart';
-import '../../../models/pinext_card_model.dart';
-import '../../../services/firebase_services.dart';
-import '../../../shared/widgets/pinext_card_minimized.dart';
-import '../../add_and_edit_pinext_card/add_and_edit_pinext_card.dart';
+import 'package:pinext/app/shared/widgets/pinext_card_minimized.dart';
 
 class CardsAndBalancePage extends StatelessWidget {
-  const CardsAndBalancePage({Key? key}) : super(key: key);
+  const CardsAndBalancePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +33,7 @@ class CardsAndBalancePage extends StatelessWidget {
 }
 
 class CardsAndBalanceView extends StatelessWidget {
-  const CardsAndBalanceView({Key? key}) : super(key: key);
+  const CardsAndBalanceView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +47,7 @@ class CardsAndBalanceView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Cards and Balances",
+              'Cards and Balances',
               style: boldTextStyle.copyWith(
                 fontSize: 25,
               ),
@@ -70,10 +69,9 @@ class CardsAndBalanceView extends StatelessWidget {
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "Your NET. Balance is",
+                    'Your NET. Balance is',
                     style: boldTextStyle.copyWith(
                       color: whiteColor.withOpacity(.6),
                       fontSize: 16,
@@ -88,7 +86,6 @@ class CardsAndBalanceView extends StatelessWidget {
                           height: 70,
                           width: double.maxFinite,
                           child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               const Icon(
@@ -102,9 +99,7 @@ class CardsAndBalanceView extends StatelessWidget {
                                     children: [
                                       AnimatedCounterTextWidget(
                                         begin: 0,
-                                        end: demoBlocState is DemoEnabledState
-                                            ? 750000.0
-                                            : double.parse(state.netBalance),
+                                        end: demoBlocState is DemoEnabledState ? 750000.0 : double.parse(state.netBalance),
                                         maxLines: 1,
                                         precision: 2,
                                         style: boldTextStyle.copyWith(
@@ -143,7 +138,7 @@ class CardsAndBalanceView extends StatelessWidget {
                     },
                   ),
                   Text(
-                    "Taka",
+                    'Taka',
                     style: boldTextStyle.copyWith(
                       color: whiteColor.withOpacity(.6),
                       fontSize: 16,
@@ -156,7 +151,7 @@ class CardsAndBalanceView extends StatelessWidget {
               height: 12,
             ),
             Text(
-              "Manage Cards",
+              'Manage Cards',
               style: boldTextStyle,
             ),
             const SizedBox(
@@ -180,7 +175,7 @@ class CardsAndBalanceView extends StatelessWidget {
                       descending: true,
                     )
                     .snapshots(),
-                builder: ((context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+                builder: (context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
                       child: CircularProgressIndicator(),
@@ -188,7 +183,7 @@ class CardsAndBalanceView extends StatelessWidget {
                   }
                   if (snapshot.data!.docs.isEmpty) {
                     return Text(
-                      "Please add a Pinext card to view your cards details here.",
+                      'Please add a Pinext card to view your cards details here.',
                       style: regularTextStyle.copyWith(
                         color: customBlackColor.withOpacity(.4),
                       ),
@@ -199,8 +194,8 @@ class CardsAndBalanceView extends StatelessWidget {
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: snapshot.data!.docs.length,
-                    itemBuilder: ((context, index) {
-                      PinextCardModel pinextCardModel = PinextCardModel.fromMap(
+                    itemBuilder: (context, index) {
+                      var pinextCardModel = PinextCardModel.fromMap(
                         snapshot.data!.docs[index].data(),
                       );
                       return Builder(
@@ -210,53 +205,54 @@ class CardsAndBalanceView extends StatelessWidget {
                             pinextCardModel: pinextCardModel,
                             onDeleteButtonClick: () {
                               showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      title: Text(
-                                        'Delete card?',
-                                        style: boldTextStyle.copyWith(
-                                          fontSize: 20,
-                                        ),
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: Text(
+                                      'Delete card?',
+                                      style: boldTextStyle.copyWith(
+                                        fontSize: 20,
                                       ),
-                                      content: SingleChildScrollView(
-                                        child: ListBody(
-                                          children: [
-                                            Text(
-                                              "You're about to delete this card from your pinext account! Are you sure you want to do that??",
-                                              style: regularTextStyle,
-                                            ),
-                                          ],
-                                        ),
+                                    ),
+                                    content: SingleChildScrollView(
+                                      child: ListBody(
+                                        children: [
+                                          Text(
+                                            "You're about to delete this card from your pinext account! Are you sure you want to do that??",
+                                            style: regularTextStyle,
+                                          ),
+                                        ],
                                       ),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(defaultBorder),
-                                      ),
-                                      actions: <Widget>[
-                                        TextButton(
-                                          child: Text(
-                                            'Cancel',
-                                            style: boldTextStyle.copyWith(
-                                              color: customBlackColor.withOpacity(
-                                                .8,
-                                              ),
+                                    ),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(defaultBorder),
+                                    ),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        child: Text(
+                                          'Cancel',
+                                          style: boldTextStyle.copyWith(
+                                            color: customBlackColor.withOpacity(
+                                              .8,
                                             ),
                                           ),
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
                                         ),
-                                        TextButton(
-                                          child: const Text('Approve'),
-                                          onPressed: () {
-                                            context.read<CardsAndBalancesCubit>().removeCard(pinextCardModel);
-                                            Navigator.of(context).pop();
-                                          },
-                                        ),
-                                      ],
-                                      actionsPadding: dialogButtonPadding,
-                                    );
-                                  });
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                      TextButton(
+                                        child: const Text('Approve'),
+                                        onPressed: () {
+                                          context.read<CardsAndBalancesCubit>().removeCard(pinextCardModel);
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                    ],
+                                    actionsPadding: dialogButtonPadding,
+                                  );
+                                },
+                              );
                             },
                             onEditButtonClick: () {
                               Navigator.push(
@@ -273,16 +269,16 @@ class CardsAndBalanceView extends StatelessWidget {
                           );
                         },
                       );
-                    }),
+                    },
                   );
-                }),
+                },
               ),
             ),
             const SizedBox(
               height: 12,
             ),
             Text(
-              "New Card??",
+              'New Card??',
               style: boldTextStyle,
             ),
             const SizedBox(
@@ -291,14 +287,14 @@ class CardsAndBalanceView extends StatelessWidget {
             BlocListener<CardsAndBalancesCubit, CardsAndBalancesState>(
               listener: (context, state) {
                 if (state is CardsAndBalancesSuccessfullyAddedCardState) {
-                  log("Card added");
+                  log('Card added');
                   context.read<UserBloc>().add(RefreshUserStateEvent());
                 }
                 if (state is CardsAndBalancesSuccessfullyRemovedCardState) {
-                  log("removed");
+                  log('removed');
                   GetCustomSnackbar(
-                    title: "Success",
-                    message: "Card has been removed from your card list.",
+                    title: 'Success',
+                    message: 'Card has been removed from your card list.',
                     snackbarType: SnackbarType.success,
                     context: context,
                   );
@@ -347,7 +343,7 @@ class CardsAndBalanceView extends StatelessWidget {
                         width: 8,
                       ),
                       Text(
-                        "Add a new card",
+                        'Add a new card',
                         style: boldTextStyle.copyWith(
                           color: customBlackColor.withOpacity(.4),
                         ),
