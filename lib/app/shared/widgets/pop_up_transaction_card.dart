@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
 import 'package:pinext/app/app_data/app_constants/domentions.dart';
-import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
@@ -35,6 +34,7 @@ void showPinextCardPopup(
             title: cardModel.title,
             balance: cardModel.balance,
             lastTransactionDate: cardModel.lastTransactionData,
+            cardId: cardModel.cardId,
           ),
           back: Container(
             padding: const EdgeInsets.all(
@@ -55,14 +55,22 @@ void showPinextCardPopup(
                 end: Alignment.topRight,
               ),
             ),
-            child: Center(
-              child: Text(
-                '"Crafted by Khondakar Afridi"',
-                style: regularTextStyle.copyWith(
-                  color: whiteColor.withOpacity(.5),
-                ),
-              ),
-            ),
+            // child: Center(
+            //   child: Container(
+            //     padding: const EdgeInsets.symmetric(
+            //       vertical: 5,
+            //       horizontal: 15,
+            //     ),
+            //     color: customBlackColor,
+            //     child: Text(
+            //       'Crafted by Khondakar Afridi',
+            //       style: regularTextStyle.copyWith(
+            //         color: whiteColor.withOpacity(.8),
+            //         fontSize: 10,
+            //       ),
+            //     ),
+            //   ),
+            // ),
           ),
         );
       },

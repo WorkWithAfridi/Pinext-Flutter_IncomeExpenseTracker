@@ -41,11 +41,11 @@ class UserStatisticsCubit extends Cubit<UserStatisticsState> {
     var totalExpenses = 0;
     var totalSavings = 0;
     var outcome = 0;
-    if (isExpense) {
+    if (isExpense && tag != 'Transfer') {
       totalExpenses = (state.totalExpenses + amount).toInt();
       totalSavings = state.totalSavings.toInt();
       log('Is an expense');
-    } else {
+    } else if (!isExpense && tag != 'Transfer') {
       totalSavings = (state.totalSavings + amount).toInt();
       totalExpenses = state.totalExpenses.toInt();
       log('Is a Income');

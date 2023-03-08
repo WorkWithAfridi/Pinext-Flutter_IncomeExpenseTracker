@@ -122,13 +122,26 @@ class _TransactionDetailsCardState extends State<TransactionDetailsCard> {
                     Container(
                       // width: 100,
                       alignment: Alignment.centerRight,
-                      child: Text(
-                        widget.pinextTransactionModel.transactionType == 'Expense'
-                            ? '- ${widget.pinextTransactionModel.amount} Tk'
-                            : '+ ${widget.pinextTransactionModel.amount} Tk',
-                        style: boldTextStyle.copyWith(
-                          color: widget.pinextTransactionModel.transactionType == 'Expense' ? Colors.red : Colors.green,
-                        ),
+                      child: FutureBuilder(
+                        future: CardHandler().getCardData(widget.pinextTransactionModel.cardId),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            final cardDetails = snapshot.data as PinextCardModel;
+                            return GradientText(
+                              widget.pinextTransactionModel.transactionType == 'Expense'
+                                  ? '- ${widget.pinextTransactionModel.amount} Tk'
+                                  : '+ ${widget.pinextTransactionModel.amount} Tk',
+                              style: boldTextStyle.copyWith(
+                                color: widget.pinextTransactionModel.transactionType == 'Expense' ? Colors.red : Colors.green,
+                              ),
+                              colors: GetGradientFromString(
+                                cardDetails.color,
+                              ),
+                            );
+                          } else {
+                            return const SizedBox.shrink();
+                          }
+                        },
                       ),
                     ),
                     // const SizedBox(

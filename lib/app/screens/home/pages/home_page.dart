@@ -877,6 +877,7 @@ class _GetYourCardsWidget extends StatelessWidget {
                           lastTransactionDate: pinextCardModel.lastTransactionData,
                           cardDetails: pinextCardModel.description,
                           cardModel: pinextCardModel,
+                          cardId: pinextCardModel.cardId,
                         );
                       },
                     ),

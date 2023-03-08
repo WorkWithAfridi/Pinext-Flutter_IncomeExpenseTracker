@@ -225,7 +225,7 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
                         width: defaultPadding,
                       ),
                       ...List.generate(months.length, (index) {
-                        final currentMonth = months[index] as String;
+                        final currentMonth = months[index];
                         return GestureDetector(
                           onTap: () {
                             context.read<ArchiveCubit>().changeMonth((index).toString());

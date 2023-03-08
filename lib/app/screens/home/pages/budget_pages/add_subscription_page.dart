@@ -668,6 +668,7 @@ class _GetCardList extends StatelessWidget {
                         isSelected: addSubscriptionState.selectedCardNo == pinextCardModel.cardId,
                         lastTransactionDate: pinextCardModel.lastTransactionData,
                         cardDetails: pinextCardModel.description,
+                        cardId: pinextCardModel.cardId,
                         // cardModel: pinextCardModel,
                       ),
                     );

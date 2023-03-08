@@ -809,8 +809,8 @@ class _GetCardListWidget extends StatelessWidget {
                             isSelected: isViewOnly ? false : state.selectedCardNo == pinextCardModel.cardId,
                             lastTransactionDate: pinextCardModel.lastTransactionData,
                             cardDetails: pinextCardModel.description,
-                            cardModel: pinextCardModel,
-
+                            cardId: pinextCardModel.cardId,
+                            // cardModel: pinextCardModel,
                             // cardModel: pinextCardModel,
                           ),
                         );

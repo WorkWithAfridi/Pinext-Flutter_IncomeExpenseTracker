@@ -17,6 +17,7 @@ class PinextCard extends StatelessWidget {
     this.isSelected = false,
     this.cardColor = 'Midnight Indigo',
     this.title = 'Test Title',
+    required this.cardId,
     this.balance = 0.00,
     this.cardModel,
     required this.cardDetails,
@@ -25,6 +26,7 @@ class PinextCard extends StatelessWidget {
 
   bool isSelected;
   String cardColor;
+  String cardId;
   double balance;
   String title;
   String cardDetails;
@@ -99,9 +101,9 @@ class PinextCard extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                         ),
-                        if (cardModel != null)
+                        if (cardId != '')
                           Text(
-                            cardModel!.cardId.substring(0, 16),
+                            cardId.substring(0, 16),
                             style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.w600,
