@@ -195,7 +195,7 @@ class CardsAndBalanceView extends StatelessWidget {
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: snapshot.data!.docs.length,
                     itemBuilder: (context, index) {
-                      var pinextCardModel = PinextCardModel.fromMap(
+                      final pinextCardModel = PinextCardModel.fromMap(
                         snapshot.data!.docs[index].data(),
                       );
                       return Builder(

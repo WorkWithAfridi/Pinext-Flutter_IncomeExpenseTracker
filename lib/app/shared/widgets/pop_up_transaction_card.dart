@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
 import 'package:pinext/app/app_data/app_constants/domentions.dart';
+import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
@@ -16,7 +17,12 @@ void showPinextCardPopup(
   final dialog = Dialog(
     elevation: 0,
     backgroundColor: Colors.transparent,
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(
+        16,
+      ),
+    ),
+
     //this right here
     child: Builder(
       builder: (context) {
@@ -27,6 +33,7 @@ void showPinextCardPopup(
             cardColor: cardModel.color,
             cardModel: cardModel,
             title: cardModel.title,
+            balance: cardModel.balance,
             lastTransactionDate: cardModel.lastTransactionData,
           ),
           back: Container(
@@ -34,7 +41,7 @@ void showPinextCardPopup(
               15,
             ),
             height: 180,
-            width: getWidth(context) * .8,
+            width: getWidth(context) * .9,
             decoration: BoxDecoration(
               // color: cardColor,
               borderRadius: BorderRadius.circular(
@@ -46,6 +53,14 @@ void showPinextCardPopup(
                 ).reversed.toList(),
                 begin: Alignment.bottomLeft,
                 end: Alignment.topRight,
+              ),
+            ),
+            child: Center(
+              child: Text(
+                '"Crafted by Khondakar Afridi"',
+                style: regularTextStyle.copyWith(
+                  color: whiteColor.withOpacity(.5),
+                ),
               ),
             ),
           ),

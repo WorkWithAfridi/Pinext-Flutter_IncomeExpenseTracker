@@ -63,7 +63,7 @@ class PinextCard extends StatelessWidget {
             15,
           ),
           height: 180,
-          width: getWidth(context) * .8,
+          width: getWidth(context) * .9,
           decoration: BoxDecoration(
             // color: cardColor,
             borderRadius: BorderRadius.circular(
@@ -103,7 +103,7 @@ class PinextCard extends StatelessWidget {
                           Text(
                             cardModel!.cardId.substring(0, 16),
                             style: TextStyle(
-                              fontSize: 13,
+                              fontSize: 10,
                               fontWeight: FontWeight.w600,
                               color: whiteColor.withOpacity(.8),
                             ),
@@ -124,6 +124,7 @@ class PinextCard extends StatelessWidget {
                             style: regularTextStyle.copyWith(
                               color: whiteColor.withOpacity(.4),
                               overflow: TextOverflow.ellipsis,
+                              fontSize: 12,
                             ),
                             maxLines: 2,
                           ),

@@ -111,7 +111,7 @@ class _RotatableCardState extends State<RotatableCard> with SingleTickerProvider
   Widget build(BuildContext context) {
     return SizedBox(
       height: 180,
-      width: getWidth(context) * .8,
+      width: getWidth(context) * .9,
       child: GestureDetector(
         onPanUpdate: _onPanUpdate,
         onPanEnd: _onPanEnd,
