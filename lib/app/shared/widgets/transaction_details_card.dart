@@ -127,15 +127,12 @@ class _TransactionDetailsCardState extends State<TransactionDetailsCard> {
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
                             final cardDetails = snapshot.data as PinextCardModel;
-                            return GradientText(
+                            return Text(
                               widget.pinextTransactionModel.transactionType == 'Expense'
                                   ? '- ${widget.pinextTransactionModel.amount} Tk'
                                   : '+ ${widget.pinextTransactionModel.amount} Tk',
                               style: boldTextStyle.copyWith(
                                 color: widget.pinextTransactionModel.transactionType == 'Expense' ? Colors.red : Colors.green,
-                              ),
-                              colors: GetGradientFromString(
-                                cardDetails.color,
                               ),
                             );
                           } else {
