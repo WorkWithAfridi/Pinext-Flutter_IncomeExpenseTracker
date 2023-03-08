@@ -44,7 +44,7 @@ void showPinextCardPopup(
                   15,
                 ),
                 height: 180,
-                width: getWidth(context) * .9,
+                width: getWidth(context) * .85,
                 decoration: BoxDecoration(
                   // color: cardColor,
                   borderRadius: BorderRadius.circular(
@@ -64,9 +64,9 @@ void showPinextCardPopup(
                   15,
                 ),
                 height: 180,
-                width: getWidth(context) * .9,
+                width: getWidth(context) * .85,
                 decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(.3),
+                  color: Colors.black.withOpacity(.10),
                   borderRadius: BorderRadius.circular(
                     defaultBorder,
                   ),

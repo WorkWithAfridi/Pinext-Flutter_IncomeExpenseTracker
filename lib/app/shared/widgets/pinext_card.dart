@@ -67,7 +67,7 @@ class PinextCard extends StatelessWidget {
                 15,
               ),
               height: 180,
-              width: getWidth(context) * .9,
+              width: getWidth(context) * .85,
               decoration: BoxDecoration(
                 // color: cardColor,
                 borderRadius: BorderRadius.circular(
@@ -87,9 +87,9 @@ class PinextCard extends StatelessWidget {
                 15,
               ),
               height: 180,
-              width: getWidth(context) * .9,
+              width: getWidth(context) * .85,
               decoration: BoxDecoration(
-                color: Colors.black.withOpacity(.25),
+                color: Colors.black.withOpacity(.10),
                 borderRadius: BorderRadius.circular(
                   defaultBorder,
                 ),
@@ -205,8 +205,16 @@ class PinextCard extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Text(
+                              'Last transaction',
+                              style: TextStyle(
+                                fontWeight: FontWeight.normal,
+                                fontSize: 10,
+                                color: whiteColor.withOpacity(.6),
+                              ),
+                            ),
                             const SizedBox(
-                              height: 10,
+                              height: 4,
                             ),
                             Container(
                               height: 1,
@@ -215,14 +223,6 @@ class PinextCard extends StatelessWidget {
                             ),
                             const SizedBox(
                               height: 4,
-                            ),
-                            Text(
-                              'Last transaction',
-                              style: TextStyle(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 10,
-                                color: whiteColor.withOpacity(.6),
-                              ),
                             ),
                             FittedBox(
                               child: Text(
