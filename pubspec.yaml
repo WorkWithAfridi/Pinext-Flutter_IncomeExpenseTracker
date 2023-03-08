@@ -92,6 +92,9 @@ flutter:
     - family: Cursive
       fonts:
         - asset: assets/fonts/SeaweedScript-Regular.ttf
+    - family: CardTitle
+      fonts:
+        - asset: assets/fonts/TiltPrism-Regular-VariableFont_XROT,YROT.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

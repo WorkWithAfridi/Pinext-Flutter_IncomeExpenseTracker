@@ -91,12 +91,29 @@ class PinextCard extends StatelessWidget {
                         Text(
                           demoBlocState is DemoEnabledState ? 'Bank' : title,
                           style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
+                            fontSize: 30,
+                            fontWeight: FontWeight.w600,
                             color: whiteColor,
+                            fontFamily: 'CardTitle',
                           ),
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
+                        ),
+                        if (cardModel != null)
+                          Text(
+                            cardModel!.cardId.substring(0, 16),
+                            style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w600,
+                              color: whiteColor.withOpacity(.8),
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          )
+                        else
+                          const SizedBox.shrink(),
+                        const SizedBox(
+                          height: 4,
                         ),
                         Expanded(
                           child: Text(
@@ -108,7 +125,7 @@ class PinextCard extends StatelessWidget {
                               color: whiteColor.withOpacity(.4),
                               overflow: TextOverflow.ellipsis,
                             ),
-                            maxLines: 4,
+                            maxLines: 2,
                           ),
                         ),
                         Column(
@@ -197,26 +214,26 @@ class PinextCard extends StatelessWidget {
                   )
                 ],
               ),
-              if (cardModel != null)
-                Center(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(
-                        25,
-                      ),
-                      border: Border.all(
-                        color: Colors.white.withOpacity(.1),
-                      ),
-                    ),
-                    padding: const EdgeInsets.all(10),
-                    child: Icon(
-                      Icons.edit_note_rounded,
-                      color: Colors.white.withOpacity(.1),
-                    ),
-                  ),
-                )
-              else
-                const SizedBox.shrink(),
+              // if (cardModel != null)
+              //   Center(
+              //     child: Container(
+              //       decoration: BoxDecoration(
+              //         borderRadius: BorderRadius.circular(
+              //           25,
+              //         ),
+              //         border: Border.all(
+              //           color: Colors.white.withOpacity(.1),
+              //         ),
+              //       ),
+              //       padding: const EdgeInsets.all(10),
+              //       child: Icon(
+              //         Icons.edit_note_rounded,
+              //         color: Colors.white.withOpacity(.1),
+              //       ),
+              //     ),
+              //   )
+              // else
+              //   const SizedBox.shrink(),
               if (isSelected)
                 const Center(
                   child: Icon(
