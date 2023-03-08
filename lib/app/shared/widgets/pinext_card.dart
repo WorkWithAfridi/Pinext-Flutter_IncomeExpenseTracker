@@ -153,7 +153,7 @@ class PinextCard extends StatelessWidget {
                                   'Current balance',
                                   style: TextStyle(
                                     fontWeight: FontWeight.normal,
-                                    fontSize: 13,
+                                    fontSize: 10,
                                     color: whiteColor.withOpacity(.6),
                                   ),
                                 ),
@@ -205,6 +205,17 @@ class PinextCard extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              height: 1,
+                              color: whiteColor.withOpacity(.6),
+                              width: getWidth(context),
+                            ),
+                            const SizedBox(
+                              height: 4,
+                            ),
                             Text(
                               'Last transaction',
                               style: TextStyle(
@@ -216,10 +227,10 @@ class PinextCard extends StatelessWidget {
                             FittedBox(
                               child: Text(
                                 '${timeago.format(
-                                  DateTime.parse(
-                                    lastTransactionDate,
-                                  ),
-                                )} ',
+                                      DateTime.parse(
+                                        lastTransactionDate,
+                                      ),
+                                    ).capitalize()} ',
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 25,
