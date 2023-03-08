@@ -185,7 +185,7 @@ class _GetStatisticsWidget extends StatelessWidget {
                 _GetOverviewWidget(
                   isDemoActive: demoBlocState is DemoEnabledState,
                   title: 'Housing and Utilities',
-                  amount: state.transportation.toString(),
+                  amount: state.housingAndUtilities.toString(),
                 ),
                 const SizedBox(
                   height: 4,
