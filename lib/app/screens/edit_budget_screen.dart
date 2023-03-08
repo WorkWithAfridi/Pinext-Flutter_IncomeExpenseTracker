@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
+import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/app_data/extensions/string_extensions.dart';
+import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/bloc/edit_budget_cubit/edit_budget_cubit.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/shared/widgets/custom_button.dart';
+import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
+import 'package:pinext/app/shared/widgets/custom_text_field.dart';
 import 'package:pinext/app/shared/widgets/info_widget.dart';
-
-import '../app_data/app_constants/fonts.dart';
-import '../app_data/theme_data/colors.dart';
-import '../shared/widgets/custom_snackbar.dart';
-import '../shared/widgets/custom_text_field.dart';
 
 class EditbudgetScreen extends StatelessWidget {
   EditbudgetScreen({
@@ -66,7 +65,7 @@ class Editbudgetview extends StatelessWidget {
           ),
         ),
         title: Text(
-          "Edit budget",
+          'Edit budget',
           style: regularTextStyle,
         ),
       ),
@@ -91,7 +90,7 @@ class Editbudgetview extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Monthly Budget",
+                        'Monthly Budget',
                         style: boldTextStyle,
                       ),
                       InfoWidget(
@@ -104,7 +103,7 @@ class Editbudgetview extends StatelessWidget {
                   ),
                   CustomTextFormField(
                     controller: monthlyBudgetController,
-                    hintTitle: "Enter your monthly budget",
+                    hintTitle: 'Enter your monthly budget',
                     textInputType: TextInputType.number,
                     onChanged: (String value) {},
                     validator: (String value) {
@@ -116,7 +115,7 @@ class Editbudgetview extends StatelessWidget {
                     height: 16,
                   ),
                   Text(
-                    "And how much of that have you spent so far?",
+                    'And how much of that have you spent so far?',
                     style: boldTextStyle,
                   ),
                   const SizedBox(
@@ -124,7 +123,7 @@ class Editbudgetview extends StatelessWidget {
                   ),
                   CustomTextFormField(
                     controller: amountSpentSoFarController,
-                    hintTitle: "Budget spent so far...",
+                    hintTitle: 'Budget spent so far...',
                     textInputType: TextInputType.number,
                     onChanged: (String value) {},
                     validator: (String value) {
@@ -136,30 +135,30 @@ class Editbudgetview extends StatelessWidget {
                     height: 16,
                   ),
                   BlocConsumer<EditBudgetCubit, EditBudgetState>(
-                    listener: ((cubitContext, state) {
+                    listener: (cubitContext, state) {
                       if (state is EditBudgetSuccessState) {
                         context.read<UserBloc>().add(RefreshUserStateEvent());
                         Navigator.pop(context);
                         context.read<EditBudgetCubit>().resetState();
                         GetCustomSnackbar(
-                          title: "Success",
-                          message: "Your monthly budget has been updated!",
+                          title: 'Success',
+                          message: 'Your monthly budget has been updated!',
                           snackbarType: SnackbarType.success,
                           context: context,
                         );
                       } else if (state is EditBudgetErrorState) {
                         GetCustomSnackbar(
-                          title: "Snap",
+                          title: 'Snap',
                           message: state.errorMessage,
                           snackbarType: SnackbarType.error,
                           context: context,
                         );
                         context.read<EditBudgetCubit>().resetState();
                       }
-                    }),
+                    },
                     builder: (context, state) {
                       return GetCustomButton(
-                        title: "Update",
+                        title: 'Update',
                         isLoading: state is EditBudgetLoadingState,
                         titleColor: Colors.white,
                         buttonColor: customBlueColor,

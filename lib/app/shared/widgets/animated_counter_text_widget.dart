@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 
 class AnimatedCounterTextWidget extends StatefulWidget {
   const AnimatedCounterTextWidget({
-    Key? key,
+    super.key,
     required this.begin,
     required this.end,
     this.precision = 0,
@@ -17,7 +17,7 @@ class AnimatedCounterTextWidget extends StatefulWidget {
     this.textScaleFactor,
     this.maxLines,
     this.semanticsLabel,
-  }) : super(key: key);
+  });
 
   final double begin;
   final double end;
@@ -52,7 +52,7 @@ class _AnimatedCounterTextWidgetState extends State<AnimatedCounterTextWidget> w
   @override
   Widget build(BuildContext context) {
     _controller = AnimationController(duration: widget.duration, vsync: this);
-    CurvedAnimation curvedAnimation = CurvedAnimation(parent: _controller, curve: widget.curve);
+    var curvedAnimation = CurvedAnimation(parent: _controller, curve: widget.curve);
     _animation = Tween<double>(begin: widget.begin, end: widget.end).animate(curvedAnimation);
     _controller.forward();
 
@@ -75,7 +75,7 @@ class _AnimatedCounterTextWidgetState extends State<AnimatedCounterTextWidget> w
 
 class _AnimatedCounterTextWidget extends AnimatedWidget {
   const _AnimatedCounterTextWidget({
-    Key? key,
+    super.key,
     required this.animation,
     required this.precision,
     this.style,
@@ -87,7 +87,7 @@ class _AnimatedCounterTextWidget extends AnimatedWidget {
     this.textScaleFactor,
     this.maxLines,
     this.semanticsLabel,
-  }) : super(key: key, listenable: animation);
+  }) : super(listenable: animation);
 
   final Animation<double> animation;
   final int precision;

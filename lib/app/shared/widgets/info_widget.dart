@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-
-import '../../app_data/app_constants/constants.dart';
-import '../../app_data/app_constants/fonts.dart';
-import '../../app_data/theme_data/colors.dart';
+import 'package:pinext/app/app_data/app_constants/constants.dart';
+import 'package:pinext/app/app_data/app_constants/fonts.dart';
+import 'package:pinext/app/app_data/theme_data/colors.dart';
 
 class InfoWidget extends StatelessWidget {
   InfoWidget({
-    Key? key,
+    super.key,
     required this.infoText,
-  }) : super(key: key);
+  });
 
   String infoText;
 
@@ -47,7 +46,6 @@ class InfoWidget extends StatelessWidget {
                   ),
                 ),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Row(

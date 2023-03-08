@@ -6,6 +6,7 @@ abstract class LoginState {}
 class LoginDefaultState extends LoginState {}
 
 class LoginWithEmailAndPasswordButtonLoadingState extends LoginState {}
+
 class LoginWithGoogleButtonLoadingState extends LoginState {}
 
 class LoginSuccessState extends LoginState {}

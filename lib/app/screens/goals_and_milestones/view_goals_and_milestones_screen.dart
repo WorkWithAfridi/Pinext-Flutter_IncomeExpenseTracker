@@ -1,16 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
+import 'package:pinext/app/app_data/app_constants/domentions.dart';
+import 'package:pinext/app/app_data/app_constants/fonts.dart';
+import 'package:pinext/app/app_data/custom_transition_page_route/custom_transition_page_route.dart';
+import 'package:pinext/app/app_data/theme_data/colors.dart';
+import 'package:pinext/app/models/pinext_goal_model.dart';
+import 'package:pinext/app/screens/goals_and_milestones/add_and_edit_goal_and_milestone_screen.dart';
+import 'package:pinext/app/services/firebase_services.dart';
 import 'package:pinext/app/shared/widgets/info_widget.dart';
-
-import '../../app_data/app_constants/domentions.dart';
-import '../../app_data/app_constants/fonts.dart';
-import '../../app_data/custom_transition_page_route/custom_transition_page_route.dart';
-import '../../app_data/theme_data/colors.dart';
-import '../../models/pinext_goal_model.dart';
-import '../../services/firebase_services.dart';
-import '../../shared/widgets/pinext_goal_minimized.dart';
-import 'add_and_edit_goal_and_milestone_screen.dart';
+import 'package:pinext/app/shared/widgets/pinext_goal_minimized.dart';
 
 class ViewGoalsAndMilestoneScreen extends StatelessWidget {
   const ViewGoalsAndMilestoneScreen({super.key});
@@ -44,11 +43,10 @@ class ViewGoalsAndMilestoneView extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Pinext",
+                'Pinext',
                 style: regularTextStyle.copyWith(
                   color: customBlackColor.withOpacity(.6),
                 ),
@@ -57,7 +55,7 @@ class ViewGoalsAndMilestoneView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Goals & Milestones",
+                    'Goals & Milestones',
                     style: boldTextStyle.copyWith(
                       fontSize: 25,
                     ),
@@ -72,20 +70,16 @@ class ViewGoalsAndMilestoneView extends StatelessWidget {
                 height: 8,
               ),
               Text(
-                "Your current goals are",
+                'Your current goals are',
                 style: boldTextStyle,
               ),
               const SizedBox(
                 height: 8,
               ),
               StreamBuilder(
-                stream: FirebaseServices()
-                    .firebaseFirestore
-                    .collection('pinext_users')
-                    .doc(FirebaseServices().getUserId())
-                    .collection('pinext_goals')
-                    .snapshots(),
-                builder: ((context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+                stream:
+                    FirebaseServices().firebaseFirestore.collection('pinext_users').doc(FirebaseServices().getUserId()).collection('pinext_goals').snapshots(),
+                builder: (context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
                       child: SizedBox.shrink(),
@@ -93,7 +87,7 @@ class ViewGoalsAndMilestoneView extends StatelessWidget {
                   }
                   if (snapshot.data!.docs.isEmpty) {
                     return Text(
-                      "404 - No record found!",
+                      '404 - No record found!',
                       style: regularTextStyle.copyWith(
                         color: customBlackColor.withOpacity(.4),
                       ),
@@ -109,20 +103,20 @@ class ViewGoalsAndMilestoneView extends StatelessWidget {
                           itemCount: snapshot.data!.docs.length > 10 ? 10 : snapshot.data!.docs.length,
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: ((context, index) {
+                          itemBuilder: (context, index) {
                             if (snapshot.data!.docs.isEmpty) {
-                              return const Text("No data found! :(");
+                              return const Text('No data found! :(');
                             }
                             if (snapshot.data!.docs.isEmpty) {
                               return Text(
-                                "No data found! :(",
+                                'No data found! :(',
                                 style: regularTextStyle.copyWith(
                                   color: customBlackColor.withOpacity(.4),
                                 ),
                               );
                             }
 
-                            PinextGoalModel pinextGoalModel = PinextGoalModel.fromMap(
+                            final pinextGoalModel = PinextGoalModel.fromMap(
                               snapshot.data!.docs[index].data(),
                             );
                             return PinextGoalCardMinimized(
@@ -130,18 +124,18 @@ class ViewGoalsAndMilestoneView extends StatelessWidget {
                               index: index,
                               showCompletePercentage: true,
                             );
-                          }),
+                          },
                         ),
                       )
                     ],
                   );
-                }),
+                },
               ),
               const SizedBox(
                 height: 8,
               ),
               Text(
-                "New goal?",
+                'New goal?',
                 style: boldTextStyle,
               ),
               const SizedBox(
@@ -195,7 +189,7 @@ class ViewGoalsAndMilestoneView extends StatelessWidget {
                         width: 8,
                       ),
                       Text(
-                        "Add a goal/ milestone",
+                        'Add a goal/ milestone',
                         style: boldTextStyle.copyWith(
                           color: customBlackColor.withOpacity(.4),
                         ),

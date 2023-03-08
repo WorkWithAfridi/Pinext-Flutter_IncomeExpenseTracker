@@ -11,8 +11,8 @@ class BudgetCubit extends Cubit<BudgetState> {
             dueAmount: 0,
           ),
         );
-  updatePaidAmount(double amount) {
-    double paidAmount = state.paidAmount + amount;
+  void updatePaidAmount(double amount) {
+    final paidAmount = state.paidAmount + amount;
     emit(
       BudgetDefault(
         paidAmount: paidAmount,
@@ -21,8 +21,8 @@ class BudgetCubit extends Cubit<BudgetState> {
     );
   }
 
-  updateDueAmount(double amount) {
-    double dueAmount = state.dueAmount + amount;
+  void updateDueAmount(double amount) {
+    final dueAmount = state.dueAmount + amount;
     emit(
       BudgetDefault(
         paidAmount: state.paidAmount,
@@ -31,11 +31,11 @@ class BudgetCubit extends Cubit<BudgetState> {
     );
   }
 
-  resetSubscriptionDetailCount() {
+  void resetSubscriptionDetailCount() {
     emit(
       BudgetDefault(
-        paidAmount: 0.0,
-        dueAmount: 0.0,
+        paidAmount: 0,
+        dueAmount: 0,
       ),
     );
   }

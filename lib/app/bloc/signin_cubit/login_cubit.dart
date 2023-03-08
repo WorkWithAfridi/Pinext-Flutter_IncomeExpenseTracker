@@ -27,7 +27,7 @@ class LoginCubit extends Cubit<LoginState> {
         seconds: defaultDelayDuration,
       ),
     );
-    String response = await AuthenticationServices().signInUser(emailAddress: email, password: password);
+    var response = await AuthenticationServices().signInUser(emailAddress: email, password: password);
     if (response == 'Success') {
       emit(
         LoginSuccessState(),
@@ -48,7 +48,7 @@ class LoginCubit extends Cubit<LoginState> {
         seconds: defaultDelayDuration,
       ),
     );
-    String response = await AuthenticationServices().googleSignin();
+    var response = await AuthenticationServices().googleSignin();
     if (response == 'Success') {
       emit(
         LoginSuccessState(),

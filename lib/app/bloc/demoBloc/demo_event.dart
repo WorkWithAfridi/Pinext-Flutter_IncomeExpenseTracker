@@ -8,4 +8,5 @@ abstract class DemoEvent extends Equatable {
 }
 
 class EnableDemoModeEvent extends DemoEvent {}
+
 class DisableDemoModeEvent extends DemoEvent {}

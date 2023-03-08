@@ -1,11 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-
-import '../../app_data/app_constants/constants.dart';
-import '../../app_data/app_constants/fonts.dart';
-import '../../app_data/routing/routes.dart';
-import '../../app_data/theme_data/colors.dart';
+import 'package:pinext/app/app_data/app_constants/constants.dart';
+import 'package:pinext/app/app_data/app_constants/fonts.dart';
+import 'package:pinext/app/app_data/routing/routes.dart';
+import 'package:pinext/app/app_data/theme_data/colors.dart';
 
 part 'homeframe_page_state.dart';
 
@@ -14,16 +13,18 @@ class HomeframeCubit extends Cubit<HomeframeState> {
       : super(
           HoemframeInitialState(
             selectedIndex: 0,
-            pageController: PageController(initialPage: 0),
+            pageController: PageController(),
           ),
         );
 
   changeHomeframePage(int index) {
     state.pageController.jumpToPage(index);
-    emit(HoemframeInitialState(
-      selectedIndex: index,
-      pageController: state.pageController,
-    ));
+    emit(
+      HoemframeInitialState(
+        selectedIndex: index,
+        pageController: state.pageController,
+      ),
+    );
   }
 
   openAddTransactionsPage(BuildContext context) {
@@ -49,7 +50,8 @@ class HomeframeCubit extends Cubit<HomeframeState> {
             child: ListBody(
               children: [
                 Text(
-                  """Meet PINEXT, the ultimate personal expense tracker that makes managing your finances a breeze. PINEXT is designed to help you stay on top of your spending, earnings, and savings, and make informed decisions about your financial future. With its sleek and user-friendly interface, PINEXT is the perfect solution for anyone looking to take control of their finances.
+                  """
+Meet PINEXT, the ultimate personal expense tracker that makes managing your finances a breeze. PINEXT is designed to help you stay on top of your spending, earnings, and savings, and make informed decisions about your financial future. With its sleek and user-friendly interface, PINEXT is the perfect solution for anyone looking to take control of their finances.
 
 One of the standout features of PINEXT is its powerful archive system. All of your transactions are stored in one convenient place, allowing you to easily review your spending history and make informed decisions about your future finances. Whether you're looking to track your monthly expenses or simply monitor your spending habits, PINEXT has you covered.
 

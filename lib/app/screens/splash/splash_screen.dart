@@ -14,14 +14,14 @@ import 'package:pinext/app/services/authentication_services.dart';
 import 'package:quick_actions/quick_actions.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+  const SplashScreen({super.key});
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  void triggerSplashScreenAnimation(BuildContext context) async {
+  Future<void> triggerSplashScreenAnimation(BuildContext context) async {
     await Future.delayed(
       const Duration(seconds: defaultDelayDuration),
     );
@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
     } else if (!userSignedIn) {
       context.read<UserBloc>().add(UnauthenticatedUserEvent());
     } else if (userSignedIn && mode == 'AddTransaction') {
-      Navigator.pushAndRemoveUntil(
+      await Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
           builder: (context) => AddAndViewTransactionScreen(
@@ -51,21 +51,21 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
-    const QuickActions quickActions = QuickActions();
+    const quickActions = QuickActions();
     quickActions.initialize((String shortcutType) {
-      if (shortcutType.toString() == "AddTransaction") {
-        log("AddTransaction");
+      if (shortcutType.toString() == 'AddTransaction') {
+        log('AddTransaction');
         setState(() {
-          mode = "AddTransaction";
+          mode = 'AddTransaction';
         });
       }
     });
 
     quickActions.setShortcutItems(<ShortcutItem>[
       const ShortcutItem(
-        type: "AddTransaction",
-        localizedTitle: "Add transaction",
-        icon: "@drawable/money_icon",
+        type: 'AddTransaction',
+        localizedTitle: 'Add transaction',
+        icon: '@drawable/money_icon',
       ),
     ]);
 
@@ -73,29 +73,29 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   setUpQuickActions() {
-    QuickActions quickActions = const QuickActions();
+    const quickActions = QuickActions();
     quickActions.setShortcutItems(<ShortcutItem>[
       const ShortcutItem(
-        type: "AddTransaction",
-        localizedTitle: "Add transaction",
-        icon: "@drawable/money_icon",
+        type: 'AddTransaction',
+        localizedTitle: 'Add transaction',
+        icon: '@drawable/money_icon',
       ),
       const ShortcutItem(
-        type: "ViewTransactions",
-        localizedTitle: "View transactions",
-        icon: "@drawable/history_icon",
+        type: 'ViewTransactions',
+        localizedTitle: 'View transactions',
+        icon: '@drawable/history_icon',
       ),
     ]);
     quickActions.initialize((String shortcutType) async {
-      if (shortcutType == "AddTransaction") {
+      if (shortcutType == 'AddTransaction') {
         if (userSignedIn) {
-          Navigator.pushNamed(context, ROUTES.getAddTransactionsRoute);
+          await Navigator.pushNamed(context, ROUTES.getAddTransactionsRoute);
         }
       }
-      if (shortcutType == "ViewTransactions") {
+      if (shortcutType == 'ViewTransactions') {
         if (userSignedIn) {
           context.read<HomeframeCubit>().changeHomeframePage(1);
-          Navigator.pushNamed(context, ROUTES.getHomeframeRoute);
+          await Navigator.pushNamed(context, ROUTES.getHomeframeRoute);
         }
       }
     });
@@ -125,11 +125,10 @@ class _SplashScreenState extends State<SplashScreen> {
           height: getHeight(context),
           width: getWidth(context),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "Pinext",
+                'Pinext',
                 style: boldTextStyle.copyWith(
                   fontSize: 50,
                   color: whiteColor,

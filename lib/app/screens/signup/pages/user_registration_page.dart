@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:pinext/app/app_data/app_constants/constants.dart';
+import 'package:pinext/app/app_data/app_constants/domentions.dart';
+import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/app_data/extensions/string_extensions.dart';
-
-import '../../../app_data/app_constants/constants.dart';
-import '../../../app_data/app_constants/domentions.dart';
-import '../../../app_data/app_constants/fonts.dart';
-import '../../../app_data/theme_data/colors.dart';
-import '../../../shared/widgets/custom_button.dart';
-import '../../../shared/widgets/custom_snackbar.dart';
-import '../../../shared/widgets/custom_text_field.dart';
+import 'package:pinext/app/app_data/theme_data/colors.dart';
+import 'package:pinext/app/shared/widgets/custom_button.dart';
+import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
+import 'package:pinext/app/shared/widgets/custom_text_field.dart';
 
 class UserRegistrationPage extends StatelessWidget {
   UserRegistrationPage({
-    Key? key,
+    super.key,
     required this.userNameController,
     required this.emailController,
     required this.passwordController,
     required this.pageController,
-  }) : super(key: key);
+  });
   TextEditingController userNameController;
   TextEditingController emailController;
   TextEditingController passwordController;
@@ -40,14 +39,14 @@ class UserRegistrationPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Welcome",
+                'Welcome',
                 style: boldTextStyle.copyWith(fontSize: 30),
               ),
               const SizedBox(
                 height: 4,
               ),
               Text(
-                "Please provide the following data\nto register a new account.",
+                'Please provide the following data\nto register a new account.',
                 style: regularTextStyle.copyWith(
                   fontSize: 14,
                   color: customBlackColor.withOpacity(.6),
@@ -58,7 +57,7 @@ class UserRegistrationPage extends StatelessWidget {
               ),
               CustomTextFormField(
                 controller: userNameController,
-                hintTitle: "Enter username...",
+                hintTitle: 'Enter username...',
                 onChanged: (String value) {},
                 validator: (value) {
                   return InputValidation(value.toString()).isCorrectName();
@@ -70,7 +69,7 @@ class UserRegistrationPage extends StatelessWidget {
               ),
               CustomTextFormField(
                 controller: emailController,
-                hintTitle: "Email address...",
+                hintTitle: 'Email address...',
                 onChanged: (String value) {},
                 validator: (value) {
                   return InputValidation(value.toString()).isCorrectEmailAddress();
@@ -82,7 +81,7 @@ class UserRegistrationPage extends StatelessWidget {
               ),
               CustomTextFormField(
                 controller: passwordController,
-                hintTitle: "Password",
+                hintTitle: 'Password',
                 isPassword: true,
                 onChanged: (String value) {},
                 validator: (value) {
@@ -94,28 +93,26 @@ class UserRegistrationPage extends StatelessWidget {
                 height: 12,
               ),
               GetCustomButton(
-                  title: "Next",
-                  titleColor: whiteColor,
-                  buttonColor: customBlueColor,
-                  isLoading: false,
-                  callBackFunction: () {
-                    if (_formKey.currentState!.validate()) {
-                      if (userNameController.text.isNotEmpty &&
-                          emailController.text.isNotEmpty &&
-                          passwordController.text.isNotEmpty) {
-                        pageController.jumpToPage(
-                          1,
-                        );
-                      } else {
-                        GetCustomSnackbar(
-                          title: "....",
-                          message: "You need to fill up the form to proceed to the next step!",
-                          snackbarType: SnackbarType.info,
-                          context: context,
-                        );
-                      }
+                title: 'Next',
+                titleColor: whiteColor,
+                buttonColor: customBlueColor,
+                callBackFunction: () {
+                  if (_formKey.currentState!.validate()) {
+                    if (userNameController.text.isNotEmpty && emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
+                      pageController.jumpToPage(
+                        1,
+                      );
+                    } else {
+                      GetCustomSnackbar(
+                        title: '....',
+                        message: 'You need to fill up the form to proceed to the next step!',
+                        snackbarType: SnackbarType.info,
+                        context: context,
+                      );
                     }
-                  }),
+                  }
+                },
+              ),
               // const SizedBox(
               //   height: 12,
               // ),
@@ -141,14 +138,14 @@ class UserRegistrationPage extends StatelessWidget {
                   text: TextSpan(
                     children: [
                       TextSpan(
-                        text: "Already have an account? ",
+                        text: 'Already have an account? ',
                         style: regularTextStyle.copyWith(
                           fontSize: 14,
                           color: customBlackColor.withOpacity(.6),
                         ),
                       ),
                       TextSpan(
-                        text: "Sign in",
+                        text: 'Sign in',
                         style: boldTextStyle.copyWith(
                           fontSize: 14,
                           color: customBlueColor,

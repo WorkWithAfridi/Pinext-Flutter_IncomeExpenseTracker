@@ -5,10 +5,9 @@ import 'package:flutter_intro/flutter_intro.dart';
 import 'package:pinext/app/app_data/custom_transition_page_route/custom_transition_page_route.dart';
 import 'package:pinext/app/screens/add_and_view_transaction/add_and_view_transaction.dart';
 import 'package:pinext/app/screens/home/homeframe.dart';
-
-import '../../screens/signin/signin_screen.dart';
-import '../../screens/signup/signup_screen.dart';
-import '../../screens/splash/splash_screen.dart';
+import 'package:pinext/app/screens/signin/signin_screen.dart';
+import 'package:pinext/app/screens/signup/signup_screen.dart';
+import 'package:pinext/app/screens/splash/splash_screen.dart';
 
 class ROUTECONTROLLER {
   static Route<dynamic> routeController(RouteSettings settings) {
@@ -30,8 +29,6 @@ class ROUTECONTROLLER {
         return CustomTransitionPageRoute(
           childWidget: Intro(
             padding: EdgeInsets.zero,
-            borderRadius: const BorderRadius.all(Radius.circular(4)),
-            maskColor: const Color.fromRGBO(0, 0, 0, .6),
             child: const Homeframe(),
           ),
         );
@@ -41,7 +38,7 @@ class ROUTECONTROLLER {
         );
       default:
         log(settings.name.toString());
-        throw ("Not a valid route ");
+        throw 'Not a valid route ';
     }
   }
 }

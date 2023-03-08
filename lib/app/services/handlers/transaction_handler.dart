@@ -33,7 +33,7 @@ class TransactionHandler {
         return "Couldn't process transaction. Low balance!";
       }
 
-      final transactionId =Uuid().v4();
+      final transactionId = const Uuid().v4();
       final pinextTransactionModel = PinextTransactionModel(
         transactionType: transactionType,
         amount: amount,

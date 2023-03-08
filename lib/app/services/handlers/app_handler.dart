@@ -27,7 +27,7 @@ class AppHandler {
     }
   }
 
-  checkForUpdate(BuildContext context) async {
+  Future<void> checkForUpdate(BuildContext context) async {
     // GetCustomSnackbar(
     //   title: "App Version: $appVersion",
     //   message: "Checking for updates!",
@@ -198,7 +198,7 @@ class AppHandler {
     }
   }
 
-  openPortfolio(BuildContext context) async {
+  Future<void> openPortfolio(BuildContext context) async {
     const url = 'https://sites.google.com/view/workwithafridi';
     if (await canLaunchUrl(Uri.parse(url))) {
       await launchUrl(

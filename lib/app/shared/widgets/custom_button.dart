@@ -1,22 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-
-import '../../app_data/app_constants/constants.dart';
-import '../../app_data/app_constants/domentions.dart';
-import '../../app_data/app_constants/fonts.dart';
-import '../../app_data/theme_data/colors.dart';
+import 'package:pinext/app/app_data/app_constants/constants.dart';
+import 'package:pinext/app/app_data/app_constants/domentions.dart';
+import 'package:pinext/app/app_data/app_constants/fonts.dart';
+import 'package:pinext/app/app_data/theme_data/colors.dart';
 
 class GetCustomButton extends StatelessWidget {
-  final String title;
-  final Color titleColor;
-  final Color buttonColor;
-  final IconData? icon;
-  final Color iconColor;
-  late bool isLoading;
-  late Function callBackFunction;
-
   GetCustomButton({
-    Key? key,
+    super.key,
     required this.title,
     required this.titleColor,
     required this.buttonColor,
@@ -24,7 +15,14 @@ class GetCustomButton extends StatelessWidget {
     this.icon,
     this.isLoading = false,
     required this.callBackFunction,
-  }) : super(key: key);
+  });
+  final String title;
+  final Color titleColor;
+  final Color buttonColor;
+  final IconData? icon;
+  final Color iconColor;
+  late bool isLoading;
+  late Function callBackFunction;
 
   @override
   Widget build(BuildContext context) {
@@ -42,32 +40,34 @@ class GetCustomButton extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            isLoading
-                ? const ButtonLoadingAnimation()
-                : Row(
-                    children: [
-                      icon != null
-                          ? Row(
-                              children: [
-                                Icon(
-                                  icon,
-                                  color: iconColor,
-                                ),
-                                const SizedBox(
-                                  width: 8,
-                                ),
-                              ],
-                            )
-                          : const SizedBox.shrink(),
-                      Text(
-                        title,
-                        style: boldTextStyle.copyWith(
-                          fontSize: 14,
-                          color: titleColor,
+            if (isLoading)
+              const ButtonLoadingAnimation()
+            else
+              Row(
+                children: [
+                  if (icon != null)
+                    Row(
+                      children: [
+                        Icon(
+                          icon,
+                          color: iconColor,
                         ),
-                      ),
-                    ],
-                  )
+                        const SizedBox(
+                          width: 8,
+                        ),
+                      ],
+                    )
+                  else
+                    const SizedBox.shrink(),
+                  Text(
+                    title,
+                    style: boldTextStyle.copyWith(
+                      fontSize: 14,
+                      color: titleColor,
+                    ),
+                  ),
+                ],
+              )
           ],
         ),
       ),
@@ -77,8 +77,8 @@ class GetCustomButton extends StatelessWidget {
 
 class ButtonLoadingAnimation extends StatelessWidget {
   const ButtonLoadingAnimation({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +86,7 @@ class ButtonLoadingAnimation extends StatelessWidget {
       height: 30,
       width: 20,
       child: LottieBuilder.asset(
-        "assets/animations/loading_animation.json",
+        'assets/animations/loading_animation.json',
       ),
     );
   }

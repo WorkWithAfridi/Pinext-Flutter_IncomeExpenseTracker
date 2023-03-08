@@ -1,11 +1,10 @@
 import 'package:pinext/app/models/pinext_goal_model.dart';
-
-import '../firebase_services.dart';
+import 'package:pinext/app/services/firebase_services.dart';
 
 class GoalHandler {
+  factory GoalHandler() => _goalHandler;
   GoalHandler._internal();
   static final GoalHandler _goalHandler = GoalHandler._internal();
-  factory GoalHandler() => _goalHandler;
 
   Future addGoal({
     required PinextGoalModel pinextGoalModel,
