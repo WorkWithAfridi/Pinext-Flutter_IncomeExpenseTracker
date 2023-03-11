@@ -1,26 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pinext/app/app_data/appVersion.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
+import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
+import 'package:pinext/app/app_data/custom_transition_page_route/custom_transition_page_route.dart';
+import 'package:pinext/app/app_data/theme_data/colors.dart';
+import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/screens/goals_and_milestones/view_goals_and_milestones_screen.dart';
 import 'package:pinext/app/services/handlers/app_handler.dart';
-
-import '../../../../app_data/appVersion.dart';
-import '../../../../app_data/app_constants/domentions.dart';
-import '../../../../app_data/custom_transition_page_route/custom_transition_page_route.dart';
-import '../../../../app_data/theme_data/colors.dart';
-import '../../../../bloc/demoBloc/demo_bloc.dart';
-import '../../../../services/handlers/user_handler.dart';
-import '../../../../shared/widgets/custom_snackbar.dart';
+import 'package:pinext/app/services/handlers/user_handler.dart';
+import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 
 class AppSettingsScreen extends StatelessWidget {
-  const AppSettingsScreen({Key? key}) : super(key: key);
+  const AppSettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     return SizedBox(
       height: height,
       width: width,
@@ -36,13 +35,13 @@ class AppSettingsScreen extends StatelessWidget {
                 text: TextSpan(
                   children: [
                     TextSpan(
-                      text: "Hello,\n",
+                      text: 'Hello,\n',
                       style: regularTextStyle.copyWith(
                         color: customBlackColor.withOpacity(.6),
                       ),
                     ),
                     TextSpan(
-                      text: "${UserHandler().currentUser.username} 👋",
+                      text: '${UserHandler().currentUser.username} 👋',
                       style: cursiveTextStyle.copyWith(
                         // height: .95,
                         fontSize: 30,
@@ -81,7 +80,7 @@ class AppSettingsScreen extends StatelessWidget {
                     ),
                   );
                 },
-                label: "Goals & Milestones",
+                label: 'Goals & Milestones',
                 icon: Icons.stop,
                 iconSize: 18,
               ),
@@ -109,7 +108,7 @@ class AppSettingsScreen extends StatelessWidget {
                 onTapFunction: () {
                   AppHandler().requestNewFuture(context);
                 },
-                label: "Request new future!",
+                label: 'Request new future!',
                 icon: FontAwesomeIcons.fire,
                 iconSize: 16,
               ),
@@ -120,7 +119,7 @@ class AppSettingsScreen extends StatelessWidget {
                 onTapFunction: () {
                   AppHandler().writeReview(context);
                 },
-                label: "Post review",
+                label: 'Post review',
                 icon: FontAwesomeIcons.penToSquare,
                 iconSize: 18,
               ),
@@ -131,7 +130,7 @@ class AppSettingsScreen extends StatelessWidget {
                 onTapFunction: () {
                   AppHandler().sendBugReport(context);
                 },
-                label: "Report bug",
+                label: 'Report bug',
                 icon: FontAwesomeIcons.bug,
                 iconSize: 18,
               ),
@@ -142,7 +141,7 @@ class AppSettingsScreen extends StatelessWidget {
                 onTapFunction: () {
                   AppHandler().checkForUpdate(context);
                 },
-                label: "Check for updates",
+                label: 'Check for updates',
                 icon: Icons.update,
                 iconSize: 18,
               ),
@@ -153,10 +152,10 @@ class AppSettingsScreen extends StatelessWidget {
                 builder: (context, state) {
                   return GetSettingsButtonWithIcon(
                     onTapFunction: () async {
-                      String status = "";
+                      var status = '';
                       if (state is DemoEnabledState) {
                         context.read<DemoBloc>().add(DisableDemoModeEvent());
-                        status = "disabled";
+                        status = 'disabled';
                       } else {
                         await showDialog(
                           context: context,
@@ -172,7 +171,7 @@ class AppSettingsScreen extends StatelessWidget {
                                 child: ListBody(
                                   children: [
                                     Text(
-                                      "Enabling Presentation Mode will temporarily replace all of your data with a template, so that you can present or show the app to other potential users! You can disable presentation mode at any time from this menu again! With that being said, do you want to proceed with this action?",
+                                      'Enabling Presentation Mode will temporarily replace all of your data with a template, so that you can present or show the app to other potential users! You can disable presentation mode at any time from this menu again! With that being said, do you want to proceed with this action?',
                                       style: regularTextStyle,
                                     ),
                                   ],
@@ -192,7 +191,7 @@ class AppSettingsScreen extends StatelessWidget {
                                     ),
                                   ),
                                   onPressed: () {
-                                    status = "";
+                                    status = '';
                                     Navigator.of(context).pop();
                                   },
                                 ),
@@ -207,7 +206,7 @@ class AppSettingsScreen extends StatelessWidget {
                                   ),
                                   onPressed: () {
                                     Navigator.pop(context);
-                                    status = "enabled";
+                                    status = 'enabled';
                                     context.read<DemoBloc>().add(EnableDemoModeEvent());
                                   },
                                 ),
@@ -217,16 +216,16 @@ class AppSettingsScreen extends StatelessWidget {
                           },
                         );
                       }
-                      if (status != "") {
+                      if (status != '') {
                         GetCustomSnackbar(
-                          title: "DEMO-MODE",
-                          message: "Presentation mode has been $status.",
+                          title: 'DEMO-MODE',
+                          message: 'Presentation mode has been $status.',
                           snackbarType: SnackbarType.info,
                           context: context,
                         );
                       }
                     },
-                    label: state is DemoEnabledState ? "Disable presentation mode" : "Enable presentation mode",
+                    label: state is DemoEnabledState ? 'Disable presentation mode' : 'Enable presentation mode',
                     icon: state is DemoEnabledState ? FontAwesomeIcons.pause : FontAwesomeIcons.play,
                     iconSize: 18,
                   );
@@ -240,7 +239,7 @@ class AppSettingsScreen extends StatelessWidget {
                   horizontal: 3,
                 ),
                 child: Text(
-                  "App Version: $appVersion",
+                  'App Version: $appVersion',
                   style: regularTextStyle.copyWith(
                     fontSize: 12,
                     color: customBlackColor.withOpacity(.2),
@@ -250,7 +249,7 @@ class AppSettingsScreen extends StatelessWidget {
               ),
               const SizedBox(height: 3),
               Text(
-                " by Kyoto",
+                ' by Kyoto',
                 style: cursiveTextStyle.copyWith(
                   // height: .95,
                   fontSize: 16,
@@ -270,12 +269,12 @@ class AppSettingsScreen extends StatelessWidget {
 
 class GetSettingsButtonWithIcon extends StatelessWidget {
   GetSettingsButtonWithIcon({
-    Key? key,
+    super.key,
     required this.icon,
     required this.label,
     required this.onTapFunction,
     required this.iconSize,
-  }) : super(key: key);
+  });
 
   IconData icon;
   String label;

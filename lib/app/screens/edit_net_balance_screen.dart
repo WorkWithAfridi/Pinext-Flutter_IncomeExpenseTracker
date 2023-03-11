@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
+import 'package:pinext/app/app_data/app_constants/domentions.dart';
+import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/app_data/extensions/string_extensions.dart';
+import 'package:pinext/app/app_data/theme_data/colors.dart';
+import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/bloc/edit_net_balance_cubit/edit_net_balance_cubit.dart';
-
-import '../app_data/app_constants/domentions.dart';
-import '../app_data/app_constants/fonts.dart';
-import '../app_data/theme_data/colors.dart';
-import '../bloc/demoBloc/demo_bloc.dart';
-import '../bloc/userBloc/user_bloc.dart';
-import '../shared/widgets/custom_button.dart';
-import '../shared/widgets/custom_snackbar.dart';
-import '../shared/widgets/custom_text_field.dart';
-import '../shared/widgets/info_widget.dart';
+import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
+import 'package:pinext/app/shared/widgets/custom_button.dart';
+import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
+import 'package:pinext/app/shared/widgets/custom_text_field.dart';
+import 'package:pinext/app/shared/widgets/info_widget.dart';
 
 class EditNetBalanceScreen extends StatelessWidget {
   EditNetBalanceScreen({
@@ -59,7 +58,7 @@ class EditNetBalanceView extends StatelessWidget {
           ),
         ),
         title: Text(
-          "Edit net balance",
+          'Edit net balance',
           style: regularTextStyle,
         ),
       ),
@@ -92,10 +91,9 @@ class EditNetBalanceView extends StatelessWidget {
                       ),
                     ),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          "Your current NET. balance is",
+                          'Your current NET. balance is',
                           style: regularTextStyle,
                         ),
                         const SizedBox(
@@ -105,7 +103,7 @@ class EditNetBalanceView extends StatelessWidget {
                           builder: (context) {
                             final demoBlocState = context.watch<DemoBloc>().state;
                             return Text(
-                              demoBlocState is DemoEnabledState ? "750000 Tk" : "$netBalance Tk",
+                              demoBlocState is DemoEnabledState ? '750000 Tk' : '$netBalance Tk',
                               style: boldTextStyle.copyWith(
                                 fontSize: 25,
                               ),
@@ -125,12 +123,12 @@ class EditNetBalanceView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Do you want to update it?",
+                        'Do you want to update it?',
                         style: boldTextStyle,
                       ),
                       InfoWidget(
                         infoText:
-                            "Updating your NET balance will not affect any of your card balances, but will effect your total cumulative NET balance statistics!",
+                            'Updating your NET balance will not affect any of your card balances, but will effect your total cumulative NET balance statistics!',
                       ),
                     ],
                   ),
@@ -139,7 +137,7 @@ class EditNetBalanceView extends StatelessWidget {
                   ),
                   CustomTextFormField(
                     controller: netBalanceController,
-                    hintTitle: "Enter updated NET. balance...",
+                    hintTitle: 'Enter updated NET. balance...',
                     textInputType: TextInputType.number,
                     onChanged: (String value) {},
                     validator: (String value) {
@@ -151,25 +149,25 @@ class EditNetBalanceView extends StatelessWidget {
                     height: 16,
                   ),
                   BlocConsumer<EditNetBalanceCubit, EditNetBalanceState>(
-                    listener: ((cubitContext, state) {
+                    listener: (cubitContext, state) {
                       if (state is EditNetBalanceSuccessState) {
                         context.read<UserBloc>().add(RefreshUserStateEvent());
                         Navigator.pop(context);
                         context.read<EditNetBalanceCubit>().resetState();
                       } else if (state is EditNetBalanceErrorState) {
                         GetCustomSnackbar(
-                          title: "Snap",
+                          title: 'Snap',
                           message: state.errorMessage,
                           snackbarType: SnackbarType.error,
                           context: context,
                         );
                         context.read<EditNetBalanceCubit>().resetState();
                       }
-                    }),
+                    },
                     builder: (context, state) {
                       final demoBlocState = context.watch<DemoBloc>().state;
                       return GetCustomButton(
-                        title: "Update",
+                        title: 'Update',
                         isLoading: state is EditNetBalanceLoadingState,
                         titleColor: Colors.white,
                         buttonColor: customBlueColor,
@@ -177,8 +175,8 @@ class EditNetBalanceView extends StatelessWidget {
                           if (demoBlocState is DemoDisabledState) {
                             if (netBalanceController.text == netBalance) {
                               GetCustomSnackbar(
-                                title: "!!",
-                                message: "Please update with a new amount and try again!",
+                                title: '!!',
+                                message: 'Please update with a new amount and try again!',
                                 snackbarType: SnackbarType.error,
                                 context: context,
                               );

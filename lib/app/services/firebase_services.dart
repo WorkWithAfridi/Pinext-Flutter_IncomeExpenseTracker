@@ -6,10 +6,10 @@ class FirebaseServices {
   factory FirebaseServices() => _firebaseServices;
 
   FirebaseServices._internal();
+  static final FirebaseServices _firebaseServices = FirebaseServices._internal();
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
   FirebaseStorage firebaseStorage = FirebaseStorage.instance;
-  static final FirebaseServices _firebaseServices = FirebaseServices._internal();
 
   String getUserId() => firebaseAuth.currentUser!.uid;
 }

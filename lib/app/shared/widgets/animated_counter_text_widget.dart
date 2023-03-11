@@ -52,7 +52,7 @@ class _AnimatedCounterTextWidgetState extends State<AnimatedCounterTextWidget> w
   @override
   Widget build(BuildContext context) {
     _controller = AnimationController(duration: widget.duration, vsync: this);
-    var curvedAnimation = CurvedAnimation(parent: _controller, curve: widget.curve);
+    final curvedAnimation = CurvedAnimation(parent: _controller, curve: widget.curve);
     _animation = Tween<double>(begin: widget.begin, end: widget.end).animate(curvedAnimation);
     _controller.forward();
 

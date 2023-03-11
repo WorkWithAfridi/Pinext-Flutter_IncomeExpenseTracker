@@ -108,7 +108,7 @@ class SigninCubit extends Cubit<SigninState> {
       ),
     );
     await Future.delayed(const Duration(seconds: 1));
-    String result = await AuthenticationServices().signupUserUsingEmailAndPassword(
+    final result = await AuthenticationServices().signupUserUsingEmailAndPassword(
       emailAddress: emailAddress,
       password: password,
       username: username,
