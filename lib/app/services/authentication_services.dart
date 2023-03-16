@@ -182,7 +182,9 @@ class AuthenticationServices {
   Future<String> resetPassword({required String email}) async {
     var response = 'Error';
     try {
-      await FirebaseServices().firebaseAuth.sendPasswordResetEmail(email: 'khondakarafridi007@gmail.com');
+      await FirebaseServices().firebaseAuth.sendPasswordResetEmail(
+            email: email,
+          );
       response = 'Success';
     } on FirebaseException catch (err) {
       response = err.message.toString();
