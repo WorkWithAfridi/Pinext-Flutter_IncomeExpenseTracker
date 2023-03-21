@@ -48,8 +48,9 @@ class CardsAndBalanceView extends StatelessWidget {
           children: [
             Text(
               'Cards and Balances',
-              style: boldTextStyle.copyWith(
+              style: cursiveTextStyle.copyWith(
                 fontSize: 25,
+                color: primaryColor,
               ),
             ),
             const SizedBox(

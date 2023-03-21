@@ -82,8 +82,9 @@ class BudgetView extends StatelessWidget {
                 children: [
                   Text(
                     'Budget & Subscriptions',
-                    style: boldTextStyle.copyWith(
+                    style: cursiveTextStyle.copyWith(
                       fontSize: 25,
+                      color: primaryColor,
                     ),
                   ),
                   const SizedBox(
@@ -620,10 +621,6 @@ class SubscriptionCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(
               defaultBorder,
             ),
-            // border: Border.all(
-            //   color: customBlackColor.withOpacity(.2),
-            //   width: .5,
-            // ),
           ),
           padding: const EdgeInsets.only(left: defaultPadding, right: 4),
           child: Builder(

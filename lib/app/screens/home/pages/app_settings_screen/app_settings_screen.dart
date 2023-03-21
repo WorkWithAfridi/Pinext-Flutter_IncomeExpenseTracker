@@ -35,7 +35,7 @@ class AppSettingsScreen extends StatelessWidget {
                 text: TextSpan(
                   children: [
                     TextSpan(
-                      text: 'Hello,\n',
+                      text: 'Bonjour,\n',
                       style: regularTextStyle.copyWith(
                         color: customBlackColor.withOpacity(.6),
                       ),
@@ -45,7 +45,7 @@ class AppSettingsScreen extends StatelessWidget {
                       style: cursiveTextStyle.copyWith(
                         // height: .95,
                         fontSize: 30,
-                        color: customBlackColor.withOpacity(.8),
+                        color: primaryColor.withOpacity(.8),
                       ),
                     ),
                   ],

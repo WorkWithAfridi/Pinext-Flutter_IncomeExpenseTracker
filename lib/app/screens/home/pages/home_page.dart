@@ -99,7 +99,7 @@ class HomepageView extends StatelessWidget {
                           demoBlocState is DemoEnabledState ? 'Kyoto' : state.username,
                           style: cursiveTextStyle.copyWith(
                             fontSize: 30,
-                            color: customBlackColor.withOpacity(.8),
+                            color: primaryColor.withOpacity(.8),
                           ),
                         );
                       } else {
@@ -113,38 +113,6 @@ class HomepageView extends StatelessWidget {
                 ],
               ),
             ),
-            // SizedBox(
-            //   height: 40,
-            //   child: SingleChildScrollView(
-            //     physics: const BouncingScrollPhysics(),
-            //     scrollDirection: Axis.horizontal,
-            //     child: Row(
-            //       children: [
-            //         const SizedBox(
-            //           width: defaultPadding,
-            //         ),
-            //         BlocBuilder<HomepageCubit, HomepageState>(
-            //           builder: (context, state) {
-            //             return ListView.builder(
-            //               shrinkWrap: true,
-            //               scrollDirection: Axis.horizontal,
-            //               itemCount: homepageFilters.length,
-            //               itemBuilder: ((context, index) {
-            //                 return MenuFilterPill(
-            //                   filtertitle: homepageFilters[index],
-            //                   selectedFilter: state.selectedFilter,
-            //                 );
-            //               }),
-            //             );
-            //           },
-            //         ),
-            //         const SizedBox(
-            //           width: defaultPadding - 10,
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // ),
             Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: defaultPadding,
@@ -349,15 +317,11 @@ class _GetGoalsAndMilestonesWidget extends StatelessWidget {
                         if (state is AuthenticatedUserState) {
                           completionAmount = ((double.parse(state.netBalance) / double.parse(pinextGoalModel.amount)) * 100).toInt();
                         }
-                        return
-                            // completionAmount < 100
-                            //     ?
-                            PinextGoalCardMinimized(
+                        return PinextGoalCardMinimized(
                           pinextGoalModel: pinextGoalModel,
                           index: index,
                           showCompletePercentage: true,
                         );
-                        // : const SizedBox.shrink();
                       },
                     );
                   },

@@ -88,8 +88,9 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
                 children: [
                   Text(
                     'Archives',
-                    style: boldTextStyle.copyWith(
+                    style: cursiveTextStyle.copyWith(
                       fontSize: 25,
+                      color: primaryColor,
                     ),
                   ),
                   BlocBuilder<ArchiveCubit, ArchiveState>(
@@ -256,22 +257,6 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
                                     ),
                                     backgroundColor: greyColor,
                                   ),
-                            // Container(
-                            //   padding: const EdgeInsets.symmetric(
-                            //     horizontal: 8,
-                            //     vertical: 8,
-                            //   ),
-                            //   decoration: const BoxDecoration(
-                            //     color: Colors.transparent,
-                            //   ),
-                            //   child: Text(
-                            //     currentMonth,
-                            //     style: regularTextStyle.copyWith(
-                            //       fontWeight: FontWeight.normal,
-                            //       color: customBlackColor.withOpacity(.4),
-                            //     ),
-                            //   ),
-                            // ),
                           ),
                         );
                       }),
@@ -356,25 +341,6 @@ class TransactionsList extends StatelessWidget {
                                       'assets/animations/404.json',
                                     ),
                                   ),
-                                  // Text(
-                                  //   "404",
-                                  //   style:
-                                  //       boldTextStyle.copyWith(fontSize: 25, color: customBlackColor.withOpacity(.5)),
-                                  // ),
-                                  // const SizedBox(
-                                  //   height: 4,
-                                  // ),
-                                  // Text(
-                                  //   "No record found!",
-                                  //   style: regularTextStyle.copyWith(color: customBlackColor.withOpacity(.5)),
-                                  // ),
-                                  // const SizedBox(
-                                  //   height: 2,
-                                  // ),
-                                  // Text(
-                                  //   ":(",
-                                  //   style: regularTextStyle.copyWith(color: customBlackColor.withOpacity(.5)),
-                                  // ),
                                 ],
                               ),
                             ),
