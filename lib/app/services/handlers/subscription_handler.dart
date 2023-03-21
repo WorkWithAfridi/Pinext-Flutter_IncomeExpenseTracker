@@ -86,4 +86,16 @@ class SubscriptionHandler {
       return 'Error';
     }
   }
+
+  Future<void> deleteSubscription({
+    required PinextSubscriptionModel pinextSubscriptionModel,
+  }) async {
+    return FirebaseServices()
+        .firebaseFirestore
+        .collection('pinext_users')
+        .doc(FirebaseServices().getUserId())
+        .collection('pinext_subscriptions')
+        .doc(pinextSubscriptionModel.subscriptionId)
+        .delete();
+  }
 }

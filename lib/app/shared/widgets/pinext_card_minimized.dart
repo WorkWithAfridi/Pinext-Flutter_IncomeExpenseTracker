@@ -191,7 +191,7 @@ class PinextCardMinimized extends StatelessWidget {
                                 },
                                 icon: const Icon(
                                   Icons.delete,
-                                  color: customBlackColor,
+                                  color: Colors.red,
                                 ),
                               )
                             ],

@@ -148,4 +148,24 @@ class AddSubscriptionCubit extends Cubit<AddSubscriptionState> {
       ),
     );
   }
+
+  Future<void> deleteGoal(PinextSubscriptionModel pinextSubscriptionModel) async {
+    emit(
+      AddSubscriptionLoadingState(
+        alreadyPaid: state.alreadyPaid,
+        automaticallyPayActivated: state.automaticallyPayActivated,
+        selectedCardNo: state.selectedCardNo,
+      ),
+    );
+    await SubscriptionHandler().deleteSubscription(
+      pinextSubscriptionModel: pinextSubscriptionModel,
+    );
+    emit(
+      DeletedSubscriptionSuccessState(
+        alreadyPaid: state.alreadyPaid,
+        automaticallyPayActivated: state.automaticallyPayActivated,
+        selectedCardNo: state.selectedCardNo,
+      ),
+    );
+  }
 }

@@ -77,6 +77,14 @@ class UpdateSubscriptionMarkAsPaidAndAddTransactionButtonLoadingState extends Ad
   });
 }
 
+class DeletedSubscriptionSuccessState extends AddSubscriptionState {
+  DeletedSubscriptionSuccessState({
+    required super.automaticallyPayActivated,
+    required super.selectedCardNo,
+    required super.alreadyPaid,
+  });
+}
+
 class UpdateSubscriptionMarkAsPaidButtonLoadingState extends AddSubscriptionState {
   UpdateSubscriptionMarkAsPaidButtonLoadingState({
     required super.automaticallyPayActivated,

@@ -111,63 +111,69 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
         centerTitle: true,
         actions: [
           if (widget.editingGoal)
-            IconButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (dialogContext) {
-                    return AlertDialog(
-                      title: Text(
-                        'Delete milestone?',
-                        style: boldTextStyle.copyWith(
-                          fontSize: 20,
-                        ),
-                      ),
-                      content: SingleChildScrollView(
-                        child: ListBody(
-                          children: [
-                            Text(
-                              "You're about to delete this milestone from your pinext account! Are you sure you want to do that??",
-                              style: regularTextStyle,
-                            ),
-                          ],
-                        ),
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(defaultBorder),
-                      ),
-                      actions: <Widget>[
-                        TextButton(
-                          child: Text(
-                            'Cancel',
+            Row(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (dialogContext) {
+                        return AlertDialog(
+                          title: Text(
+                            'Delete milestone?',
                             style: boldTextStyle.copyWith(
-                              color: customBlackColor.withOpacity(
-                                .8,
-                              ),
+                              fontSize: 20,
                             ),
                           ),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                        TextButton(
-                          child: const Text('Approve'),
-                          onPressed: () {
-                            context.read<AddGoalCubit>().deleteGoal(widget.pinextGoalModel!);
-                            Navigator.pop(dialogContext);
-                          },
-                        ),
-                      ],
-                      actionsPadding: dialogButtonPadding,
+                          content: SingleChildScrollView(
+                            child: ListBody(
+                              children: [
+                                Text(
+                                  "You're about to delete this milestone from your pinext account! Are you sure you want to do that??",
+                                  style: regularTextStyle,
+                                ),
+                              ],
+                            ),
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(defaultBorder),
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              child: Text(
+                                'Cancel',
+                                style: boldTextStyle.copyWith(
+                                  color: customBlackColor.withOpacity(
+                                    .8,
+                                  ),
+                                ),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                            TextButton(
+                              child: const Text('Approve'),
+                              onPressed: () {
+                                context.read<AddGoalCubit>().deleteGoal(widget.pinextGoalModel!);
+                                Navigator.pop(dialogContext);
+                              },
+                            ),
+                          ],
+                          actionsPadding: dialogButtonPadding,
+                        );
+                      },
                     );
                   },
-                );
-              },
-              icon: const Icon(
-                Icons.delete,
-                color: Colors.red,
-                size: 18,
-              ),
+                  icon: const Icon(
+                    Icons.delete,
+                    color: Colors.red,
+                  ),
+                ),
+                const SizedBox(
+                  width: 6,
+                )
+              ],
             )
           else
             const SizedBox.shrink()

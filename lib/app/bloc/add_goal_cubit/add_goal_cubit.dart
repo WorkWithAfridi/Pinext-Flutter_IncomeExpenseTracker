@@ -10,14 +10,14 @@ part 'add_goal_state.dart';
 class AddGoalCubit extends Cubit<AddGoalState> {
   AddGoalCubit() : super(AddGoalDefaultState());
 
-  addGoal(PinextGoalModel pinextGoalModel) async {
+  Future<void> addGoal(PinextGoalModel pinextGoalModel) async {
     emit(AddGoalLoadingState());
     await Future.delayed(const Duration(seconds: 1));
     await GoalHandler().addGoal(pinextGoalModel: pinextGoalModel);
     emit(AddGoalSuccessState());
   }
 
-  updateGoal(PinextGoalModel pinextGoalModel) async {
+  Future<void> updateGoal(PinextGoalModel pinextGoalModel) async {
     emit(AddGoalLoadingState());
     emit(AddGoalLoadingState());
     log('At Goal Cubit');
@@ -25,7 +25,7 @@ class AddGoalCubit extends Cubit<AddGoalState> {
     emit(UpdateGoalSuccessState());
   }
 
-  deleteGoal(PinextGoalModel pinextGoalModel) async {
+  Future<void> deleteGoal(PinextGoalModel pinextGoalModel) async {
     emit(AddGoalLoadingState());
     emit(AddGoalLoadingState());
     log('At Goal Cubit');

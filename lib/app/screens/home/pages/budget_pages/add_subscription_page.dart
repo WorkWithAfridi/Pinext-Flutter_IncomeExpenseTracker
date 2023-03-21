@@ -119,6 +119,15 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
                 snackbarType: SnackbarType.success,
                 context: context,
               );
+            } else if (state is DeletedSubscriptionSuccessState) {
+              Navigator.pop(context);
+              GetCustomSnackbar(
+                title: 'Deleted',
+                message: 'Your subscription has been deleted.',
+                snackbarType: SnackbarType.info,
+                context: context,
+              );
+              context.read<AddSubscriptionCubit>().resetState();
             }
           },
         ),
@@ -138,6 +147,75 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
             'Adding a new subscription',
             style: regularTextStyle,
           ),
+          actions: [
+            if (widget.isEdit)
+              Row(
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (dialogContext) {
+                          return AlertDialog(
+                            title: Text(
+                              'Delete subscription?',
+                              style: boldTextStyle.copyWith(
+                                fontSize: 20,
+                              ),
+                            ),
+                            content: SingleChildScrollView(
+                              child: ListBody(
+                                children: [
+                                  Text(
+                                    "You're about to delete this subscription from your pinext account! Are you sure you want to do that??",
+                                    style: regularTextStyle,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(defaultBorder),
+                            ),
+                            actions: <Widget>[
+                              TextButton(
+                                child: Text(
+                                  'Cancel',
+                                  style: boldTextStyle.copyWith(
+                                    color: customBlackColor.withOpacity(
+                                      .8,
+                                    ),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                              TextButton(
+                                child: const Text('Approve'),
+                                onPressed: () {
+                                  context.read<AddSubscriptionCubit>().deleteGoal(widget.subscriptionModel!);
+                                  Navigator.pop(dialogContext);
+                                },
+                              ),
+                            ],
+                            actionsPadding: dialogButtonPadding,
+                          );
+                        },
+                      );
+                    },
+                    icon: const Icon(
+                      Icons.delete,
+                      color: Colors.red,
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 6,
+                  ),
+                ],
+              )
+            else
+              const SizedBox.shrink()
+          ],
         ),
         body: SizedBox(
           height: MediaQuery.of(context).size.height,
