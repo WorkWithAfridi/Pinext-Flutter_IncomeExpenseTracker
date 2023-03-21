@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -50,15 +49,16 @@ class PinextDrawer extends StatelessWidget {
                     children: [
                       Text(
                         'Pinext',
-                        style: regularTextStyle.copyWith(
+                        style: boldTextStyle.copyWith(
                           height: .9,
-                          color: customBlackColor.withOpacity(.6),
+                          color: primaryColor,
                         ),
                       ),
                       Text(
                         'Space',
                         style: boldTextStyle.copyWith(
                           fontSize: 25,
+                          color: primaryColor.withOpacity(.6),
                         ),
                       ),
                       const SizedBox(
@@ -73,14 +73,14 @@ class PinextDrawer extends StatelessWidget {
                             Text(
                               'By',
                               style: regularTextStyle.copyWith(
-                                fontSize: 20,
+                                fontSize: 14,
                                 color: customBlackColor.withOpacity(.4),
                               ),
                             ),
                             Text(
                               'KYOTO',
                               style: regularTextStyle.copyWith(
-                                fontSize: 12,
+                                fontSize: 16,
                                 color: customBlackColor.withOpacity(.4),
                               ),
                             ),

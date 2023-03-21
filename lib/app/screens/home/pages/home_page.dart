@@ -99,7 +99,7 @@ class HomepageView extends StatelessWidget {
                           demoBlocState is DemoEnabledState ? 'Kyoto' : state.username,
                           style: cursiveTextStyle.copyWith(
                             fontSize: 30,
-                            color: primaryColor.withOpacity(.8),
+                            color: primaryColor,
                           ),
                         );
                       } else {

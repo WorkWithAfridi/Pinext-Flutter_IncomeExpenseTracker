@@ -43,7 +43,6 @@ class AppSettingsScreen extends StatelessWidget {
                     TextSpan(
                       text: '${UserHandler().currentUser.username} 👋',
                       style: cursiveTextStyle.copyWith(
-                        // height: .95,
                         fontSize: 30,
                         color: primaryColor.withOpacity(.8),
                       ),

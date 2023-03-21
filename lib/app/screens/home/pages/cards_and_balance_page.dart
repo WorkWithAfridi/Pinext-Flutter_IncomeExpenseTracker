@@ -43,9 +43,9 @@ class CardsAndBalanceView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Cards and Balances',
+              'Cards & Balances',
               style: cursiveTextStyle.copyWith(
-                fontSize: 25,
+                fontSize: 30,
                 color: primaryColor,
               ),
             ),

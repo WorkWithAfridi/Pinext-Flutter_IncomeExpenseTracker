@@ -83,7 +83,7 @@ class BudgetView extends StatelessWidget {
                   Text(
                     'Budget & Subscriptions',
                     style: cursiveTextStyle.copyWith(
-                      fontSize: 25,
+                      fontSize: 30,
                       color: primaryColor,
                     ),
                   ),

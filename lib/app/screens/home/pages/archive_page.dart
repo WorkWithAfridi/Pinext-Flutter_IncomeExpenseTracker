@@ -81,7 +81,7 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
                   Text(
                     'Archives',
                     style: cursiveTextStyle.copyWith(
-                      fontSize: 25,
+                      fontSize: 30,
                       color: primaryColor,
                     ),
                   ),
