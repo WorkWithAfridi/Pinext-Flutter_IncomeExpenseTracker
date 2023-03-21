@@ -150,7 +150,7 @@ class HomeframeView extends StatelessWidget {
                       child: const Icon(
                         Icons.add,
                         color: whiteColor,
-                        size: 16,
+                        size: 18,
                       ),
                     );
                   },
