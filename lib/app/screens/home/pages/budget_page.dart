@@ -679,7 +679,7 @@ class SubscriptionCard extends StatelessWidget {
                           Text(
                             'STATUS: ',
                             style: boldTextStyle.copyWith(
-                              color: blackColor,
+                              color: darkPurpleColor,
                             ),
                           ),
                           Text(

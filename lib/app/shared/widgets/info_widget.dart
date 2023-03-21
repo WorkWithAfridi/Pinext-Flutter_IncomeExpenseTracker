@@ -52,7 +52,7 @@ class InfoWidget extends StatelessWidget {
                     //   children: [
                     //     const Icon(
                     //       Icons.info,
-                    //       color: blackColor,
+                    //       color: darkPurpleColor,
                     //     ),
                     //     const SizedBox(
                     //       width: 4,
