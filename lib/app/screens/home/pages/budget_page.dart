@@ -505,7 +505,7 @@ class _GetOverviewWidget extends StatelessWidget {
         Text(
           isDemoActive ? '100000 Tk' : '$amount Tk.',
           style: boldTextStyle.copyWith(
-            color: customBlueColor,
+            color: primaryColor,
           ),
         )
       ],
@@ -679,7 +679,7 @@ class SubscriptionCard extends StatelessWidget {
                           Text(
                             'STATUS: ',
                             style: boldTextStyle.copyWith(
-                              color: customDarkBBlueColor,
+                              color: blackColor,
                             ),
                           ),
                           Text(
@@ -698,7 +698,7 @@ class SubscriptionCard extends StatelessWidget {
                           4,
                         ),
                       ),
-                      activeColor: customBlueColor,
+                      activeColor: primaryColor,
                       value: subscriptionModel.lastPaidOn.substring(5, 7) == currentMonth,
                       onChanged: (value) async {
                         if (value == true) {

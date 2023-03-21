@@ -459,7 +459,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                     return GetCustomButton(
                       title: 'Register',
                       titleColor: whiteColor,
-                      buttonColor: customBlueColor,
+                      buttonColor: primaryColor,
                       isLoading: state is SigninLoadingState,
                       callBackFunction: () {
                         if (_formKey.currentState!.validate()) {

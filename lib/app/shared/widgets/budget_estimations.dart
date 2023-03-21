@@ -81,7 +81,7 @@ class GetBudgetEstimationsWidget extends StatelessWidget {
                                   demoBlocState is DemoEnabledState ? '25000 Tk' : '${state.monthlyBudget} Tk',
                                   style: regularTextStyle.copyWith(
                                     fontWeight: FontWeight.w600,
-                                    color: customDarkBBlueColor,
+                                    color: blackColor,
                                   ),
                                 )
                               else
@@ -111,7 +111,7 @@ class GetBudgetEstimationsWidget extends StatelessWidget {
                   Container(
                     height: 5,
                     width: getWidth(context),
-                    color: customBlueColor.withOpacity(.2),
+                    color: primaryColor.withOpacity(.2),
                   ),
                   Builder(
                     builder: (context) {
@@ -135,7 +135,7 @@ class GetBudgetEstimationsWidget extends StatelessWidget {
                                       ? 0.0
                                       : budgetSpentPercentage.toDouble(),
                               decoration: BoxDecoration(
-                                color: customDarkBBlueColor,
+                                color: blackColor,
                                 borderRadius: BorderRadius.circular(defaultBorder),
                               ),
                             );

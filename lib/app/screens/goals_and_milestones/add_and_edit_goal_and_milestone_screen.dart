@@ -313,7 +313,7 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                     return GetCustomButton(
                       title: widget.editingGoal ? 'Update' : 'Add',
                       titleColor: whiteColor,
-                      buttonColor: customBlueColor,
+                      buttonColor: primaryColor,
                       isLoading: state is AddGoalLoadingState,
                       callBackFunction: () async {
                         // final demoState = context.watch<DemoBloc>().state;

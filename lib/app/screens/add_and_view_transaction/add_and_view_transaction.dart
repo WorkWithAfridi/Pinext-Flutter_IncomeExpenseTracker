@@ -320,7 +320,7 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
                     ),
                     Checkbox(
                       value: state.markAs,
-                      activeColor: customBlueColor,
+                      activeColor: primaryColor,
                       onChanged: (value) {
                         context.read<AddTransactionsCubit>().togglemarkAs(value);
                       },
@@ -413,7 +413,7 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
                             'Deposit',
                             style: state.selectedTransactionMode == SelectedTransactionMode.income
                                 ? boldTextStyle.copyWith(
-                                    color: customBlueColor,
+                                    color: primaryColor,
                                     fontSize: 20,
                                   )
                                 : boldTextStyle.copyWith(
@@ -451,7 +451,7 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
                             'Withdrawal ',
                             style: state.selectedTransactionMode == SelectedTransactionMode.enpense
                                 ? boldTextStyle.copyWith(
-                                    color: customBlueColor,
+                                    color: primaryColor,
                                     fontSize: 20,
                                   )
                                 : boldTextStyle.copyWith(
@@ -512,7 +512,7 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
                             color: listOfTransactionDetailSuggestions[index] == state.selectedDescription ? whiteColor : customBlackColor.withOpacity(.6),
                           ),
                         ),
-                        backgroundColor: listOfTransactionDetailSuggestions[index] == state.selectedDescription ? customBlueColor : greyColor,
+                        backgroundColor: listOfTransactionDetailSuggestions[index] == state.selectedDescription ? primaryColor : greyColor,
                       ),
                     );
                   },
@@ -548,7 +548,7 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                backgroundColor: customBlueColor,
+                backgroundColor: primaryColor,
               );
             }
             return Wrap(
@@ -575,7 +575,7 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
                             fontWeight: transactionTags[index] == state.selectedTag ? FontWeight.w600 : FontWeight.normal,
                           ),
                         ),
-                        backgroundColor: transactionTags[index] == state.selectedTag ? customBlueColor : greyColor,
+                        backgroundColor: transactionTags[index] == state.selectedTag ? primaryColor : greyColor,
                       ),
                     );
                   },
@@ -639,7 +639,7 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
           return GetCustomButton(
             title: widget.isViewOnly ? 'Update Transaction' : 'Add Transaction',
             titleColor: whiteColor,
-            buttonColor: customBlueColor,
+            buttonColor: primaryColor,
             isLoading: state is AddTransactionsLoadingState ? true : false,
             callBackFunction: () {
               if (demoBlocState is DemoDisabledState) {

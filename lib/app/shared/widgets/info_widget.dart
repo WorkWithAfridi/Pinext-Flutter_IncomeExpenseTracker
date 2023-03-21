@@ -52,7 +52,7 @@ class InfoWidget extends StatelessWidget {
                     //   children: [
                     //     const Icon(
                     //       Icons.info,
-                    //       color: customDarkBBlueColor,
+                    //       color: blackColor,
                     //     ),
                     //     const SizedBox(
                     //       width: 4,
@@ -85,7 +85,7 @@ class InfoWidget extends StatelessWidget {
       position: PopupMenuPosition.over,
       child: const Icon(
         Icons.help,
-        color: customBlueColor,
+        color: primaryColor,
       ),
     );
   }

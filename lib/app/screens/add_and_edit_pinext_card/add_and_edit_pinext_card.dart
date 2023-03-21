@@ -421,7 +421,7 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                       return GetCustomButton(
                         title: widget.isEditCardScreen ? 'Update Pinext Card' : 'Add Pinext Card',
                         titleColor: whiteColor,
-                        buttonColor: customBlueColor,
+                        buttonColor: primaryColor,
                         isLoading: state is AddCardDefaultState ? false : true,
                         callBackFunction: () {
                           if (demoBlocState is DemoDisabledState) {

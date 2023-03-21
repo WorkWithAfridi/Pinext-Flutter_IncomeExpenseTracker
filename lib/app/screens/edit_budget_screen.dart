@@ -161,7 +161,7 @@ class Editbudgetview extends StatelessWidget {
                         title: 'Update',
                         isLoading: state is EditBudgetLoadingState,
                         titleColor: Colors.white,
-                        buttonColor: customBlueColor,
+                        buttonColor: primaryColor,
                         callBackFunction: () {
                           final demoState = context.read<DemoBloc>().state;
                           if (demoState is DemoDisabledState) {

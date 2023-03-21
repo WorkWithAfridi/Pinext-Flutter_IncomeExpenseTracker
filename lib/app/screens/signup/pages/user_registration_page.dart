@@ -95,7 +95,7 @@ class UserRegistrationPage extends StatelessWidget {
               GetCustomButton(
                 title: 'Next',
                 titleColor: whiteColor,
-                buttonColor: customBlueColor,
+                buttonColor: primaryColor,
                 callBackFunction: () {
                   if (_formKey.currentState!.validate()) {
                     if (userNameController.text.isNotEmpty && emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
@@ -148,7 +148,7 @@ class UserRegistrationPage extends StatelessWidget {
                         text: 'Sign in',
                         style: boldTextStyle.copyWith(
                           fontSize: 14,
-                          color: customBlueColor,
+                          color: primaryColor,
                         ),
                       )
                     ],

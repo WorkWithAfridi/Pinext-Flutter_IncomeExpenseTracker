@@ -128,7 +128,7 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
                             const Icon(
                               Icons.download,
                               size: 18,
-                              color: customBlueColor,
+                              color: primaryColor,
                             ),
                           ],
                         ),
@@ -193,7 +193,7 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
                             ),
                             const Icon(
                               Icons.edit_calendar_rounded,
-                              color: customBlueColor,
+                              color: primaryColor,
                               size: 25,
                             ),
                           ],
@@ -243,7 +243,7 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
                                         color: whiteColor,
                                       ),
                                     ),
-                                    backgroundColor: customBlueColor,
+                                    backgroundColor: primaryColor,
                                   )
                                 : Chip(
                                     elevation: 0,
@@ -430,7 +430,7 @@ class TransactionsList extends StatelessWidget {
                                                   fontWeight: filters[index] == state.selectedFilter ? FontWeight.w600 : FontWeight.normal,
                                                 ),
                                               ),
-                                              backgroundColor: filters[index] == state.selectedFilter ? customBlueColor : greyColor,
+                                              backgroundColor: filters[index] == state.selectedFilter ? primaryColor : greyColor,
                                             ),
                                           );
                                         },
@@ -447,7 +447,7 @@ class TransactionsList extends StatelessWidget {
                                     builder: (context, state) {
                                       return Icon(
                                         state.isSearchActive ? Icons.search_off_rounded : Icons.search_rounded,
-                                        color: customBlueColor,
+                                        color: primaryColor,
                                         size: 25,
                                       );
                                     },
@@ -1011,7 +1011,7 @@ class _GetOverviewWidget extends StatelessWidget {
         Text(
           isDemoActive ? '100000 Tk' : '$amount Tk.',
           style: boldTextStyle.copyWith(
-            color: customBlueColor,
+            color: primaryColor,
           ),
         )
       ],

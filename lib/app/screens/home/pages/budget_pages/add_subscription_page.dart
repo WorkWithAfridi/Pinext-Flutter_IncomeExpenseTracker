@@ -270,7 +270,7 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
                           builder: (context, state) {
                             return Switch(
                               value: state.automaticallyPayActivated,
-                              activeColor: customBlueColor,
+                              activeColor: primaryColor,
                               onChanged: (value) {
                                 if (!widget.isEdit) {
                                   context.read<AddSubscriptionCubit>().toogleAutomaticallyPaySwitch(value);
@@ -335,7 +335,7 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
                                 GetCustomButton(
                                   title: 'Marked as paid',
                                   titleColor: whiteColor,
-                                  buttonColor: customBlueColor,
+                                  buttonColor: primaryColor,
                                   callBackFunction: () {},
                                 ),
                               ],
@@ -365,7 +365,7 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
                                     return GetCustomButton(
                                       title: 'Mark as paid and add transaction to archive',
                                       titleColor: whiteColor,
-                                      buttonColor: customBlueColor,
+                                      buttonColor: primaryColor,
                                       isLoading: state is UpdateSubscriptionMarkAsPaidAndAddTransactionButtonLoadingState,
                                       callBackFunction: () {
                                         final demoState = context.read<DemoBloc>().state;
@@ -391,7 +391,7 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
                                       title: 'Mark as paid',
                                       titleColor: whiteColor,
                                       isLoading: state is UpdateSubscriptionMarkAsPaidButtonLoadingState,
-                                      buttonColor: customBlueColor,
+                                      buttonColor: primaryColor,
                                       callBackFunction: () {
                                         final demoState = context.read<DemoBloc>().state;
                                         if (demoState is DemoDisabledState) {
@@ -545,9 +545,9 @@ class _GetAlreadyPaidWidget extends StatelessWidget {
                               width: double.maxFinite,
                               decoration: BoxDecoration(
                                 border: Border.all(
-                                  color: customBlueColor,
+                                  color: primaryColor,
                                 ),
-                                color: state.alreadyPaid == 'YES' ? customBlueColor.withOpacity(.5) : Colors.transparent,
+                                color: state.alreadyPaid == 'YES' ? primaryColor.withOpacity(.5) : Colors.transparent,
                                 borderRadius: BorderRadius.circular(
                                   defaultBorder,
                                 ),
@@ -556,7 +556,7 @@ class _GetAlreadyPaidWidget extends StatelessWidget {
                               child: Text(
                                 'YES',
                                 style: boldTextStyle.copyWith(
-                                  color: state.alreadyPaid == 'YES' ? whiteColor : customBlueColor,
+                                  color: state.alreadyPaid == 'YES' ? whiteColor : primaryColor,
                                 ),
                               ),
                             ),
@@ -713,7 +713,7 @@ class _SaveButton extends StatelessWidget {
             title: 'Save Subscription',
             titleColor: whiteColor,
             isLoading: state is AddSubscriptionLoadingState,
-            buttonColor: customBlueColor,
+            buttonColor: primaryColor,
             callBackFunction: () {
               if (demoState is DemoDisabledState) {
                 if (formKey.currentState!.validate() as bool && (state.alreadyPaid != '') && (state.selectedCardNo != '')) {

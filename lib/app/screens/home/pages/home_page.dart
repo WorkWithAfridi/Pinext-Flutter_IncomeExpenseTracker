@@ -446,7 +446,7 @@ class _GetExpensesWidget extends StatelessWidget {
                         borderRadius: BorderRadius.circular(
                           defaultBorder,
                         ),
-                        color: customBlueColor,
+                        color: primaryColor,
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -932,7 +932,7 @@ class MenuFilterPill extends StatelessWidget {
           ),
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: selectedFilter == filtertitle ? customBlueColor : greyColor,
+            color: selectedFilter == filtertitle ? primaryColor : greyColor,
             borderRadius: BorderRadius.circular(
               defaultBorder,
             ),

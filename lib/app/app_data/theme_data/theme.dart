@@ -4,11 +4,11 @@ import 'package:pinext/app/app_data/theme_data/colors.dart';
 class PinextTheme {
   static ThemeData lightTheme = ThemeData.light().copyWith(
     visualDensity: VisualDensity.compact,
-    primaryColor: customBlueColor,
+    primaryColor: primaryColor,
     scaffoldBackgroundColor: whiteColor,
     colorScheme: const ColorScheme(
       brightness: Brightness.light,
-      primary: customBlueColor,
+      primary: primaryColor,
       onPrimary: whiteColor,
       secondary: cyanColor,
       onSecondary: customBlackColor,

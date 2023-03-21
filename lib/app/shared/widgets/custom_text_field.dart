@@ -97,7 +97,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         focusedBorder: OutlineInputBorder(
           borderSide: Divider.createBorderSide(
             context,
-            color: customBlueColor,
+            color: primaryColor,
             width: 2.5,
           ),
           borderRadius: BorderRadius.circular(

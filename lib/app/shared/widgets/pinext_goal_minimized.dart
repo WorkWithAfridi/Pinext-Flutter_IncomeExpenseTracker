@@ -104,7 +104,7 @@ class PinextGoalCardMinimized extends StatelessWidget {
                                 ),
                                 Icon(
                                   Icons.edit,
-                                  color: customBlueColor,
+                                  color: primaryColor,
                                   size: 16,
                                 ),
                               ],
@@ -182,7 +182,7 @@ class PinextGoalCardMinimized extends StatelessWidget {
                 Container(
                   height: 5,
                   width: getWidth(context),
-                  color: customBlueColor.withOpacity(.2),
+                  color: primaryColor.withOpacity(.2),
                 ),
                 BlocBuilder<UserBloc, UserState>(
                   builder: (context, state) {
@@ -201,7 +201,7 @@ class PinextGoalCardMinimized extends StatelessWidget {
                                             )) *
                                         100)) /
                                 100,
-                            color: customBlueColor,
+                            color: primaryColor,
                           );
                         },
                       );

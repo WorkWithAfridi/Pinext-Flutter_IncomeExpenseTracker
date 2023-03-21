@@ -183,23 +183,30 @@ class _SigninScreenViewState extends State<SigninScreenView> {
                                 onPressed: () async {
                                   if (emailFormKey.currentState!.validate()) {
                                     if (resetEmailController.text.isNotEmpty) {
-                                      final response = await AuthenticationServices().resetPassword(email: resetEmailController.text);
                                       Navigator.pop(dialogContext);
-                                      if (response == 'Success') {
-                                        GetCustomSnackbar(
-                                          title: 'We sent you a code',
-                                          message: 'Please check your email to reset your password.',
-                                          snackbarType: SnackbarType.info,
-                                          context: context,
-                                        );
-                                      } else {
-                                        GetCustomSnackbar(
-                                          title: 'Snap',
-                                          message: response,
-                                          snackbarType: SnackbarType.info,
-                                          context: context,
-                                        );
-                                      }
+                                      await AuthenticationServices()
+                                          .resetPassword(
+                                        email: resetEmailController.text,
+                                      )
+                                          .then(
+                                        (value) {
+                                          if (value == 'Success') {
+                                            GetCustomSnackbar(
+                                              title: 'We sent you a code',
+                                              message: 'Please check your email to reset your password.',
+                                              snackbarType: SnackbarType.info,
+                                              context: context,
+                                            );
+                                          } else {
+                                            GetCustomSnackbar(
+                                              title: 'Snap',
+                                              message: value,
+                                              snackbarType: SnackbarType.info,
+                                              context: context,
+                                            );
+                                          }
+                                        },
+                                      );
                                     } else {
                                       GetCustomSnackbar(
                                         title: 'Snap',
@@ -221,7 +228,7 @@ class _SigninScreenViewState extends State<SigninScreenView> {
                       'Forgot password?',
                       style: boldTextStyle.copyWith(
                         fontSize: 14,
-                        color: customBlueColor,
+                        color: primaryColor,
                       ),
                     ),
                   ),
@@ -258,7 +265,7 @@ class _SigninScreenViewState extends State<SigninScreenView> {
                       return GetCustomButton(
                         title: 'Sign In',
                         titleColor: whiteColor,
-                        buttonColor: customBlueColor,
+                        buttonColor: primaryColor,
                         isLoading: state is LoginWithEmailAndPasswordButtonLoadingState,
                         callBackFunction: () {
                           if (_formKey.currentState!.validate()) {
@@ -281,20 +288,6 @@ class _SigninScreenViewState extends State<SigninScreenView> {
                     },
                   ),
                 ),
-                // const SizedBox(
-                //   height: 12,
-                // ),
-                // Text(
-                //   "Or sign in with socials",
-                //   style: regularTextStyle.copyWith(
-                //     fontSize: 14,
-                //     color: customBlackColor.withOpacity(.6),
-                //   ),
-                // ),
-                // const SizedBox(
-                //   height: 8,
-                // ),
-                // SocialsButton(),
                 const SizedBox(
                   height: 8,
                 ),
@@ -316,7 +309,7 @@ class _SigninScreenViewState extends State<SigninScreenView> {
                           text: 'Sign up using email.',
                           style: boldTextStyle.copyWith(
                             fontSize: 14,
-                            color: customBlueColor,
+                            color: primaryColor,
                           ),
                         )
                       ],

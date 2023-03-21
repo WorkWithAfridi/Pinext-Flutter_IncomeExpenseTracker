@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-const Color customBlueColor = Color(0xff4F62C1);
-const Color customDarkBBlueColor = Color(0xff3b47a1);
+const Color primaryColor = Color(0xff783EF0);
+const Color blackColor = Color(0xff3b47a1);
 const Color cyanColor = Color(0xffA6E6EF);
 const Color whiteColor = Color(0xffFFFFFF);
 const Color customBlackColor = Color(0xff0A0F34);
@@ -19,11 +19,11 @@ Color getColorFromString(String colorInStringFormat) {
   } else if (color == 'Green') {
     cardColor = Colors.green;
   } else if (color == 'Light Blue') {
-    cardColor = customBlueColor;
+    cardColor = primaryColor;
   } else if (color == 'Dark Blue') {
     cardColor = customBlackColor;
   } else {
-    cardColor = customBlueColor;
+    cardColor = primaryColor;
   }
   return cardColor;
 }
@@ -39,7 +39,7 @@ String getStringFromColor(Color colorInColorFormat) {
     color = 'Purple';
   } else if (cardColor == Colors.green) {
     color = 'Green';
-  } else if (cardColor == customBlueColor) {
+  } else if (cardColor == primaryColor) {
     color = 'Light Blue';
   } else if (cardColor == customBlackColor) {
     color = 'Dark Blue';
@@ -114,8 +114,8 @@ List<Color> GetGradientFromString(String color) {
       break;
     default:
       colorList = [
-        customBlueColor,
-        customBlueColor,
+        primaryColor,
+        primaryColor,
       ];
   }
   return colorList;

@@ -177,7 +177,7 @@ class HomeframeView extends StatelessWidget {
             onTap: (value) {
               context.read<HomeframeCubit>().changeHomeframePage(value);
             },
-            selectedItemColor: customBlueColor,
+            selectedItemColor: primaryColor,
             unselectedItemColor: customBlackColor.withOpacity(.4),
             type: BottomNavigationBarType.fixed,
             // showSelectedLabels: false,

@@ -170,7 +170,7 @@ class EditNetBalanceView extends StatelessWidget {
                         title: 'Update',
                         isLoading: state is EditNetBalanceLoadingState,
                         titleColor: Colors.white,
-                        buttonColor: customBlueColor,
+                        buttonColor: primaryColor,
                         callBackFunction: () {
                           if (demoBlocState is DemoDisabledState) {
                             if (netBalanceController.text == netBalance) {
