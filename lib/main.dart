@@ -85,3 +85,15 @@ class Pinext extends StatelessWidget {
 // The second match statement specifies that users can also read, write, update, and delete any subcollection or document of their own document in the "users" collection. The {document=**} part of the match statement captures any subcollection or document path after the user's UID. The update and delete permissions are included to allow users to modify any data they have created within their own document.
 
 // By using this rule, users will be restricted to only accessing data that belongs to them, as well as any data that is contained within their own document.
+
+
+
+// No rule
+// rules_version = '2';
+// service cloud.firestore {
+//   match /databases/{database}/documents {
+//     match /{document=**} {
+//       allow read, write;
+//     }
+//   }
+// }
