@@ -107,9 +107,6 @@ class HomepageView extends StatelessWidget {
                       }
                     },
                   ),
-                  // const SizedBox(
-                  //   height: 8,
-                  // ),
                 ],
               ),
             ),
