@@ -104,7 +104,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: primaryColor,
+      backgroundColor: customBlackColor,
       body: BlocListener<UserBloc, UserState>(
         listener: (context, state) {
           if (state is AuthenticatedUserState) {

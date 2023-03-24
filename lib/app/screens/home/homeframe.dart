@@ -139,7 +139,7 @@ class HomeframeView extends StatelessWidget {
                           );
                         }
                       },
-                      backgroundColor: darkPurpleColor,
+                      backgroundColor: customBlackColor,
                       child: const Icon(
                         Icons.add,
                         color: whiteColor,
@@ -153,7 +153,7 @@ class HomeframeView extends StatelessWidget {
                       onPressed: () {
                         context.read<HomeframeCubit>().showAboutDialog(context);
                       },
-                      backgroundColor: darkPurpleColor,
+                      backgroundColor: customBlackColor,
                       child: Text(
                         '?',
                         style: boldTextStyle.copyWith(
@@ -170,7 +170,7 @@ class HomeframeView extends StatelessWidget {
             onTap: (value) {
               context.read<HomeframeCubit>().changeHomeframePage(value);
             },
-            selectedItemColor: primaryColor,
+            selectedItemColor: customBlackColor,
             unselectedItemColor: customBlackColor.withOpacity(.4),
             type: BottomNavigationBarType.fixed,
             // showSelectedLabels: false,
