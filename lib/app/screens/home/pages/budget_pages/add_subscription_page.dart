@@ -1,3 +1,4 @@
+import 'package:antdesign_icons/antdesign_icons.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -204,7 +205,7 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
                       );
                     },
                     icon: const Icon(
-                      Icons.delete,
+                      AntIcons.deleteOutlined,
                       color: Colors.red,
                     ),
                   ),

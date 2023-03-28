@@ -157,7 +157,7 @@ class _TransactionDetailsCardState extends State<TransactionDetailsCard> {
                     //     );
                     //   },
                     //   child: const Icon(
-                    //     Icons.edit,
+                    //     AntIcons.editOutlined,
                     //     color: primaryColor,
                     //     size: 16,
                     //   ),

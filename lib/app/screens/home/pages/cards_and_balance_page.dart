@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:antdesign_icons/antdesign_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
@@ -86,7 +87,7 @@ class CardsAndBalanceView extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               const Icon(
-                                Icons.edit,
+                                AntIcons.editOutlined,
                                 size: 20,
                                 color: customBlackColor,
                               ),
@@ -121,7 +122,7 @@ class CardsAndBalanceView extends StatelessWidget {
                                   );
                                 },
                                 icon: const Icon(
-                                  Icons.edit,
+                                  AntIcons.editOutlined,
                                   size: 20,
                                   color: whiteColor,
                                 ),

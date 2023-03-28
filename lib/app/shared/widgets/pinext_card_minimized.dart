@@ -1,3 +1,4 @@
+import 'package:antdesign_icons/antdesign_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
@@ -176,7 +177,7 @@ class PinextCardMinimized extends StatelessWidget {
                                   onEditButtonClick();
                                 },
                                 icon: const Icon(
-                                  Icons.edit,
+                                  AntIcons.editOutlined,
                                   color: customBlackColor,
                                 ),
                               ),
@@ -190,7 +191,7 @@ class PinextCardMinimized extends StatelessWidget {
                                   demoBlocState is DemoEnabledState ? () {} : onDeleteButtonClick();
                                 },
                                 icon: const Icon(
-                                  Icons.delete,
+                                  AntIcons.deleteOutlined,
                                   color: Colors.red,
                                 ),
                               )

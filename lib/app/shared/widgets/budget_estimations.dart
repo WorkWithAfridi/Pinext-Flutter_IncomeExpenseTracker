@@ -1,3 +1,4 @@
+import 'package:antdesign_icons/antdesign_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
@@ -90,7 +91,7 @@ class GetBudgetEstimationsWidget extends StatelessWidget {
                                 width: 8,
                               ),
                               const Icon(
-                                Icons.edit,
+                                AntIcons.editOutlined,
                                 color: customBlackColor,
                                 size: 16,
                               ),

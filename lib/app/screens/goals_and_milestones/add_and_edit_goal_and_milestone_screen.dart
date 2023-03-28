@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:antdesign_icons/antdesign_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
@@ -166,7 +167,7 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                     );
                   },
                   icon: const Icon(
-                    Icons.delete,
+                    AntIcons.deleteOutlined,
                     color: Colors.red,
                   ),
                 ),
@@ -343,7 +344,7 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                               description: descriptionController.text,
                               id: const Uuid().v4().toString(),
                             );
-                            addGoalContext.read<AddGoalCubit>().addGoal(pinextGoalModel);
+                            await addGoalContext.read<AddGoalCubit>().addGoal(pinextGoalModel);
                           } else if (widget.editingGoal) {
                             final pinextGoalModel = PinextGoalModel(
                               title: titleController.text,
@@ -351,7 +352,7 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                               description: descriptionController.text,
                               id: widget.pinextGoalModel!.id,
                             );
-                            addGoalContext.read<AddGoalCubit>().updateGoal(pinextGoalModel);
+                            await addGoalContext.read<AddGoalCubit>().updateGoal(pinextGoalModel);
                           }
                         }
                       },

@@ -27,6 +27,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  antdesign_icons: ^0.0.3
   awesome_snackbar_content: ^0.0.8
   bloc: ^8.1.0
   cloud_firestore: ^3.4.6

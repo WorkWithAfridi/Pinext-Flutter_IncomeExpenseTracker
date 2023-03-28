@@ -1,9 +1,9 @@
 import 'dart:developer';
 
+import 'package:antdesign_icons/antdesign_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_intro/flutter_intro.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pinext/app/app_data/app_constants/app_labels.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/app_data/custom_transition_page_route/custom_transition_page_route.dart';
@@ -175,7 +175,7 @@ class HomeframeView extends StatelessWidget {
             type: BottomNavigationBarType.fixed,
             // showSelectedLabels: false,
             // showUnselectedLabels: false,
-            selectedLabelStyle: regularTextStyle,
+            selectedLabelStyle: regularTextStyle.copyWith(fontSize: 12),
             unselectedLabelStyle: regularTextStyle.copyWith(fontSize: 10),
             items: [
               BottomNavigationBarItem(
@@ -184,7 +184,7 @@ class HomeframeView extends StatelessWidget {
                   text: intro_label_two,
                   builder: (context, introkey) {
                     return Icon(
-                      Icons.home,
+                      AntIcons.homeOutlined,
                       size: state.selectedIndex == 0 ? 20 : 16,
                     );
                   },
@@ -197,7 +197,7 @@ class HomeframeView extends StatelessWidget {
                   text: intro_label_three,
                   builder: (context, introkey) {
                     return Icon(
-                      Icons.list,
+                      AntIcons.databaseOutlined,
                       size: state.selectedIndex == 1 ? 20 : 16,
                     );
                   },
@@ -206,7 +206,7 @@ class HomeframeView extends StatelessWidget {
               ),
               BottomNavigationBarItem(
                 icon: Icon(
-                  FontAwesomeIcons.dollarSign,
+                  AntIcons.dollarCircleOutlined,
                   size: state.selectedIndex == 2 ? 20 : 16,
                 ),
                 label: 'Budget',
@@ -217,7 +217,7 @@ class HomeframeView extends StatelessWidget {
                   text: intro_label_four,
                   builder: (context, introkey) {
                     return Icon(
-                      Icons.wallet,
+                      AntIcons.walletOutlined,
                       size: state.selectedIndex == 3 ? 20 : 16,
                     );
                   },
@@ -230,7 +230,7 @@ class HomeframeView extends StatelessWidget {
                   text: intro_label_five,
                   builder: (context, introkey) {
                     return Icon(
-                      Icons.more_horiz,
+                      AntIcons.appstoreOutlined,
                       size: state.selectedIndex == 4 ? 20 : 16,
                     );
                   },
