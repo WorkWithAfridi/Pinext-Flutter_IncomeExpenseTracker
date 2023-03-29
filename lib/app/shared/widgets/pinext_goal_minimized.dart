@@ -189,9 +189,6 @@ class PinextGoalCardMinimized extends StatelessWidget {
                     if (state is AuthenticatedUserState) {
                       return LayoutBuilder(
                         builder: (context, constradoubles) {
-                          log(
-                            (constradoubles.maxWidth * (double.parse(pinextGoalModel.amount) / double.parse(state.netBalance)) / 100).toString(),
-                          );
                           return Container(
                             height: 5,
                             width: (constradoubles.maxWidth *

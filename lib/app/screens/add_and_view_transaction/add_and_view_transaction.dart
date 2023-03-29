@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -496,8 +495,6 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
                     return GestureDetector(
                       onTap: () {
                         final selectedDescription = listOfTransactionDetailSuggestions[index].toString();
-                        log(selectedDescription);
-                        log(state.selectedDescription);
                         if (state.selectedDescription != selectedDescription) {
                           detailsController.text = selectedDescription;
                           context.read<AddTransactionsCubit>().changeSelectedDescription(selectedDescription);

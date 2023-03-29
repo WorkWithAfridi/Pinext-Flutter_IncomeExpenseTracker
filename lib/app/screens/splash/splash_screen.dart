@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
@@ -54,7 +52,6 @@ class _SplashScreenState extends State<SplashScreen> {
     const quickActions = QuickActions();
     quickActions.initialize((String shortcutType) {
       if (shortcutType.toString() == 'AddTransaction') {
-        log('AddTransaction');
         setState(() {
           mode = 'AddTransaction';
         });

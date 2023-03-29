@@ -25,7 +25,6 @@ class TransactionHandler {
     required String transactionTag,
     required BuildContext context,
   }) async {
-    log('Adding sub transaction');
     var response = 'Error';
     try {
       final pinextCardModel = await CardHandler().getCard(cardId);

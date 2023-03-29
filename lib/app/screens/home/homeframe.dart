@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -44,15 +43,14 @@ class _HomeframeState extends State<Homeframe> {
     //Add introKeys to children widgets
   }
 
-  showIntroductions() async {
+  Future<void> showIntroductions() async {
     final isFirstBoot = await AppHandler().checkIfFirstBoot();
-    log(isFirstBoot.toString());
     if (isFirstBoot) {
-      triggerIntroduction();
+      await triggerIntroduction();
     }
   }
 
-  triggerIntroduction() async {
+  Future<void> triggerIntroduction() async {
     await Future.delayed(const Duration(seconds: 1)).then((_) {
       Intro.of(context).start();
     });

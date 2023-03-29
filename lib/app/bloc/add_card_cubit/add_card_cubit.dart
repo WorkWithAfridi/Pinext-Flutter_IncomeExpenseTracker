@@ -50,7 +50,6 @@ class AddCardCubit extends Cubit<AddCardState> {
   }
 
   void changeColor(String color) {
-    log(color);
     emit(
       AddCardDefaultState(
         title: state.title,

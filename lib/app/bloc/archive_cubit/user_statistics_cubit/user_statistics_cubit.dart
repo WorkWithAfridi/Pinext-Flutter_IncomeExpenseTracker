@@ -44,11 +44,9 @@ class UserStatisticsCubit extends Cubit<UserStatisticsState> {
     if (isExpense) {
       totalExpenses = (state.totalExpenses + amount).toInt();
       totalSavings = state.totalSavings.toInt();
-      log('withdraw');
     } else {
       totalSavings = (state.totalSavings + amount).toInt();
       totalExpenses = state.totalExpenses.toInt();
-      log('diposit');
     }
 
     switch (tag) {
@@ -126,7 +124,6 @@ class UserStatisticsCubit extends Cubit<UserStatisticsState> {
     BuildContext context,
     List<PinextTransactionModel> transactionList,
   ) {
-    log(transactionList.toString());
     resetState();
     for (final transaction in transactionList) {
       updateStatistics(

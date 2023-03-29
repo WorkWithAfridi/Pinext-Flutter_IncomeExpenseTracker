@@ -58,11 +58,8 @@ class SigninCubit extends Cubit<SigninState> {
   }
 
   void removeCard(int cardIndex) {
-    log(cardIndex.toString());
-    log(state.cards.length.toString());
     final cardList = state.cards;
     cardList.removeAt(cardIndex);
-    log(cardList.length.toString());
     emit(
       SigninDefaultState(
         cardList,
@@ -74,11 +71,8 @@ class SigninCubit extends Cubit<SigninState> {
   }
 
   void removeGoal(int goalIndex) {
-    log(goalIndex.toString());
-    log(state.goals.length.toString());
     final goalsList = state.goals;
     goalsList.removeAt(goalIndex);
-    log(goalsList.length.toString());
     emit(
       SigninDefaultState(
         state.cards,

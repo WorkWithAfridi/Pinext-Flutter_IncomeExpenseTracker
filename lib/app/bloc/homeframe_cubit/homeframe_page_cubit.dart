@@ -17,7 +17,7 @@ class HomeframeCubit extends Cubit<HomeframeState> {
           ),
         );
 
-  changeHomeframePage(int index) {
+  void changeHomeframePage(int index) {
     state.pageController.jumpToPage(index);
     emit(
       HoemframeInitialState(
@@ -27,14 +27,14 @@ class HomeframeCubit extends Cubit<HomeframeState> {
     );
   }
 
-  openAddTransactionsPage(BuildContext context) {
+  void openAddTransactionsPage(BuildContext context) {
     Navigator.pushNamed(
       context,
       ROUTES.getAddTransactionsRoute,
     );
   }
 
-  showAboutDialog(BuildContext context) {
+  void showAboutDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (context) {

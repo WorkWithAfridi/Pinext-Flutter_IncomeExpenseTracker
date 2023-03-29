@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pinext/app/API/firebase_directories.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
@@ -13,7 +11,7 @@ class CardHandler {
 
   List<PinextCardModel>? userCards;
 
-  getUserCards() async {
+  Future<void> getUserCards() async {
     userCards = [];
     QuerySnapshot cardData =
         await FirebaseServices().firebaseFirestore.collection('pinext_users').doc(UserHandler().currentUser.userId).collection('pinext_cards').get();
@@ -27,12 +25,10 @@ class CardHandler {
     PinextCardModel cardModel;
     try {
       if (userCards!.isEmpty) {
-        // log("Fetching card from firebase");
         // cardModel = await getCard(cardId);
         await Future.delayed(const Duration(seconds: 1));
       }
       //  else {
-      log('Fetching card from local card list');
       cardModel = userCards!.firstWhere((element) => element.cardId == cardId);
       // }
     } catch (err) {
@@ -45,7 +41,6 @@ class CardHandler {
         lastTransactionData: DateTime.now().toString(),
       );
     }
-    log(cardModel.cardId);
     return cardModel;
   }
 

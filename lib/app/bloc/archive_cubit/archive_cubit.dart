@@ -85,7 +85,6 @@ class ArchiveCubit extends Cubit<ArchiveState> {
   }
 
   void changeYear(String selectedYear) {
-    log('Changing filter');
     emit(
       ArchiveInitialState(
         selectedMonth: state.selectedMonth,
