@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:antdesign_icons/antdesign_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -169,11 +167,9 @@ class CardsAndBalanceView extends StatelessWidget {
             BlocListener<CardsAndBalancesCubit, CardsAndBalancesState>(
               listener: (context, state) {
                 if (state is CardsAndBalancesSuccessfullyAddedCardState) {
-                  log('Card added');
                   context.read<UserBloc>().add(RefreshUserStateEvent());
                 }
                 if (state is CardsAndBalancesSuccessfullyRemovedCardState) {
-                  log('removed');
                   GetCustomSnackbar(
                     title: 'Success',
                     message: 'Card has been removed from your card list.',

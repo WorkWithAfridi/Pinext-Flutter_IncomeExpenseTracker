@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -20,7 +19,6 @@ class AddGoalCubit extends Cubit<AddGoalState> {
   Future<void> updateGoal(PinextGoalModel pinextGoalModel) async {
     emit(AddGoalLoadingState());
     emit(AddGoalLoadingState());
-    log('At Goal Cubit');
     await GoalHandler().updateGoal(pinextGoalModel: pinextGoalModel);
     emit(UpdateGoalSuccessState());
   }
@@ -28,7 +26,6 @@ class AddGoalCubit extends Cubit<AddGoalState> {
   Future<void> deleteGoal(PinextGoalModel pinextGoalModel) async {
     emit(AddGoalLoadingState());
     emit(AddGoalLoadingState());
-    log('At Goal Cubit');
     await GoalHandler().deleteGoal(pinextGoalModel: pinextGoalModel);
     emit(DeleteGoalSuccessState());
   }

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
@@ -213,11 +211,9 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
-                            log('creating list');
                             final pinextCardModel = state.cards[index];
                             return PinextCardMinimized(
                               onDeleteButtonClick: () {
-                                log('button pressed');
                                 context.read<SigninCubit>().removeCard(index);
                               },
                               onEditButtonClick: () {
@@ -336,7 +332,6 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
-                            log('creating list');
                             final pinextGoalModel = state.goals[index];
                             return PinextGoalCardMinimized(
                               pinextGoalModel: pinextGoalModel,

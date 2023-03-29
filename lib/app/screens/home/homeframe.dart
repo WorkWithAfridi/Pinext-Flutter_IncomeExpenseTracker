@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:antdesign_icons/antdesign_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -39,7 +37,6 @@ class _HomeframeState extends State<Homeframe> {
 
   Future<void> showIntroductions() async {
     final isFirstBoot = await AppHandler().checkIfFirstBoot();
-    log(isFirstBoot.toString());
     if (isFirstBoot) {
       await triggerIntroduction();
     }

@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +24,6 @@ class TransactionHandler {
     required String transactionTag,
     required BuildContext context,
   }) async {
-    log('Adding sub transaction');
     var response = 'Error';
     try {
       final pinextCardModel = await CardHandler().getCard(cardId);

@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -50,9 +49,7 @@ class BudgetView extends StatelessWidget {
         BlocListener<UpdateSubscriptionCubit, UpdateSubscriptionState>(
           listener: (context, state) {
             if (state is SubscriptionUpdatedSuccessfullyState) {
-              log('Updating user state');
               context.read<UserBloc>().add(RefreshUserStateEvent());
-              log('resetting');
             } else if (state is SubscriptionUpdatedErrorState) {
               GetCustomSnackbar(
                 title: 'Snap',

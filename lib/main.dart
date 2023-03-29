@@ -5,6 +5,7 @@ import 'package:pinext/app/app_data/routing/routes.dart';
 import 'package:pinext/app/app_data/theme_data/theme.dart';
 import 'package:pinext/app/bloc/archive_cubit/archive_cubit.dart';
 import 'package:pinext/app/bloc/archive_cubit/user_statistics_cubit/user_statistics_cubit.dart';
+import 'package:pinext/app/bloc/bloc_observer/bloc_observer.dart';
 import 'package:pinext/app/bloc/cards_and_balances_cubit/cards_and_balances_cubit.dart';
 import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/bloc/signup_cubit/signin_cubit_cubit.dart';
@@ -16,6 +17,7 @@ void main(List<String> args) async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  Bloc.observer = PinextObserver();
   runApp(const Pinext());
 }
 
@@ -24,7 +26,6 @@ class Pinext extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Last update on 5th March 2023
     return MultiBlocProvider(
       providers: [
         BlocProvider(

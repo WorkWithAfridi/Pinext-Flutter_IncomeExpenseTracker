@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -62,7 +60,6 @@ class AuthenticationServices {
           }
           await UserHandler().getCurrentUser();
           response = 'Success';
-          log(response);
           // }
         }
       } else {
@@ -73,7 +70,6 @@ class AuthenticationServices {
     } catch (err) {
       response = err.toString();
     }
-    log(response.toString());
     return response;
   }
 

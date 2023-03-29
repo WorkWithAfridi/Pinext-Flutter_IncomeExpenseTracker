@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
@@ -101,7 +99,6 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
 
   @override
   Widget build(BuildContext context) {
-    log('Rebuilding');
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(

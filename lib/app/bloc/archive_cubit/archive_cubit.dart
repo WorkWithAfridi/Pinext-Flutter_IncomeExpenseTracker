@@ -1,6 +1,5 @@
 // ignore_for_file: avoid_dynamic_calls
 
-import 'dart:developer';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -85,7 +84,6 @@ class ArchiveCubit extends Cubit<ArchiveState> {
   }
 
   void changeYear(String selectedYear) {
-    log('Changing filter');
     emit(
       ArchiveInitialState(
         selectedMonth: state.selectedMonth,

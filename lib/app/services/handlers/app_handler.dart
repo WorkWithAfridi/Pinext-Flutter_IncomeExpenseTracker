@@ -37,7 +37,7 @@ class AppHandler {
     await Future.delayed(const Duration(milliseconds: 500)).then((value) async {
       DocumentSnapshot appDataSnapShot = await FirebaseServices().firebaseFirestore.collection(APPDATA_DIRECTORY).doc(APPVERSION_DIRECTORY).get();
       final currentAvailableAppVersion = (appDataSnapShot.data() as Map<String, dynamic>)['appVersion'] as String;
-      // log(currentAvailableAppVersion);
+
       if (currentAvailableAppVersion != appVersion) {
         await showDialog(
           context: context,
