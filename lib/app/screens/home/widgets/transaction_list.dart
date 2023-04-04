@@ -202,13 +202,9 @@ class TransactionsList extends StatelessWidget {
                                 return Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 5),
                                   child: ListView.builder(
+                                    itemCount: snapshot.data!.docs.length,
                                     shrinkWrap: true,
                                     physics: const NeverScrollableScrollPhysics(),
-                                    // options: const LiveOptions(
-                                    //   showItemInterval: Duration(milliseconds: 60),
-                                    //   showItemDuration: Duration(milliseconds: 120),
-                                    // ),
-                                    itemCount: snapshot.data!.docs.length,
                                     itemBuilder: (context, index) {
                                       if (snapshot.data!.docs.isEmpty) {
                                         return const Text('No data found! :(');
@@ -222,7 +218,7 @@ class TransactionsList extends StatelessWidget {
                                       );
                                       context.read<UserStatisticsCubit>().updateStatistics(
                                             amount: double.parse(pinextTransactionModel.amount),
-                                            isExpense: pinextTransactionModel.transactionType == 'Expense',
+                                            isExpense: pinextTransactionModel.transactionType.toString() == 'Expense',
                                             tag: pinextTransactionModel.transactionTag,
                                             tagAmount: double.parse(
                                               pinextTransactionModel.amount,

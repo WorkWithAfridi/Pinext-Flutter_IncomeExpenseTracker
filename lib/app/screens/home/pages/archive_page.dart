@@ -81,7 +81,7 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
                   Text(
                     'Archives',
                     style: cursiveTextStyle.copyWith(
-                      fontSize: 30,
+                      fontSize: 25,
                       color: primaryColor,
                     ),
                   ),
@@ -227,7 +227,7 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
                           },
                           child: Padding(
                             padding: EdgeInsets.only(right: currentMonth == 'December' ? defaultPadding : 8),
-                            child: state.selectedMonth == (index).toString()
+                            child: state.selectedMonth.toString() == (index).toString()
                                 ? Chip(
                                     label: Text(
                                       currentMonth,
