@@ -5,9 +5,6 @@ import 'package:lottie/lottie.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
 import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
-import 'package:pinext/app/app_data/packages/live_animated_widgets/src/helpers/options.dart';
-import 'package:pinext/app/app_data/packages/live_animated_widgets/src/list.dart';
-import 'package:pinext/app/app_data/packages/live_animated_widgets/widget/turn_into_animated_widget.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/archive_cubit/archive_cubit.dart';
 import 'package:pinext/app/bloc/archive_cubit/search_cubit/search_cubit.dart';
@@ -204,15 +201,15 @@ class TransactionsList extends StatelessWidget {
                               builder: (context, searchState) {
                                 return Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 5),
-                                  child: LiveList.options(
+                                  child: ListView.builder(
                                     shrinkWrap: true,
                                     physics: const NeverScrollableScrollPhysics(),
-                                    options: const LiveOptions(
-                                      showItemInterval: Duration(milliseconds: 60),
-                                      showItemDuration: Duration(milliseconds: 120),
-                                    ),
+                                    // options: const LiveOptions(
+                                    //   showItemInterval: Duration(milliseconds: 60),
+                                    //   showItemDuration: Duration(milliseconds: 120),
+                                    // ),
                                     itemCount: snapshot.data!.docs.length,
-                                    itemBuilder: (context, index, animation) {
+                                    itemBuilder: (context, index) {
                                       if (snapshot.data!.docs.isEmpty) {
                                         return const Text('No data found! :(');
                                       }
@@ -234,30 +231,30 @@ class TransactionsList extends StatelessWidget {
                                       if (state.selectedFilter == 'All transactions') {
                                         if (searchState.isSearchActive) {
                                           if (pinextTransactionModel.details.toLowerCase().contains(searchState.searchTerm.toLowerCase())) {
-                                            return TurnIntoAnimatedWidget(transactionDetailsCard, animation);
+                                            return transactionDetailsCard;
                                           } else {
                                             return const SizedBox.shrink();
                                           }
                                         }
-                                        return TurnIntoAnimatedWidget(transactionDetailsCard, animation);
+                                        return transactionDetailsCard;
                                       } else if (state.selectedFilter == 'Income' && pinextTransactionModel.transactionType == 'Income') {
                                         if (searchState.isSearchActive) {
                                           if (pinextTransactionModel.details.toLowerCase().contains(searchState.searchTerm.toLowerCase())) {
-                                            return TurnIntoAnimatedWidget(transactionDetailsCard, animation);
+                                            return transactionDetailsCard;
                                           } else {
                                             return const SizedBox.shrink();
                                           }
                                         }
-                                        return TurnIntoAnimatedWidget(transactionDetailsCard, animation);
+                                        return transactionDetailsCard;
                                       } else if (state.selectedFilter == 'Expenses' && pinextTransactionModel.transactionType == 'Expense') {
                                         if (searchState.isSearchActive) {
                                           if (pinextTransactionModel.details.toLowerCase().contains(searchState.searchTerm.toLowerCase())) {
-                                            return TurnIntoAnimatedWidget(transactionDetailsCard, animation);
+                                            return transactionDetailsCard;
                                           } else {
                                             return const SizedBox.shrink();
                                           }
                                         }
-                                        return TurnIntoAnimatedWidget(transactionDetailsCard, animation);
+                                        return transactionDetailsCard;
                                       }
                                       return const SizedBox.shrink();
                                     },
