@@ -5,6 +5,9 @@ import 'package:pinext/app/app_data/app_constants/constants.dart';
 import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/app_data/custom_transition_page_route/custom_transition_page_route.dart';
+import 'package:pinext/app/app_data/packages/live_animated_widgets/src/helpers/options.dart';
+import 'package:pinext/app/app_data/packages/live_animated_widgets/src/list.dart';
+import 'package:pinext/app/app_data/packages/live_animated_widgets/widget/turn_into_animated_widget.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/archive_cubit/archive_cubit.dart';
 import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
@@ -738,15 +741,22 @@ class _GetPastTransactionsWidget extends StatelessWidget {
                 ),
               );
             }
-            return ListView.builder(
-              itemCount: archiveState.archiveList.length > 10 ? 10 : archiveState.archiveList.length,
+            return LiveList.options(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
+              options: const LiveOptions(
+                showItemInterval: Duration(milliseconds: 60),
+                showItemDuration: Duration(milliseconds: 120),
+              ),
+              itemCount: archiveState.archiveList.length > 10 ? 10 : archiveState.archiveList.length,
+              itemBuilder: (context, index, animation) {
                 final listLen = archiveState.archiveList.length > 10 ? 10 : archiveState.archiveList.length;
-                return TransactionDetailsCard(
-                  pinextTransactionModel: archiveState.archiveList[index] as PinextTransactionModel,
-                  isLastIndex: index == listLen - 1,
+                return TurnIntoAnimatedWidget(
+                  TransactionDetailsCard(
+                    pinextTransactionModel: archiveState.archiveList[index] as PinextTransactionModel,
+                    isLastIndex: index == listLen - 1,
+                  ),
+                  animation,
                 );
               },
             );
