@@ -27,6 +27,15 @@ class HomeframeCubit extends Cubit<HomeframeState> {
     );
   }
 
+  void updateHomeframePage(int index) {
+    emit(
+      HoemframeInitialState(
+        selectedIndex: index,
+        pageController: state.pageController,
+      ),
+    );
+  }
+
   void openAddTransactionsPage(BuildContext context) {
     Navigator.pushNamed(
       context,

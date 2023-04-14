@@ -114,7 +114,7 @@ class HomeframeView extends StatelessWidget {
             itemCount: homeframePages.length,
             controller: state.pageController,
             onPageChanged: (value) {
-              context.read<HomeframeCubit>().changeHomeframePage(value);
+              context.read<HomeframeCubit>().updateHomeframePage(value);
             },
             itemBuilder: (context, index) => homeframePages[index] as Widget,
           ),
