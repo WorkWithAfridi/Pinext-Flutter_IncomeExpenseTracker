@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pinext/app/app_data/appVersion.dart';
@@ -10,7 +11,6 @@ import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/screens/goals_and_milestones/view_goals_and_milestones_screen.dart';
 import 'package:pinext/app/services/handlers/app_handler.dart';
-import 'package:pinext/app/services/handlers/user_handler.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 
 class AppSettingsScreen extends StatelessWidget {
@@ -31,42 +31,19 @@ class AppSettingsScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'Bonjour,\n',
-                      style: regularTextStyle.copyWith(
-                        color: customBlackColor.withOpacity(.6),
-                      ),
-                    ),
-                    TextSpan(
-                      text: '${UserHandler().currentUser.username} 👋',
-                      style: cursiveTextStyle.copyWith(
-                        fontSize: 30,
-                        color: primaryColor.withOpacity(.8),
-                      ),
-                    ),
-                  ],
+              Animate(
+                effects: const [
+                  SlideEffect(),
+                  FadeEffect(),
+                ],
+                child: Text(
+                  'Settings',
+                  style: cursiveTextStyle.copyWith(
+                    fontSize: 30,
+                    color: primaryColor,
+                  ),
                 ),
               ),
-              // const SizedBox(
-              //   height: 8,
-              // ),
-              // GetSettingsButtonWithIcon(
-              //   onTapFunction: () {
-              //     GetCustomSnackbar(
-              //       title: "Snap",
-              //       message:
-              //           "The section is still under development.\nAnd will be updated at a later date!",
-              //       snackbarType: SnackbarType.info,
-              //       context: context,
-              //     );
-              //   },
-              //   label: "${UserHandler().currentUser.username} - User settings",
-              //   icon: Icons.person,
-              //   iconSize: 18,
-              // ),
               const SizedBox(
                 height: 8,
               ),

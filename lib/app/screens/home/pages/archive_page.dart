@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
@@ -78,11 +79,17 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Archives',
-                    style: cursiveTextStyle.copyWith(
-                      fontSize: 25,
-                      color: primaryColor,
+                  Animate(
+                    effects: const [
+                      SlideEffect(),
+                      FadeEffect(),
+                    ],
+                    child: Text(
+                      'Archives',
+                      style: cursiveTextStyle.copyWith(
+                        fontSize: 25,
+                        color: primaryColor,
+                      ),
                     ),
                   ),
                   BlocBuilder<ArchiveCubit, ArchiveState>(

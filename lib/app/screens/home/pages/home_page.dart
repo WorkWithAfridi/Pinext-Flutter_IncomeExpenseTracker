@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
 import 'package:pinext/app/app_data/app_constants/domentions.dart';
@@ -84,22 +85,33 @@ class HomepageView extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    getGreetings(),
-                    style: regularTextStyle.copyWith(
-                      color: customBlackColor.withOpacity(.6),
-                    ),
-                  ),
                   Builder(
                     builder: (context) {
                       final state = context.watch<UserBloc>().state;
                       final demoBlocState = context.watch<DemoBloc>().state;
                       if (state is AuthenticatedUserState) {
-                        return Text(
-                          demoBlocState is DemoEnabledState ? 'Kyoto' : state.username,
-                          style: cursiveTextStyle.copyWith(
-                            fontSize: 30,
-                            color: primaryColor,
+                        return Animate(
+                          effects: const [
+                            SlideEffect(),
+                            FadeEffect(),
+                          ],
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                getGreetings(),
+                                style: regularTextStyle.copyWith(
+                                  color: customBlackColor.withOpacity(.6),
+                                ),
+                              ),
+                              Text(
+                                demoBlocState is DemoEnabledState ? 'Kyoto' : state.username,
+                                style: cursiveTextStyle.copyWith(
+                                  fontSize: 30,
+                                  color: primaryColor,
+                                ),
+                              ),
+                            ],
                           ),
                         );
                       } else {
