@@ -15,7 +15,6 @@ import 'package:pinext/app/screens/home/pages/budget_page.dart';
 import 'package:pinext/app/screens/home/pages/budget_pages/add_subscription_page.dart';
 import 'package:pinext/app/screens/home/pages/cards_and_balance_page.dart';
 import 'package:pinext/app/screens/home/pages/home_page.dart';
-import 'package:pinext/app/screens/home/widgets/app_drawer.dart';
 import 'package:pinext/app/services/handlers/app_handler.dart';
 import 'package:pinext/app/services/handlers/card_handler.dart';
 
@@ -80,21 +79,21 @@ class HomeframeView extends StatelessWidget {
         return Scaffold(
           key: scaffoldKey,
           appBar: AppBar(
-            leading: IconButton(
-              onPressed: () {
-                scaffoldKey.currentState!.openDrawer();
-              },
-              icon: IntroStepBuilder(
-                order: 6,
-                text: intro_label_six,
-                builder: (context, introkey) {
-                  return const Icon(
-                    Icons.menu,
-                    color: customBlackColor,
-                  );
-                },
-              ),
-            ),
+            // leading: IconButton(
+            //   onPressed: () {
+            //     scaffoldKey.currentState!.openDrawer();
+            //   },
+            //   icon: IntroStepBuilder(
+            //     order: 6,
+            //     text: intro_label_six,
+            //     builder: (context, introkey) {
+            //       return const Icon(
+            //         Icons.menu,
+            //         color: customBlackColor,
+            //       );
+            //     },
+            //   ),
+            // ),
             centerTitle: true,
             title: Builder(
               builder: (context) {
@@ -108,7 +107,7 @@ class HomeframeView extends StatelessWidget {
               },
             ),
           ),
-          drawer: const PinextDrawer(),
+          // drawer: const PinextDrawer(),
           body: PageView.builder(
             physics: const BouncingScrollPhysics(),
             itemCount: homeframePages.length,

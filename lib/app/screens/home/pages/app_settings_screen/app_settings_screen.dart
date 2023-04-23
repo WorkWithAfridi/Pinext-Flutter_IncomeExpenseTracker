@@ -9,9 +9,12 @@ import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/app_data/custom_transition_page_route/custom_transition_page_route.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
+import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/screens/goals_and_milestones/view_goals_and_milestones_screen.dart';
 import 'package:pinext/app/services/handlers/app_handler.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
+
+import '../../../../app_data/routing/routes.dart';
 
 class AppSettingsScreen extends StatelessWidget {
   const AppSettingsScreen({super.key});
@@ -208,7 +211,31 @@ class AppSettingsScreen extends StatelessWidget {
                 },
               ),
               const SizedBox(
-                height: 6,
+                height: 8,
+              ),
+                BlocListener<UserBloc, UserState>(
+                  listener: (context, state) {
+                    if (state is UnauthenticatedUserState) {
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        ROUTES.getLoginRoute,
+                        (route) => false,
+                      );
+                    }
+                  },
+                child: GetSettingsButtonWithIcon(
+                  onTapFunction: () {
+                    context.read<UserBloc>().add(
+                          SignOutUserEvent(context: context),
+                        );
+                  },
+                  label: 'Logout',
+                  icon: Icons.logout,
+                  iconSize: 18,
+                ),
+              ),
+              const SizedBox(
+                height: 8,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(
@@ -253,9 +280,9 @@ class GetSettingsButtonWithIcon extends StatelessWidget {
   });
 
   IconData icon;
+  double iconSize;
   String label;
   Function onTapFunction;
-  double iconSize;
 
   @override
   Widget build(BuildContext context) {
