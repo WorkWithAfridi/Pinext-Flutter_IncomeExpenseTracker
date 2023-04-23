@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:antdesign_icons/antdesign_icons.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,11 +12,15 @@ import 'package:pinext/app/app_data/extensions/string_extensions.dart';
 import 'package:pinext/app/app_data/routing/routes.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/add_transactions_cubit/add_transactions_cubit.dart';
+import 'package:pinext/app/bloc/archive_cubit/archive_cubit.dart';
+import 'package:pinext/app/bloc/delete_transaction_cubit/delete_transaction_cubit.dart';
 import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
 import 'package:pinext/app/models/pinext_transaction_model.dart';
+import 'package:pinext/app/services/date_time_services.dart';
 import 'package:pinext/app/services/firebase_services.dart';
+import 'package:pinext/app/services/handlers/card_handler.dart';
 import 'package:pinext/app/services/handlers/user_handler.dart';
 import 'package:pinext/app/shared/widgets/custom_button.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
@@ -37,8 +42,15 @@ class AddAndViewTransactionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AddTransactionsCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => AddTransactionsCubit(),
+        ),
+        BlocProvider(
+          create: (context) => DeleteTransactionCubit(),
+        ),
+      ],
       child: AddAndViewTransactionView(
         isAQuickAction: isAQuickAction,
         isViewOnly: isViewOnly,
@@ -55,6 +67,7 @@ class AddAndViewTransactionView extends StatefulWidget {
     required this.isViewOnly,
     required this.pinextTransactionModel,
   });
+
   bool isAQuickAction;
   bool isViewOnly;
   PinextTransactionModel? pinextTransactionModel;
@@ -66,6 +79,25 @@ class AddAndViewTransactionView extends StatefulWidget {
 class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
   late TextEditingController amountController;
   late TextEditingController detailsController;
+  List listOfTransactionDetailSuggestions = [
+    'donation',
+    'breakfast',
+    'lunch',
+    'dinner',
+    'date',
+    'bus fare',
+    'transportation fare',
+    'drinks',
+  ];
+
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    amountController.dispose();
+    detailsController.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -82,226 +114,8 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
 
       context.read<AddTransactionsCubit>().selectCard(widget.pinextTransactionModel!.cardId);
     }
+    context.read<DeleteTransactionCubit>().onResetState();
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    amountController.dispose();
-    detailsController.dispose();
-    super.dispose();
-  }
-
-  List listOfTransactionDetailSuggestions = [
-    'donation',
-    'breakfast',
-    'lunch',
-    'dinner',
-    'date',
-    'bus fare',
-    'transportation fare',
-    'drinks',
-  ];
-
-  final _formKey = GlobalKey<FormState>();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            if (widget.isAQuickAction) {
-              if (Platform.isAndroid) {
-                SystemNavigator.pop();
-              } else {
-                context.read<UserBloc>().add(RefreshUserStateEvent());
-                Navigator.pushNamedAndRemoveUntil(
-                  context,
-                  ROUTES.getHomeframeRoute,
-                  (route) => false,
-                );
-              }
-            } else {
-              Navigator.pop(context);
-            }
-          },
-          icon: const Icon(
-            Icons.close,
-            color: customBlackColor,
-          ),
-        ),
-        title: Text(
-          widget.isViewOnly ? 'Transaction details' : 'Adding a new transaction',
-          style: regularTextStyle,
-        ),
-      ),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: defaultPadding,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SelectTransactionTypeCard(),
-                        const SizedBox(
-                          height: 12,
-                        ),
-                      ],
-                    ),
-                  ),
-                  if (widget.isViewOnly)
-                    const SizedBox.shrink()
-                  else
-                    Column(
-                      children: [
-                        ChooseIfmarkAsOrNot(),
-                        const SizedBox(
-                          height: 12,
-                        ),
-                      ],
-                    ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: defaultPadding,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Amount',
-                          style: boldTextStyle.copyWith(
-                            color: customBlackColor.withOpacity(
-                              .6,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        CustomTextFormField(
-                          isEnabled: !widget.isViewOnly,
-                          controller: amountController,
-                          hintTitle: 'Enter amount...',
-                          textInputType: TextInputType.number,
-                          onChanged: (String value) {},
-                          validator: (String value) {
-                            return InputValidation(value).isCorrectNumber();
-                          },
-                          suffixButtonAction: () {},
-                        ),
-                        const SizedBox(
-                          height: 12,
-                        ),
-                        Text(
-                          'Details',
-                          style: boldTextStyle.copyWith(
-                            color: customBlackColor.withOpacity(
-                              .6,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        CustomTextFormField(
-                          isEnabled: !widget.isViewOnly,
-                          controller: detailsController,
-                          hintTitle: 'Enter description...',
-                          numberOfLines: 3,
-                          onChanged: (String value) {
-                            context.read<AddTransactionsCubit>().changeSelectedDescription(value);
-                          },
-                          validator: (String value) {
-                            return InputValidation(value).isNotEmpty();
-                          },
-                          suffixButtonAction: () {},
-                        ),
-                        const SizedBox(
-                          height: 12,
-                        ),
-                        if (widget.isViewOnly && widget.pinextTransactionModel!.transactionTag != '')
-                          Column(
-                            children: [
-                              GetTagsList(),
-                              const SizedBox(
-                                height: 12,
-                              ),
-                            ],
-                          )
-                        else
-                          const SizedBox.shrink(),
-                        if (!widget.isViewOnly)
-                          Column(
-                            children: [
-                              GetTagsList(),
-                              const SizedBox(
-                                height: 12,
-                              ),
-                            ],
-                          )
-                        else
-                          const SizedBox.shrink(),
-                        // Column(
-                        //   children: [
-                        //     GetTagsList(),
-                        //     const SizedBox(
-                        //       height: 12,
-                        //     ),
-                        //   ],
-                        // ),
-                        if (widget.isViewOnly)
-                          Text(
-                            'Card',
-                            style: boldTextStyle.copyWith(
-                              color: customBlackColor.withOpacity(
-                                .6,
-                              ),
-                            ),
-                          )
-                        else
-                          Text(
-                            'Select card',
-                            style: boldTextStyle.copyWith(
-                              color: customBlackColor.withOpacity(
-                                .6,
-                              ),
-                            ),
-                          ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              _GetCardListWidget(
-                isViewOnly: widget.isViewOnly,
-                viewTransactionModel: widget.pinextTransactionModel,
-              ),
-              const SizedBox(
-                height: 12,
-              ),
-              if (widget.isViewOnly) const SizedBox.shrink() else AddTransactionButton(),
-              const SizedBox(
-                height: 30,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
   }
 
   BlocBuilder<AddTransactionsCubit, AddTransactionsState> ChooseIfmarkAsOrNot() {
@@ -706,6 +520,309 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
             },
           );
         },
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            if (widget.isAQuickAction) {
+              if (Platform.isAndroid) {
+                SystemNavigator.pop();
+              } else {
+                context.read<UserBloc>().add(RefreshUserStateEvent());
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  ROUTES.getHomeframeRoute,
+                  (route) => false,
+                );
+              }
+            } else {
+              Navigator.pop(context);
+            }
+          },
+          icon: const Icon(
+            Icons.close,
+            color: customBlackColor,
+          ),
+        ),
+        title: Text(
+          widget.isViewOnly ? 'Transaction details' : 'Adding a new transaction',
+          style: regularTextStyle,
+        ),
+        actions: [
+          if (widget.isViewOnly)
+            Row(
+              children: [
+                IconButton(
+                  onPressed: () async {
+                    PinextCardModel? cardModel = await CardHandler().getCardData(widget.pinextTransactionModel!.cardId);
+
+                    await showDialog(
+                      context: context,
+                      builder: (dialogContext) {
+                        return AlertDialog(
+                          title: Text(
+                            'Delete transaction?',
+                            style: boldTextStyle.copyWith(
+                              fontSize: 20,
+                            ),
+                          ),
+                          content: SingleChildScrollView(
+                            child: ListBody(
+                              children: [
+                                Text(
+                                  "You're about to delete this transaction from your pinext account! Are you sure you want to do that??\n\n*Deleting any transaction will adjust the transaction amount with the assigned card number.",
+                                  style: regularTextStyle,
+                                ),
+                              ],
+                            ),
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(defaultBorder),
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              child: Text(
+                                'Cancel',
+                                style: boldTextStyle.copyWith(
+                                  color: customBlackColor.withOpacity(
+                                    .8,
+                                  ),
+                                ),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                            TextButton(
+                              child: const Text('Approve'),
+                              onPressed: () {
+                                context.read<DeleteTransactionCubit>().deleteTransaction(
+                                      transactionModel: widget.pinextTransactionModel!,
+                                      cardModel: cardModel,
+                                    );
+                                Navigator.pop(context);
+                                // Navigator.pop(dialogContext);
+                              },
+                            ),
+                          ],
+                          actionsPadding: dialogButtonPadding,
+                        );
+                      },
+                    );
+                  },
+                  icon: const Icon(
+                    AntIcons.deleteOutlined,
+                    color: Colors.red,
+                  ),
+                ),
+                const SizedBox(
+                  width: 6,
+                )
+              ],
+            )
+        ],
+      ),
+      body: BlocListener<DeleteTransactionCubit, DeleteTransactionState>(
+        listener: (context, state) {
+          if (state is TransactionDeletedSuccessfully) {
+            Navigator.pop(context);
+            GetCustomSnackbar(
+              title: 'Transaction deleted!!',
+              message: 'Your transaction data has been deleted.',
+              snackbarType: SnackbarType.success,
+              context: context,
+            );
+            context.read<UserBloc>().add(RefreshUserStateEvent());
+
+            final date = DateTime.parse(widget.pinextTransactionModel!.transactionDate);
+            final month = date.month.toString().length == 1 ? '0${date.month.toString()}' : date.month.toString();
+
+            if (month == currentMonth && date.year.toString() == currentYear) {
+              context.read<ArchiveCubit>().getCurrentMonthTransactionArchive(context);
+            }
+          } else if (state is TransactionNotDeleted) {
+            GetCustomSnackbar(
+              title: 'ERROR',
+              message: state.errorMessage,
+              snackbarType: SnackbarType.error,
+              context: context,
+            );
+            Future.delayed(const Duration(seconds: 1)).then((_) {
+              context.read<DeleteTransactionCubit>().onResetState();
+            });
+          }
+        },
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: defaultPadding,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SelectTransactionTypeCard(),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                        ],
+                      ),
+                    ),
+                    if (widget.isViewOnly)
+                      const SizedBox.shrink()
+                    else
+                      Column(
+                        children: [
+                          ChooseIfmarkAsOrNot(),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                        ],
+                      ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: defaultPadding,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Amount',
+                            style: boldTextStyle.copyWith(
+                              color: customBlackColor.withOpacity(
+                                .6,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          CustomTextFormField(
+                            isEnabled: !widget.isViewOnly,
+                            controller: amountController,
+                            hintTitle: 'Enter amount...',
+                            textInputType: TextInputType.number,
+                            onChanged: (String value) {},
+                            validator: (String value) {
+                              return InputValidation(value).isCorrectNumber();
+                            },
+                            suffixButtonAction: () {},
+                          ),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          Text(
+                            'Details',
+                            style: boldTextStyle.copyWith(
+                              color: customBlackColor.withOpacity(
+                                .6,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          CustomTextFormField(
+                            isEnabled: !widget.isViewOnly,
+                            controller: detailsController,
+                            hintTitle: 'Enter description...',
+                            numberOfLines: 3,
+                            onChanged: (String value) {
+                              context.read<AddTransactionsCubit>().changeSelectedDescription(value);
+                            },
+                            validator: (String value) {
+                              return InputValidation(value).isNotEmpty();
+                            },
+                            suffixButtonAction: () {},
+                          ),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          if (widget.isViewOnly && widget.pinextTransactionModel!.transactionTag != '')
+                            Column(
+                              children: [
+                                GetTagsList(),
+                                const SizedBox(
+                                  height: 12,
+                                ),
+                              ],
+                            )
+                          else
+                            const SizedBox.shrink(),
+                          if (!widget.isViewOnly)
+                            Column(
+                              children: [
+                                GetTagsList(),
+                                const SizedBox(
+                                  height: 12,
+                                ),
+                              ],
+                            )
+                          else
+                            const SizedBox.shrink(),
+                          // Column(
+                          //   children: [
+                          //     GetTagsList(),
+                          //     const SizedBox(
+                          //       height: 12,
+                          //     ),
+                          //   ],
+                          // ),
+                          if (widget.isViewOnly)
+                            Text(
+                              'Card',
+                              style: boldTextStyle.copyWith(
+                                color: customBlackColor.withOpacity(
+                                  .6,
+                                ),
+                              ),
+                            )
+                          else
+                            Text(
+                              'Select card',
+                              style: boldTextStyle.copyWith(
+                                color: customBlackColor.withOpacity(
+                                  .6,
+                                ),
+                              ),
+                            ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                _GetCardListWidget(
+                  isViewOnly: widget.isViewOnly,
+                  viewTransactionModel: widget.pinextTransactionModel,
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                if (widget.isViewOnly) const SizedBox.shrink() else AddTransactionButton(),
+                const SizedBox(
+                  height: 30,
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

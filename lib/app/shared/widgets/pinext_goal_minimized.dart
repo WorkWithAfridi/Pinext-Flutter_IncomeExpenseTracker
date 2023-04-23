@@ -1,4 +1,3 @@
-
 import 'package:antdesign_icons/antdesign_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -216,7 +215,7 @@ class PinextGoalCardMinimized extends StatelessWidget {
               builder: (context, state) {
                 if (state is AuthenticatedUserState) {
                   final completionAmount =
-                      double.parse(state.netBalance) <= 0 ? 0 : ((double.parse(state.netBalance) / double.parse(pinextGoalModel.amount)) * 100);
+                      double.parse(state.netBalance) <= 0.0 ? 0 : ((double.parse(state.netBalance) / double.parse(pinextGoalModel.amount)) * 100);
                   if (completionAmount > 100) {
                     return const SizedBox.shrink();
                   } else {

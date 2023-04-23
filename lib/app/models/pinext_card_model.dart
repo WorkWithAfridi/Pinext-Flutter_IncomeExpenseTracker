@@ -41,11 +41,28 @@ class PinextCardModel {
 
   String toJson() => json.encode(toMap());
 
-  factory PinextCardModel.fromJson(String source) =>
-      PinextCardModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory PinextCardModel.fromJson(String source) => PinextCardModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
     return 'PinextCardModel(cardId: $cardId, title: $title, description: $description, balance: $balance, color: $color, lastTransactionData: $lastTransactionData)';
+  }
+
+  PinextCardModel copyWith({
+    String? cardId,
+    String? title,
+    String? description,
+    double? balance,
+    String? color,
+    String? lastTransactionData,
+  }) {
+    return PinextCardModel(
+      cardId: cardId ?? this.cardId,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      balance: balance ?? this.balance,
+      color: color ?? this.color,
+      lastTransactionData: lastTransactionData ?? this.lastTransactionData,
+    );
   }
 }

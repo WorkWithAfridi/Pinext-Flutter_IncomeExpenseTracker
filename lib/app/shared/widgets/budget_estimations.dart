@@ -134,7 +134,8 @@ class GetBudgetEstimationsWidget extends StatelessWidget {
                                   ? constraints.maxWidth * .5
                                   : state.monthlyBudget == '000'
                                       ? 0.0
-                                      : budgetSpentPercentage.toDouble(),
+                                      // : budgetSpentPercentage.toDouble(),
+                                      : 0,
                               decoration: BoxDecoration(
                                 color: darkPurpleColor,
                                 borderRadius: BorderRadius.circular(defaultBorder),
