@@ -180,7 +180,7 @@ class HomeframeView extends StatelessWidget {
                   text: intro_label_two,
                   builder: (context, introkey) {
                     return Icon(
-                      AntIcons.homeOutlined,
+                      state.selectedIndex == 0 ? AntIcons.homeFilled : AntIcons.homeOutlined,
                       size: state.selectedIndex == 0 ? 20 : 16,
                     );
                   },
@@ -193,7 +193,7 @@ class HomeframeView extends StatelessWidget {
                   text: intro_label_three,
                   builder: (context, introkey) {
                     return Icon(
-                      AntIcons.databaseOutlined,
+                      state.selectedIndex == 1 ? AntIcons.databaseFilled : AntIcons.databaseOutlined,
                       size: state.selectedIndex == 1 ? 20 : 16,
                     );
                   },
@@ -202,7 +202,7 @@ class HomeframeView extends StatelessWidget {
               ),
               BottomNavigationBarItem(
                 icon: Icon(
-                  AntIcons.dollarCircleOutlined,
+                  state.selectedIndex == 2 ? AntIcons.dollarCircleFilled : AntIcons.dollarCircleOutlined,
                   size: state.selectedIndex == 2 ? 20 : 16,
                 ),
                 label: 'Budget',
@@ -213,7 +213,7 @@ class HomeframeView extends StatelessWidget {
                   text: intro_label_four,
                   builder: (context, introkey) {
                     return Icon(
-                      AntIcons.walletOutlined,
+                      state.selectedIndex == 3 ? AntIcons.walletFilled : AntIcons.walletOutlined,
                       size: state.selectedIndex == 3 ? 20 : 16,
                     );
                   },
@@ -226,7 +226,7 @@ class HomeframeView extends StatelessWidget {
                   text: intro_label_five,
                   builder: (context, introkey) {
                     return Icon(
-                      AntIcons.appstoreOutlined,
+                      state.selectedIndex == 4 ? AntIcons.appstoreFilled : AntIcons.appstoreOutlined,
                       size: state.selectedIndex == 4 ? 20 : 16,
                     );
                   },
