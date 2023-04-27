@@ -45,14 +45,14 @@ class HomepageView extends StatelessWidget {
     super.key,
   });
 
-  final List homepageFilters = ['Overview', 'Daily', 'Weekly', 'Monthly', 'Yearly'];
-
   Map<String, double> demoData = {
     'Office fare': 50,
     'Lunch': 150,
     'Snacks': 100,
     'Hangout': 80,
   };
+
+  final List homepageFilters = ['Overview', 'Daily', 'Weekly', 'Monthly', 'Yearly'];
 
   String getGreetings() {
     final currentHour = DateTime.now().hour;
@@ -98,6 +98,10 @@ class HomepageView extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              TextButton(
+                                onPressed: () => throw Exception(),
+                                child: const Text('Throw Test Exception'),
+                              ),
                               Text(
                                 getGreetings(),
                                 style: regularTextStyle.copyWith(

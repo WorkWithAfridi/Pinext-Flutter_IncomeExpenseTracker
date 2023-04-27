@@ -35,6 +35,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   elegant_notification: ^1.6.1
   equatable: ^2.0.5
+  firebase_analytics: ^9.3.8
   firebase_auth: ^3.7.0
   firebase_core: ^1.21.1
   firebase_core_platform_interface: 4.5.1
