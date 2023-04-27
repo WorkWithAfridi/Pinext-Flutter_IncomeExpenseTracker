@@ -98,10 +98,10 @@ class HomepageView extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              TextButton(
-                                onPressed: () => throw Exception(),
-                                child: const Text('Throw Test Exception'),
-                              ),
+                              // TextButton(
+                              //   onPressed: () => throw Exception(),
+                              //   child: const Text('Throw Test Exception'),
+                              // ),
                               Text(
                                 getGreetings(),
                                 style: regularTextStyle.copyWith(
