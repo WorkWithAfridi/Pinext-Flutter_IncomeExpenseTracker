@@ -13,6 +13,7 @@ import 'package:pinext/app/models/pinext_card_model.dart';
 import 'package:pinext/app/shared/widgets/custom_button.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 import 'package:pinext/app/shared/widgets/custom_text_field.dart';
+import 'package:pinext/app/shared/widgets/info_widget.dart';
 import 'package:pinext/app/shared/widgets/pinext_card.dart';
 import 'package:uuid/uuid.dart';
 
@@ -152,13 +153,22 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                     const SizedBox(
                       height: 12,
                     ),
-                    Text(
-                      'Card description (if any)',
-                      style: boldTextStyle.copyWith(
-                        color: customBlackColor.withOpacity(
-                          .6,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Card description (if any)',
+                          style: boldTextStyle.copyWith(
+                            color: customBlackColor.withOpacity(
+                              .6,
+                            ),
+                          ),
                         ),
-                      ),
+                        InfoWidget(
+                          infoText:
+                              'Please be advised that this module is not designed to store or handle any personal information, including but not limited to credit/debit card information. We strongly advise users not to store any personal data in this module, as it may be vulnerable to security breaches and unauthorized access. It is recommended to follow industry best practices for securing sensitive information and using secure, reputable storage systems for storing personal data. We shall not be held responsible for any loss, damage, or unauthorized access resulting from storing personal information in this module.',
+                        )
+                      ],
                     ),
                     const SizedBox(
                       height: 8,

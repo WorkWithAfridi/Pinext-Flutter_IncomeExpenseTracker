@@ -56,7 +56,7 @@ class _SigninScreenViewState extends State<SigninScreenView> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          '',
+          'PINEXT',
           style: regularTextStyle.copyWith(
             fontSize: 16,
           ),

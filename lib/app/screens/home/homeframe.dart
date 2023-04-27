@@ -101,7 +101,7 @@ class HomeframeView extends StatelessWidget {
                 return Text(
                   demoBlocState is DemoEnabledState ? 'PINEXT : DEMO-MODE' : 'PINEXT',
                   style: regularTextStyle.copyWith(
-                    fontSize: 20,
+                    fontSize: 16,
                   ),
                 );
               },

@@ -101,7 +101,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: customBlackColor,
+      backgroundColor: whiteColor,
       body: BlocListener<UserBloc, UserState>(
         listener: (context, state) {
           if (state is AuthenticatedUserState) {
@@ -124,11 +124,18 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              SizedBox(
+                height: 100,
+                width: 100,
+                child: Image.asset(
+                  'assets/app_icon/aap_icon.png',
+                ),
+              ),
               Text(
                 'Pinext',
                 style: boldTextStyle.copyWith(
-                  fontSize: 50,
-                  color: whiteColor,
+                  fontSize: 40,
+                  color: customBlackColor,
                   height: .9,
                 ),
               ),
