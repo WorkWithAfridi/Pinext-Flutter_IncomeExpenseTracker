@@ -82,7 +82,7 @@ class GetCardList extends StatelessWidget {
                               child: ListBody(
                                 children: [
                                   Text(
-                                    "You're about to delete this card from your pinext account! Are you sure you want to do that??",
+                                    'Before proceeding with the removal of this card from your pinext account, kindly confirm your decision. Are you sure you want to delete this card? Thank you for your attention to this matter.',
                                     style: regularTextStyle,
                                   ),
                                 ],

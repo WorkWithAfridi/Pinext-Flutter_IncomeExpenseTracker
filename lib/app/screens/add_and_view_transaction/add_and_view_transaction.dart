@@ -560,61 +560,61 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
               children: [
                 IconButton(
                   onPressed: () async {
-                    PinextCardModel? cardModel = await CardHandler().getCardData(widget.pinextTransactionModel!.cardId);
-
-                    await showDialog(
-                      context: context,
-                      builder: (dialogContext) {
-                        return AlertDialog(
-                          title: Text(
-                            'Delete transaction?',
-                            style: boldTextStyle.copyWith(
-                              fontSize: 20,
+                    await CardHandler().getCardData(widget.pinextTransactionModel!.cardId).then((cardModel) {
+                      showDialog(
+                        context: context,
+                        builder: (dialogContext) {
+                          return AlertDialog(
+                            title: Text(
+                              'Delete transaction?',
+                              style: boldTextStyle.copyWith(
+                                fontSize: 20,
+                              ),
                             ),
-                          ),
-                          content: SingleChildScrollView(
-                            child: ListBody(
-                              children: [
-                                Text(
-                                  "You're about to delete this transaction from your pinext account! Are you sure you want to do that??\n\n*Deleting any transaction will adjust the transaction amount with the assigned card number.",
-                                  style: regularTextStyle,
-                                ),
-                              ],
+                            content: SingleChildScrollView(
+                              child: ListBody(
+                                children: [
+                                  Text(
+                                    'Before proceeding with the deletion of this transaction from your pinext account, kindly confirm your decision. It is essential to note that deleting a transaction will result in a corresponding adjustment of the transaction amount associated with the assigned card number. Thank you for your attention to this matter.',
+                                    style: regularTextStyle,
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(defaultBorder),
-                          ),
-                          actions: <Widget>[
-                            TextButton(
-                              child: Text(
-                                'Cancel',
-                                style: boldTextStyle.copyWith(
-                                  color: customBlackColor.withOpacity(
-                                    .8,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(defaultBorder),
+                            ),
+                            actions: <Widget>[
+                              TextButton(
+                                child: Text(
+                                  'Cancel',
+                                  style: boldTextStyle.copyWith(
+                                    color: customBlackColor.withOpacity(
+                                      .8,
+                                    ),
                                   ),
                                 ),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
                               ),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                            TextButton(
-                              child: const Text('Approve'),
-                              onPressed: () {
-                                context.read<DeleteTransactionCubit>().deleteTransaction(
-                                      transactionModel: widget.pinextTransactionModel!,
-                                      cardModel: cardModel,
-                                    );
-                                Navigator.pop(context);
-                                // Navigator.pop(dialogContext);
-                              },
-                            ),
-                          ],
-                          actionsPadding: dialogButtonPadding,
-                        );
-                      },
-                    );
+                              TextButton(
+                                child: const Text('Approve'),
+                                onPressed: () {
+                                  context.read<DeleteTransactionCubit>().deleteTransaction(
+                                        transactionModel: widget.pinextTransactionModel!,
+                                        cardModel: cardModel,
+                                      );
+                                  Navigator.pop(context);
+                                  // Navigator.pop(dialogContext);
+                                },
+                              ),
+                            ],
+                            actionsPadding: dialogButtonPadding,
+                          );
+                        },
+                      );
+                    });
                   },
                   icon: const Icon(
                     AntIcons.deleteOutlined,

@@ -128,7 +128,7 @@ class EditNetBalanceView extends StatelessWidget {
                       ),
                       InfoWidget(
                         infoText:
-                            'Updating your NET balance will not affect any of your card balances, but will effect your total cumulative NET balance statistics!',
+                            'Please note that updating your NET balance will not impact the balances of any of your cards. However, it will affect your overall cumulative NET balance statistics. Thank you for your attention to this matter.',
                       ),
                     ],
                   ),
