@@ -132,28 +132,30 @@ class HomepageView extends StatelessWidget {
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  SizedBox(
+                children: [
+                  const SizedBox(
                     // height: 16,
                     height: 12,
                   ),
-                  GetBudgetEstimationsWidget(),
-                  SizedBox(
+                  GetBudgetEstimationsWidget(
+                    isForHomePage: true,
+                  ),
+                  const SizedBox(
                     height: 12,
                   ),
-                  _GetSavingsForThisMonthWidget(),
-                  SizedBox(
+                  const _GetSavingsForThisMonthWidget(),
+                  const SizedBox(
                     height: 12,
                   ),
-                  _GetExpensesWidget(),
-                  SizedBox(
+                  const _GetExpensesWidget(),
+                  const SizedBox(
                     height: 12,
                   ),
-                  _GetPastTransactionsWidget(),
-                  SizedBox(
+                  const _GetPastTransactionsWidget(),
+                  const SizedBox(
                     height: 12,
                   ),
-                  _GetGoalsAndMilestonesWidget()
+                  const _GetGoalsAndMilestonesWidget()
                 ],
               ),
             ),

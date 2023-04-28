@@ -15,6 +15,7 @@ import 'package:pinext/app/models/pinext_transaction_model.dart';
 import 'package:pinext/app/services/date_time_services.dart';
 import 'package:pinext/app/services/firebase_services.dart';
 import 'package:pinext/app/shared/widgets/custom_text_field.dart';
+import 'package:pinext/app/shared/widgets/horizontal_bar.dart';
 import 'package:pinext/app/shared/widgets/transaction_details_card.dart';
 
 class TransactionsList extends StatelessWidget {
@@ -95,16 +96,24 @@ class TransactionsList extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const SizedBox(
-                              height: 10,
+                              height: 16,
                             ),
-                            Text(
-                              'Transactions',
-                              style: boldTextStyle.copyWith(
-                                fontSize: 18,
-                              ),
+                            Row(
+                              children: [
+                                Text(
+                                  'Transactions',
+                                  style: boldTextStyle.copyWith(
+                                    fontSize: 18,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 8,
+                                ),
+                                const GetHorizontalBar(),
+                              ],
                             ),
                             const SizedBox(
-                              height: 2,
+                              height: 4,
                             ),
                             Row(
                               children: [
@@ -300,11 +309,19 @@ class _GetStatisticsWidget extends StatelessWidget {
                           const SizedBox(
                             height: 12,
                           ),
-                          Text(
-                            'Summary',
-                            style: boldTextStyle.copyWith(
-                              fontSize: 18,
-                            ),
+                          Row(
+                            children: [
+                              Text(
+                                'Summary',
+                                style: boldTextStyle.copyWith(
+                                  fontSize: 18,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 8,
+                              ),
+                              const GetHorizontalBar(),
+                            ],
                           ),
                           const SizedBox(
                             height: 6,
@@ -464,11 +481,19 @@ class _GetTransactionHistryOverviewWidget extends StatelessWidget {
                   const SizedBox(
                     height: 12,
                   ),
-                  Text(
-                    'Overview',
-                    style: boldTextStyle.copyWith(
-                      fontSize: 18,
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        'Overview',
+                        style: boldTextStyle.copyWith(
+                          fontSize: 18,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      const GetHorizontalBar(),
+                    ],
                   ),
                   const SizedBox(
                     height: 6,

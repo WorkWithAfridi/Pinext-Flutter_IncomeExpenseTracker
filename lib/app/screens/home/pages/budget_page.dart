@@ -19,6 +19,7 @@ import 'package:pinext/app/services/date_time_services.dart';
 import 'package:pinext/app/services/firebase_services.dart';
 import 'package:pinext/app/shared/widgets/budget_estimations.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
+import 'package:pinext/app/shared/widgets/horizontal_bar.dart';
 import 'package:pinext/app/shared/widgets/info_widget.dart';
 
 class BudgetPage extends StatelessWidget {
@@ -42,6 +43,7 @@ class BudgetPage extends StatelessWidget {
 
 class BudgetView extends StatelessWidget {
   const BudgetView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocListener(
@@ -93,7 +95,7 @@ class BudgetView extends StatelessWidget {
                   const SizedBox(
                     height: 12,
                   ),
-                  const GetBudgetEstimationsWidget(),
+                  GetBudgetEstimationsWidget(),
                   const SizedBox(
                     height: 12,
                   ),
@@ -127,11 +129,19 @@ class _GetStatisticsWidget extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Overview',
-              style: boldTextStyle.copyWith(
-                fontSize: 18,
-              ),
+            Row(
+              children: [
+                Text(
+                  'Overview',
+                  style: boldTextStyle.copyWith(
+                    fontSize: 18,
+                  ),
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
+                const GetHorizontalBar()
+              ],
             ),
             const SizedBox(
               height: 6,
@@ -356,11 +366,19 @@ class _GetStatisticsWidget extends StatelessWidget {
             const SizedBox(
               height: 12,
             ),
-            Text(
-              'Summary',
-              style: boldTextStyle.copyWith(
-                fontSize: 18,
-              ),
+            Row(
+              children: [
+                Text(
+                  'Summary',
+                  style: boldTextStyle.copyWith(
+                    fontSize: 18,
+                  ),
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
+                const GetHorizontalBar()
+              ],
             ),
             const SizedBox(
               height: 6,
@@ -492,9 +510,11 @@ class _GetOverviewWidget extends StatelessWidget {
     required this.title,
     required this.amount,
   });
+
+  String amount;
   bool isDemoActive;
   String title;
-  String amount;
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -533,6 +553,13 @@ class _GetSubscriptionWidget extends StatelessWidget {
               style: boldTextStyle.copyWith(
                 fontSize: 20,
               ),
+            ),
+            const SizedBox(
+              width: 8,
+            ),
+            const GetHorizontalBar(),
+            const SizedBox(
+              width: 8,
             ),
             InfoWidget(
               infoText:
@@ -734,11 +761,19 @@ class _GetSubscriptionDetailsWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Subscription details',
-          style: boldTextStyle.copyWith(
-            fontSize: 20,
-          ),
+        Row(
+          children: [
+            Text(
+              'Subscription details',
+              style: boldTextStyle.copyWith(
+                fontSize: 20,
+              ),
+            ),
+            const SizedBox(
+              width: 8,
+            ),
+            const GetHorizontalBar()
+          ],
         ),
         const SizedBox(
           height: 8,

@@ -10,23 +10,42 @@ import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/screens/edit_budget_screen.dart';
 import 'package:pinext/app/services/date_time_services.dart';
+import 'package:pinext/app/shared/widgets/horizontal_bar.dart';
 
 class GetBudgetEstimationsWidget extends StatelessWidget {
-  const GetBudgetEstimationsWidget({
+  GetBudgetEstimationsWidget({
     super.key,
+    this.isForHomePage = false,
   });
+  bool isForHomePage;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Budget Estimations',
-          style: boldTextStyle.copyWith(
-            fontSize: 20,
+        if (isForHomePage)
+          Text(
+            'Budget Estimations',
+            style: boldTextStyle.copyWith(
+              fontSize: 20,
+            ),
+          )
+        else
+          Row(
+            children: [
+              Text(
+                'Budget Estimations',
+                style: boldTextStyle.copyWith(
+                  fontSize: 20,
+                ),
+              ),
+              const SizedBox(
+                width: 8,
+              ),
+              const GetHorizontalBar()
+            ],
           ),
-        ),
         const SizedBox(
           height: 8,
         ),
