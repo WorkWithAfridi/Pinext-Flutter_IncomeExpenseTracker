@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:antdesign_icons/antdesign_icons.dart';
@@ -560,7 +561,9 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
               children: [
                 IconButton(
                   onPressed: () async {
+                    await CardHandler().getUserCards();
                     await CardHandler().getCardData(widget.pinextTransactionModel!.cardId).then((cardModel) {
+                      log(cardModel.toString());
                       showDialog(
                         context: context,
                         builder: (dialogContext) {
@@ -601,6 +604,7 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
                               TextButton(
                                 child: const Text('Approve'),
                                 onPressed: () {
+                                  log(cardModel.toString());
                                   context.read<DeleteTransactionCubit>().deleteTransaction(
                                         transactionModel: widget.pinextTransactionModel!,
                                         cardModel: cardModel,

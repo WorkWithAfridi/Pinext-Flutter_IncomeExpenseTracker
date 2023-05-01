@@ -128,7 +128,7 @@ class TransactionHandler {
     final date = DateTime.parse(transactionModel.transactionDate);
     final month = date.month.toString().length == 1 ? '0${date.month.toString()}' : date.month.toString();
 
-    var updatedBalance = 0.0;
+    const updatedBalance = 0.0;
 
     //Deleting transaction
     await FirebaseServices()
@@ -144,13 +144,12 @@ class TransactionHandler {
         .delete();
     log('Transaction deleted');
     if (cardModel != null) {
-      log(cardModel.balance.toString());
+      var updatedBalance = 0.0;
       if (transactionModel.transactionTag == 'Income') {
         updatedBalance = double.parse(cardModel.balance.toString()) - double.parse(transactionModel.amount);
       } else {
         updatedBalance = double.parse(cardModel.balance.toString()) + double.parse(transactionModel.amount);
       }
-      log('Card updated Balance: #{updatedBalance}');
 
       await FirebaseServices()
           .firebaseFirestore
@@ -158,13 +157,11 @@ class TransactionHandler {
           .doc(FirebaseServices().getUserId())
           .collection('pinext_cards')
           .doc(cardModel.cardId)
-          .set(
-            cardModel
-                .copyWith(
-                  balance: updatedBalance.toDouble(),
-                )
-                .toMap(),
-          );
+          .update(
+        {
+          'balance': updatedBalance,
+        },
+      );
     }
 
     final pinextUserModel = UserHandler().currentUser;

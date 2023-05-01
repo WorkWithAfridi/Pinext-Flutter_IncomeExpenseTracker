@@ -190,9 +190,11 @@ class GetBudgetEstimationsWidget extends StatelessWidget {
                                 ),
                               ),
                               TextSpan(
-                                text: demoBlocState is DemoEnabledState
-                                    ? '50%'
-                                    : '${((double.parse(state.monthlyExpenses) / double.parse(state.monthlyBudget)) * 100).ceil()}%',
+                                text: int.parse(state.monthlyBudget) == 0
+                                    ? '0'
+                                    : demoBlocState is DemoEnabledState
+                                        ? '50%'
+                                        : '${((double.parse(state.monthlyExpenses) / double.parse(state.monthlyBudget)) * 100).ceil()}%',
                                 style: boldTextStyle.copyWith(
                                   color: Colors.red.withOpacity(.9),
                                 ),
