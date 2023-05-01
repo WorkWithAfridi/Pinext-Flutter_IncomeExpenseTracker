@@ -128,8 +128,9 @@ class PinextGoalCardMinimized extends StatelessWidget {
 
                 var completionAmount = 0;
                 if (state is AuthenticatedUserState) {
-                  completionAmount =
-                      double.parse(state.netBalance) <= 0 ? 0 : ((double.parse(state.netBalance) / double.parse(pinextGoalModel.amount)) * 100).toInt();
+                  completionAmount = double.parse(state.netBalance) <= 0
+                      ? 0
+                      : ((double.parse(state.netBalance) / (double.parse(pinextGoalModel.amount) - .005)) * 100).toInt();
                 }
                 return RichText(
                   text: TextSpan(
@@ -231,7 +232,7 @@ class PinextGoalCardMinimized extends StatelessWidget {
                           TextSpan(
                             text: double.parse(state.netBalance) <= 0
                                 ? '0%'
-                                : '${((double.parse(state.netBalance) / double.parse(pinextGoalModel.amount)) * 100).toString().substring(0, 4)}%',
+                                : '${((double.parse(state.netBalance) / (double.parse(pinextGoalModel.amount) - .005)) * 100).toString().substring(0, 4)}%',
                             style: boldTextStyle.copyWith(
                               color: Colors.red.withOpacity(.9),
                             ),

@@ -122,6 +122,7 @@ class TransactionHandler {
     PinextTransactionModel transactionModel,
     PinextCardModel? cardModel,
   ) async {
+    log(cardModel.toString());
     var response = 'An error occured while trying to delete your transaction';
     // try {
     final date = DateTime.parse(transactionModel.transactionDate);
@@ -142,7 +143,6 @@ class TransactionHandler {
         )
         .delete();
     log('Transaction deleted');
-    log('Card Balance: #{cardModel.balance}');
     if (cardModel != null) {
       log(cardModel.balance.toString());
       if (transactionModel.transactionTag == 'Income') {
