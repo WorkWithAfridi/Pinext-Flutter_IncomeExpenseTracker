@@ -10,10 +10,10 @@ class GetHorizontalBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-        height: 3,
+        height: 2,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(6),
-          color: customBlackColor.withOpacity(.5),
+          color: customBlackColor.withOpacity(.2),
         ),
       ),
     );

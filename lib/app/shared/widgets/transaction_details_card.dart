@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -126,11 +128,11 @@ class _TransactionDetailsCardState extends State<TransactionDetailsCard> {
                         future: CardHandler().getCardData(widget.pinextTransactionModel.cardId),
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
-                            final cardDetails = snapshot.data as PinextCardModel;
+                            var rand = Random();
+                            final transactionAmount =
+                                demoBlocState is DemoEnabledState ? rand.nextInt(100000).toString() : widget.pinextTransactionModel.amount;
                             return Text(
-                              widget.pinextTransactionModel.transactionType == 'Expense'
-                                  ? '- ${widget.pinextTransactionModel.amount} Tk'
-                                  : '+ ${widget.pinextTransactionModel.amount} Tk',
+                              widget.pinextTransactionModel.transactionType == 'Expense' ? '- $transactionAmount Tk' : '+ $transactionAmount Tk',
                               style: boldTextStyle.copyWith(
                                 color: widget.pinextTransactionModel.transactionType == 'Expense' ? Colors.red : Colors.green,
                               ),
