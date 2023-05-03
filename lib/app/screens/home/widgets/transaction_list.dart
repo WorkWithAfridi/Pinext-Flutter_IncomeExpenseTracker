@@ -193,6 +193,11 @@ class TransactionsList extends StatelessWidget {
                                           return null;
                                         },
                                         suffixButtonAction: () {
+                                          if (searchController.text.isEmpty) {
+                                            context.read<ArchiveSearchCubit>().toogleSearch();
+                                            context.read<UserStatisticsCubit>().resetState();
+                                            return;
+                                          }
                                           searchController.clear();
                                           context.read<ArchiveSearchCubit>().updateSearchTerm('');
                                         },
