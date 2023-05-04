@@ -53,7 +53,7 @@ mixin ListAnimation<T extends StatefulWidget> on State<T> {
   @protected
   int indexToItemIndex(int index) {
     var itemIndex = index;
-    for (var item in outgoingItems) {
+    for (final item in outgoingItems) {
       if (item.itemIndex <= itemIndex) {
         itemIndex += 1;
       } else {
@@ -77,12 +77,12 @@ mixin ListAnimation<T extends StatefulWidget> on State<T> {
 
     // Increment the incoming and outgoing item indices to account
     // for the insertion.
-    for (var item in incomingItems) {
+    for (final item in incomingItems) {
       if (item.itemIndex >= itemIndex) {
         item.itemIndex += 1;
       }
     }
-    for (var item in outgoingItems) {
+    for (final item in outgoingItems) {
       if (item.itemIndex >= itemIndex) {
         item.itemIndex += 1;
       }
@@ -139,12 +139,12 @@ mixin ListAnimation<T extends StatefulWidget> on State<T> {
 
       // Decrement the incoming and outgoing item indices to account
       // for the removal.
-      for (var item in incomingItems) {
+      for (final item in incomingItems) {
         if (item.itemIndex > outgoingItem.itemIndex) {
           item.itemIndex -= 1;
         }
       }
-      for (var item in outgoingItems) {
+      for (final item in outgoingItems) {
         if (item.itemIndex > outgoingItem.itemIndex) {
           item.itemIndex -= 1;
         }

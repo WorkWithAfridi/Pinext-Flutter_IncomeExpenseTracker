@@ -128,7 +128,7 @@ class _TransactionDetailsCardState extends State<TransactionDetailsCard> {
                         future: CardHandler().getCardData(widget.pinextTransactionModel.cardId),
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
-                            var rand = Random();
+                            final rand = Random();
                             final transactionAmount =
                                 demoBlocState is DemoEnabledState ? rand.nextInt(100000).toString() : widget.pinextTransactionModel.amount;
                             return Text(

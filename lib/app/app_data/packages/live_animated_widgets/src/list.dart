@@ -5,10 +5,10 @@ import 'dart:math' as math;
 
 import 'package:flutter/widgets.dart';
 
-import 'animate_if_visible.dart';
-import 'helpers/callbacks.dart';
-import 'helpers/options.dart';
-import 'helpers/utils.dart' as utils;
+import 'package:pinext/app/app_data/packages/live_animated_widgets/src/animate_if_visible.dart';
+import 'package:pinext/app/app_data/packages/live_animated_widgets/src/helpers/callbacks.dart';
+import 'package:pinext/app/app_data/packages/live_animated_widgets/src/helpers/options.dart';
+import 'package:pinext/app/app_data/packages/live_animated_widgets/src/helpers/utils.dart' as utils;
 
 const Duration _kDuration = Duration(milliseconds: 100);
 
@@ -81,9 +81,8 @@ class LiveList extends StatefulWidget {
     this.addAutomaticKeepAlives = true,
     this.addRepaintBoundaries = true,
     this.addSemanticIndexes = true,
-    Key? key,
-  })  : assert(itemCount >= 0),
-        super(key: key);
+    super.key,
+  })  : assert(itemCount >= 0);
 
   /// Creates a fixed-length scrollable linear array of list "items" separated
   /// by list item "separators".
@@ -157,14 +156,13 @@ class LiveList extends StatefulWidget {
     this.addAutomaticKeepAlives = true,
     this.addRepaintBoundaries = true,
     this.addSemanticIndexes = true,
-    Key? key,
+    super.key,
   })  : delay = options.delay,
         showItemInterval = options.showItemInterval,
         showItemDuration = options.showItemDuration,
         visibleFraction = options.visibleFraction,
         reAnimateOnVisibility = options.reAnimateOnVisibility,
-        assert(itemCount >= 0),
-        super(key: key);
+        assert(itemCount >= 0);
 
   /// Start animation after (default zero)
   final Duration delay;
@@ -324,7 +322,7 @@ class LiveListState extends State<LiveList> with TickerProviderStateMixin<LiveLi
     if (widget.separatorBuilder != null) {
       childDelegate = SliverChildBuilderDelegate(
         (BuildContext context, int index) {
-          final int itemIndex = index ~/ 2;
+          final itemIndex = index ~/ 2;
           Widget? widget;
           if (index.isEven) {
             widget = _itemBuilder(context, itemIndex);
