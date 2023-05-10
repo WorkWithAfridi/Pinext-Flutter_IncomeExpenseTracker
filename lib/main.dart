@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:pinext/app/app_data/routing/routes.dart';
 import 'package:pinext/app/app_data/theme_data/theme.dart';
 import 'package:pinext/app/bloc/archive_cubit/archive_cubit.dart';
@@ -14,6 +15,7 @@ import 'package:pinext/app/bloc/cards_and_balances_cubit/cards_and_balances_cubi
 import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/bloc/signup_cubit/signin_cubit_cubit.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
+import 'package:pinext/app/services/notification_services.dart';
 import 'package:pinext/firebase_options.dart';
 
 void main(List<String> args) async {
@@ -34,6 +36,18 @@ void main(List<String> args) async {
   final analytics = FirebaseAnalytics.instance;
 
   Bloc.observer = PinextObserver();
+
+  const initializationSettingsAndroid = AndroidInitializationSettings('ic_launcher');
+
+  const initializationSettingsIOS = DarwinInitializationSettings();
+
+  const initializationSettings = InitializationSettings(
+    android: initializationSettingsAndroid,
+    iOS: initializationSettingsIOS,
+  );
+
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+
   runApp(const Pinext());
 }
 

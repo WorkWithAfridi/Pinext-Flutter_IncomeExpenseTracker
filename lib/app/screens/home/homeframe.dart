@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:antdesign_icons/antdesign_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,6 +19,7 @@ import 'package:pinext/app/screens/home/pages/cards_and_balance_page.dart';
 import 'package:pinext/app/screens/home/pages/home_page.dart';
 import 'package:pinext/app/services/handlers/app_handler.dart';
 import 'package:pinext/app/services/handlers/card_handler.dart';
+import 'package:pinext/app/services/notification_services.dart';
 
 class Homeframe extends StatefulWidget {
   const Homeframe({super.key});
@@ -32,6 +35,9 @@ class _HomeframeState extends State<Homeframe> {
     CardHandler().getUserCards();
 
     context.read<ArchiveCubit>().getCurrentMonthTransactionArchive(context);
+    if (Platform.isAndroid) {
+      showNotification();
+    }
   }
 
   Future<void> showIntroductions() async {

@@ -47,12 +47,14 @@ dependencies:
   flutter_animate: ^4.1.1+1
   flutter_bloc: ^8.1.1
   flutter_intro: ^3.0.2
+  flutter_local_notifications: ^14.0.0+1
   font_awesome_flutter: ^10.2.1
   google_sign_in: ^5.4.2
   intl: ^0.17.0
   lottie: ^2.2.0
   open_file: ^3.2.1
   path_provider: ^2.0.11
+  permission_handler: ^10.2.0
   pie_chart: ^5.3.2
   quick_actions: ^0.6.0+11
   shared_preferences: ^2.0.17
