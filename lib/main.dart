@@ -15,7 +15,6 @@ import 'package:pinext/app/bloc/cards_and_balances_cubit/cards_and_balances_cubi
 import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/bloc/signup_cubit/signin_cubit_cubit.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
-import 'package:pinext/app/services/notification_services.dart';
 import 'package:pinext/firebase_options.dart';
 
 void main(List<String> args) async {
@@ -46,7 +45,7 @@ void main(List<String> args) async {
     iOS: initializationSettingsIOS,
   );
 
-  await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+  // await flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
   runApp(const Pinext());
 }

@@ -19,7 +19,6 @@ import 'package:pinext/app/screens/home/pages/cards_and_balance_page.dart';
 import 'package:pinext/app/screens/home/pages/home_page.dart';
 import 'package:pinext/app/services/handlers/app_handler.dart';
 import 'package:pinext/app/services/handlers/card_handler.dart';
-import 'package:pinext/app/services/notification_services.dart';
 
 class Homeframe extends StatefulWidget {
   const Homeframe({super.key});
@@ -36,7 +35,7 @@ class _HomeframeState extends State<Homeframe> {
 
     context.read<ArchiveCubit>().getCurrentMonthTransactionArchive(context);
     if (Platform.isAndroid) {
-      showNotification();
+      // showNotification();
     }
   }
 
