@@ -171,12 +171,15 @@ class HomeframeView extends StatelessWidget {
             onTap: (value) {
               context.read<HomeframeCubit>().changeHomeframePage(value);
             },
-            selectedItemColor: customBlackColor,
+            selectedItemColor: darkPurpleColor,
             unselectedItemColor: customBlackColor.withOpacity(.4),
             type: BottomNavigationBarType.fixed,
             // showSelectedLabels: false,
             // showUnselectedLabels: false,
-            selectedLabelStyle: regularTextStyle.copyWith(fontSize: 12),
+            selectedLabelStyle: regularTextStyle.copyWith(
+              fontSize: 12,
+              color: darkPurpleColor,
+            ),
             unselectedLabelStyle: regularTextStyle.copyWith(fontSize: 10),
             items: [
               BottomNavigationBarItem(

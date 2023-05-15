@@ -65,7 +65,7 @@ class CardsAndBalanceView extends StatelessWidget {
               height: 180,
               width: getWidth(context),
               decoration: BoxDecoration(
-                color: customBlackColor,
+                color: darkPurpleColor,
                 borderRadius: BorderRadius.circular(
                   defaultBorder,
                 ),
@@ -94,7 +94,7 @@ class CardsAndBalanceView extends StatelessWidget {
                               const Icon(
                                 AntIcons.editOutlined,
                                 size: 20,
-                                color: customBlackColor,
+                                color: darkPurpleColor,
                               ),
                               Expanded(
                                 child: FittedBox(
