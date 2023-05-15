@@ -126,6 +126,10 @@ class HomepageView extends StatelessWidget {
                 ],
               ),
             ),
+            const SizedBox(
+              height: 12,
+            ),
+            const _GetBalanceWidget(),
             Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: defaultPadding,
@@ -161,10 +165,6 @@ class HomepageView extends StatelessWidget {
             ),
             const _GetYourCardsWidget(),
             const SizedBox(
-              height: 12,
-            ),
-            const _GetBalanceWidget(),
-            const SizedBox(
               height: 30,
             ),
           ],
@@ -199,16 +199,19 @@ class _GetBalanceWidget extends StatelessWidget {
             ),
             width: getWidth(context),
             decoration: BoxDecoration(
-              color: greyColor,
+              color: darkPurpleColor,
               borderRadius: BorderRadius.circular(
                 defaultBorder,
               ),
             ),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'Your current NET. balance is',
-                  style: regularTextStyle,
+                  style: regularTextStyle.copyWith(
+                    color: whiteColor,
+                  ),
                 ),
                 const SizedBox(
                   height: 4,
@@ -222,6 +225,7 @@ class _GetBalanceWidget extends StatelessWidget {
                         demoBlocState is DemoEnabledState ? '750000 Tk' : '${state.netBalance} Tk',
                         style: boldTextStyle.copyWith(
                           fontSize: 25,
+                          color: whiteColor,
                         ),
                       );
                     }
@@ -229,6 +233,7 @@ class _GetBalanceWidget extends StatelessWidget {
                       'Loading...',
                       style: boldTextStyle.copyWith(
                         fontSize: 20,
+                        color: whiteColor,
                       ),
                     );
                   },
