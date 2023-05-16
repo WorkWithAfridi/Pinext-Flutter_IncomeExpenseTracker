@@ -121,7 +121,12 @@ class HomepageView extends StatelessWidget {
             const SizedBox(
               height: 12,
             ),
-            const HomepageGetBalanceWidget(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+              child: HomepageGetBalanceWidget(
+                tapToOpenUpdateNetBalancePage: false,
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: defaultPadding,
