@@ -1,4 +1,3 @@
-import 'package:antdesign_icons/antdesign_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,12 +7,10 @@ import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/app_data/custom_transition_page_route/custom_transition_page_route.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/cards_and_balances_cubit/cards_and_balances_cubit.dart';
-import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/screens/add_and_edit_pinext_card/add_and_edit_pinext_card.dart';
-import 'package:pinext/app/screens/edit_net_balance_screen.dart';
 import 'package:pinext/app/screens/home/widgets/get_card_list.dart';
-import 'package:pinext/app/shared/widgets/animated_counter_text_widget.dart';
+import 'package:pinext/app/screens/home/widgets/homepage_get_balance_widget.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 
 class CardsAndBalancePage extends StatelessWidget {
@@ -58,98 +55,7 @@ class CardsAndBalanceView extends StatelessWidget {
             const SizedBox(
               height: 8,
             ),
-            Container(
-              padding: const EdgeInsets.all(
-                35,
-              ),
-              height: 180,
-              width: getWidth(context),
-              decoration: BoxDecoration(
-                color: darkPurpleColor,
-                borderRadius: BorderRadius.circular(
-                  defaultBorder,
-                ),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Your NET. Balance is',
-                    style: boldTextStyle.copyWith(
-                      color: whiteColor.withOpacity(.6),
-                      fontSize: 16,
-                    ),
-                  ),
-                  Builder(
-                    builder: (context) {
-                      final state = context.watch<UserBloc>().state;
-                      final demoBlocState = context.watch<DemoBloc>().state;
-                      if (state is AuthenticatedUserState) {
-                        return SizedBox(
-                          height: 70,
-                          width: double.maxFinite,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Icon(
-                                AntIcons.editOutlined,
-                                size: 20,
-                                color: darkPurpleColor,
-                              ),
-                              Expanded(
-                                child: FittedBox(
-                                  child: Row(
-                                    children: [
-                                      AnimatedCounterTextWidget(
-                                        begin: 0,
-                                        end: demoBlocState is DemoEnabledState ? 750000.0 : double.parse(state.netBalance),
-                                        maxLines: 1,
-                                        precision: 2,
-                                        style: boldTextStyle.copyWith(
-                                          color: whiteColor,
-                                          fontSize: 50,
-                                        ),
-                                        curve: Curves.fastOutSlowIn,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              IconButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    CustomTransitionPageRoute(
-                                      childWidget: EditNetBalanceScreen(
-                                        netBalance: state.netBalance,
-                                      ),
-                                    ),
-                                  );
-                                },
-                                icon: const Icon(
-                                  AntIcons.editOutlined,
-                                  size: 20,
-                                  color: whiteColor,
-                                ),
-                              )
-                            ],
-                          ),
-                        );
-                      } else {
-                        return const SizedBox.shrink();
-                      }
-                    },
-                  ),
-                  Text(
-                    'Taka',
-                    style: boldTextStyle.copyWith(
-                      color: whiteColor.withOpacity(.6),
-                      fontSize: 16,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            HomepageGetBalanceWidget(),
             const SizedBox(
               height: 12,
             ),
