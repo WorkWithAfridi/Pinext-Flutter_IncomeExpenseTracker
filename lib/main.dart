@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:device_preview/device_preview.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -45,7 +46,11 @@ void main(List<String> args) async {
 
   // await flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
-  runApp(const Pinext());
+  runApp(
+    DevicePreview(
+      builder: (context) => const Pinext(),
+    ),
+  );
 }
 
 class Pinext extends StatelessWidget {
@@ -75,6 +80,8 @@ class Pinext extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
+        useInheritedMediaQuery: true,
+        builder: DevicePreview.appBuilder,
         debugShowCheckedModeBanner: false,
         onGenerateRoute: ROUTECONTROLLER.routeController,
         initialRoute: ROUTES.getSplashRoute,
