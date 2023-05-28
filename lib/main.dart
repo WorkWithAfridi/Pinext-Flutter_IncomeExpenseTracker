@@ -48,6 +48,7 @@ void main(List<String> args) async {
 
   runApp(
     DevicePreview(
+      enabled: false,
       builder: (context) => const Pinext(),
     ),
   );

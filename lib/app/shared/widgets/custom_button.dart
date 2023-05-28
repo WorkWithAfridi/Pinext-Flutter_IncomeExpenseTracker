@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
 import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
@@ -82,12 +81,17 @@ class ButtonLoadingAnimation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
+      padding: const EdgeInsets.all(5),
       height: 30,
-      width: 20,
-      child: LottieBuilder.asset(
-        'assets/animations/loading_animation.json',
+      width: 30,
+      child: const CircularProgressIndicator(
+        color: Colors.white,
       ),
+
+      // LottieBuilder.asset(
+      //   'assets/animations/loading_animation.json',
+      // ),
     );
   }
 }
