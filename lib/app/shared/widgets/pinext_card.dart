@@ -160,15 +160,17 @@ class PinextCard extends StatelessWidget {
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    Text(
-                                      demoBlocState is DemoEnabledState ? '55000 Tk' : balance.toString(),
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 25,
-                                        color: whiteColor,
+                                    Flexible(
+                                      child: Text(
+                                        demoBlocState is DemoEnabledState ? '55000 Tk' : balance.toString(),
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 25,
+                                          color: whiteColor,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
                                       ),
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 1,
                                     ),
                                     Text(
                                       '/',

@@ -12,7 +12,6 @@ import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/screens/goals_and_milestones/view_goals_and_milestones_screen.dart';
-import 'package:pinext/app/services/handlers/app_handler.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 
 class AppSettingsScreen extends StatelessWidget {
@@ -79,50 +78,50 @@ class AppSettingsScreen extends StatelessWidget {
               //   icon: Icons.settings,
               //   iconSize: 18,
               // ),
-              const SizedBox(
-                height: 8,
-              ),
-              GetSettingsButtonWithIcon(
-                onTapFunction: () {
-                  AppHandler().requestNewFuture(context);
-                },
-                label: 'Request new future!',
-                icon: FontAwesomeIcons.fire,
-                iconSize: 16,
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              GetSettingsButtonWithIcon(
-                onTapFunction: () {
-                  AppHandler().writeReview(context);
-                },
-                label: 'Post review',
-                icon: FontAwesomeIcons.penToSquare,
-                iconSize: 18,
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              GetSettingsButtonWithIcon(
-                onTapFunction: () {
-                  AppHandler().sendBugReport(context);
-                },
-                label: 'Report bug',
-                icon: FontAwesomeIcons.bug,
-                iconSize: 18,
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              GetSettingsButtonWithIcon(
-                onTapFunction: () {
-                  AppHandler().checkForUpdate(context);
-                },
-                label: 'Check for updates',
-                icon: Icons.update,
-                iconSize: 18,
-              ),
+              // const SizedBox(
+              //   height: 8,
+              // ),
+              // GetSettingsButtonWithIcon(
+              //   onTapFunction: () {
+              //     AppHandler().requestNewFuture(context);
+              //   },
+              //   label: 'Request new future!',
+              //   icon: FontAwesomeIcons.fire,
+              //   iconSize: 16,
+              // ),
+              // const SizedBox(
+              //   height: 8,
+              // ),
+              // GetSettingsButtonWithIcon(
+              //   onTapFunction: () {
+              //     AppHandler().writeReview(context);
+              //   },
+              //   label: 'Post review',
+              //   icon: FontAwesomeIcons.penToSquare,
+              //   iconSize: 18,
+              // ),
+              // const SizedBox(
+              //   height: 8,
+              // ),
+              // GetSettingsButtonWithIcon(
+              //   onTapFunction: () {
+              //     AppHandler().sendBugReport(context);
+              //   },
+              //   label: 'Report bug',
+              //   icon: FontAwesomeIcons.bug,
+              //   iconSize: 18,
+              // ),
+              // const SizedBox(
+              //   height: 8,
+              // ),
+              // GetSettingsButtonWithIcon(
+              //   onTapFunction: () {
+              //     AppHandler().checkForUpdate(context);
+              //   },
+              //   label: 'Check for updates',
+              //   icon: Icons.update,
+              //   iconSize: 18,
+              // ),
               const SizedBox(
                 height: 8,
               ),
@@ -149,7 +148,7 @@ class AppSettingsScreen extends StatelessWidget {
                                 child: ListBody(
                                   children: [
                                     Text(
-                                      'Enabling Presentation Mode will temporarily replace all of your data with a template, so that you can present or show the app to other potential users! You can disable presentation mode at any time from this menu again! With that being said, do you want to proceed with this action?',
+                                      'Enabling Presentation Mode entails a temporary substitution of all your data with a template, facilitating the presentation or demonstration of the application to prospective users. It is possible to disable Presentation Mode at any given time through this menu. Given the aforementioned information, would you like to proceed with this action?',
                                       style: regularTextStyle,
                                     ),
                                   ],
@@ -249,20 +248,20 @@ class AppSettingsScreen extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
               ),
-              const SizedBox(height: 3),
-              GestureDetector(
-                onTap: () {
-                  AppHandler().openPortfolio(context);
-                },
-                child: Text(
-                  ' by Kyoto',
-                  style: cursiveTextStyle.copyWith(
-                    // height: .95,
-                    fontSize: 16,
-                    color: customBlackColor.withOpacity(.2),
-                  ),
-                ),
-              ),
+              // const SizedBox(height: 3),
+              // GestureDetector(
+              //   onTap: () {
+              //     AppHandler().openPortfolio(context);
+              //   },
+              //   child: Text(
+              //     ' by Kyoto',
+              //     style: cursiveTextStyle.copyWith(
+              //       // height: .95,
+              //       fontSize: 16,
+              //       color: customBlackColor.withOpacity(.2),
+              //     ),
+              //   ),
+              // ),
               const SizedBox(
                 height: 30,
               ),
