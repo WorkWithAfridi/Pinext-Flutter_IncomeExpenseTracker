@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:antdesign_icons/antdesign_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
@@ -11,6 +14,7 @@ import 'package:pinext/app/services/authentication_services.dart';
 import 'package:pinext/app/shared/widgets/custom_button.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 import 'package:pinext/app/shared/widgets/custom_text_field.dart';
+import 'package:pinext/app/shared/widgets/horizontal_bar.dart';
 
 class SigninScreen extends StatelessWidget {
   const SigninScreen({super.key});
@@ -315,7 +319,52 @@ class _SigninScreenViewState extends State<SigninScreenView> {
                       ],
                     ),
                   ),
-                )
+                ),
+                if (Platform.isAndroid || Platform.isIOS)
+                  Column(
+                    children: [
+                      const SizedBox(
+                        height: 22,
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            'Or sign in using socials',
+                            style: boldTextStyle.copyWith(
+                              fontSize: 14,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          const GetHorizontalBar()
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Material(
+                        elevation: 3,
+                        shadowColor: Colors.black.withOpacity(.5),
+                        child: BlocBuilder<LoginCubit, LoginState>(
+                          builder: (context, state) {
+                            return GetCustomButton(
+                              isLoading: state is LoginWithGoogleButtonLoadingState,
+                              icon: AntIcons.googleCircleFilled,
+                              title: 'Sign in with Google',
+                              titleColor: whiteColor,
+                              buttonColor: customBlackColor,
+                              callBackFunction: () {
+                                context.read<LoginCubit>().loginWithGoogle();
+                              },
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  )
+                else
+                  const SizedBox.shrink()
               ],
             ),
           ),
