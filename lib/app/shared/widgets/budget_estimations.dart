@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:antdesign_icons/antdesign_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -140,12 +142,15 @@ class GetBudgetEstimationsWidget extends StatelessWidget {
                       if (state is AuthenticatedUserState) {
                         return LayoutBuilder(
                           builder: (context, constraints) {
-                            var budgetSpentPercentage = 0;
+                            var budgetSpentPercentage = 0.0;
                             if (state.monthlyBudget == '000' || state.monthlyExpenses == '000') {
                               budgetSpentPercentage = 0;
                             } else {
-                              budgetSpentPercentage =
-                                  (constraints.maxWidth * (double.parse(state.monthlyExpenses) / double.parse(state.monthlyBudget))).toInt();
+                              budgetSpentPercentage = double.parse(state.monthlyExpenses) / double.parse(state.monthlyBudget);
+                            }
+                            log('Budget percentage: $budgetSpentPercentage');
+                            if (budgetSpentPercentage > 100) {
+                              budgetSpentPercentage = 1;
                             }
                             return Container(
                               height: 5,
@@ -153,10 +158,16 @@ class GetBudgetEstimationsWidget extends StatelessWidget {
                                   ? constraints.maxWidth * .5
                                   : state.monthlyBudget == '000'
                                       ? 0.0
-                                      // : budgetSpentPercentage.toDouble(),
-                                      : 0,
+                                      : constraints.maxWidth * budgetSpentPercentage,
+                              // : 0,
                               decoration: BoxDecoration(
-                                color: darkPurpleColor,
+                                color: budgetSpentPercentage < .4
+                                    ? Colors.greenAccent
+                                    : budgetSpentPercentage > .7
+                                        ? Colors.orangeAccent
+                                        : budgetSpentPercentage > .9
+                                            ? Colors.redAccent
+                                            : darkPurpleColor,
                                 borderRadius: BorderRadius.circular(defaultBorder),
                               ),
                             );
@@ -176,6 +187,18 @@ class GetBudgetEstimationsWidget extends StatelessWidget {
                 builder: (context) {
                   final state = context.watch<UserBloc>().state;
                   final demoBlocState = context.watch<DemoBloc>().state;
+                  var budgetSpentPercentage = 0.0;
+                  if (state is AuthenticatedUserState) {
+                    if (state.monthlyBudget == '000' || state.monthlyExpenses == '000') {
+                      budgetSpentPercentage = 0;
+                    } else {
+                      budgetSpentPercentage = double.parse(state.monthlyExpenses) / double.parse(state.monthlyBudget);
+                    }
+                    log('Budget percentage: $budgetSpentPercentage');
+                    if (budgetSpentPercentage > 100) {
+                      budgetSpentPercentage = 1;
+                    }
+                  }
                   if (state is AuthenticatedUserState) {
                     return Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -196,7 +219,13 @@ class GetBudgetEstimationsWidget extends StatelessWidget {
                                         ? '50%'
                                         : '${((double.parse(state.monthlyExpenses) / double.parse(state.monthlyBudget)) * 100).ceil()}%',
                                 style: boldTextStyle.copyWith(
-                                  color: Colors.red.withOpacity(.9),
+                                  color: budgetSpentPercentage < .4
+                                      ? Colors.greenAccent
+                                      : budgetSpentPercentage > .7
+                                          ? Colors.orangeAccent
+                                          : budgetSpentPercentage > .9
+                                              ? Colors.redAccent
+                                              : darkPurpleColor,
                                 ),
                               ),
                               TextSpan(
