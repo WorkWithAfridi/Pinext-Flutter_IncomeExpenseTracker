@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
 import 'package:pinext/app/app_data/app_constants/domentions.dart';
-import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/app_data/routing/routes.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/homeframe_cubit/homeframe_page_cubit.dart';
@@ -131,14 +130,14 @@ class _SplashScreenState extends State<SplashScreen> {
                   'assets/app_icon/aap_icon.png',
                 ),
               ),
-              Text(
-                'Pinext',
-                style: boldTextStyle.copyWith(
-                  fontSize: 40,
-                  color: customBlackColor,
-                  height: .9,
-                ),
-              ),
+              // Text(
+              //   'Pinext',
+              //   style: boldTextStyle.copyWith(
+              //     fontSize: 40,
+              //     color: customBlackColor,
+              //     height: .9,
+              //   ),
+              // ),
             ],
           ),
         ),
