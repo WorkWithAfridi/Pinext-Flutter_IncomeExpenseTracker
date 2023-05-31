@@ -14,11 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "1049606352114-chrdte8qpkhocfmgp3ka0l1aqdrvt3qj.apps.googleusercontent.com",
+          "client_id": "1049606352114-q1lcn5kgq2ja0fdoo6e73btck1hrckmm.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.workwithafridi.pinext",
-            "certificate_hash": "ed8ae2b340ec219e80b070d7737d4cdb82dfae00"
+            "certificate_hash": "c993e640c1d3cfaf142c200c41bed1139a8abe08"
           }
         },
         {
