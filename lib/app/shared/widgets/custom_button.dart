@@ -87,7 +87,7 @@ class ButtonLoadingAnimation extends StatelessWidget {
       width: 30,
       child: const CircularProgressIndicator(
         color: Colors.white,
-        strokeWidth: 1,
+        strokeWidth: 2.5,
       ),
 
       // LottieBuilder.asset(

@@ -161,12 +161,12 @@ class GetBudgetEstimationsWidget extends StatelessWidget {
                                       : constraints.maxWidth * budgetSpentPercentage,
                               // : 0,
                               decoration: BoxDecoration(
-                                color: budgetSpentPercentage < .4
-                                    ? Colors.greenAccent
+                                color: budgetSpentPercentage > .9
+                                    ? Colors.redAccent
                                     : budgetSpentPercentage > .7
                                         ? Colors.orangeAccent
-                                        : budgetSpentPercentage > .9
-                                            ? Colors.redAccent
+                                        : budgetSpentPercentage < .4
+                                            ? Colors.greenAccent
                                             : darkPurpleColor,
                                 borderRadius: BorderRadius.circular(defaultBorder),
                               ),
