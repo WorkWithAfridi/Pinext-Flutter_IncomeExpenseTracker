@@ -14,6 +14,7 @@ import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/models/pinext_transaction_model.dart';
 import 'package:pinext/app/services/date_time_services.dart';
 import 'package:pinext/app/services/firebase_services.dart';
+import 'package:pinext/app/services/handlers/user_handler.dart';
 import 'package:pinext/app/shared/widgets/custom_text_field.dart';
 import 'package:pinext/app/shared/widgets/horizontal_bar.dart';
 import 'package:pinext/app/shared/widgets/transaction_details_card.dart';
@@ -749,7 +750,7 @@ class _GetOverviewWidget extends StatelessWidget {
           ),
         ),
         Text(
-          isDemoActive ? '100000 Tk' : '$amount Tk.',
+          isDemoActive ? '100000 ${UserHandler().currentUser.currencySymbol}' : '$amount ${UserHandler().currentUser.currencySymbol}.',
           style: boldTextStyle.copyWith(
             color: primaryColor,
           ),

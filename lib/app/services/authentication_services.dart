@@ -53,6 +53,7 @@ class AuthenticationServices {
               currentMonth: currentMonth,
               currentWeekOfTheYear: currentWeekOfTheYear,
               currentYear: currentYear,
+              currencySymbol: '৳',
             );
 
             //storing userData
@@ -82,6 +83,7 @@ class AuthenticationServices {
     required String netBalance,
     required String monthlyBudget,
     required String budgetSpentSoFar,
+    required String currencySymbol,
   }) async {
     String response;
     try {
@@ -108,6 +110,7 @@ class AuthenticationServices {
         currentMonth: currentMonth,
         currentWeekOfTheYear: currentWeekOfTheYear,
         currentYear: currentYear,
+        currencySymbol: currencySymbol,
       );
 
       //storing userData

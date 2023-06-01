@@ -10,6 +10,7 @@ import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/add_goal_cubit/add_goal_cubit.dart';
 import 'package:pinext/app/bloc/signup_cubit/signin_cubit_cubit.dart';
 import 'package:pinext/app/models/pinext_goal_model.dart';
+import 'package:pinext/app/services/handlers/user_handler.dart';
 import 'package:pinext/app/shared/widgets/custom_button.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 import 'package:pinext/app/shared/widgets/custom_text_field.dart';
@@ -254,7 +255,7 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                 ),
                 CustomTextFormField(
                   controller: amountController,
-                  hintTitle: 'Ex: 400,000Tk',
+                  hintTitle: 'Ex: 400,000${UserHandler().currentUser.currencySymbol}',
                   textInputType: TextInputType.number,
                   onChanged: (String value) {},
                   validator: (String value) {

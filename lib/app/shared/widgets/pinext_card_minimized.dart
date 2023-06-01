@@ -7,6 +7,7 @@ import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
+import 'package:pinext/app/services/handlers/user_handler.dart';
 import 'package:pinext/app/shared/widgets/animated_counter_text_widget.dart';
 import 'package:pinext/app/shared/widgets/gradient_text.dart';
 import 'package:pinext/app/shared/widgets/pop_up_transaction_card.dart';
@@ -107,7 +108,7 @@ class PinextCardMinimized extends StatelessWidget {
                                     ),
                                     curve: Curves.fastOutSlowIn,
                                   ),
-                                  const Text('/Tk'),
+                                  Text('/${UserHandler().currentUser.currencySymbol}'),
                                 ],
                               ),
                               // Text(

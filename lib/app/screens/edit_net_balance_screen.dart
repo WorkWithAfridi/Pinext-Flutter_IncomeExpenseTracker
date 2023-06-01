@@ -8,6 +8,7 @@ import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/bloc/edit_net_balance_cubit/edit_net_balance_cubit.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
+import 'package:pinext/app/services/handlers/user_handler.dart';
 import 'package:pinext/app/shared/widgets/custom_button.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 import 'package:pinext/app/shared/widgets/custom_text_field.dart';
@@ -103,7 +104,9 @@ class EditNetBalanceView extends StatelessWidget {
                           builder: (context) {
                             final demoBlocState = context.watch<DemoBloc>().state;
                             return Text(
-                              demoBlocState is DemoEnabledState ? '750000 Tk' : '$netBalance Tk',
+                              demoBlocState is DemoEnabledState
+                                  ? '750000 ${UserHandler().currentUser.currencySymbol}'
+                                  : '$netBalance ${UserHandler().currentUser.currencySymbol}',
                               style: boldTextStyle.copyWith(
                                 fontSize: 25,
                               ),

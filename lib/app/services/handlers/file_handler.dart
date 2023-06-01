@@ -75,28 +75,28 @@ class FileHandler {
             'A${totalTransactions + offset + 1}',
           )
           .setText(
-            'Total income: +$income TK',
+            'Total income: +$income ${UserHandler().currentUser.currencySymbol}',
           );
       sheet
           .getRangeByName(
             'A${totalTransactions + offset + 2}',
           )
           .setText(
-            'Total expense: -$expense TK',
+            'Total expense: -$expense ${UserHandler().currentUser.currencySymbol}',
           );
       sheet
           .getRangeByName(
             'A${totalTransactions + offset + 3}',
           )
           .setText(
-            'Outcome: ${income - expense} TK',
+            'Outcome: ${income - expense} ${UserHandler().currentUser.currencySymbol}',
           );
       sheet
           .getRangeByName(
             'A${totalTransactions + offset + 4}',
           )
           .setText(
-            'NET. Balance: ${UserHandler().currentUser.netBalance} TK',
+            'NET. Balance: ${UserHandler().currentUser.netBalance} ${UserHandler().currentUser.currencySymbol}',
           );
 
       final bytes = workbook.saveAsStream();

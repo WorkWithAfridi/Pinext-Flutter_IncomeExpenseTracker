@@ -27,6 +27,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
     required this.userNameController,
     required this.passwordController,
     required this.pageController,
+    required this.currencySymbolController,
   });
 
   TextEditingController userNameController;
@@ -34,6 +35,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
   TextEditingController passwordController;
   TextEditingController monthlyBudgetController;
   TextEditingController budgetSpentSoFarController;
+  TextEditingController currencySymbolController;
   PageController pageController;
   double netBalance = 0;
 
@@ -470,6 +472,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                                   monthlyBudget: monthlyBudgetController.text,
                                   budgetSpentSoFar: budgetSpentSoFarController.text,
                                   pinextGoals: state.goals,
+                                  currencySymbol: currencySymbolController.text.isEmpty ? '৳' : currencySymbolController.text,
                                 );
                           } else {
                             GetCustomSnackbar(

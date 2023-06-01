@@ -1,4 +1,3 @@
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
@@ -84,6 +83,7 @@ class SigninCubit extends Cubit<SigninState> {
 
   Future<void> signupUser({
     required String emailAddress,
+    required String currencySymbol,
     required String password,
     required String username,
     required List<PinextCardModel> pinextCards,
@@ -110,6 +110,7 @@ class SigninCubit extends Cubit<SigninState> {
       monthlyBudget: monthlyBudget,
       budgetSpentSoFar: budgetSpentSoFar,
       pinextGoals: pinextGoals,
+      currencySymbol: currencySymbol,
     );
     if (result == 'Success') {
       emit(

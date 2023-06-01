@@ -7,6 +7,7 @@ import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/services/date_time_services.dart';
+import 'package:pinext/app/services/handlers/user_handler.dart';
 
 class HomepageGetSavingsForThisMonthWidget extends StatelessWidget {
   const HomepageGetSavingsForThisMonthWidget({super.key});
@@ -63,7 +64,9 @@ class HomepageGetSavingsForThisMonthWidget extends StatelessWidget {
                               final demoBlocState = context.watch<DemoBloc>().state;
                               if (state is AuthenticatedUserState) {
                                 return Text(
-                                  demoBlocState is DemoEnabledState ? '75000 Tk' : '${state.monthlySavings} Tk',
+                                  demoBlocState is DemoEnabledState
+                                      ? '75000 ${UserHandler().currentUser.currencySymbol}'
+                                      : '${state.monthlySavings} ${UserHandler().currentUser.currencySymbol}',
                                   style: boldTextStyle.copyWith(
                                     fontSize: 20,
                                   ),
@@ -116,7 +119,9 @@ class HomepageGetSavingsForThisMonthWidget extends StatelessWidget {
                               final demoBlocState = context.watch<DemoBloc>().state;
                               if (state is AuthenticatedUserState) {
                                 return Text(
-                                  demoBlocState is DemoEnabledState ? '100000 Tk' : "${state.monthlyEarnings == "" ? "0000" : state.monthlyEarnings} Tk",
+                                  demoBlocState is DemoEnabledState
+                                      ? '100000 ${UserHandler().currentUser.currencySymbol}'
+                                      : "${state.monthlyEarnings == "" ? "0000" : state.monthlyEarnings} ${UserHandler().currentUser.currencySymbol}",
                                   style: boldTextStyle.copyWith(
                                     fontSize: 20,
                                   ),

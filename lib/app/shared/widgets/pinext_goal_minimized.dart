@@ -10,6 +10,7 @@ import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/models/pinext_goal_model.dart';
 import 'package:pinext/app/screens/goals_and_milestones/add_and_edit_goal_and_milestone_screen.dart';
+import 'package:pinext/app/services/handlers/user_handler.dart';
 
 class PinextGoalCardMinimized extends StatelessWidget {
   PinextGoalCardMinimized({
@@ -143,13 +144,13 @@ class PinextGoalCardMinimized extends StatelessWidget {
                         ),
                       ),
                       TextSpan(
-                        text: demoBlocState is DemoEnabledState ? '25000 Tk' : pinextGoalModel.amount,
+                        text: demoBlocState is DemoEnabledState ? '25000 ${UserHandler().currentUser.currencySymbol}' : pinextGoalModel.amount,
                         style: boldTextStyle.copyWith(
                           decoration: completionAmount > 100 ? TextDecoration.lineThrough : TextDecoration.none,
                         ),
                       ),
                       TextSpan(
-                        text: ' TK. for ',
+                        text: ' ${UserHandler().currentUser.currencySymbol} for ',
                         style: regularTextStyle.copyWith(
                           color: customBlackColor.withOpacity(.6),
                           decoration: completionAmount > 100 ? TextDecoration.lineThrough : TextDecoration.none,

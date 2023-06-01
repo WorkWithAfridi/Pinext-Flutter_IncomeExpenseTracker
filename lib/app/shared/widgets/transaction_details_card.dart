@@ -13,6 +13,7 @@ import 'package:pinext/app/models/pinext_card_model.dart';
 import 'package:pinext/app/models/pinext_transaction_model.dart';
 import 'package:pinext/app/screens/add_and_view_transaction/add_and_view_transaction.dart';
 import 'package:pinext/app/services/handlers/card_handler.dart';
+import 'package:pinext/app/services/handlers/user_handler.dart';
 import 'package:pinext/app/shared/widgets/gradient_text.dart';
 
 class TransactionDetailsCard extends StatefulWidget {
@@ -132,7 +133,9 @@ class _TransactionDetailsCardState extends State<TransactionDetailsCard> {
                             final transactionAmount =
                                 demoBlocState is DemoEnabledState ? rand.nextInt(100000).toString() : widget.pinextTransactionModel.amount;
                             return Text(
-                              widget.pinextTransactionModel.transactionType == 'Expense' ? '- $transactionAmount Tk' : '+ $transactionAmount Tk',
+                              widget.pinextTransactionModel.transactionType == 'Expense'
+                                  ? '- $transactionAmount ${UserHandler().currentUser.currencySymbol}'
+                                  : '+ $transactionAmount ${UserHandler().currentUser.currencySymbol}',
                               style: boldTextStyle.copyWith(
                                 color: widget.pinextTransactionModel.transactionType == 'Expense' ? Colors.red : Colors.green,
                               ),

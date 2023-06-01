@@ -12,6 +12,7 @@ import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/screens/edit_budget_screen.dart';
 import 'package:pinext/app/services/date_time_services.dart';
+import 'package:pinext/app/services/handlers/user_handler.dart';
 import 'package:pinext/app/shared/widgets/horizontal_bar.dart';
 
 class GetBudgetEstimationsWidget extends StatelessWidget {
@@ -100,7 +101,9 @@ class GetBudgetEstimationsWidget extends StatelessWidget {
                             children: [
                               if (state is AuthenticatedUserState)
                                 Text(
-                                  demoBlocState is DemoEnabledState ? '25000 Tk' : '${state.monthlyBudget} Tk',
+                                  demoBlocState is DemoEnabledState
+                                      ? '25000 ${UserHandler().currentUser.currencySymbol}'
+                                      : '${state.monthlyBudget} ${UserHandler().currentUser.currencySymbol}',
                                   style: regularTextStyle.copyWith(
                                     fontWeight: FontWeight.w600,
                                     color: darkPurpleColor,
@@ -238,7 +241,9 @@ class GetBudgetEstimationsWidget extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          demoBlocState is DemoEnabledState ? '- 12500 Tk' : '- ${state.monthlyExpenses} Tk',
+                          demoBlocState is DemoEnabledState
+                              ? '- 12500 ${UserHandler().currentUser.currencySymbol}'
+                              : '- ${state.monthlyExpenses} ${UserHandler().currentUser.currencySymbol}',
                           style: boldTextStyle.copyWith(
                             color: Colors.red.withOpacity(.9),
                           ),
