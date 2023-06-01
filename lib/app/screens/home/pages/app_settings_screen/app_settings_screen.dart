@@ -12,7 +12,10 @@ import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/screens/goals_and_milestones/view_goals_and_milestones_screen.dart';
+import 'package:pinext/app/screens/home/pages/app_settings_screen/currency_page.dart';
+import 'package:pinext/app/services/handlers/user_handler.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
+import 'package:pinext/country_data/country_data.dart';
 
 class AppSettingsScreen extends StatelessWidget {
   const AppSettingsScreen({super.key});
@@ -60,6 +63,48 @@ class AppSettingsScreen extends StatelessWidget {
                 label: 'Goals & Milestones',
                 icon: Icons.stop,
                 iconSize: 18,
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    CustomTransitionPageRoute(
+                      childWidget: const CurrencyPage(),
+                    ),
+                  );
+                },
+                child: Container(
+                  height: 50,
+                  width: getWidth(context),
+                  decoration: BoxDecoration(
+                    color: greyColor,
+                    borderRadius: BorderRadius.circular(defaultBorder),
+                  ),
+                  alignment: Alignment.centerLeft,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: defaultPadding,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Currency: ${CountryHandler().countryList.where((element) => element.symbol == UserHandler().currentUser.currencySymbol).first.currency}',
+                        style: regularTextStyle.copyWith(
+                          fontSize: 15,
+                        ),
+                      ),
+                      Text(
+                        UserHandler().currentUser.currencySymbol,
+                        style: regularTextStyle.copyWith(
+                          fontSize: 15,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
 
               // const SizedBox(

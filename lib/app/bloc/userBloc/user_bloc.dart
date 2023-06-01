@@ -69,6 +69,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           currentMonth: user.currentMonth,
           monthlyEarnings: user.monthlyEarnings,
           currentWeekOfTheYear: user.currentWeekOfTheYear,
+          currencySymbol: user.currencySymbol,
         ),
       );
     } else {
@@ -94,6 +95,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           currentMonth: user.currentMonth,
           monthlyEarnings: user.monthlyEarnings,
           currentWeekOfTheYear: user.currentWeekOfTheYear,
+          currencySymbol: user.currencySymbol,
         ),
       );
     }
@@ -120,6 +122,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           currentMonth: user.currentMonth,
           monthlyEarnings: user.monthlyEarnings,
           currentWeekOfTheYear: user.currentWeekOfTheYear,
+          currencySymbol: user.currencySymbol,
         ),
       );
     }

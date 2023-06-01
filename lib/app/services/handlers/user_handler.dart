@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pinext/app/API/firebase_directories.dart';
 import 'package:pinext/app/models/pinext_user_model.dart';
@@ -104,6 +103,13 @@ class UserHandler {
   Future updateNetBalance(String amount) async {
     await FirebaseServices().firebaseFirestore.collection(USERS_DIRECTORY).doc(FirebaseServices().getUserId()).update({
       'netBalance': amount,
+    });
+    return;
+  }
+
+  Future updateUserCurrency(String currencySymbol) async {
+    await FirebaseServices().firebaseFirestore.collection(USERS_DIRECTORY).doc(FirebaseServices().getUserId()).update({
+      'currencySymbol': currencySymbol,
     });
     return;
   }
