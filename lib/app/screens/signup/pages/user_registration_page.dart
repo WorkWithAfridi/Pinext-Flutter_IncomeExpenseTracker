@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
 import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
+import 'package:pinext/app/app_data/custom_transition_page_route/custom_transition_page_route.dart';
 import 'package:pinext/app/app_data/extensions/string_extensions.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
+import 'package:pinext/app/bloc/region_cubit/region_cubit.dart';
+import 'package:pinext/app/screens/home/pages/app_settings_screen/select_region_page.dart';
 import 'package:pinext/app/shared/widgets/custom_button.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 import 'package:pinext/app/shared/widgets/custom_text_field.dart';
@@ -88,6 +92,59 @@ class UserRegistrationPage extends StatelessWidget {
                   return InputValidation(value.toString()).isNotEmpty();
                 },
                 suffixButtonAction: () {},
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    CustomTransitionPageRoute(
+                      childWidget: SelectRegionScreen(
+                        isUpdateUserRegion: false,
+                      ),
+                    ),
+                  );
+                },
+                child: Container(
+                  height: 50,
+                  width: getWidth(context),
+                  decoration: BoxDecoration(
+                    color: greyColor,
+                    borderRadius: BorderRadius.circular(defaultBorder),
+                    border: Border.all(
+                      color: customBlackColor.withOpacity(.1),
+                      width: 2,
+                    ),
+                  ),
+                  alignment: Alignment.centerLeft,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: defaultPadding,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Region ',
+                        style: regularTextStyle.copyWith(
+                          fontSize: 15,
+                        ),
+                      ),
+                      BlocBuilder<RegionCubit, RegionState>(
+                        builder: (context, state) {
+                          return Text(
+                            // UserHandler().currentUser.currencySymbol,
+                            state.countryData.name,
+                            style: regularTextStyle.copyWith(
+                              fontSize: 15,
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ),
               ),
               const SizedBox(
                 height: 12,

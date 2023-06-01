@@ -52,7 +52,7 @@ class BudgetView extends StatelessWidget {
         BlocListener<UpdateSubscriptionCubit, UpdateSubscriptionState>(
           listener: (context, state) {
             if (state is SubscriptionUpdatedSuccessfullyState) {
-              context.read<UserBloc>().add(RefreshUserStateEvent());
+              context.read<UserBloc>().add(RefreshUserStateEvent(context: context));
             } else if (state is SubscriptionUpdatedErrorState) {
               GetCustomSnackbar(
                 title: 'Snap',

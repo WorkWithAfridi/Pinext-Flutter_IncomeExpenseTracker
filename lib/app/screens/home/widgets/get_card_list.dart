@@ -24,7 +24,7 @@ class GetCardList extends StatelessWidget {
     return BlocListener<CardsAndBalancesCubit, CardsAndBalancesState>(
       listener: (context, state) {
         if (state is CardsAndBalancesSuccessfullyRemovedCardState) {
-          context.read<UserBloc>().add(RefreshUserStateEvent());
+          context.read<UserBloc>().add(RefreshUserStateEvent(context: context));
           context.read<CardsAndBalancesCubit>().resetState();
         }
       },
@@ -53,7 +53,7 @@ class GetCardList extends StatelessWidget {
               ),
             );
           }
-          context.read<UserBloc>().add(RefreshUserStateEvent());
+          context.read<UserBloc>().add(RefreshUserStateEvent(context: context));
           return ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),

@@ -153,7 +153,7 @@ class EditNetBalanceView extends StatelessWidget {
                   BlocConsumer<EditNetBalanceCubit, EditNetBalanceState>(
                     listener: (cubitContext, state) {
                       if (state is EditNetBalanceSuccessState) {
-                        context.read<UserBloc>().add(RefreshUserStateEvent());
+                        context.read<UserBloc>().add(RefreshUserStateEvent(context: context));
                         Navigator.pop(context);
                         context.read<EditNetBalanceCubit>().resetState();
                       } else if (state is EditNetBalanceErrorState) {

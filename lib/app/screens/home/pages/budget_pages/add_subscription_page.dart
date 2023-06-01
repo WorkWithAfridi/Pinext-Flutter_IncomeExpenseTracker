@@ -87,7 +87,7 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
         BlocListener<AddSubscriptionCubit, AddSubscriptionState>(
           listener: (context, state) async {
             if (state is AddSubscriptionSuccessState) {
-              context.read<UserBloc>().add(RefreshUserStateEvent());
+              context.read<UserBloc>().add(RefreshUserStateEvent(context: context));
               Navigator.pop(context);
               GetCustomSnackbar(
                 title: 'Subscription added!!',
@@ -112,7 +112,7 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
               );
               context.read<AddSubscriptionCubit>().resetState();
             } else if (state is SubscriptionSuccessfullyUpdatedState) {
-              context.read<UserBloc>().add(RefreshUserStateEvent());
+              context.read<UserBloc>().add(RefreshUserStateEvent(context: context));
               Navigator.pop(context);
               GetCustomSnackbar(
                 title: 'Updated',

@@ -107,9 +107,9 @@ class UserHandler {
     return;
   }
 
-  Future updateUserCurrency(String currencySymbol) async {
+  Future updateUserRegion(String regionCode) async {
     await FirebaseServices().firebaseFirestore.collection(USERS_DIRECTORY).doc(FirebaseServices().getUserId()).update({
-      'currencySymbol': currencySymbol,
+      'regionCode': regionCode,
     });
     return;
   }

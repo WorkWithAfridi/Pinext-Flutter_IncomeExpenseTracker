@@ -8,6 +8,7 @@ import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/app_data/extensions/string_extensions.dart';
 import 'package:pinext/app/app_data/routing/routes.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
+import 'package:pinext/app/bloc/region_cubit/region_cubit.dart';
 import 'package:pinext/app/bloc/signin_cubit/login_cubit.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/services/authentication_services.dart';
@@ -15,6 +16,7 @@ import 'package:pinext/app/shared/widgets/custom_button.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 import 'package:pinext/app/shared/widgets/custom_text_field.dart';
 import 'package:pinext/app/shared/widgets/horizontal_bar.dart';
+import 'package:pinext/country_data/country_data.dart';
 
 class SigninScreen extends StatelessWidget {
   const SigninScreen({super.key});
@@ -43,6 +45,7 @@ class _SigninScreenViewState extends State<SigninScreenView> {
   void initState() {
     emailController = TextEditingController();
     passwordController = TextEditingController();
+    context.read<RegionCubit>().selectRegion(CountryHandler().countryList.where((element) => element.code == 'BD').first);
     super.initState();
   }
 
@@ -253,7 +256,7 @@ class _SigninScreenViewState extends State<SigninScreenView> {
                   child: BlocConsumer<LoginCubit, LoginState>(
                     listener: (context, state) {
                       if (state is LoginSuccessState) {
-                        context.read<UserBloc>().add(RefreshUserStateEvent());
+                        context.read<UserBloc>().add(RefreshUserStateEvent(context: context));
                       }
                       if (state is LoginErrorState) {
                         GetCustomSnackbar(

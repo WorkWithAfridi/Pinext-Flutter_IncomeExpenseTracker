@@ -32,7 +32,6 @@ class _SignupScreenViewState extends State<SignupScreenView> {
   late TextEditingController passwordController;
 
   late PageController signupPageController;
-  late TextEditingController currencySymbolController;
 
   @override
   void initState() {
@@ -59,7 +58,6 @@ class _SignupScreenViewState extends State<SignupScreenView> {
         userNameController: userNameController,
         passwordController: passwordController,
         pageController: signupPageController,
-        currencySymbolController: currencySymbolController,
       ),
     );
     super.initState();

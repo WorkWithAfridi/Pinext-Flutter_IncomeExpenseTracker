@@ -2,10 +2,12 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
+import 'package:pinext/app/bloc/region_cubit/region_cubit.dart';
 import 'package:pinext/app/services/authentication_services.dart';
 import 'package:pinext/app/services/date_time_services.dart';
 import 'package:pinext/app/services/handlers/user_handler.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
+import 'package:pinext/country_data/country_data.dart';
 
 part 'user_event.dart';
 part 'user_state.dart';
@@ -16,7 +18,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       await SignInUser(event, emit);
     });
     on<RefreshUserStateEvent>((event, emit) async {
-      await RereshUserState(emit);
+      await RereshUserState(event, emit);
     });
     on<SignOutUserEvent>(
       (event, emit) async {
@@ -45,8 +47,11 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     }
   }
 
-  Future<void> RereshUserState(Emitter<UserState> emit) async {
+  Future<void> RereshUserState(RefreshUserStateEvent event, Emitter<UserState> emit) async {
     var user = await UserHandler().getCurrentUser();
+    event.context.read<RegionCubit>().selectRegion(
+          CountryHandler().countryList.where((element) => element.code == user.regionCode).first,
+        );
 
     if (user.currentDate == currentDate &&
         user.currentMonth == currentMonth &&
@@ -69,7 +74,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           currentMonth: user.currentMonth,
           monthlyEarnings: user.monthlyEarnings,
           currentWeekOfTheYear: user.currentWeekOfTheYear,
-          currencySymbol: user.currencySymbol,
+          regionCode: user.regionCode,
         ),
       );
     } else {
@@ -95,7 +100,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           currentMonth: user.currentMonth,
           monthlyEarnings: user.monthlyEarnings,
           currentWeekOfTheYear: user.currentWeekOfTheYear,
-          currencySymbol: user.currencySymbol,
+          regionCode: user.regionCode,
         ),
       );
     }
@@ -122,7 +127,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           currentMonth: user.currentMonth,
           monthlyEarnings: user.monthlyEarnings,
           currentWeekOfTheYear: user.currentWeekOfTheYear,
-          currencySymbol: user.currencySymbol,
+          regionCode: user.regionCode,
         ),
       );
     }

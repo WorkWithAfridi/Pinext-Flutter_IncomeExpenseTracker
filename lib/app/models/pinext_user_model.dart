@@ -17,7 +17,7 @@ class PinextUserModel {
   String currentMonth;
   String currentWeekOfTheYear;
   String currentYear;
-  String currencySymbol;
+  String regionCode;
   PinextUserModel({
     required this.userId,
     required this.username,
@@ -34,7 +34,7 @@ class PinextUserModel {
     required this.currentWeekOfTheYear,
     required this.currentYear,
     required this.monthlyEarnings,
-    required this.currencySymbol,
+    required this.regionCode,
   });
 
   Map<String, dynamic> toMap() {
@@ -54,7 +54,7 @@ class PinextUserModel {
       'currentMonth': currentMonth,
       'currentWeekOfTheYear': currentWeekOfTheYear,
       'currentYear': currentYear,
-      'currency': currencySymbol,
+      'regionCode': regionCode,
     };
   }
 
@@ -75,7 +75,7 @@ class PinextUserModel {
       currentWeekOfTheYear: map['currentWeekOfTheYear'] as String,
       currentYear: map['currentYear'] as String,
       monthlyEarnings: (map['monthlyEarnings'] ?? '0000') as String,
-      currencySymbol: (map['currencySymbol'] ?? '৳') as String,
+      regionCode: (map['regionCode'] ?? 'BD') as String,
     );
   }
 
@@ -85,6 +85,6 @@ class PinextUserModel {
 
   @override
   String toString() {
-    return 'PinextUserModel(userId: $userId, username: $username, emailAddress: $emailAddress, netBalance: $netBalance, monthlyBudget: $monthlyBudget, monthlyExpenses: $monthlyExpenses, dailyExpenses: $dailyExpenses, weeklyExpenses: $weeklyExpenses, monthlySavings: $monthlySavings, monthlyEarnings: $monthlyEarnings, accountCreatedOn: $accountCreatedOn, currentDate: $currentDate, currentMonth: $currentMonth, currentWeekOfTheYear: $currentWeekOfTheYear, currentYear: $currentYear, currencySymbol: $currencySymbol)';
+    return 'PinextUserModel(userId: $userId, username: $username, emailAddress: $emailAddress, netBalance: $netBalance, monthlyBudget: $monthlyBudget, monthlyExpenses: $monthlyExpenses, dailyExpenses: $dailyExpenses, weeklyExpenses: $weeklyExpenses, monthlySavings: $monthlySavings, monthlyEarnings: $monthlyEarnings, accountCreatedOn: $accountCreatedOn, currentDate: $currentDate, currentMonth: $currentMonth, currentWeekOfTheYear: $currentWeekOfTheYear, currentYear: $currentYear, regionCode: $regionCode)';
   }
 }

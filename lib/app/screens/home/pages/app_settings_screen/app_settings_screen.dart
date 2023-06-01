@@ -71,7 +71,9 @@ class AppSettingsScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     CustomTransitionPageRoute(
-                      childWidget: const SelectRegionScreen(),
+                      childWidget: SelectRegionScreen(
+                        isUpdateUserRegion: true,
+                      ),
                     ),
                   );
                 },
@@ -90,7 +92,7 @@ class AppSettingsScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Region: ',
+                        'Region ',
                         style: regularTextStyle.copyWith(
                           fontSize: 15,
                         ),

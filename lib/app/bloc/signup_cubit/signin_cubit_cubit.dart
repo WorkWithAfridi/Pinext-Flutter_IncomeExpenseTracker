@@ -83,7 +83,7 @@ class SigninCubit extends Cubit<SigninState> {
 
   Future<void> signupUser({
     required String emailAddress,
-    required String currencySymbol,
+    required String regionCode,
     required String password,
     required String username,
     required List<PinextCardModel> pinextCards,
@@ -110,7 +110,7 @@ class SigninCubit extends Cubit<SigninState> {
       monthlyBudget: monthlyBudget,
       budgetSpentSoFar: budgetSpentSoFar,
       pinextGoals: pinextGoals,
-      currencySymbol: currencySymbol,
+      regionCode: regionCode,
     );
     if (result == 'Success') {
       emit(

@@ -80,7 +80,7 @@ class CardsAndBalanceView extends StatelessWidget {
             BlocListener<CardsAndBalancesCubit, CardsAndBalancesState>(
               listener: (context, state) {
                 if (state is CardsAndBalancesSuccessfullyAddedCardState) {
-                  context.read<UserBloc>().add(RefreshUserStateEvent());
+                  context.read<UserBloc>().add(RefreshUserStateEvent(context: context));
                 }
                 if (state is CardsAndBalancesSuccessfullyRemovedCardState) {
                   GetCustomSnackbar(

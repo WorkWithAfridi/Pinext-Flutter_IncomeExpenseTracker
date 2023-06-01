@@ -7,6 +7,7 @@ import 'package:pinext/app/app_data/custom_transition_page_route/custom_transiti
 import 'package:pinext/app/app_data/extensions/string_extensions.dart';
 import 'package:pinext/app/app_data/routing/routes.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
+import 'package:pinext/app/bloc/region_cubit/region_cubit.dart';
 import 'package:pinext/app/bloc/signup_cubit/signin_cubit_cubit.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/screens/add_and_edit_pinext_card/add_and_edit_pinext_card.dart';
@@ -27,7 +28,6 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
     required this.userNameController,
     required this.passwordController,
     required this.pageController,
-    required this.currencySymbolController,
   });
 
   TextEditingController userNameController;
@@ -35,7 +35,6 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
   TextEditingController passwordController;
   TextEditingController monthlyBudgetController;
   TextEditingController budgetSpentSoFarController;
-  TextEditingController currencySymbolController;
   PageController pageController;
   double netBalance = 0;
 
@@ -114,12 +113,16 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                         const SizedBox(
                           height: 8,
                         ),
-                        Text(
-                          'Taka',
-                          style: boldTextStyle.copyWith(
-                            color: customBlackColor.withOpacity(.6),
-                            fontSize: 16,
-                          ),
+                        BlocBuilder<RegionCubit, RegionState>(
+                          builder: (context, state) {
+                            return Text(
+                              state.countryData.currency,
+                              style: boldTextStyle.copyWith(
+                                color: customBlackColor.withOpacity(.6),
+                                fontSize: 16,
+                              ),
+                            );
+                          },
                         ),
                       ],
                     ),
@@ -448,7 +451,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                       context.read<SigninCubit>().reset();
                     }
                     if (state is SigninSuccessState) {
-                      context.read<UserBloc>().add(RefreshUserStateEvent());
+                      context.read<UserBloc>().add(RefreshUserStateEvent(context: context));
                       context.read<SigninCubit>().reset();
                     }
                   },
@@ -472,7 +475,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                                   monthlyBudget: monthlyBudgetController.text,
                                   budgetSpentSoFar: budgetSpentSoFarController.text,
                                   pinextGoals: state.goals,
-                                  currencySymbol: currencySymbolController.text.isEmpty ? '৳' : currencySymbolController.text,
+                                  regionCode: context.read<RegionCubit>().state.countryData.code,
                                 );
                           } else {
                             GetCustomSnackbar(

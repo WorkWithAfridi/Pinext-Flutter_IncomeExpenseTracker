@@ -137,7 +137,7 @@ class Editbudgetview extends StatelessWidget {
                   BlocConsumer<EditBudgetCubit, EditBudgetState>(
                     listener: (cubitContext, state) {
                       if (state is EditBudgetSuccessState) {
-                        context.read<UserBloc>().add(RefreshUserStateEvent());
+                        context.read<UserBloc>().add(RefreshUserStateEvent(context: context));
                         Navigator.pop(context);
                         context.read<EditBudgetCubit>().resetState();
                         GetCustomSnackbar(

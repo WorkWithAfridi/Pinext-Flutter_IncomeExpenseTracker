@@ -24,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
     );
     userSignedIn = await AuthenticationServices().isUserSignedIn();
     if (userSignedIn && mode == 'default') {
-      context.read<UserBloc>().add(RefreshUserStateEvent());
+      context.read<UserBloc>().add(RefreshUserStateEvent(context: context));
     } else if (!userSignedIn) {
       context.read<UserBloc>().add(UnauthenticatedUserEvent());
     } else if (userSignedIn && mode == 'AddTransaction') {

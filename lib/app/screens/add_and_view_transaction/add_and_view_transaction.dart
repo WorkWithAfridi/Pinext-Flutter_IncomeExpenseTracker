@@ -412,7 +412,7 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
               if (Platform.isAndroid) {
                 SystemNavigator.pop();
               } else {
-                context.read<UserBloc>().add(RefreshUserStateEvent());
+                context.read<UserBloc>().add(RefreshUserStateEvent(context: context));
                 Navigator.pushNamedAndRemoveUntil(
                   context,
                   ROUTES.getHomeframeRoute,
@@ -426,7 +426,7 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
                 );
               }
             } else {
-              context.read<UserBloc>().add(RefreshUserStateEvent());
+              context.read<UserBloc>().add(RefreshUserStateEvent(context: context));
               Navigator.pop(context);
               GetCustomSnackbar(
                 title: 'Transaction added!!',
@@ -535,7 +535,7 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
               if (Platform.isAndroid) {
                 SystemNavigator.pop();
               } else {
-                context.read<UserBloc>().add(RefreshUserStateEvent());
+                context.read<UserBloc>().add(RefreshUserStateEvent(context: context));
                 Navigator.pushNamedAndRemoveUntil(
                   context,
                   ROUTES.getHomeframeRoute,
@@ -642,7 +642,7 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
               snackbarType: SnackbarType.success,
               context: context,
             );
-            context.read<UserBloc>().add(RefreshUserStateEvent());
+            context.read<UserBloc>().add(RefreshUserStateEvent(context: context));
 
             final date = DateTime.parse(widget.pinextTransactionModel!.transactionDate);
             final month = date.month.toString().length == 1 ? '0${date.month.toString()}' : date.month.toString();

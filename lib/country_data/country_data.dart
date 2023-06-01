@@ -210,6 +210,24 @@ class CountryHandler {
   ];
 
   void _setUpCountryList() {
+    // for (final country in _countryMap) {
+    //   countryList.add(CountryData.fromMap(country));
+    // }
+
+    // // Sort the list based on country name
+    // countryList.sort((a, b) => a.name.compareTo(b.name));
+
+    // // Remove duplicates based on country name
+    // final uniqueCountries = <CountryData>[];
+    // var previousName = '';
+
+    // for (final country in countryList) {
+    //   if (country.name != previousName) {
+    //     uniqueCountries.add(country);
+    //     previousName = country.name;
+    //   }
+    // }
+    // countryList = uniqueCountries;
     for (final country in _countryMap) {
       countryList.add(CountryData.fromMap(country));
     }
