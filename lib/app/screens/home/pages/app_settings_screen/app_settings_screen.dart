@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pinext/app/API/repo/api_repo.dart';
 import 'package:pinext/app/app_data/appVersion.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
 import 'package:pinext/app/app_data/app_constants/domentions.dart';
@@ -61,6 +64,25 @@ class AppSettingsScreen extends StatelessWidget {
                 icon: Icons.stop,
                 iconSize: 18,
               ),
+
+              const SizedBox(
+                height: 8,
+              ),
+              GetSettingsButtonWithIcon(
+                onTapFunction: () async {
+                  // final countryHandler = CountryHandler();
+                  // log(countryHandler.countryList.length.toString());
+                  // final bangladesh = countryHandler.countryList.where((element) => element.code == 'BD').first;
+                  // log('Currency of Bangladesh is ${bangladesh.symbol}');
+
+                  final ipData = await ApiRepo().printIps();
+                  log(ipData.toString());
+                },
+                label: 'Country data',
+                icon: Icons.settings,
+                iconSize: 18,
+              ),
+
               // const SizedBox(
               //   height: 8,
               // ),
