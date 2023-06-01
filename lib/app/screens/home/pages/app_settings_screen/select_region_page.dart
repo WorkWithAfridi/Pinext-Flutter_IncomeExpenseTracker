@@ -24,7 +24,7 @@ class SelectRegionScreen extends StatelessWidget {
           ),
         ),
         title: Text(
-          'Select Currency',
+          'Select Region',
           style: regularTextStyle,
         ),
       ),
@@ -45,6 +45,7 @@ class SelectRegionScreen extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: () {
+                          context.read<RegionCubit>().selectRegion(CountryHandler().countryList[index]);
                           // UserHandler().currentUser.currencySymbol = CountryHandler().countryList[index].symbol;
                         },
                         child: Container(
@@ -64,7 +65,7 @@ class SelectRegionScreen extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    '${CountryHandler().countryList[index].currency}}',
+                                    CountryHandler().countryList[index].currency,
                                     style: regularTextStyle.copyWith(
                                       fontSize: 15,
                                     ),

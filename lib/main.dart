@@ -14,6 +14,7 @@ import 'package:pinext/app/bloc/archive_cubit/user_statistics_cubit/user_statist
 import 'package:pinext/app/bloc/bloc_observer/bloc_observer.dart';
 import 'package:pinext/app/bloc/cards_and_balances_cubit/cards_and_balances_cubit.dart';
 import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
+import 'package:pinext/app/bloc/region_cubit/region_cubit.dart';
 import 'package:pinext/app/bloc/signup_cubit/signin_cubit_cubit.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/firebase_options.dart';
@@ -78,6 +79,9 @@ class Pinext extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => ArchiveCubit(),
+        ),
+        BlocProvider(
+          create: (context) => RegionCubit(),
         ),
       ],
       child: MaterialApp(

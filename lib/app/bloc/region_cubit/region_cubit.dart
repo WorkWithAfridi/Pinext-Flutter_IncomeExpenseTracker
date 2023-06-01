@@ -12,4 +12,10 @@ class RegionCubit extends Cubit<RegionState> {
             countryData: CountryHandler().countryList.where((element) => element.code == 'BD').first,
           ),
         );
+
+  void selectRegion(CountryData region) {
+    emit(
+      state.copyWith(countryData: region),
+    );
+  }
 }
