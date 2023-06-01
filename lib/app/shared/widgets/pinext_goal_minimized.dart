@@ -7,10 +7,10 @@ import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/app_data/custom_transition_page_route/custom_transition_page_route.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
+import 'package:pinext/app/bloc/region_cubit/region_cubit.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/models/pinext_goal_model.dart';
 import 'package:pinext/app/screens/goals_and_milestones/add_and_edit_goal_and_milestone_screen.dart';
-import 'package:pinext/app/services/handlers/user_handler.dart';
 
 class PinextGoalCardMinimized extends StatelessWidget {
   PinextGoalCardMinimized({
@@ -126,6 +126,7 @@ class PinextGoalCardMinimized extends StatelessWidget {
               builder: (context) {
                 final state = context.watch<UserBloc>().state;
                 final demoBlocState = context.watch<DemoBloc>().state;
+                final regionState = context.watch<RegionCubit>().state;
 
                 var completionAmount = 0;
                 if (state is AuthenticatedUserState) {
@@ -144,13 +145,13 @@ class PinextGoalCardMinimized extends StatelessWidget {
                         ),
                       ),
                       TextSpan(
-                        text: demoBlocState is DemoEnabledState ? '25000 ${UserHandler().currentUser.currencySymbol}' : pinextGoalModel.amount,
+                        text: demoBlocState is DemoEnabledState ? '25000 ${regionState.countryData.symbol}' : pinextGoalModel.amount,
                         style: boldTextStyle.copyWith(
                           decoration: completionAmount > 100 ? TextDecoration.lineThrough : TextDecoration.none,
                         ),
                       ),
                       TextSpan(
-                        text: ' ${UserHandler().currentUser.currencySymbol} for ',
+                        text: ' ${regionState.countryData.symbol} for ',
                         style: regularTextStyle.copyWith(
                           color: customBlackColor.withOpacity(.6),
                           decoration: completionAmount > 100 ? TextDecoration.lineThrough : TextDecoration.none,

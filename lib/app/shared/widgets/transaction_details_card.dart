@@ -9,11 +9,11 @@ import 'package:pinext/app/app_data/custom_transition_page_route/custom_transiti
 import 'package:pinext/app/app_data/extensions/string_extensions.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
+import 'package:pinext/app/bloc/region_cubit/region_cubit.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
 import 'package:pinext/app/models/pinext_transaction_model.dart';
 import 'package:pinext/app/screens/add_and_view_transaction/add_and_view_transaction.dart';
 import 'package:pinext/app/services/handlers/card_handler.dart';
-import 'package:pinext/app/services/handlers/user_handler.dart';
 import 'package:pinext/app/shared/widgets/gradient_text.dart';
 
 class TransactionDetailsCard extends StatefulWidget {
@@ -132,13 +132,17 @@ class _TransactionDetailsCardState extends State<TransactionDetailsCard> {
                             final rand = Random();
                             final transactionAmount =
                                 demoBlocState is DemoEnabledState ? rand.nextInt(100000).toString() : widget.pinextTransactionModel.amount;
-                            return Text(
-                              widget.pinextTransactionModel.transactionType == 'Expense'
-                                  ? '- $transactionAmount ${UserHandler().currentUser.currencySymbol}'
-                                  : '+ $transactionAmount ${UserHandler().currentUser.currencySymbol}',
-                              style: boldTextStyle.copyWith(
-                                color: widget.pinextTransactionModel.transactionType == 'Expense' ? Colors.red : Colors.green,
-                              ),
+                            return BlocBuilder<RegionCubit, RegionState>(
+                              builder: (context, state) {
+                                return Text(
+                                  widget.pinextTransactionModel.transactionType == 'Expense'
+                                      ? '- $transactionAmount ${state.countryData.symbol}'
+                                      : '+ $transactionAmount ${state.countryData.symbol}',
+                                  style: boldTextStyle.copyWith(
+                                    color: widget.pinextTransactionModel.transactionType == 'Expense' ? Colors.red : Colors.green,
+                                  ),
+                                );
+                              },
                             );
                           } else {
                             return const SizedBox.shrink();

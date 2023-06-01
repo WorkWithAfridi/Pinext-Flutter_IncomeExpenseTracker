@@ -5,9 +5,9 @@ import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
+import 'package:pinext/app/bloc/region_cubit/region_cubit.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/services/date_time_services.dart';
-import 'package:pinext/app/services/handlers/user_handler.dart';
 
 class HomepageGetExpensesWidget extends StatelessWidget {
   const HomepageGetExpensesWidget({super.key});
@@ -30,6 +30,7 @@ class HomepageGetExpensesWidget extends StatelessWidget {
           builder: (context) {
             final state = context.watch<UserBloc>().state;
             final demoBlocState = context.watch<DemoBloc>().state;
+            final regionState = context.watch<RegionCubit>().state;
             if (state is AuthenticatedUserState) {
               return Row(
                 children: [
@@ -52,8 +53,8 @@ class HomepageGetExpensesWidget extends StatelessWidget {
                           FittedBox(
                             child: Text(
                               demoBlocState is DemoEnabledState
-                                  ? '- 3600 ${UserHandler().currentUser.currencySymbol}'
-                                  : '- ${state.dailyExpenses} ${UserHandler().currentUser.currencySymbol}',
+                                  ? '- 3600 ${regionState.countryData.symbol}'
+                                  : '- ${state.dailyExpenses} ${regionState.countryData.symbol}',
                               style: boldTextStyle.copyWith(
                                 fontSize: 25,
                                 color: whiteColor,
@@ -94,8 +95,8 @@ class HomepageGetExpensesWidget extends StatelessWidget {
                           FittedBox(
                             child: Text(
                               demoBlocState is DemoEnabledState
-                                  ? '- 10000 ${UserHandler().currentUser.currencySymbol}'
-                                  : '- ${state.weeklyExpenses} ${UserHandler().currentUser.currencySymbol}',
+                                  ? '- 10000 ${regionState.countryData.symbol}'
+                                  : '- ${state.weeklyExpenses} ${regionState.countryData.symbol}',
                               style: boldTextStyle.copyWith(
                                 fontSize: 25,
                                 color: whiteColor.withOpacity(.8),
@@ -149,11 +150,12 @@ class HomepageGetExpensesWidget extends StatelessWidget {
                 builder: (context) {
                   final state = context.watch<UserBloc>().state;
                   final demoBlocState = context.watch<DemoBloc>().state;
+                  final regionState = context.watch<RegionCubit>().state;
                   if (state is AuthenticatedUserState) {
                     return Text(
                       demoBlocState is DemoEnabledState
-                          ? '- 25000 ${UserHandler().currentUser.currencySymbol}'
-                          : '- ${state.monthlyExpenses} ${UserHandler().currentUser.currencySymbol}',
+                          ? '- 25000 ${regionState.countryData.symbol}'
+                          : '- ${state.monthlyExpenses} ${regionState.countryData.symbol}',
                       style: boldTextStyle.copyWith(
                         fontSize: 20,
                       ),

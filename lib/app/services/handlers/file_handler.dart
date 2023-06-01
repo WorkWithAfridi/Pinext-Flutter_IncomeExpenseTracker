@@ -2,12 +2,14 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pinext/app/API/firebase_directories.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
 import 'package:pinext/app/app_data/extensions/string_extensions.dart';
+import 'package:pinext/app/bloc/region_cubit/region_cubit.dart';
 import 'package:pinext/app/services/firebase_services.dart';
 import 'package:pinext/app/services/handlers/card_handler.dart';
 import 'package:pinext/app/services/handlers/user_handler.dart';
@@ -22,6 +24,7 @@ class FileHandler {
 
   Future<void> createReportForMonth(int month, BuildContext context, String selectedYear) async {
     try {
+      final regionState = context.watch<RegionCubit>().state;
       final selectedMonthInString = months[month];
       month = month + 1;
       final selectedMonth = '0$month'.length > 2 ? '0$month'.substring(1, 3) : '0$month';
@@ -75,28 +78,28 @@ class FileHandler {
             'A${totalTransactions + offset + 1}',
           )
           .setText(
-            'Total income: +$income ${UserHandler().currentUser.currencySymbol}',
+            'Total income: +$income ${regionState.countryData.symbol}',
           );
       sheet
           .getRangeByName(
             'A${totalTransactions + offset + 2}',
           )
           .setText(
-            'Total expense: -$expense ${UserHandler().currentUser.currencySymbol}',
+            'Total expense: -$expense ${regionState.countryData.symbol}',
           );
       sheet
           .getRangeByName(
             'A${totalTransactions + offset + 3}',
           )
           .setText(
-            'Outcome: ${income - expense} ${UserHandler().currentUser.currencySymbol}',
+            'Outcome: ${income - expense} ${regionState.countryData.symbol}',
           );
       sheet
           .getRangeByName(
             'A${totalTransactions + offset + 4}',
           )
           .setText(
-            'NET. Balance: ${UserHandler().currentUser.netBalance} ${UserHandler().currentUser.currencySymbol}',
+            'NET. Balance: ${UserHandler().currentUser.netBalance} ${regionState.countryData.symbol}',
           );
 
       final bytes = workbook.saveAsStream();

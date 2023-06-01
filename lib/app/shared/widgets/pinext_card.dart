@@ -7,9 +7,9 @@ import 'package:pinext/app/app_data/custom_transition_page_route/custom_transiti
 import 'package:pinext/app/app_data/extensions/string_extensions.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
+import 'package:pinext/app/bloc/region_cubit/region_cubit.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
 import 'package:pinext/app/screens/add_and_edit_pinext_card/add_and_edit_pinext_card.dart';
-import 'package:pinext/app/services/handlers/user_handler.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class PinextCard extends StatelessWidget {
@@ -61,6 +61,7 @@ class PinextCard extends StatelessWidget {
     return Builder(
       builder: (context) {
         final demoBlocState = context.watch<DemoBloc>().state;
+        final regionState = context.watch<RegionCubit>().state;
         return Stack(
           children: [
             Container(
@@ -163,7 +164,7 @@ class PinextCard extends StatelessWidget {
                                   children: [
                                     Flexible(
                                       child: Text(
-                                        demoBlocState is DemoEnabledState ? '55000 ${UserHandler().currentUser.currencySymbol}' : balance.toString(),
+                                        demoBlocState is DemoEnabledState ? '55000 ${regionState.countryData.symbol}' : balance.toString(),
                                         style: const TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 25,
@@ -184,7 +185,7 @@ class PinextCard extends StatelessWidget {
                                       maxLines: 1,
                                     ),
                                     Text(
-                                      UserHandler().currentUser.currencySymbol,
+                                      regionState.countryData.symbol,
                                       style: TextStyle(
                                         fontWeight: FontWeight.w500,
                                         fontSize: 15,

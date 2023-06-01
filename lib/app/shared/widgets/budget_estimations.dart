@@ -9,10 +9,10 @@ import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/app_data/custom_transition_page_route/custom_transition_page_route.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
+import 'package:pinext/app/bloc/region_cubit/region_cubit.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/screens/edit_budget_screen.dart';
 import 'package:pinext/app/services/date_time_services.dart';
-import 'package:pinext/app/services/handlers/user_handler.dart';
 import 'package:pinext/app/shared/widgets/horizontal_bar.dart';
 
 class GetBudgetEstimationsWidget extends StatelessWidget {
@@ -80,6 +80,7 @@ class GetBudgetEstimationsWidget extends StatelessWidget {
                     builder: (context) {
                       final state = context.watch<UserBloc>().state;
                       final demoBlocState = context.watch<DemoBloc>().state;
+                      final regionState = context.watch<RegionCubit>().state;
                       return GestureDetector(
                         onTap: () {
                           if (state is AuthenticatedUserState) {
@@ -102,8 +103,8 @@ class GetBudgetEstimationsWidget extends StatelessWidget {
                               if (state is AuthenticatedUserState)
                                 Text(
                                   demoBlocState is DemoEnabledState
-                                      ? '25000 ${UserHandler().currentUser.currencySymbol}'
-                                      : '${state.monthlyBudget} ${UserHandler().currentUser.currencySymbol}',
+                                      ? '25000 ${regionState.countryData.symbol}'
+                                      : '${state.monthlyBudget} ${regionState.countryData.symbol}',
                                   style: regularTextStyle.copyWith(
                                     fontWeight: FontWeight.w600,
                                     color: darkPurpleColor,
@@ -190,6 +191,7 @@ class GetBudgetEstimationsWidget extends StatelessWidget {
                 builder: (context) {
                   final state = context.watch<UserBloc>().state;
                   final demoBlocState = context.watch<DemoBloc>().state;
+                  final regionState = context.watch<RegionCubit>().state;
                   var budgetSpentPercentage = 0.0;
                   if (state is AuthenticatedUserState) {
                     if (state.monthlyBudget == '000' || state.monthlyExpenses == '000') {
@@ -242,8 +244,8 @@ class GetBudgetEstimationsWidget extends StatelessWidget {
                         ),
                         Text(
                           demoBlocState is DemoEnabledState
-                              ? '- 12500 ${UserHandler().currentUser.currencySymbol}'
-                              : '- ${state.monthlyExpenses} ${UserHandler().currentUser.currencySymbol}',
+                              ? '- 12500 ${regionState.countryData.symbol}'
+                              : '- ${state.monthlyExpenses} ${regionState.countryData.symbol}',
                           style: boldTextStyle.copyWith(
                             color: Colors.red.withOpacity(.9),
                           ),

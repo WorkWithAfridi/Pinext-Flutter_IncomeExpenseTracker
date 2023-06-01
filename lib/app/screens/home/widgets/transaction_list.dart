@@ -10,11 +10,11 @@ import 'package:pinext/app/bloc/archive_cubit/archive_cubit.dart';
 import 'package:pinext/app/bloc/archive_cubit/search_cubit/search_cubit.dart';
 import 'package:pinext/app/bloc/archive_cubit/user_statistics_cubit/user_statistics_cubit.dart';
 import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
+import 'package:pinext/app/bloc/region_cubit/region_cubit.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/models/pinext_transaction_model.dart';
 import 'package:pinext/app/services/date_time_services.dart';
 import 'package:pinext/app/services/firebase_services.dart';
-import 'package:pinext/app/services/handlers/user_handler.dart';
 import 'package:pinext/app/shared/widgets/custom_text_field.dart';
 import 'package:pinext/app/shared/widgets/horizontal_bar.dart';
 import 'package:pinext/app/shared/widgets/transaction_details_card.dart';
@@ -749,11 +749,15 @@ class _GetOverviewWidget extends StatelessWidget {
             color: customBlackColor.withOpacity(.80),
           ),
         ),
-        Text(
-          isDemoActive ? '100000 ${UserHandler().currentUser.currencySymbol}' : '$amount ${UserHandler().currentUser.currencySymbol}.',
-          style: boldTextStyle.copyWith(
-            color: primaryColor,
-          ),
+        BlocBuilder<RegionCubit, RegionState>(
+          builder: (context, state) {
+            return Text(
+              isDemoActive ? '100000 ${state.countryData.symbol}' : '$amount ${state.countryData.symbol}.',
+              style: boldTextStyle.copyWith(
+                color: primaryColor,
+              ),
+            );
+          },
         )
       ],
     );

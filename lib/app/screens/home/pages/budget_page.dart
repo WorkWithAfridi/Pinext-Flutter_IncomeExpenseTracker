@@ -11,13 +11,13 @@ import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/archive_cubit/user_statistics_cubit/user_statistics_cubit.dart';
 import 'package:pinext/app/bloc/budget_cubit/budget_cubit.dart';
 import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
+import 'package:pinext/app/bloc/region_cubit/region_cubit.dart';
 import 'package:pinext/app/bloc/update_subscription_cubit/update_subscription_cubit.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/models/pinext_subscription_model.dart';
 import 'package:pinext/app/screens/home/pages/budget_pages/add_subscription_page.dart';
 import 'package:pinext/app/services/date_time_services.dart';
 import 'package:pinext/app/services/firebase_services.dart';
-import 'package:pinext/app/services/handlers/user_handler.dart';
 import 'package:pinext/app/shared/widgets/budget_estimations.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 import 'package:pinext/app/shared/widgets/horizontal_bar.dart';
@@ -527,11 +527,15 @@ class _GetOverviewWidget extends StatelessWidget {
             color: customBlackColor.withOpacity(.80),
           ),
         ),
-        Text(
-          isDemoActive ? '100000 ${UserHandler().currentUser.currencySymbol}' : '$amount ${UserHandler().currentUser.currencySymbol}.',
-          style: boldTextStyle.copyWith(
-            color: primaryColor,
-          ),
+        BlocBuilder<RegionCubit, RegionState>(
+          builder: (context, state) {
+            return Text(
+              isDemoActive ? '100000 ${state.countryData.symbol}' : '$amount ${state.countryData.symbol}.',
+              style: boldTextStyle.copyWith(
+                color: primaryColor,
+              ),
+            );
+          },
         )
       ],
     );
@@ -657,6 +661,7 @@ class SubscriptionCard extends StatelessWidget {
           child: Builder(
             builder: (context) {
               final demoBlocState = context.watch<DemoBloc>().state;
+              final regionState = context.watch<RegionCubit>().state;
               return Row(
                 children: [
                   Expanded(
@@ -686,8 +691,8 @@ class SubscriptionCard extends StatelessWidget {
                             Expanded(
                               child: Text(
                                 demoBlocState is DemoEnabledState
-                                    ? '1000 ${UserHandler().currentUser.currencySymbol}'
-                                    : '${subscriptionModel.amount} ${UserHandler().currentUser.currencySymbol}',
+                                    ? '1000 ${regionState.countryData.symbol}'
+                                    : '${subscriptionModel.amount} ${regionState.countryData.symbol}',
                                 maxLines: 1,
                                 style: regularTextStyle.copyWith(
                                   color: customBlackColor.withOpacity(.7),
@@ -816,10 +821,11 @@ class _GetSubscriptionDetailsWidget extends StatelessWidget {
                             builder: (context) {
                               final state = context.watch<BudgetCubit>().state;
                               final demoBlocState = context.watch<DemoBloc>().state;
+                              final regionState = context.watch<RegionCubit>().state;
                               return Text(
                                 demoBlocState is DemoEnabledState
-                                    ? '75000 ${UserHandler().currentUser.currencySymbol}'
-                                    : '${state.paidAmount} ${UserHandler().currentUser.currencySymbol}',
+                                    ? '75000 ${regionState.countryData.symbol}'
+                                    : '${state.paidAmount} ${regionState.countryData.symbol}',
                                 style: boldTextStyle.copyWith(
                                   fontSize: 20,
                                   color: Colors.green,
@@ -864,10 +870,11 @@ class _GetSubscriptionDetailsWidget extends StatelessWidget {
                             builder: (context) {
                               final state = context.watch<BudgetCubit>().state;
                               final demoBlocState = context.watch<DemoBloc>().state;
+                              final regionState = context.watch<RegionCubit>().state;
                               return Text(
                                 demoBlocState is DemoEnabledState
-                                    ? '100000 ${UserHandler().currentUser.currencySymbol}'
-                                    : '${state.dueAmount} ${UserHandler().currentUser.currencySymbol}',
+                                    ? '100000 ${regionState.countryData.symbol}'
+                                    : '${state.dueAmount} ${regionState.countryData.symbol}',
                                 style: boldTextStyle.copyWith(
                                   fontSize: 20,
                                   color: Colors.red,

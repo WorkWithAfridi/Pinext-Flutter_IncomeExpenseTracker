@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
 import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
-import 'package:pinext/app/services/handlers/user_handler.dart';
+import 'package:pinext/app/bloc/region_cubit/region_cubit.dart';
 import 'package:pinext/country_data/country_data.dart';
 
-class CurrencyPage extends StatelessWidget {
-  const CurrencyPage({super.key});
+class SelectRegionScreen extends StatelessWidget {
+  const SelectRegionScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +45,7 @@ class CurrencyPage extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          UserHandler().currentUser.currencySymbol = CountryHandler().countryList[index].symbol;
+                          // UserHandler().currentUser.currencySymbol = CountryHandler().countryList[index].symbol;
                         },
                         child: Container(
                           height: 50,
@@ -57,23 +58,27 @@ class CurrencyPage extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(
                             horizontal: defaultPadding,
                           ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                '${CountryHandler().countryList[index].currency} - ${CountryHandler().countryList[index].symbol}',
-                                style: regularTextStyle.copyWith(
-                                  fontSize: 15,
-                                ),
-                              ),
-                              if (UserHandler().currentUser.currencySymbol == CountryHandler().countryList[index].symbol)
-                                const Icon(
-                                  Icons.check,
-                                  color: primaryColor,
-                                )
-                              else
-                                const SizedBox.shrink()
-                            ],
+                          child: BlocBuilder<RegionCubit, RegionState>(
+                            builder: (context, state) {
+                              return Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    '${CountryHandler().countryList[index].currency}}',
+                                    style: regularTextStyle.copyWith(
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                  if (state.countryData.symbol == CountryHandler().countryList[index].symbol)
+                                    const Icon(
+                                      Icons.check,
+                                      color: primaryColor,
+                                    )
+                                  else
+                                    const SizedBox.shrink()
+                                ],
+                              );
+                            },
                           ),
                         ),
                       ),

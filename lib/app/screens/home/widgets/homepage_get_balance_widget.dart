@@ -7,9 +7,9 @@ import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/app_data/custom_transition_page_route/custom_transition_page_route.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
+import 'package:pinext/app/bloc/region_cubit/region_cubit.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/screens/edit_net_balance_screen.dart';
-import 'package:pinext/app/services/handlers/user_handler.dart';
 
 class HomepageGetBalanceWidget extends StatelessWidget {
   HomepageGetBalanceWidget({
@@ -25,6 +25,7 @@ class HomepageGetBalanceWidget extends StatelessWidget {
       builder: (context) {
         final state = context.watch<UserBloc>().state;
         final demoBlocState = context.watch<DemoBloc>().state;
+        final regionState = context.watch<RegionCubit>().state;
         if (state is AuthenticatedUserState) {
           return GestureDetector(
             onTap: () {
@@ -80,8 +81,8 @@ class HomepageGetBalanceWidget extends StatelessWidget {
                             ),
                             Text(
                               demoBlocState is DemoEnabledState
-                                  ? '750000 ${UserHandler().currentUser.currencySymbol}'
-                                  : '${state.netBalance} ${UserHandler().currentUser.currencySymbol}',
+                                  ? '750000 ${regionState.countryData.symbol}'
+                                  : '${state.netBalance} ${regionState.countryData.symbol}',
                               style: boldTextStyle.copyWith(
                                 fontSize: 30,
                                 color: whiteColor,

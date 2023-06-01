@@ -8,9 +8,9 @@ import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/app_data/extensions/string_extensions.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/add_goal_cubit/add_goal_cubit.dart';
+import 'package:pinext/app/bloc/region_cubit/region_cubit.dart';
 import 'package:pinext/app/bloc/signup_cubit/signin_cubit_cubit.dart';
 import 'package:pinext/app/models/pinext_goal_model.dart';
-import 'package:pinext/app/services/handlers/user_handler.dart';
 import 'package:pinext/app/shared/widgets/custom_button.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 import 'package:pinext/app/shared/widgets/custom_text_field.dart';
@@ -253,15 +253,19 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                 const SizedBox(
                   height: 8,
                 ),
-                CustomTextFormField(
-                  controller: amountController,
-                  hintTitle: 'Ex: 400,000${UserHandler().currentUser.currencySymbol}',
-                  textInputType: TextInputType.number,
-                  onChanged: (String value) {},
-                  validator: (String value) {
-                    return InputValidation(value).isCorrectNumber();
+                BlocBuilder<RegionCubit, RegionState>(
+                  builder: (context, state) {
+                    return CustomTextFormField(
+                      controller: amountController,
+                      hintTitle: 'Ex: 400,000${state.countryData.symbol}',
+                      textInputType: TextInputType.number,
+                      onChanged: (String value) {},
+                      validator: (String value) {
+                        return InputValidation(value).isCorrectNumber();
+                      },
+                      suffixButtonAction: () {},
+                    );
                   },
-                  suffixButtonAction: () {},
                 ),
                 const SizedBox(
                   height: 12,
