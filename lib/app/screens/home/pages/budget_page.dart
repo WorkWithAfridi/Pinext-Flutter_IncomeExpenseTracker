@@ -530,7 +530,7 @@ class _GetOverviewWidget extends StatelessWidget {
         BlocBuilder<RegionCubit, RegionState>(
           builder: (context, state) {
             return Text(
-              isDemoActive ? '100000 ${state.countryData.symbol}' : '$amount ${state.countryData.symbol}.',
+              isDemoActive ? '100000 ${state.countryData.symbol}' : ' $amount ${state.countryData.symbol}',
               style: boldTextStyle.copyWith(
                 color: primaryColor,
               ),

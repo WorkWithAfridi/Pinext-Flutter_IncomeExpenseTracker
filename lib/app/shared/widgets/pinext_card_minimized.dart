@@ -109,7 +109,10 @@ class PinextCardMinimized extends StatelessWidget {
                                     ),
                                     curve: Curves.fastOutSlowIn,
                                   ),
-                                  Text('/${regionState.countryData.symbol}'),
+                                  Text(
+                                    ' ${regionState.countryData.symbol}',
+                                    style: regularTextStyle.copyWith(fontSize: 20),
+                                  ),
                                 ],
                               ),
                               // Text(
