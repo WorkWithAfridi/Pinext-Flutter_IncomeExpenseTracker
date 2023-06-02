@@ -101,7 +101,7 @@ class AppSettingsScreen extends StatelessWidget {
                         builder: (context, state) {
                           return Text(
                             // UserHandler().currentUser.currencySymbol,
-                            state.countryData.name,
+                            state.countryData.code,
                             style: regularTextStyle.copyWith(
                               fontSize: 15,
                             ),
