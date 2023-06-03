@@ -66,6 +66,22 @@ class AppSettingsScreen extends StatelessWidget {
               const SizedBox(
                 height: 8,
               ),
+              // GetSettingsButtonWithIcon(
+              //   onTapFunction: () {
+              //     // Navigator.push(
+              //     //   context,
+              //     //   CustomTransitionPageRoute(
+              //     //     childWidget: const ViewGoalsAndMilestoneScreen(),
+              //     //   ),
+              //     // );
+              //   },
+              //   label: 'Fresh Start',
+              //   icon: Icons.delete,
+              //   iconSize: 18,
+              // ),
+              // const SizedBox(
+              //   height: 8,
+              // ),
               GestureDetector(
                 onTap: () {
                   Navigator.push(
@@ -101,7 +117,7 @@ class AppSettingsScreen extends StatelessWidget {
                         builder: (context, state) {
                           return Text(
                             // UserHandler().currentUser.currencySymbol,
-                            state.countryData.name,
+                            state.countryData.code,
                             style: regularTextStyle.copyWith(
                               fontSize: 15,
                             ),
