@@ -110,29 +110,13 @@ class PinextCard extends StatelessWidget {
                             Text(
                               demoBlocState is DemoEnabledState ? 'Bank' : title,
                               style: const TextStyle(
-                                fontSize: 30,
+                                fontSize: 25,
                                 fontWeight: FontWeight.w600,
                                 color: whiteColor,
-                                fontFamily: 'CardTitle',
+                                fontFamily: 'BakbakOne',
                               ),
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
-                            ),
-                            if (cardId != '')
-                              Text(
-                                cardId.substring(0, 16),
-                                style: TextStyle(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w600,
-                                  color: whiteColor.withOpacity(.8),
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                              )
-                            else
-                              const SizedBox.shrink(),
-                            const SizedBox(
-                              height: 4,
                             ),
                             Expanded(
                               child: Text(
@@ -145,54 +129,116 @@ class PinextCard extends StatelessWidget {
                                   overflow: TextOverflow.ellipsis,
                                   fontSize: 12,
                                 ),
-                                maxLines: 2,
+                                maxLines: 3,
                               ),
                             ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Current balance',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 10,
-                                    color: whiteColor.withOpacity(.6),
+                            if (cardId != '')
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    height: 40,
+                                    width: 40,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(defaultBorder),
+                                      child: Image.asset(
+                                        'assets/app_icon/aap_icon.png',
+                                      ),
+                                    ),
                                   ),
-                                ),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Flexible(
-                                      child: Text(
-                                        demoBlocState is DemoEnabledState ? '55000 ${regionState.countryData.symbol}' : balance.toString(),
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 25,
-                                          color: whiteColor,
+                                  const SizedBox(
+                                    height: 6,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        '•••• •••• •••• ',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                          color: whiteColor.withOpacity(.8),
                                         ),
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 1,
                                       ),
-                                    ),
-                                    Text(
-                                      " ${regionState.countryData.symbol}",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 25,
-                                        color: whiteColor.withOpacity(.4),
+                                      Text(
+                                        cardId.substring(cardId.length - 4, cardId.length),
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                          color: whiteColor.withOpacity(.8),
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
                                       ),
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 1,
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            )
+                                    ],
+                                  ),
+                                ],
+                              )
+                            else
+                              const SizedBox.shrink(),
                           ],
                         ),
                       ),
                       const SizedBox(
                         width: 16,
+                      ),
+                      RotatedBox(
+                        quarterTurns: 3,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Current balance',
+                              style: TextStyle(
+                                fontWeight: FontWeight.normal,
+                                fontSize: 10,
+                                color: whiteColor.withOpacity(.6),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 4,
+                            ),
+                            Container(
+                              height: 1,
+                              color: whiteColor.withOpacity(.6),
+                              width: getWidth(context),
+                            ),
+                            const SizedBox(
+                              height: 4,
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Flexible(
+                                  child: Text(
+                                    demoBlocState is DemoEnabledState ? '55000' : balance.toInt().toString(),
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 25,
+                                      color: whiteColor,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                  ),
+                                ),
+                                Text(
+                                  ' ${regionState.countryData.symbol}',
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 25,
+                                    color: whiteColor,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 8,
                       ),
                       RotatedBox(
                         quarterTurns: 3,

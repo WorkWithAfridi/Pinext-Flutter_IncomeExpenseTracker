@@ -107,6 +107,9 @@ flutter:
     - family: CardTitle
       fonts:
         - asset: assets/fonts/TiltPrism-Regular-VariableFont_XROT,YROT.ttf
+    - family: BakbakOne
+      fonts:
+        - asset: assets/fonts/BakbakOne-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

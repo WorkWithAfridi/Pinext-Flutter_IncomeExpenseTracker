@@ -73,6 +73,8 @@ class PinextCardMinimized extends StatelessWidget {
                               fontSize: 18,
                               color: customBlackColor,
                             ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                             colors: GetGradientFromString(
                               pinextCardModel.color,
                             ),

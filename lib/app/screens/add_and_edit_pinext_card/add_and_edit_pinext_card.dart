@@ -320,7 +320,7 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                         // final color = state.color;
                         // late final cardColor = getColorFromString(color);
                         return PinextCard(
-                          cardId: '',
+                          cardId: widget.isEditCardScreen ? widget.pinextCardModel!.cardId : '',
                           cardColor: widget.isEditCardScreen ? isEditCardColor! : state.color,
                           title: widget.isEditCardScreen ? widget.pinextCardModel!.title : 'Example card',
                           balance: widget.isEditCardScreen ? widget.pinextCardModel!.balance : 1233456,
