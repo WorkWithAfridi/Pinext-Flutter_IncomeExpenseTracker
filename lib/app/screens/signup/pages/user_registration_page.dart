@@ -107,43 +107,49 @@ class UserRegistrationPage extends StatelessWidget {
                     ),
                   );
                 },
-                child: Container(
-                  height: 50,
-                  width: getWidth(context),
-                  decoration: BoxDecoration(
-                    color: greyColor,
-                    borderRadius: BorderRadius.circular(defaultBorder),
-                    border: Border.all(
-                      color: customBlackColor.withOpacity(.1),
-                      width: 2,
-                    ),
-                  ),
-                  alignment: Alignment.centerLeft,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: defaultPadding,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Region ',
-                        style: regularTextStyle.copyWith(
-                          fontSize: 15,
+                child: BlocBuilder<RegionCubit, RegionState>(
+                  builder: (context, state) {
+                    return Container(
+                      height: 50,
+                      width: getWidth(context),
+                      decoration: BoxDecoration(
+                        color: greyColor,
+                        borderRadius: BorderRadius.circular(defaultBorder),
+                        border: Border.all(
+                          color: customBlackColor.withOpacity(.1),
+                          width: 2,
                         ),
                       ),
-                      BlocBuilder<RegionCubit, RegionState>(
-                        builder: (context, state) {
-                          return Text(
-                            // UserHandler().currentUser.currencySymbol,
-                            state.countryData.name,
-                            style: regularTextStyle.copyWith(
-                              fontSize: 15,
-                            ),
-                          );
-                        },
+                      alignment: Alignment.centerLeft,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: defaultPadding,
                       ),
-                    ],
-                  ),
+                      child: state.isLoading
+                          ? Center(
+                              child: ButtonLoadingAnimation(
+                                loadingColor: customBlackColor,
+                              ),
+                            )
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Region ',
+                                  style: regularTextStyle.copyWith(
+                                    fontSize: 15,
+                                  ),
+                                ),
+                                Text(
+                                  // UserHandler().currentUser.currencySymbol,
+                                  state.countryData.name,
+                                  style: regularTextStyle.copyWith(
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ],
+                            ),
+                    );
+                  },
                 ),
               ),
               const SizedBox(

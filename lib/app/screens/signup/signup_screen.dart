@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
+import 'package:pinext/app/bloc/region_cubit/region_cubit.dart';
 import 'package:pinext/app/bloc/signup_cubit/signin_cubit_cubit.dart';
 import 'package:pinext/app/screens/signup/pages/cards_and_balance_registration_page.dart';
 import 'package:pinext/app/screens/signup/pages/user_registration_page.dart';
@@ -60,6 +61,7 @@ class _SignupScreenViewState extends State<SignupScreenView> {
         pageController: signupPageController,
       ),
     );
+    context.read<RegionCubit>().getRegionFromIp();
     super.initState();
   }
 

@@ -40,7 +40,7 @@ class GetCustomButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             if (isLoading)
-              const ButtonLoadingAnimation()
+              ButtonLoadingAnimation()
             else
               Row(
                 children: [
@@ -75,9 +75,12 @@ class GetCustomButton extends StatelessWidget {
 }
 
 class ButtonLoadingAnimation extends StatelessWidget {
-  const ButtonLoadingAnimation({
+  ButtonLoadingAnimation({
     super.key,
+    this.loadingColor = Colors.white,
   });
+
+  Color loadingColor;
 
   @override
   Widget build(BuildContext context) {
@@ -85,8 +88,8 @@ class ButtonLoadingAnimation extends StatelessWidget {
       padding: const EdgeInsets.all(5),
       height: 30,
       width: 30,
-      child: const CircularProgressIndicator(
-        color: Colors.white,
+      child: CircularProgressIndicator(
+        color: loadingColor,
         strokeWidth: 2.5,
       ),
 
