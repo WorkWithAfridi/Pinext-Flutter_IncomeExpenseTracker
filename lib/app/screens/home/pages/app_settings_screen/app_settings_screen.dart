@@ -59,29 +59,147 @@ class AppSettingsScreen extends StatelessWidget {
                     ),
                   );
                 },
-                label: 'Goals & Milestones',
+                label: 'Goals & milestones',
                 icon: Icons.stop,
                 iconSize: 18,
               ),
               const SizedBox(
                 height: 8,
               ),
-              // GetSettingsButtonWithIcon(
-              //   onTapFunction: () {
-              //     // Navigator.push(
-              //     //   context,
-              //     //   CustomTransitionPageRoute(
-              //     //     childWidget: const ViewGoalsAndMilestoneScreen(),
-              //     //   ),
-              //     // );
-              //   },
-              //   label: 'Fresh Start',
-              //   icon: Icons.delete,
-              //   iconSize: 18,
-              // ),
-              // const SizedBox(
-              //   height: 8,
-              // ),
+              GetSettingsButtonWithIcon(
+                onTapFunction: () async {
+                  await showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text(
+                          'Proceed with Caution\nIrreversible Action',
+                          style: boldTextStyle.copyWith(
+                            fontSize: 20,
+                          ),
+                        ),
+                        content: SingleChildScrollView(
+                          child: ListBody(
+                            children: [
+                              Text(
+                                'Please read this warning carefully before proceeding. Resetting account is an irreversible action that cannot be undone. This service will remove all your account details and associated data. There will be no way to recover your information once the deletion is complete.\n \nTo proceed, click the "Approve" button below. If you have any concerns or need further assistance, please click "Cancel" and reach out to our support team.',
+                                style: regularTextStyle,
+                              ),
+                            ],
+                          ),
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(defaultBorder),
+                        ),
+                        actions: <Widget>[
+                          TextButton(
+                            child: Text(
+                              'Cancel',
+                              style: boldTextStyle.copyWith(
+                                color: customBlackColor.withOpacity(
+                                  .8,
+                                ),
+                              ),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          TextButton(
+                            child: Text(
+                              'Approve',
+                              style: boldTextStyle.copyWith(
+                                color: customBlackColor.withOpacity(
+                                  .8,
+                                ),
+                              ),
+                            ),
+                            onPressed: () {
+                              // Navigator.pop(context);
+                              // status = 'enabled';
+                              // context.read<DemoBloc>().add(EnableDemoModeEvent());
+                            },
+                          ),
+                        ],
+                        actionsPadding: dialogButtonPadding,
+                      );
+                    },
+                  );
+                },
+                label: 'Reset account',
+                icon: Icons.restore,
+                iconSize: 18,
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              GetSettingsButtonWithIcon(
+                onTapFunction: () async {
+                  await showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text(
+                          'Proceed with Caution\nIrreversible Action',
+                          style: boldTextStyle.copyWith(
+                            fontSize: 20,
+                          ),
+                        ),
+                        content: SingleChildScrollView(
+                          child: ListBody(
+                            children: [
+                              Text(
+                                'Please read this warning carefully before proceeding. Account deletion is an irreversible action that cannot be undone. This service will delete your account and remove all of your account details and associated data. There will be no way to recover your information once the deletion is complete.\n \nTo proceed, click the "Approve" button below. If you have any concerns or need further assistance, please click "Cancel" and reach out to our support team.',
+                                style: regularTextStyle,
+                              ),
+                            ],
+                          ),
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(defaultBorder),
+                        ),
+                        actions: <Widget>[
+                          TextButton(
+                            child: Text(
+                              'Cancel',
+                              style: boldTextStyle.copyWith(
+                                color: customBlackColor.withOpacity(
+                                  .8,
+                                ),
+                              ),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          TextButton(
+                            child: Text(
+                              'Approve',
+                              style: boldTextStyle.copyWith(
+                                color: customBlackColor.withOpacity(
+                                  .8,
+                                ),
+                              ),
+                            ),
+                            onPressed: () {
+                              // Navigator.pop(context);
+                              // status = 'enabled';
+                              // context.read<DemoBloc>().add(EnableDemoModeEvent());
+                            },
+                          ),
+                        ],
+                        actionsPadding: dialogButtonPadding,
+                      );
+                    },
+                  );
+                },
+                label: 'Delete account',
+                icon: Icons.delete_forever,
+                iconSize: 18,
+              ),
+              const SizedBox(
+                height: 8,
+              ),
               GestureDetector(
                 onTap: () {
                   Navigator.push(
@@ -128,86 +246,6 @@ class AppSettingsScreen extends StatelessWidget {
                   ),
                 ),
               ),
-
-              // const SizedBox(
-              //   height: 8,
-              // ),
-              // GetSettingsButtonWithIcon(
-              //   onTapFunction: () async {
-              //     // final countryHandler = CountryHandler();
-              //     // log(countryHandler.countryList.length.toString());
-              //     // final bangladesh = countryHandler.countryList.where((element) => element.code == 'BD').first;
-              //     // log('Currency of Bangladesh is ${bangladesh.symbol}');
-
-              //     // final ipData = await ApiRepo().printIps();
-              //     // log(ipData.toString());
-              //   },
-              //   label: 'Country data',
-              //   icon: Icons.settings,
-              //   iconSize: 18,
-              // ),
-
-              // const SizedBox(
-              //   height: 8,
-              // ),
-              // GetSettingsButtonWithIcon(
-              //   onTapFunction: () {
-              //     GetCustomSnackbar(
-              //       title: "Snap",
-              //       message:
-              //           "The section is still under development.\nAnd will be updated at a later date!",
-              //       snackbarType: SnackbarType.info,
-              //       context: context,
-              //     );
-              //   },
-              //   label: "App settings",
-              //   icon: Icons.settings,
-              //   iconSize: 18,
-              // ),
-              // const SizedBox(
-              //   height: 8,
-              // ),
-              // GetSettingsButtonWithIcon(
-              //   onTapFunction: () {
-              //     AppHandler().requestNewFuture(context);
-              //   },
-              //   label: 'Request new future!',
-              //   icon: FontAwesomeIcons.fire,
-              //   iconSize: 16,
-              // ),
-              // const SizedBox(
-              //   height: 8,
-              // ),
-              // GetSettingsButtonWithIcon(
-              //   onTapFunction: () {
-              //     AppHandler().writeReview(context);
-              //   },
-              //   label: 'Post review',
-              //   icon: FontAwesomeIcons.penToSquare,
-              //   iconSize: 18,
-              // ),
-              // const SizedBox(
-              //   height: 8,
-              // ),
-              // GetSettingsButtonWithIcon(
-              //   onTapFunction: () {
-              //     AppHandler().sendBugReport(context);
-              //   },
-              //   label: 'Report bug',
-              //   icon: FontAwesomeIcons.bug,
-              //   iconSize: 18,
-              // ),
-              // const SizedBox(
-              //   height: 8,
-              // ),
-              // GetSettingsButtonWithIcon(
-              //   onTapFunction: () {
-              //     AppHandler().checkForUpdate(context);
-              //   },
-              //   label: 'Check for updates',
-              //   icon: Icons.update,
-              //   iconSize: 18,
-              // ),
               const SizedBox(
                 height: 8,
               ),

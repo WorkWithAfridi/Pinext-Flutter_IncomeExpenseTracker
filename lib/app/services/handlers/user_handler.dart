@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pinext/app/API/firebase_directories.dart';
 import 'package:pinext/app/models/pinext_user_model.dart';
 import 'package:pinext/app/services/date_time_services.dart';
@@ -112,5 +113,47 @@ class UserHandler {
       'regionCode': regionCode,
     });
     return;
+  }
+
+  Future deleteUserData() async {
+    try {
+      await FirebaseServices().firebaseFirestore.collection('pinext_users').doc(currentUser.userId).delete();
+      final pinextUserModel = PinextUserModel(
+        userId: currentUser.userId,
+        emailAddress: currentUser.emailAddress,
+        username: currentUser.username,
+        netBalance: '0',
+        monthlyBudget: '1',
+        dailyExpenses: '0',
+        monthlyExpenses: '0',
+        weeklyExpenses: '0',
+        monthlySavings: '0',
+        monthlyEarnings: '0',
+        accountCreatedOn: DateTime.now().toString(),
+        currentDate: currentDate,
+        currentMonth: currentMonth,
+        currentWeekOfTheYear: currentWeekOfTheYear,
+        currentYear: currentYear,
+        regionCode: currentUser.regionCode,
+      );
+      await FirebaseServices().firebaseFirestore.collection('pinext_users').doc(currentUser.userId).set(pinextUserModel.toMap());
+      return 'Success';
+    } on FirebaseAuthException catch (e) {
+      return e.message.toString();
+    } catch (e) {
+      return 'An error occurred while deleting your date. Please contact admin at afridi.khondakar@gmail.com.';
+    }
+  }
+
+  Future<String> deleteUser() async {
+    try {
+      await FirebaseServices().firebaseFirestore.collection('pinext_users').doc(currentUser.userId).delete();
+      await FirebaseServices().firebaseAuth.currentUser!.delete();
+      return 'Success';
+    } on FirebaseAuthException catch (e) {
+      return e.message.toString();
+    } catch (e) {
+      return 'An error occurred while deleting your account. Please contact admin at afridi.khondakar@gmail.com.';
+    }
   }
 }
