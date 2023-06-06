@@ -68,7 +68,7 @@ class PinextCard extends StatelessWidget {
               padding: const EdgeInsets.all(
                 15,
               ),
-              height: 180,
+              height: 210,
               width: getWidth(context) * .85,
               decoration: BoxDecoration(
                 // color: cardColor,
@@ -88,7 +88,7 @@ class PinextCard extends StatelessWidget {
               padding: const EdgeInsets.all(
                 15,
               ),
-              height: 180,
+              height: 210,
               width: getWidth(context) * .85,
               decoration: BoxDecoration(
                 color: Colors.black.withOpacity(.10),
