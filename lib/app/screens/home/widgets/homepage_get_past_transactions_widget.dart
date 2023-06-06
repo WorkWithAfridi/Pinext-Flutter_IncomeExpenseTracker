@@ -19,7 +19,7 @@ class HomepageGetPastTransactionsWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Last 10 transactions',
+              'Recent transactions',
               style: boldTextStyle.copyWith(
                 fontSize: 20,
               ),
