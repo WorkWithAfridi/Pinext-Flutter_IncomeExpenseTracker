@@ -5,6 +5,7 @@ import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/region_cubit/region_cubit.dart';
+import 'package:pinext/app/shared/widgets/custom_loader.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 import 'package:pinext/country_data/country_data.dart';
 
@@ -125,25 +126,8 @@ class SelectRegionScreen extends StatelessWidget {
           BlocBuilder<RegionCubit, RegionState>(
             builder: (context, state) {
               return state.isLoading
-                  ? Container(
-                      height: getHeight(context),
-                      width: getWidth(context),
-                      color: whiteColor,
-                      child: Align(
-                        child: Container(
-                          padding: const EdgeInsets.all(5),
-                          height: 30,
-                          width: 30,
-                          child: const CircularProgressIndicator(
-                            color: customBlackColor,
-                            strokeWidth: 2.5,
-                          ),
-
-                          // LottieBuilder.asset(
-                          //   'assets/animations/loading_animation.json',
-                          // ),
-                        ),
-                      ),
+                  ? const CustomLoader(
+                      title: 'Loading...',
                     )
                   : const SizedBox.shrink();
             },

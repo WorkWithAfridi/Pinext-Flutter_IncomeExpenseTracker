@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pinext/app/API/firebase_directories.dart';
@@ -117,7 +119,9 @@ class UserHandler {
 
   Future deleteUserData() async {
     try {
-      await FirebaseServices().firebaseFirestore.collection('pinext_users').doc(currentUser.userId).delete();
+      final documentRef = FirebaseServices().firebaseFirestore.collection('pinext_users').doc(currentUser.userId);
+      await documentRef.delete();
+
       final pinextUserModel = PinextUserModel(
         userId: currentUser.userId,
         emailAddress: currentUser.emailAddress,
@@ -137,8 +141,10 @@ class UserHandler {
         regionCode: currentUser.regionCode,
       );
       await FirebaseServices().firebaseFirestore.collection('pinext_users').doc(currentUser.userId).set(pinextUserModel.toMap());
+      log('Account resetted');
       return 'Success';
     } on FirebaseAuthException catch (e) {
+      log(e.message.toString());
       return e.message.toString();
     } catch (e) {
       return 'An error occurred while deleting your date. Please contact admin at afridi.khondakar@gmail.com.';

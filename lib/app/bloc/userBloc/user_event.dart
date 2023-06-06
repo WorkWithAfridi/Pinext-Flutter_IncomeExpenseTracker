@@ -37,3 +37,21 @@ class SignOutUserEvent extends UserEvent {
 }
 
 class UnauthenticatedUserEvent extends UserEvent {}
+
+class ResetUserDataEvent extends UserEvent {
+  AuthenticatedUserState currentState;
+  BuildContext context;
+  ResetUserDataEvent({
+    required this.currentState,
+    required this.context,
+  });
+}
+
+class DeleteUserEvent extends UserEvent {
+  AuthenticatedUserState currentState;
+  BuildContext context;
+  DeleteUserEvent({
+    required this.currentState,
+    required this.context,
+  });
+}

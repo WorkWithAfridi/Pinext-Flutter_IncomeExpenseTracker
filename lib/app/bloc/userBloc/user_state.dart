@@ -27,6 +27,7 @@ class AuthenticatedUserState extends UserState {
   String currentYear;
   String monthlyEarnings;
   String regionCode;
+  bool isLoading;
 
   AuthenticatedUserState({
     required this.userId,
@@ -45,6 +46,7 @@ class AuthenticatedUserState extends UserState {
     required this.currentYear,
     required this.monthlyEarnings,
     required this.regionCode,
+    this.isLoading = false,
   });
 
   @override
@@ -65,5 +67,46 @@ class AuthenticatedUserState extends UserState {
         currentYear,
         monthlyEarnings,
         regionCode,
+        isLoading,
       ];
+
+  AuthenticatedUserState copyWith({
+    String? userId,
+    String? username,
+    String? emailAddress,
+    String? netBalance,
+    String? monthlyBudget,
+    String? monthlyExpenses,
+    String? dailyExpenses,
+    String? weeklyExpenses,
+    String? monthlySavings,
+    String? accountCreatedOn,
+    String? currentDate,
+    String? currentMonth,
+    String? currentWeekOfTheYear,
+    String? currentYear,
+    String? monthlyEarnings,
+    String? regionCode,
+    bool? isLoading,
+  }) {
+    return AuthenticatedUserState(
+      userId: userId ?? this.userId,
+      username: username ?? this.username,
+      emailAddress: emailAddress ?? this.emailAddress,
+      netBalance: netBalance ?? this.netBalance,
+      monthlyBudget: monthlyBudget ?? this.monthlyBudget,
+      monthlyExpenses: monthlyExpenses ?? this.monthlyExpenses,
+      dailyExpenses: dailyExpenses ?? this.dailyExpenses,
+      weeklyExpenses: weeklyExpenses ?? this.weeklyExpenses,
+      monthlySavings: monthlySavings ?? this.monthlySavings,
+      accountCreatedOn: accountCreatedOn ?? this.accountCreatedOn,
+      currentDate: currentDate ?? this.currentDate,
+      currentMonth: currentMonth ?? this.currentMonth,
+      currentWeekOfTheYear: currentWeekOfTheYear ?? this.currentWeekOfTheYear,
+      currentYear: currentYear ?? this.currentYear,
+      monthlyEarnings: monthlyEarnings ?? this.monthlyEarnings,
+      regionCode: regionCode ?? this.regionCode,
+      isLoading: isLoading ?? this.isLoading,
+    );
+  }
 }

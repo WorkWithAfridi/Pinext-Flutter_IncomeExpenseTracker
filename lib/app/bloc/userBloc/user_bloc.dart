@@ -5,6 +5,7 @@ import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/bloc/region_cubit/region_cubit.dart';
 import 'package:pinext/app/services/authentication_services.dart';
 import 'package:pinext/app/services/date_time_services.dart';
+import 'package:pinext/app/services/handlers/card_handler.dart';
 import 'package:pinext/app/services/handlers/user_handler.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 import 'package:pinext/country_data/country_data.dart';
@@ -28,6 +29,83 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     on<UnauthenticatedUserEvent>(
       (event, emit) {
         emit(UnauthenticatedUserState());
+      },
+    );
+    on<ResetUserDataEvent>(
+      (event, emit) async {
+        emit(
+          AuthenticatedUserState(
+            userId: event.currentState.userId,
+            username: event.currentState.username,
+            emailAddress: event.currentState.emailAddress,
+            netBalance: event.currentState.netBalance,
+            monthlyBudget: event.currentState.monthlyBudget,
+            monthlyExpenses: event.currentState.monthlyExpenses,
+            dailyExpenses: event.currentState.dailyExpenses,
+            weeklyExpenses: event.currentState.weeklyExpenses,
+            monthlySavings: event.currentState.monthlySavings,
+            accountCreatedOn: event.currentState.accountCreatedOn,
+            currentYear: event.currentState.currentYear,
+            currentDate: event.currentState.currentDate,
+            currentMonth: event.currentState.currentMonth,
+            monthlyEarnings: event.currentState.monthlyEarnings,
+            currentWeekOfTheYear: event.currentState.currentWeekOfTheYear,
+            regionCode: event.currentState.regionCode,
+            isLoading: true,
+          ),
+        );
+        await UserHandler().deleteUserData();
+        final user = await UserHandler().getCurrentUser();
+        await CardHandler().getUserCards();
+        emit(
+          AuthenticatedUserState(
+            userId: user.userId,
+            username: user.username,
+            emailAddress: user.emailAddress,
+            netBalance: user.netBalance,
+            monthlyBudget: user.monthlyBudget,
+            monthlyExpenses: user.monthlyExpenses,
+            dailyExpenses: user.dailyExpenses,
+            weeklyExpenses: user.weeklyExpenses,
+            monthlySavings: user.monthlySavings,
+            accountCreatedOn: user.accountCreatedOn,
+            currentYear: user.currentYear,
+            currentDate: user.currentDate,
+            currentMonth: user.currentMonth,
+            monthlyEarnings: user.monthlyEarnings,
+            currentWeekOfTheYear: user.currentWeekOfTheYear,
+            regionCode: user.regionCode,
+          ),
+        );
+      },
+    );
+    on<DeleteUserEvent>(
+      (event, emit) async {
+        emit(
+          AuthenticatedUserState(
+            userId: event.currentState.userId,
+            username: event.currentState.username,
+            emailAddress: event.currentState.emailAddress,
+            netBalance: event.currentState.netBalance,
+            monthlyBudget: event.currentState.monthlyBudget,
+            monthlyExpenses: event.currentState.monthlyExpenses,
+            dailyExpenses: event.currentState.dailyExpenses,
+            weeklyExpenses: event.currentState.weeklyExpenses,
+            monthlySavings: event.currentState.monthlySavings,
+            accountCreatedOn: event.currentState.accountCreatedOn,
+            currentYear: event.currentState.currentYear,
+            currentDate: event.currentState.currentDate,
+            currentMonth: event.currentState.currentMonth,
+            monthlyEarnings: event.currentState.monthlyEarnings,
+            currentWeekOfTheYear: event.currentState.currentWeekOfTheYear,
+            regionCode: event.currentState.regionCode,
+            isLoading: true,
+          ),
+        );
+        await UserHandler().deleteUser();
+        emit(
+          UnauthenticatedUserState(),
+        );
       },
     );
   }
