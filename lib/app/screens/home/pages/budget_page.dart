@@ -67,6 +67,24 @@ class BudgetView extends StatelessWidget {
         ),
       ],
       child: Scaffold(
+        floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              CustomTransitionPageRoute(
+                childWidget: AddSubscriptionPage(),
+              ),
+            );
+          },
+          backgroundColor: darkPurpleColor,
+          child: const Icon(
+            Icons.add,
+            color: whiteColor,
+            size: 18,
+          ),
+        ),
         backgroundColor: whiteColor,
         body: SizedBox(
           height: MediaQuery.of(context).size.height,
@@ -107,7 +125,7 @@ class BudgetView extends StatelessWidget {
                   ),
                   const _GetSubscriptionWidget(),
                   const SizedBox(
-                    height: 30,
+                    height: kToolbarHeight * 1.5,
                   ),
                 ],
               ),
@@ -433,12 +451,12 @@ class _GetStatisticsWidget extends StatelessWidget {
 
                 var totalEarnings = '';
                 if (state is AuthenticatedUserState) {
-                  totalEarnings = state.monthlyEarnings.toString();
+                  totalEarnings = state.monthlyEarnings;
                 }
                 return _GetOverviewWidget(
                   isDemoActive: demoBlocState is DemoEnabledState,
                   title: "You've earned",
-                  amount: totalEarnings.toString(),
+                  amount: totalEarnings,
                 );
               },
             ),
@@ -460,12 +478,12 @@ class _GetStatisticsWidget extends StatelessWidget {
 
                 var totalSavings = '';
                 if (state is AuthenticatedUserState) {
-                  totalSavings = state.monthlySavings.toString();
+                  totalSavings = state.monthlySavings;
                 }
                 return _GetOverviewWidget(
                   isDemoActive: demoBlocState is DemoEnabledState,
                   title: "You've saved",
-                  amount: totalSavings.toString(),
+                  amount: totalSavings,
                 );
               },
             ),
@@ -486,12 +504,12 @@ class _GetStatisticsWidget extends StatelessWidget {
                 final demoBlocState = context.watch<DemoBloc>().state;
                 var netWorth = '';
                 if (state is AuthenticatedUserState) {
-                  netWorth = state.netBalance.toString();
+                  netWorth = state.netBalance;
                 }
                 return _GetOverviewWidget(
                   isDemoActive: demoBlocState is DemoEnabledState,
                   title: 'Current NET. balance',
-                  amount: netWorth.toString(),
+                  amount: netWorth,
                 );
               },
             ),
@@ -621,8 +639,8 @@ class _GetSubscriptionWidget extends StatelessWidget {
 
 class SubscriptionCard extends StatelessWidget {
   SubscriptionCard({
-    super.key,
     required this.subscriptionModel,
+    super.key,
   });
 
   late int date;

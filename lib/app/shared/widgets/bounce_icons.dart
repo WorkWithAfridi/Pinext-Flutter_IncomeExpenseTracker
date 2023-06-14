@@ -1,9 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:pinext/app/app_data/app_constants/fonts.dart';
+import 'package:pinext/app/app_data/theme_data/colors.dart';
 
 class BounceIcon extends StatefulWidget {
-  const BounceIcon({required this.icon, required this.onTap, super.key});
+  BounceIcon({
+    required this.icon,
+    required this.onTap,
+    super.key,
+    this.size = 16,
+    this.title,
+    this.color = primaryColor,
+  });
   final IconData icon;
   final Function onTap;
+  double size;
+  String? title;
+  Color color;
 
   @override
   _BounceIconState createState() => _BounceIconState();
@@ -17,9 +29,9 @@ class _BounceIconState extends State<BounceIcon> with SingleTickerProviderStateM
   void initState() {
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 400),
+      duration: const Duration(milliseconds: 500),
     );
-    _animation = Tween<double>(begin: 0.8, end: 1.5).animate(
+    _animation = Tween<double>(begin: 0.2, end: 1).animate(
       CurvedAnimation(parent: _controller, curve: Curves.fastEaseInToSlowEaseOut),
     );
     _controller.forward();
@@ -40,17 +52,45 @@ class _BounceIconState extends State<BounceIcon> with SingleTickerProviderStateM
         _controller.forward();
         widget.onTap();
       },
-      child: AnimatedBuilder(
-        animation: _controller,
-        builder: (context, child) {
-          return Transform.scale(
-            scale: _animation.value,
-            child: Icon(
-              widget.icon,
-              size: 16,
-            ),
-          );
-        },
+      child: Container(
+        height: double.maxFinite,
+        width: double.maxFinite,
+        color: Colors.transparent,
+        child: AnimatedBuilder(
+          animation: _controller,
+          builder: (context, child) {
+            return Transform.scale(
+              scale: _animation.value,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    widget.icon,
+                    size: widget.size,
+                    color: widget.color,
+                  ),
+                  if (widget.title == null)
+                    const SizedBox.shrink()
+                  else
+                    Column(
+                      children: [
+                        const SizedBox(
+                          height: 1,
+                        ),
+                        Text(
+                          widget.title!,
+                          style: regularTextStyle.copyWith(
+                            fontSize: 12,
+                            color: widget.color,
+                          ),
+                        ),
+                      ],
+                    ),
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }

@@ -6,6 +6,7 @@ import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
+import 'package:pinext/app/bloc/homeframe_cubit/homeframe_page_cubit.dart';
 import 'package:pinext/app/bloc/homepage_cubit/homepage_cubit.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/screens/home/widgets/homepage_expense_tracker_widget.dart';
@@ -62,109 +63,124 @@ class HomepageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: getHeight(context),
-      width: getWidth(context),
-      child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: defaultPadding,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Builder(
-                    builder: (context) {
-                      final state = context.watch<UserBloc>().state;
-                      final demoBlocState = context.watch<DemoBloc>().state;
-                      if (state is AuthenticatedUserState) {
-                        return Animate(
-                          effects: const [
-                            SlideEffect(),
-                            FadeEffect(),
-                          ],
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // TextButton(
-                              //   onPressed: () => throw Exception(),
-                              //   child: const Text('Throw Test Exception'),
-                              // ),
-                              Text(
-                                getGreetings(),
-                                style: regularTextStyle.copyWith(
-                                  color: customBlackColor.withOpacity(.6),
-                                ),
-                              ),
-                              Text(
-                                demoBlocState is DemoEnabledState ? 'Kyoto' : state.username,
-                                style: cursiveTextStyle.copyWith(
-                                  fontSize: 30,
-                                  color: primaryColor,
-                                ),
-                              ),
+    return Scaffold(
+      floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          context.read<HomeframeCubit>().openAddTransactionsPage(context);
+        },
+        backgroundColor: darkPurpleColor,
+        child: const Icon(
+          Icons.add,
+          color: whiteColor,
+          size: 18,
+        ),
+      ),
+      body: SizedBox(
+        height: getHeight(context),
+        width: getWidth(context),
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: defaultPadding,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Builder(
+                      builder: (context) {
+                        final state = context.watch<UserBloc>().state;
+                        final demoBlocState = context.watch<DemoBloc>().state;
+                        if (state is AuthenticatedUserState) {
+                          return Animate(
+                            effects: const [
+                              SlideEffect(),
+                              FadeEffect(),
                             ],
-                          ),
-                        );
-                      } else {
-                        return const SizedBox.shrink();
-                      }
-                    },
-                  ),
-                ],
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // TextButton(
+                                //   onPressed: () => throw Exception(),
+                                //   child: const Text('Throw Test Exception'),
+                                // ),
+                                Text(
+                                  getGreetings(),
+                                  style: regularTextStyle.copyWith(
+                                    color: customBlackColor.withOpacity(.6),
+                                  ),
+                                ),
+                                Text(
+                                  demoBlocState is DemoEnabledState ? 'Kyoto' : state.username,
+                                  style: cursiveTextStyle.copyWith(
+                                    fontSize: 30,
+                                    color: primaryColor,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        } else {
+                          return const SizedBox.shrink();
+                        }
+                      },
+                    ),
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 12,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
-              child: HomepageGetBalanceWidget(
-                tapToOpenUpdateNetBalancePage: false,
+              const SizedBox(
+                height: 12,
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: defaultPadding,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+                child: HomepageGetBalanceWidget(
+                  tapToOpenUpdateNetBalancePage: false,
+                ),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    // height: 16,
-                    height: 12,
-                  ),
-                  GetBudgetEstimationsWidget(
-                    isForHomePage: true,
-                  ),
-                  const SizedBox(
-                    height: 12,
-                  ),
-                  const HomepageGetSavingsForThisMonthWidget(),
-                  const SizedBox(
-                    height: 12,
-                  ),
-                  const HomepageGetExpensesWidget(),
-                  const SizedBox(
-                    height: 12,
-                  ),
-                  const HomepageGetPastTransactionsWidget(),
-                  const SizedBox(
-                    height: 12,
-                  ),
-                  const HomepageGetGoalsAndMilestonesWidget()
-                ],
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: defaultPadding,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(
+                      // height: 16,
+                      height: 12,
+                    ),
+                    GetBudgetEstimationsWidget(
+                      isForHomePage: true,
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    const HomepageGetSavingsForThisMonthWidget(),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    const HomepageGetExpensesWidget(),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    const HomepageGetPastTransactionsWidget(),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    const HomepageGetGoalsAndMilestonesWidget()
+                  ],
+                ),
               ),
-            ),
-            const HomepageGetYourCardsWidget(),
-            const SizedBox(
-              height: 30,
-            ),
-          ],
+              const HomepageGetYourCardsWidget(),
+              const SizedBox(
+                height: kToolbarHeight * 1.5,
+              ),
+            ],
+          ),
         ),
       ),
     );

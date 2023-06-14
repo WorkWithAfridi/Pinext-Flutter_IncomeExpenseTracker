@@ -10,6 +10,7 @@ import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/bloc/region_cubit/region_cubit.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/screens/edit_net_balance_screen.dart';
+import 'package:pinext/app/shared/widgets/animated_counter_text_widget.dart';
 
 class HomepageGetBalanceWidget extends StatelessWidget {
   HomepageGetBalanceWidget({
@@ -79,14 +80,29 @@ class HomepageGetBalanceWidget extends StatelessWidget {
                             const SizedBox(
                               height: 4,
                             ),
-                            Text(
-                              demoBlocState is DemoEnabledState
-                                  ? '750000 ${regionState.countryData.symbol}'
-                                  : '${state.netBalance} ${regionState.countryData.symbol}',
-                              style: boldTextStyle.copyWith(
-                                fontSize: 30,
-                                color: whiteColor,
-                              ),
+                            Row(
+                              children: [
+                                AnimatedCounterTextWidget(
+                                  begin: 0,
+                                  end: demoBlocState is DemoEnabledState
+                                      ? double.parse('750000 ${regionState.countryData.symbol}')
+                                      : double.parse(state.netBalance),
+                                  maxLines: 1,
+                                  precision: 2,
+                                  style: boldTextStyle.copyWith(
+                                    fontSize: 30,
+                                    color: whiteColor,
+                                  ),
+                                  curve: Curves.fastOutSlowIn,
+                                ),
+                                Text(
+                                  regionState.countryData.symbol,
+                                  style: boldTextStyle.copyWith(
+                                    fontSize: 30,
+                                    color: whiteColor,
+                                  ),
+                                ),
+                              ],
                             ),
                             const SizedBox(
                               height: 4,

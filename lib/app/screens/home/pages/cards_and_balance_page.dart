@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,6 +32,7 @@ class CardsAndBalanceView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log('Rebuilding');
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Padding(
