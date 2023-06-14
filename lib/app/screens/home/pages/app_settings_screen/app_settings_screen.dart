@@ -466,11 +466,11 @@ class AppSettingsScreen extends StatelessWidget {
 
 class GetSettingsButtonWithIcon extends StatelessWidget {
   GetSettingsButtonWithIcon({
-    super.key,
     required this.icon,
     required this.label,
     required this.onTapFunction,
     required this.iconSize,
+    super.key,
   });
 
   IconData icon;
