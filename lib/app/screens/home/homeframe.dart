@@ -71,8 +71,6 @@ class _HomeframeState extends State<Homeframe> {
 
 List homeframePages = [const Homepage(), const ArchivePage(), const BudgetPage(), const CardsAndBalancePage(), const AppSettingsScreen()];
 
-checkIfOldUser() {}
-
 class HomeframeView extends StatelessWidget {
   HomeframeView({super.key});
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
@@ -81,21 +79,6 @@ class HomeframeView extends StatelessWidget {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        // leading: IconButton(
-        //   onPressed: () {
-        //     scaffoldKey.currentState!.openDrawer();
-        //   },
-        //   icon: IntroStepBuilder(
-        //     order: 6,
-        //     text: intro_label_six,
-        //     builder: (context, introkey) {
-        //       return const Icon(
-        //         Icons.menu,
-        //         color: customBlackColor,
-        //       );
-        //     },
-        //   ),
-        // ),
         centerTitle: true,
         title: Builder(
           builder: (context) {
@@ -203,127 +186,6 @@ class HomeframeView extends StatelessWidget {
           ),
         ],
       ),
-      // floatingActionButton: state.selectedIndex == 0 || state.selectedIndex == 2
-      //     ? IntroStepBuilder(
-      //         order: 1,
-      //         text: intro_label_one,
-      //         builder: (context, introkey) {
-      //           return FloatingActionButton(
-      //             onPressed: () {
-      //               if (state.selectedIndex == 0) {
-      //                 context.read<HomeframeCubit>().openAddTransactionsPage(context);
-      //               } else if (state.selectedIndex == 2) {
-      //                 Navigator.push(
-      //                   context,
-      //                   CustomTransitionPageRoute(
-      //                     childWidget: AddSubscriptionPage(),
-      //                   ),
-      //                 );
-      //               }
-      //             },
-      //             backgroundColor: customBlackColor,
-      //             child: const Icon(
-      //               Icons.add,
-      //               color: whiteColor,
-      //               size: 18,
-      //             ),
-      //           );
-      //         },
-      //       )
-      //     : state.selectedIndex == 4
-      //         ? FloatingActionButton(
-      //             onPressed: () {
-      //               context.read<HomeframeCubit>().showAboutDialog(context);
-      //             },
-      //             backgroundColor: customBlackColor,
-      //             child: Text(
-      //               '?',
-      //               style: boldTextStyle.copyWith(
-      //                 color: whiteColor,
-      //                 fontSize: 16,
-      //               ),
-      //             ),
-      //           )
-      //         : const SizedBox.shrink(),
-      // floatingActionButtonLocation: state.selectedIndex != 4 ? FloatingActionButtonLocation.miniEndTop : FloatingActionButtonLocation.endFloat,
-      // bottomNavigationBar: BottomNavigationBar(
-      //   key: key,
-      //   currentIndex: state.selectedIndex,
-      //   onTap: (value) {
-      //     context.read<HomeframeCubit>().changeHomeframePage(value);
-      //   },
-      //   selectedItemColor: darkPurpleColor,
-      //   unselectedItemColor: customBlackColor.withOpacity(.4),
-      //   type: BottomNavigationBarType.fixed,
-      //   // showSelectedLabels: false,
-      //   // showUnselectedLabels: false,
-      //   selectedLabelStyle: regularTextStyle.copyWith(
-      //     fontSize: 12,
-      //     color: darkPurpleColor,
-      //   ),
-      //   unselectedLabelStyle: regularTextStyle.copyWith(fontSize: 10),
-      //   items: [
-      //     BottomNavigationBarItem(
-      //       icon: IntroStepBuilder(
-      //         order: 2,
-      //         text: intro_label_two,
-      //         builder: (context, introkey) {
-      //           return Icon(
-      //             state.selectedIndex == 0 ? AntIcons.homeFilled : AntIcons.homeOutlined,
-      //             size: state.selectedIndex == 0 ? 20 : 16,
-      //           );
-      //         },
-      //       ),
-      //       label: 'Home',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: IntroStepBuilder(
-      //         order: 3,
-      //         text: intro_label_three,
-      //         builder: (context, introkey) {
-      //           return Icon(
-      //             state.selectedIndex == 1 ? AntIcons.databaseFilled : AntIcons.databaseOutlined,
-      //             size: state.selectedIndex == 1 ? 20 : 16,
-      //           );
-      //         },
-      //       ),
-      //       label: 'Archive',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(
-      //         state.selectedIndex == 2 ? AntIcons.dollarCircleFilled : AntIcons.dollarCircleOutlined,
-      //         size: state.selectedIndex == 2 ? 20 : 16,
-      //       ),
-      //       label: 'Budget',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: IntroStepBuilder(
-      //         order: 4,
-      //         text: intro_label_four,
-      //         builder: (context, introkey) {
-      //           return Icon(
-      //             state.selectedIndex == 3 ? AntIcons.walletFilled : AntIcons.walletOutlined,
-      //             size: state.selectedIndex == 3 ? 20 : 16,
-      //           );
-      //         },
-      //       ),
-      //       label: 'Wallet',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: IntroStepBuilder(
-      //         order: 5,
-      //         text: intro_label_five,
-      //         builder: (context, introkey) {
-      //           return Icon(
-      //             state.selectedIndex == 4 ? AntIcons.appstoreFilled : AntIcons.appstoreOutlined,
-      //             size: state.selectedIndex == 4 ? 20 : 16,
-      //           );
-      //         },
-      //       ),
-      //       label: 'More',
-      //     ),
-      //   ],
-      // ),
     );
   }
 }
