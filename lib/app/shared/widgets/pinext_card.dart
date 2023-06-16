@@ -68,8 +68,8 @@ class PinextCard extends StatelessWidget {
               padding: const EdgeInsets.all(
                 15,
               ),
-              height: 210,
-              width: getWidth(context) * .85,
+              height: getCardHeight(context),
+              width: getCardWidth(context),
               decoration: BoxDecoration(
                 // color: cardColor,
                 borderRadius: BorderRadius.circular(
@@ -88,8 +88,8 @@ class PinextCard extends StatelessWidget {
               padding: const EdgeInsets.all(
                 15,
               ),
-              height: 210,
-              width: getWidth(context) * .85,
+              height: getCardHeight(context),
+              width: getCardWidth(context),
               decoration: BoxDecoration(
                 color: Colors.black.withOpacity(.10),
                 borderRadius: BorderRadius.circular(
@@ -321,4 +321,12 @@ class PinextCard extends StatelessWidget {
       },
     );
   }
+}
+
+double getCardHeight(BuildContext context) {
+  return (getWidth(context) * .85) / 1.7;
+}
+
+double getCardWidth(BuildContext context) {
+  return getWidth(context) * .85;
 }
