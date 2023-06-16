@@ -14,15 +14,15 @@ import 'package:timeago/timeago.dart' as timeago;
 
 class PinextCard extends StatelessWidget {
   PinextCard({
+    required this.cardId,
+    required this.cardDetails,
+    required this.lastTransactionDate,
     super.key,
     this.isSelected = false,
     this.cardColor = 'Midnight Indigo',
     this.title = 'Test Title',
-    required this.cardId,
     this.balance = 0.00,
     this.cardModel,
-    required this.cardDetails,
-    required this.lastTransactionDate,
   });
 
   bool isSelected;
