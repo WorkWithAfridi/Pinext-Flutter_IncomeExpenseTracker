@@ -177,7 +177,7 @@ class HomepageView extends StatelessWidget {
               ),
               const HomepageGetYourCardsWidget(),
               const SizedBox(
-                height: kToolbarHeight * 1.5,
+                height: 30,
               ),
             ],
           ),

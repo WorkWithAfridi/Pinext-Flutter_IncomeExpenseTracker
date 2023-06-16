@@ -125,7 +125,7 @@ class BudgetView extends StatelessWidget {
                   ),
                   const _GetSubscriptionWidget(),
                   const SizedBox(
-                    height: kToolbarHeight * 1.5,
+                    height: 30,
                   ),
                 ],
               ),
