@@ -68,7 +68,7 @@ class BudgetView extends StatelessWidget {
       ],
       child: Scaffold(
         floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
-        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+        floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.push(

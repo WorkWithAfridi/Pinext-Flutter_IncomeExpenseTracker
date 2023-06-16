@@ -26,21 +26,6 @@ class AppSettingsScreen extends StatelessWidget {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
-      floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          context.read<HomeframeCubit>().showAboutDialog(context);
-        },
-        backgroundColor: darkPurpleColor,
-        child: Text(
-          '?',
-          style: boldTextStyle.copyWith(
-            color: whiteColor,
-            fontSize: 16,
-          ),
-        ),
-      ),
       body: SizedBox(
         height: height,
         width: width,
@@ -66,6 +51,17 @@ class AppSettingsScreen extends StatelessWidget {
                           color: primaryColor,
                         ),
                       ),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    GetSettingsButtonWithIcon(
+                      onTapFunction: () {
+                        context.read<HomeframeCubit>().showAboutDialog(context);
+                      },
+                      label: 'About Pinext',
+                      icon: Icons.question_mark,
+                      iconSize: 18,
                     ),
                     const SizedBox(
                       height: 8,
