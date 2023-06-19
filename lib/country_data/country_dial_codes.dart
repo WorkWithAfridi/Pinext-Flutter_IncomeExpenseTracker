@@ -205,7 +205,9 @@ class DialCodeHandler {
 
   String? getDialCode(String phoneNumber) {
     for (final dialCode in countryDialCodes.values) {
-      if (phoneNumber.startsWith(dialCode)) {
+      if (phoneNumber.startsWith(dialCode) || phoneNumber.startsWith(dialCode.substring(1, dialCode.length))) {
+        return dialCode;
+      } else if (phoneNumber.endsWith(dialCode)) {
         return dialCode;
       }
     }
