@@ -17,7 +17,6 @@ import 'package:pinext/app/services/firebase_services.dart';
 import 'package:pinext/app/shared/widgets/custom_button.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 import 'package:pinext/app/shared/widgets/custom_text_field.dart';
-import 'package:pinext/app/shared/widgets/info_widget.dart';
 import 'package:pinext/app/shared/widgets/pinext_card.dart';
 import 'package:uuid/uuid.dart';
 
@@ -315,52 +314,52 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
                       ],
                     ),
                   ),
-                  const SizedBox(
-                    height: 6,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      right: 8,
-                      left: defaultPadding,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              'Automatically add transaction',
-                              style: boldTextStyle.copyWith(
-                                color: customBlackColor.withOpacity(
-                                  .6,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 6,
-                            ),
-                            InfoWidget(
-                              infoText:
-                                  'Enabling this option will automatically deduct the subscription amount at the start of every month, from the selected card!',
-                            ),
-                          ],
-                        ),
-                        BlocBuilder<AddSubscriptionCubit, AddSubscriptionState>(
-                          builder: (context, state) {
-                            return Switch(
-                              value: state.automaticallyPayActivated,
-                              activeColor: primaryColor,
-                              onChanged: (value) {
-                                if (!widget.isEdit) {
-                                  context.read<AddSubscriptionCubit>().toogleAutomaticallyPaySwitch(value);
-                                }
-                              },
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
+                  // const SizedBox(
+                  //   height: 6,
+                  // ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(
+                  //     right: 8,
+                  //     left: defaultPadding,
+                  //   ),
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     children: [
+                  //       Row(
+                  //         children: [
+                  //           Text(
+                  //             'Automatically add transaction',
+                  //             style: boldTextStyle.copyWith(
+                  //               color: customBlackColor.withOpacity(
+                  //                 .6,
+                  //               ),
+                  //             ),
+                  //           ),
+                  //           const SizedBox(
+                  //             width: 6,
+                  //           ),
+                  //           InfoWidget(
+                  //             infoText:
+                  //                 'Enabling this option will automatically deduct the subscription amount at the start of every month, from the selected card!',
+                  //           ),
+                  //         ],
+                  //       ),
+                  //       BlocBuilder<AddSubscriptionCubit, AddSubscriptionState>(
+                  //         builder: (context, state) {
+                  //           return Switch(
+                  //             value: state.automaticallyPayActivated,
+                  //             activeColor: primaryColor,
+                  //             onChanged: (value) {
+                  //               if (!widget.isEdit) {
+                  //                 context.read<AddSubscriptionCubit>().toogleAutomaticallyPaySwitch(value);
+                  //               }
+                  //             },
+                  //           );
+                  //         },
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                   const SizedBox(
                     height: 8,
                   ),
@@ -808,7 +807,7 @@ class _SaveButton extends StatelessWidget {
                   } else {
                     lastMonthDate = DateTime(date.year, date.month - 1, date.day).toString();
                   }
-                  final lastPaidOn = state.alreadyPaid == 'YES' ? date.toString() : lastMonthDate.toString();
+                  final lastPaidOn = state.alreadyPaid == 'YES' ? date.toString() : lastMonthDate;
 
                   context.read<AddSubscriptionCubit>().addSubscription(
                         PinextSubscriptionModel(
