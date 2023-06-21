@@ -50,7 +50,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     const quickActions = QuickActions();
     quickActions.initialize((String shortcutType) {
-      if (shortcutType.toString() == 'AddTransaction') {
+      if (shortcutType == 'AddTransaction') {
         setState(() {
           mode = 'AddTransaction';
         });
@@ -68,7 +68,7 @@ class _SplashScreenState extends State<SplashScreen> {
     triggerSplashScreenAnimation(context);
   }
 
-  setUpQuickActions() {
+  void setUpQuickActions() {
     const quickActions = QuickActions();
     quickActions.setShortcutItems(<ShortcutItem>[
       const ShortcutItem(

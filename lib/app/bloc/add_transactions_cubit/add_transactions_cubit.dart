@@ -1,6 +1,7 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/services/handlers/transaction_handler.dart';
 
 part 'add_transactions_state.dart';
@@ -68,6 +69,8 @@ class AddTransactionsCubit extends Cubit<AddTransactionsState> {
       context: context,
     );
     if (response == 'Success') {
+      context.read<UserBloc>().add(RefreshUserStateEvent(context: context));
+      await Future.delayed(const Duration(milliseconds: 400));
       emit(
         AddTransactionsSuccessState(
           selectedTransactionMode: state.selectedTransactionMode,
