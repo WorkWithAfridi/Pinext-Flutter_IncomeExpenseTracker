@@ -31,7 +31,7 @@ class _BounceIconState extends State<BounceIcon> with SingleTickerProviderStateM
       vsync: this,
       duration: const Duration(milliseconds: 500),
     );
-    _animation = Tween<double>(begin: 0.2, end: 1).animate(
+    _animation = Tween<double>(begin: 0.6, end: 1).animate(
       CurvedAnimation(parent: _controller, curve: Curves.fastEaseInToSlowEaseOut),
     );
     _controller.forward();

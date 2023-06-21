@@ -63,10 +63,10 @@ class AddAndViewTransactionScreen extends StatelessWidget {
 
 class AddAndViewTransactionView extends StatefulWidget {
   AddAndViewTransactionView({
-    super.key,
     required this.isAQuickAction,
     required this.isViewOnly,
     required this.pinextTransactionModel,
+    super.key,
   });
 
   bool isAQuickAction;
@@ -372,7 +372,7 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
                   (index) {
                     return GestureDetector(
                       onTap: () {
-                        final selectedTag = transactionTags[index].toString();
+                        final selectedTag = transactionTags[index];
                         if (state.selectedTag != selectedTag) {
                           context.read<AddTransactionsCubit>().changeSelectedTag(selectedTag);
                         } else {
@@ -381,7 +381,7 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
                       },
                       child: Chip(
                         label: Text(
-                          transactionTags[index].toString(),
+                          transactionTags[index],
                           style: regularTextStyle.copyWith(
                             color: transactionTags[index] == state.selectedTag ? whiteColor : customBlackColor.withOpacity(.6),
                             fontWeight: transactionTags[index] == state.selectedTag ? FontWeight.w600 : FontWeight.normal,
@@ -645,7 +645,7 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
             context.read<UserBloc>().add(RefreshUserStateEvent(context: context));
 
             final date = DateTime.parse(widget.pinextTransactionModel!.transactionDate);
-            final month = date.month.toString().length == 1 ? '0${date.month.toString()}' : date.month.toString();
+            final month = date.month.toString().length == 1 ? '0${date.month}' : date.month.toString();
 
             if (month == currentMonth && date.year.toString() == currentYear) {
               context.read<ArchiveCubit>().getCurrentMonthTransactionArchive(context);
@@ -844,7 +844,7 @@ class _GetCardListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 185,
+      height: getCardHeight(context) + 10,
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,
@@ -910,7 +910,7 @@ class _GetCardListWidget extends StatelessWidget {
 
                     return BlocBuilder<AddTransactionsCubit, AddTransactionsState>(
                       builder: (context, state) {
-                        Widget pinextCardWidget = GestureDetector(
+                        final Widget pinextCardWidget = GestureDetector(
                           onTap: () {
                             if (!isViewOnly) {
                               if (state.selectedCardNo == pinextCardModel.cardId) {

@@ -65,7 +65,7 @@ class HomepageView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           context.read<HomeframeCubit>().openAddTransactionsPage(context);
@@ -177,7 +177,7 @@ class HomepageView extends StatelessWidget {
               ),
               const HomepageGetYourCardsWidget(),
               const SizedBox(
-                height: kToolbarHeight * 1.5,
+                height: 30,
               ),
             ],
           ),

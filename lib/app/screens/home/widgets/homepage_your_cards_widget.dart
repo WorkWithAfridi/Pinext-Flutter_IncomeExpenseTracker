@@ -70,7 +70,7 @@ class HomepageGetYourCardsWidget extends StatelessWidget {
                     );
                   }
                   return SizedBox(
-                    height: 185,
+                    height: getCardHeight(context) + 10,
                     child: ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),

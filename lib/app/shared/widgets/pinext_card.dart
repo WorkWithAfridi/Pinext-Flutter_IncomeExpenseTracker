@@ -14,15 +14,15 @@ import 'package:timeago/timeago.dart' as timeago;
 
 class PinextCard extends StatelessWidget {
   PinextCard({
+    required this.cardId,
+    required this.cardDetails,
+    required this.lastTransactionDate,
     super.key,
     this.isSelected = false,
     this.cardColor = 'Midnight Indigo',
     this.title = 'Test Title',
-    required this.cardId,
     this.balance = 0.00,
     this.cardModel,
-    required this.cardDetails,
-    required this.lastTransactionDate,
   });
 
   bool isSelected;
@@ -68,8 +68,8 @@ class PinextCard extends StatelessWidget {
               padding: const EdgeInsets.all(
                 15,
               ),
-              height: 210,
-              width: getWidth(context) * .85,
+              height: getCardHeight(context),
+              width: getCardWidth(context),
               decoration: BoxDecoration(
                 // color: cardColor,
                 borderRadius: BorderRadius.circular(
@@ -88,8 +88,8 @@ class PinextCard extends StatelessWidget {
               padding: const EdgeInsets.all(
                 15,
               ),
-              height: 210,
-              width: getWidth(context) * .85,
+              height: getCardHeight(context),
+              width: getCardWidth(context),
               decoration: BoxDecoration(
                 color: Colors.black.withOpacity(.10),
                 borderRadius: BorderRadius.circular(
@@ -321,4 +321,12 @@ class PinextCard extends StatelessWidget {
       },
     );
   }
+}
+
+double getCardHeight(BuildContext context) {
+  return (getWidth(context) * .85) / 1.7;
+}
+
+double getCardWidth(BuildContext context) {
+  return getWidth(context) * .85;
 }

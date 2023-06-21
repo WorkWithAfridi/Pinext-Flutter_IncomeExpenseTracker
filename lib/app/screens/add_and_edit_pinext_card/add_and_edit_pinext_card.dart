@@ -76,10 +76,10 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
     descriptionController = TextEditingController();
     balanceController = TextEditingController();
     if (widget.isEditCardScreen) {
-      titleController.text = widget.isDemoMode ? 'Bank' : widget.pinextCardModel!.title.toString().capitalize();
+      titleController.text = widget.isDemoMode ? 'Bank' : widget.pinextCardModel!.title.capitalize();
       descriptionController.text = widget.isDemoMode
           ? "The purpose of lorem ipsum is to create a natural looking block of text (sentence, paragraph, page, etc.) that doesn't distract from the layout."
-          : widget.pinextCardModel!.description.toString().capitalize();
+          : widget.pinextCardModel!.description.capitalize();
       balanceController.text = widget.isDemoMode ? '55000' : widget.pinextCardModel!.balance.toString();
       isEditCardColor = widget.pinextCardModel!.color;
     }
@@ -221,7 +221,7 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                       ),
                     ),
                     const SizedBox(
-                      height: 8,
+                      height: 10,
                     ),
                   ],
                 ),
@@ -303,6 +303,7 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
               ),
               SizedBox(
                 width: getWidth(context),
+                height: getCardHeight(context) + 10,
                 child: Row(
                   children: [
                     const SizedBox(
@@ -324,7 +325,7 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                           cardColor: widget.isEditCardScreen ? isEditCardColor! : state.color,
                           title: widget.isEditCardScreen ? widget.pinextCardModel!.title : 'Example card',
                           balance: widget.isEditCardScreen ? widget.pinextCardModel!.balance : 1233456,
-                          lastTransactionDate: widget.isEditCardScreen ? widget.pinextCardModel!.lastTransactionData.toString() : DateTime.now().toString(),
+                          lastTransactionDate: widget.isEditCardScreen ? widget.pinextCardModel!.lastTransactionData : DateTime.now().toString(),
                           cardDetails: widget.isEditCardScreen ? widget.pinextCardModel!.description : ' ',
                         );
                       },
@@ -401,7 +402,7 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                         }
                         if (state is AddCardSuccessState) {
                           final newPinextCard = PinextCardModel(
-                            cardId: const Uuid().v4().toString(),
+                            cardId: const Uuid().v4(),
                             title: state.title,
                             description: state.description,
                             balance: state.balance,
