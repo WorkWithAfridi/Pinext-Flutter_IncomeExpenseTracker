@@ -14,10 +14,10 @@ import 'package:pinext/app/screens/goals_and_milestones/add_and_edit_goal_and_mi
 
 class PinextGoalCardMinimized extends StatelessWidget {
   PinextGoalCardMinimized({
-    super.key,
     required this.pinextGoalModel,
     required this.index,
     required this.showCompletePercentage,
+    super.key,
   });
 
   late PinextGoalModel pinextGoalModel;
@@ -97,8 +97,8 @@ class PinextGoalCardMinimized extends StatelessWidget {
                                 );
                               }
                             },
-                            child: Row(
-                              children: const [
+                            child: const Row(
+                              children: [
                                 SizedBox(
                                   width: 8,
                                 ),
@@ -145,15 +145,14 @@ class PinextGoalCardMinimized extends StatelessWidget {
                         ),
                       ),
                       TextSpan(
-                        text: demoBlocState is DemoEnabledState ? '25000 ${regionState.countryData.symbol}' : pinextGoalModel.amount,
+                        text: demoBlocState is DemoEnabledState ? '25000' : pinextGoalModel.amount,
                         style: boldTextStyle.copyWith(
                           decoration: completionAmount > 100 ? TextDecoration.lineThrough : TextDecoration.none,
                         ),
                       ),
                       TextSpan(
                         text: ' ${regionState.countryData.symbol} for ',
-                        style: regularTextStyle.copyWith(
-                          color: customBlackColor.withOpacity(.6),
+                        style: boldTextStyle.copyWith(
                           decoration: completionAmount > 100 ? TextDecoration.lineThrough : TextDecoration.none,
                         ),
                       ),

@@ -16,8 +16,8 @@ import 'package:pinext/app/shared/widgets/info_widget.dart';
 
 class EditNetBalanceScreen extends StatelessWidget {
   EditNetBalanceScreen({
-    super.key,
     required this.netBalance,
+    super.key,
   });
 
   String netBalance;
@@ -35,8 +35,8 @@ class EditNetBalanceScreen extends StatelessWidget {
 
 class EditNetBalanceView extends StatelessWidget {
   EditNetBalanceView({
-    super.key,
     required this.netBalance,
+    super.key,
   });
 
   String netBalance;
@@ -106,7 +106,7 @@ class EditNetBalanceView extends StatelessWidget {
                             final regionState = context.watch<RegionCubit>().state;
                             return Text(
                               demoBlocState is DemoEnabledState ? '750000 ${regionState.countryData.symbol}' : '$netBalance ${regionState.countryData.symbol}',
-                              style: boldTextStyle.copyWith(
+                              style: regularTextStyle.copyWith(
                                 fontSize: 25,
                               ),
                             );

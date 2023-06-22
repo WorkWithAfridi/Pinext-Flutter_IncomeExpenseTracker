@@ -84,9 +84,7 @@ class HomepageGetBalanceWidget extends StatelessWidget {
                               children: [
                                 AnimatedCounterTextWidget(
                                   begin: 0,
-                                  end: demoBlocState is DemoEnabledState
-                                      ? double.parse('750000 ${regionState.countryData.symbol}')
-                                      : double.parse(state.netBalance),
+                                  end: demoBlocState is DemoEnabledState ? double.parse('750000') : double.parse(state.netBalance),
                                   maxLines: 1,
                                   precision: 2,
                                   style: boldTextStyle.copyWith(
@@ -96,9 +94,9 @@ class HomepageGetBalanceWidget extends StatelessWidget {
                                   curve: Curves.fastOutSlowIn,
                                 ),
                                 Text(
-                                  regionState.countryData.symbol,
-                                  style: boldTextStyle.copyWith(
-                                    fontSize: 30,
+                                  ' ${regionState.countryData.symbol}',
+                                  style: regularTextStyle.copyWith(
+                                    fontSize: 25,
                                     color: whiteColor,
                                   ),
                                 ),
