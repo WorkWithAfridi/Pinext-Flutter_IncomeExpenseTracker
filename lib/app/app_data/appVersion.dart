@@ -1,1 +1,1 @@
-String appVersion = '1.0.0';
+String appVersion = '1.0.2';
