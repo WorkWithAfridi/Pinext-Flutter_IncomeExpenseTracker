@@ -68,40 +68,45 @@ class HomepageGetGoalsAndMilestonesWidget extends StatelessWidget {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ListView.builder(
-                  itemCount: snapshot.data!.docs.length > 5 ? 5 : snapshot.data!.docs.length,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    if (snapshot.data!.docs.isEmpty) {
-                      return const Text('No data found! :(');
-                    }
-                    if (snapshot.data!.docs.isEmpty) {
-                      return Text(
-                        'No data found! :(',
-                        style: regularTextStyle.copyWith(
-                          color: customBlackColor.withOpacity(.4),
-                        ),
-                      );
-                    }
-
-                    final pinextGoalModel = PinextGoalModel.fromMap(
-                      snapshot.data!.docs[index].data(),
-                    );
-                    return BlocBuilder<UserBloc, UserState>(
-                      builder: (context, state) {
-                        var completionAmount = 0;
-                        if (state is AuthenticatedUserState) {
-                          completionAmount = ((double.parse(state.netBalance) / double.parse(pinextGoalModel.amount)) * 100).toInt();
-                        }
-                        return PinextGoalCardMinimized(
-                          pinextGoalModel: pinextGoalModel,
-                          index: index,
-                          showCompletePercentage: true,
+                MediaQuery.removePadding(
+                  context: context,
+                  removeBottom: true,
+                  removeTop: true,
+                  child: ListView.builder(
+                    itemCount: snapshot.data!.docs.length > 5 ? 5 : snapshot.data!.docs.length,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      if (snapshot.data!.docs.isEmpty) {
+                        return const Text('No data found! :(');
+                      }
+                      if (snapshot.data!.docs.isEmpty) {
+                        return Text(
+                          'No data found! :(',
+                          style: regularTextStyle.copyWith(
+                            color: customBlackColor.withOpacity(.4),
+                          ),
                         );
-                      },
-                    );
-                  },
+                      }
+
+                      final pinextGoalModel = PinextGoalModel.fromMap(
+                        snapshot.data!.docs[index].data(),
+                      );
+                      return BlocBuilder<UserBloc, UserState>(
+                        builder: (context, state) {
+                          var completionAmount = 0;
+                          if (state is AuthenticatedUserState) {
+                            completionAmount = ((double.parse(state.netBalance) / double.parse(pinextGoalModel.amount)) * 100).toInt();
+                          }
+                          return PinextGoalCardMinimized(
+                            pinextGoalModel: pinextGoalModel,
+                            index: index,
+                            showCompletePercentage: true,
+                          );
+                        },
+                      );
+                    },
+                  ),
                 )
               ],
             );
