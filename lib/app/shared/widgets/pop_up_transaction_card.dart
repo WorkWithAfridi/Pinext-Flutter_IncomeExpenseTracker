@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
-import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
@@ -43,8 +42,8 @@ void showPinextCardPopup(
                 padding: const EdgeInsets.all(
                   15,
                 ),
-                height: 180,
-                width: getWidth(context) * .85,
+                height: getCardHeight(context),
+                width: getCardWidth(context),
                 decoration: BoxDecoration(
                   // color: cardColor,
                   borderRadius: BorderRadius.circular(
@@ -63,8 +62,8 @@ void showPinextCardPopup(
                 padding: const EdgeInsets.all(
                   15,
                 ),
-                height: 180,
-                width: getWidth(context) * .85,
+                height: getCardHeight(context),
+                width: getCardWidth(context),
                 decoration: BoxDecoration(
                   color: Colors.black.withOpacity(.10),
                   borderRadius: BorderRadius.circular(
