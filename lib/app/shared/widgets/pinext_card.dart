@@ -324,7 +324,7 @@ class PinextCard extends StatelessWidget {
 }
 
 double getCardHeight(BuildContext context) {
-  return (getWidth(context) * .85) / 1.7;
+  return (getWidth(context) * .85) / 1.8;
 }
 
 double getCardWidth(BuildContext context) {
