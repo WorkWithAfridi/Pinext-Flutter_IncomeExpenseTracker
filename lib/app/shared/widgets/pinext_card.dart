@@ -107,16 +107,40 @@ class PinextCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              demoBlocState is DemoEnabledState ? 'Bank' : title,
-                              style: const TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.w600,
-                                color: whiteColor,
-                                fontFamily: 'BakbakOne',
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
+                            Row(
+                              children: [
+                                Opacity(
+                                  opacity: .9,
+                                  child: SizedBox(
+                                    height: 30,
+                                    width: 30,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(defaultBorder),
+                                      child: Image.asset(
+                                        'assets/app_icon/aap_icon.png',
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 6,
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    demoBlocState is DemoEnabledState ? 'Bank' : title,
+                                    style: regularTextStyle.copyWith(
+                                      color: whiteColor,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 18,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 6,
                             ),
                             Expanded(
                               child: Text(
@@ -125,27 +149,58 @@ class PinextCard extends StatelessWidget {
                                         .capitalize()
                                     : cardDetails.capitalize(),
                                 style: regularTextStyle.copyWith(
-                                  color: whiteColor.withOpacity(.4),
+                                  color: whiteColor.withOpacity(.8),
                                   overflow: TextOverflow.ellipsis,
                                   fontSize: 12,
                                 ),
                                 maxLines: 3,
                               ),
                             ),
+                            const SizedBox(
+                              height: 6,
+                            ),
+                            Text(
+                              'Current balance',
+                              style: TextStyle(
+                                fontWeight: FontWeight.normal,
+                                fontSize: 10,
+                                color: whiteColor.withOpacity(.8),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 4,
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Flexible(
+                                  child: Text(
+                                    demoBlocState is DemoEnabledState ? '55000' : balance.toInt().toString(),
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                      color: whiteColor,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                  ),
+                                ),
+                                Text(
+                                  ' ${regionState.countryData.symbol}',
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 18,
+                                    color: whiteColor,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                ),
+                              ],
+                            ),
                             if (cardId != '')
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  SizedBox(
-                                    height: 40,
-                                    width: 40,
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(defaultBorder),
-                                      child: Image.asset(
-                                        'assets/app_icon/aap_icon.png',
-                                      ),
-                                    ),
-                                  ),
                                   const SizedBox(
                                     height: 6,
                                   ),
@@ -189,68 +244,11 @@ class PinextCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Current balance',
-                              style: TextStyle(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 10,
-                                color: whiteColor.withOpacity(.6),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 4,
-                            ),
-                            Container(
-                              height: 1,
-                              color: whiteColor.withOpacity(.6),
-                              width: getWidth(context),
-                            ),
-                            const SizedBox(
-                              height: 4,
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Flexible(
-                                  child: Text(
-                                    demoBlocState is DemoEnabledState ? '55000' : balance.toInt().toString(),
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 25,
-                                      color: whiteColor,
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
-                                  ),
-                                ),
-                                Text(
-                                  ' ${regionState.countryData.symbol}',
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 25,
-                                    color: whiteColor,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      RotatedBox(
-                        quarterTurns: 3,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
                               'Last transaction',
                               style: TextStyle(
                                 fontWeight: FontWeight.normal,
                                 fontSize: 10,
-                                color: whiteColor.withOpacity(.6),
+                                color: whiteColor.withOpacity(.8),
                               ),
                             ),
                             const SizedBox(
@@ -258,7 +256,7 @@ class PinextCard extends StatelessWidget {
                             ),
                             Container(
                               height: 1,
-                              color: whiteColor.withOpacity(.6),
+                              color: whiteColor.withOpacity(.4),
                               width: getWidth(context),
                             ),
                             const SizedBox(
@@ -273,7 +271,7 @@ class PinextCard extends StatelessWidget {
                                     ).capitalize()} ',
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 25,
+                                  fontSize: 18,
                                   color: whiteColor,
                                 ),
                               ),
