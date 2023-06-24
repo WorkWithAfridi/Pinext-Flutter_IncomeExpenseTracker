@@ -54,86 +54,91 @@ class GetCardList extends StatelessWidget {
             );
           }
           context.read<UserBloc>().add(RefreshUserStateEvent(context: context));
-          return ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: snapshot.data!.docs.length,
-            itemBuilder: (context, index) {
-              final pinextCardModel = PinextCardModel.fromMap(
-                snapshot.data!.docs[index].data(),
-              );
-              return Builder(
-                builder: (context) {
-                  final demoBlocState = context.watch<DemoBloc>().state;
-                  return PinextCardMinimized(
-                    pinextCardModel: pinextCardModel,
-                    onDeleteButtonClick: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: Text(
-                              'Delete card?',
-                              style: boldTextStyle.copyWith(
-                                fontSize: 20,
+          return MediaQuery.removePadding(
+            context: context,
+            removeBottom: true,
+            removeTop: true,
+            child: ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: snapshot.data!.docs.length,
+              itemBuilder: (context, index) {
+                final pinextCardModel = PinextCardModel.fromMap(
+                  snapshot.data!.docs[index].data(),
+                );
+                return Builder(
+                  builder: (context) {
+                    final demoBlocState = context.watch<DemoBloc>().state;
+                    return PinextCardMinimized(
+                      pinextCardModel: pinextCardModel,
+                      onDeleteButtonClick: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text(
+                                'Delete card?',
+                                style: boldTextStyle.copyWith(
+                                  fontSize: 20,
+                                ),
                               ),
-                            ),
-                            content: SingleChildScrollView(
-                              child: ListBody(
-                                children: [
-                                  Text(
-                                    'Before proceeding with the removal of this card from your pinext account, kindly confirm your decision. Are you sure you want to delete this card? Thank you for your attention to this matter.',
-                                    style: regularTextStyle,
-                                  ),
-                                ],
+                              content: SingleChildScrollView(
+                                child: ListBody(
+                                  children: [
+                                    Text(
+                                      'Before proceeding with the removal of this card from your pinext account, kindly confirm your decision. Are you sure you want to delete this card? Thank you for your attention to this matter.',
+                                      style: regularTextStyle,
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(defaultBorder),
-                            ),
-                            actions: <Widget>[
-                              TextButton(
-                                child: Text(
-                                  'Cancel',
-                                  style: boldTextStyle.copyWith(
-                                    color: customBlackColor.withOpacity(
-                                      .8,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(defaultBorder),
+                              ),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: Text(
+                                    'Cancel',
+                                    style: boldTextStyle.copyWith(
+                                      color: customBlackColor.withOpacity(
+                                        .8,
+                                      ),
                                     ),
                                   ),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
                                 ),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                              TextButton(
-                                child: const Text('Approve'),
-                                onPressed: () {
-                                  context.read<CardsAndBalancesCubit>().removeCard(pinextCardModel);
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                            ],
-                            actionsPadding: dialogButtonPadding,
-                          );
-                        },
-                      );
-                    },
-                    onEditButtonClick: () {
-                      Navigator.push(
-                        context,
-                        CustomTransitionPageRoute(
-                          childWidget: AddAndEditPinextCardScreen(
-                            isEditCardScreen: true,
-                            pinextCardModel: pinextCardModel,
-                            isDemoMode: demoBlocState is DemoEnabledState,
+                                TextButton(
+                                  child: const Text('Approve'),
+                                  onPressed: () {
+                                    context.read<CardsAndBalancesCubit>().removeCard(pinextCardModel);
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                              actionsPadding: dialogButtonPadding,
+                            );
+                          },
+                        );
+                      },
+                      onEditButtonClick: () {
+                        Navigator.push(
+                          context,
+                          CustomTransitionPageRoute(
+                            childWidget: AddAndEditPinextCardScreen(
+                              isEditCardScreen: true,
+                              pinextCardModel: pinextCardModel,
+                              isDemoMode: demoBlocState is DemoEnabledState,
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                  );
-                },
-              );
-            },
+                        );
+                      },
+                    );
+                  },
+                );
+              },
+            ),
           );
         },
       ),
