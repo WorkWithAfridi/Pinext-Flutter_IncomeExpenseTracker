@@ -35,7 +35,7 @@ class AppHandler {
     //   context: context,
     // );
     await Future.delayed(const Duration(milliseconds: 500)).then((value) async {
-      DocumentSnapshot appDataSnapShot = await FirebaseServices().firebaseFirestore.collection(APPDATA_DIRECTORY).doc(APPVERSION_DIRECTORY).get();
+      final DocumentSnapshot appDataSnapShot = await FirebaseServices().firebaseFirestore.collection(APPDATA_DIRECTORY).doc(APPVERSION_DIRECTORY).get();
       final currentAvailableAppVersion = (appDataSnapShot.data() as Map<String, dynamic>)['appVersion'] as String;
 
       if (currentAvailableAppVersion != appVersion) {
@@ -114,7 +114,7 @@ class AppHandler {
     });
   }
 
-  requestNewFuture(BuildContext context) {
+  void requestNewFuture(BuildContext context) {
     _sendEmail(
       context,
       'PINEXT: REQUESTING NEW FUTURE!',
@@ -122,7 +122,7 @@ class AppHandler {
     );
   }
 
-  writeReview(BuildContext context) {
+  void writeReview(BuildContext context) {
     _sendEmail(
       context,
       'PINEXT: REVIEW',
@@ -130,7 +130,7 @@ class AppHandler {
     );
   }
 
-  sendBugReport(BuildContext context) {
+  void sendBugReport(BuildContext context) {
     showDialog(
       context: context,
       builder: (context) {
@@ -182,7 +182,7 @@ class AppHandler {
     );
   }
 
-  _sendEmail(BuildContext context, String subject, String body) async {
+  Future<void> _sendEmail(BuildContext context, String subject, String body) async {
     final email =
         Uri(scheme: 'mailto', path: 'khondakarafridi35@gmail.com', query: 'subject=${Uri.encodeComponent(subject)}&body=${Uri.encodeComponent(body)}');
     if (await canLaunchUrl(email)) {

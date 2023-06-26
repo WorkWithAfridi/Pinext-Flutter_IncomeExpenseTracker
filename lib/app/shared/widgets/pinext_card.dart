@@ -112,8 +112,8 @@ class PinextCard extends StatelessWidget {
                                 Opacity(
                                   opacity: .9,
                                   child: SizedBox(
-                                    height: 30,
-                                    width: 30,
+                                    height: 40,
+                                    width: 40,
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(defaultBorder),
                                       child: Image.asset(
@@ -123,24 +123,64 @@ class PinextCard extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(
-                                  width: 6,
+                                  width: 8,
                                 ),
                                 Expanded(
-                                  child: Text(
-                                    demoBlocState is DemoEnabledState ? 'Bank' : title,
-                                    style: regularTextStyle.copyWith(
-                                      color: whiteColor,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 18,
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 2,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        demoBlocState is DemoEnabledState ? 'Bank' : title,
+                                        style: regularTextStyle.copyWith(
+                                          color: whiteColor,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 18,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 2,
+                                      ),
+                                      if (cardId != '')
+                                        Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            const SizedBox(
+                                              height: 4,
+                                            ),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  '•••• •••• •••• ',
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: whiteColor.withOpacity(.8),
+                                                  ),
+                                                  overflow: TextOverflow.ellipsis,
+                                                  maxLines: 1,
+                                                ),
+                                                Text(
+                                                  cardId.substring(cardId.length - 4, cardId.length),
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: whiteColor.withOpacity(.8),
+                                                  ),
+                                                  overflow: TextOverflow.ellipsis,
+                                                  maxLines: 1,
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        )
+                                      else
+                                        const SizedBox.shrink(),
+                                    ],
                                   ),
                                 ),
                               ],
                             ),
                             const SizedBox(
-                              height: 6,
+                              height: 8,
                             ),
                             Expanded(
                               child: Text(
@@ -168,17 +208,16 @@ class PinextCard extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(
-                              height: 4,
+                              height: 2,
                             ),
                             Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Flexible(
                                   child: Text(
                                     demoBlocState is DemoEnabledState ? '55000' : balance.toInt().toString(),
                                     style: const TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 20,
+                                      fontSize: 24,
                                       color: whiteColor,
                                     ),
                                     overflow: TextOverflow.ellipsis,
@@ -197,41 +236,6 @@ class PinextCard extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            if (cardId != '')
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const SizedBox(
-                                    height: 6,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        '•••• •••• •••• ',
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w600,
-                                          color: whiteColor.withOpacity(.8),
-                                        ),
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 1,
-                                      ),
-                                      Text(
-                                        cardId.substring(cardId.length - 4, cardId.length),
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w600,
-                                          color: whiteColor.withOpacity(.8),
-                                        ),
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 1,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              )
-                            else
-                              const SizedBox.shrink(),
                           ],
                         ),
                       ),
