@@ -1,7 +1,9 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:open_file/open_file.dart';
@@ -35,7 +37,7 @@ class FileHandler {
       sheet.getRangeByName('C1').setText('Details');
       sheet.getRangeByName('D1').setText('Amount');
       sheet.getRangeByName('E1').setText('Transaction Type');
-      QuerySnapshot doc = await FirebaseServices()
+      final QuerySnapshot doc = await FirebaseServices()
           .firebaseFirestore
           .collection(USERS_DIRECTORY)
           .doc(FirebaseServices().getUserId())
@@ -117,6 +119,48 @@ class FileHandler {
         snackbarType: SnackbarType.error,
         context: context,
       );
+    }
+  }
+
+  Future<void> getPrivicyPolicyPdf() async {
+    const fileName = 'Pinext-PrivacyPolicy'; // You can provide the same unique name as used in _downloadPDF()
+    final filePath = await _getLocalFilePath(fileName);
+    final exists = await File(filePath).exists();
+
+    if (exists) {
+      await OpenFile.open(filePath);
+    } else {
+      await _downloadPDF();
+    }
+  }
+
+  Future<String> _getLocalFilePath(String fileName) async {
+    final directory = Platform.isAndroid ? await getExternalStorageDirectory() : await getApplicationDocumentsDirectory();
+    // final directory = await getExternalStorageDirectory();
+    final downloadPath = directory!.path;
+    return '$downloadPath/$fileName.pdf';
+  }
+
+  Future<void> _downloadPDF() async {
+    final dio = Dio();
+    const fileName = 'Pinext-PrivacyPolicy'; // You can provide a unique name here
+    final filePath = await _getLocalFilePath(fileName);
+
+    try {
+      final response = await dio.download(
+        'https://drive.google.com/file/d/1GkComX6fDBd4ZJwhhi4Qz9dAvI9RieVe/view?usp=sharing',
+        filePath,
+        options: Options(
+          responseType: ResponseType.bytes,
+          followRedirects: false,
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        await OpenFile.open(filePath);
+      }
+    } catch (e) {
+      log('Error downloading PDF: $e');
     }
   }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pinext/app/app_data/appVersion.dart';
 import 'package:pinext/app/app_data/app_constants/constants.dart';
 import 'package:pinext/app/app_data/app_constants/domentions.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
@@ -17,7 +16,9 @@ import 'package:pinext/app/screens/home/pages/app_settings_screen/widgets/get_de
 import 'package:pinext/app/screens/home/pages/app_settings_screen/widgets/get_demo_mode_button.dart';
 import 'package:pinext/app/screens/home/pages/app_settings_screen/widgets/get_reset_account_button.dart';
 import 'package:pinext/app/screens/home/pages/app_settings_screen/widgets/get_settings_button_with_icon.dart';
+import 'package:pinext/app/services/handlers/file_handler.dart';
 import 'package:pinext/app/shared/widgets/custom_loader.dart';
+import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 
 class AppSettingsScreen extends StatelessWidget {
   const AppSettingsScreen({super.key});
@@ -56,13 +57,18 @@ class AppSettingsScreen extends StatelessWidget {
                     const SizedBox(
                       height: 8,
                     ),
-                    GetSettingsButtonWithIcon(
-                      onTapFunction: () {
-                        context.read<HomeframeCubit>().showAboutDialog(context);
-                      },
-                      label: 'About Pinext',
-                      icon: Icons.question_mark,
-                      iconSize: 18,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 3,
+                      ),
+                      child: Text(
+                        'User',
+                        style: regularTextStyle.copyWith(
+                          fontSize: 12,
+                          color: customBlackColor.withOpacity(.5),
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                     const SizedBox(
                       height: 8,
@@ -83,11 +89,19 @@ class AppSettingsScreen extends StatelessWidget {
                     const SizedBox(
                       height: 8,
                     ),
-                    const GetResetAccountButton(),
-                    const SizedBox(
-                      height: 8,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 3,
+                      ),
+                      child: Text(
+                        'Account',
+                        style: regularTextStyle.copyWith(
+                          fontSize: 12,
+                          color: customBlackColor.withOpacity(.5),
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
-                    const GetDeleteAccountButton(),
                     const SizedBox(
                       height: 8,
                     ),
@@ -140,7 +154,75 @@ class AppSettingsScreen extends StatelessWidget {
                     const SizedBox(
                       height: 8,
                     ),
+                    const GetResetAccountButton(),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    const GetDeleteAccountButton(),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 3,
+                      ),
+                      child: Text(
+                        'App',
+                        style: regularTextStyle.copyWith(
+                          fontSize: 12,
+                          color: customBlackColor.withOpacity(.5),
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    GetSettingsButtonWithIcon(
+                      onTapFunction: () {
+                        context.read<HomeframeCubit>().showAboutDialog(context);
+                      },
+                      label: 'About Pinext',
+                      icon: Icons.question_mark,
+                      iconSize: 18,
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    GetSettingsButtonWithIcon(
+                      onTapFunction: () {
+                        FileHandler().getPrivicyPolicyPdf();
+                        GetCustomSnackbar(
+                          title: 'Pinext-PrivicyPolicy',
+                          message: 'Privicy pplicy is being generated. Please wait. :)',
+                          snackbarType: SnackbarType.info,
+                          context: context,
+                        );
+                      },
+                      label: 'Privicy Policy',
+                      icon: Icons.security,
+                      iconSize: 18,
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
                     const GetDemoModeButton(),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 3,
+                      ),
+                      child: Text(
+                        'Others',
+                        style: regularTextStyle.copyWith(
+                          fontSize: 12,
+                          color: customBlackColor.withOpacity(.5),
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
                     const SizedBox(
                       height: 8,
                     ),
@@ -163,22 +245,6 @@ class AppSettingsScreen extends StatelessWidget {
                         label: 'Logout',
                         icon: Icons.logout,
                         iconSize: 18,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 3,
-                      ),
-                      child: Text(
-                        'App Version: $appVersion',
-                        style: regularTextStyle.copyWith(
-                          fontSize: 12,
-                          color: customBlackColor.withOpacity(.2),
-                        ),
-                        textAlign: TextAlign.center,
                       ),
                     ),
                     const SizedBox(

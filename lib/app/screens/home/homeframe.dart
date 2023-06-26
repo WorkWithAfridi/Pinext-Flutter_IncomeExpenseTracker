@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_intro/flutter_intro.dart';
+import 'package:pinext/app/app_data/appVersion.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/bloc/archive_cubit/archive_cubit.dart';
 import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
@@ -80,10 +81,15 @@ class HomeframeView extends StatelessWidget {
         title: Builder(
           builder: (context) {
             final demoBlocState = context.watch<DemoBloc>().state;
+            final homepageCubitState = context.watch<HomeframeCubit>().state;
             return Text(
-              demoBlocState is DemoEnabledState ? 'PINEXT : DEMO-MODE' : 'PINEXT',
+              demoBlocState is DemoEnabledState
+                  ? 'PINEXT : DEMO-MODE'
+                  : homepageCubitState.selectedIndex == 4
+                      ? 'PINEXT : v$appVersion'
+                      : 'PINEXT',
               style: regularTextStyle.copyWith(
-                fontSize: 16,
+                fontSize: 14,
               ),
             );
           },
