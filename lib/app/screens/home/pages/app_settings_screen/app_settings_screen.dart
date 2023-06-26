@@ -16,9 +16,9 @@ import 'package:pinext/app/screens/home/pages/app_settings_screen/widgets/get_de
 import 'package:pinext/app/screens/home/pages/app_settings_screen/widgets/get_demo_mode_button.dart';
 import 'package:pinext/app/screens/home/pages/app_settings_screen/widgets/get_reset_account_button.dart';
 import 'package:pinext/app/screens/home/pages/app_settings_screen/widgets/get_settings_button_with_icon.dart';
-import 'package:pinext/app/services/handlers/file_handler.dart';
 import 'package:pinext/app/shared/widgets/custom_loader.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AppSettingsScreen extends StatelessWidget {
   const AppSettingsScreen({super.key});
@@ -190,14 +190,22 @@ class AppSettingsScreen extends StatelessWidget {
                       height: 8,
                     ),
                     GetSettingsButtonWithIcon(
-                      onTapFunction: () {
-                        FileHandler().getPrivicyPolicyPdf();
-                        GetCustomSnackbar(
-                          title: 'Pinext-PrivicyPolicy',
-                          message: 'Privicy pplicy is being generated. Please wait. :)',
-                          snackbarType: SnackbarType.info,
-                          context: context,
-                        );
+                      onTapFunction: () async {
+                        // FileHandler().getPrivicyPolicyPdf();
+                        // OpenFile.open('assets/Pinext-PrivacyPolicy.pdf');
+                        const privicyPolicyUrl = 'https://drive.google.com/file/d/1GkComX6fDBd4ZJwhhi4Qz9dAvI9RieVe/view?usp=sharing';
+                        if (await canLaunchUrl(Uri.parse(privicyPolicyUrl))) {
+                          await launchUrl(
+                            Uri.parse(privicyPolicyUrl),
+                          );
+                        } else {
+                          GetCustomSnackbar(
+                            title: 'Pinext-PrivicyPolicy',
+                            message: 'Privicy pplicy is being generated. Please wait. :)',
+                            snackbarType: SnackbarType.info,
+                            context: context,
+                          );
+                        }
                       },
                       label: 'Privicy Policy',
                       icon: Icons.security,

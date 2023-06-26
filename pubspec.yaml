@@ -63,6 +63,7 @@ flutter:
   assets:
     - assets/animations/
     - assets/app_icon/
+    - assets/privicy_policy/
 
   fonts:
     - family: SFPro

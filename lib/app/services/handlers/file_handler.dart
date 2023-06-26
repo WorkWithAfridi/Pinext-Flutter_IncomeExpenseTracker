@@ -123,11 +123,12 @@ class FileHandler {
   }
 
   Future<void> getPrivicyPolicyPdf() async {
-    const fileName = 'Pinext-PrivacyPolicy'; // You can provide the same unique name as used in _downloadPDF()
+    const fileName = 'Pinext-PrivacyPolicy';
     final filePath = await _getLocalFilePath(fileName);
     final exists = await File(filePath).exists();
 
     if (exists) {
+      log(filePath);
       await OpenFile.open(filePath);
     } else {
       await _downloadPDF();
@@ -136,7 +137,6 @@ class FileHandler {
 
   Future<String> _getLocalFilePath(String fileName) async {
     final directory = Platform.isAndroid ? await getExternalStorageDirectory() : await getApplicationDocumentsDirectory();
-    // final directory = await getExternalStorageDirectory();
     final downloadPath = directory!.path;
     return '$downloadPath/$fileName.pdf';
   }
@@ -153,10 +153,14 @@ class FileHandler {
         options: Options(
           responseType: ResponseType.bytes,
           followRedirects: false,
+          headers: {
+            HttpHeaders.contentTypeHeader: 'application/pdf',
+          },
         ),
       );
 
       if (response.statusCode == 200) {
+        log(filePath);
         await OpenFile.open(filePath);
       }
     } catch (e) {
