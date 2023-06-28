@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:pinext/app/app_data/routing/routes.dart';
 import 'package:pinext/app/app_data/theme_data/theme.dart';
+import 'package:pinext/app/bloc/alert_cubit/alert_cubit.dart';
 import 'package:pinext/app/bloc/archive_cubit/archive_cubit.dart';
 import 'package:pinext/app/bloc/archive_cubit/user_statistics_cubit/user_statistics_cubit.dart';
 import 'package:pinext/app/bloc/bloc_observer/bloc_observer.dart';
@@ -82,6 +83,9 @@ class Pinext extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => RegionCubit(),
+        ),
+        BlocProvider(
+          create: (context) => AlertCubit(),
         ),
       ],
       child: MaterialApp(

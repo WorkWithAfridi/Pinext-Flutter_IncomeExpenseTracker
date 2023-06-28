@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_intro/flutter_intro.dart';
 import 'package:pinext/app/app_data/appVersion.dart';
 import 'package:pinext/app/app_data/app_constants/fonts.dart';
+import 'package:pinext/app/bloc/alert_cubit/alert_cubit.dart';
 import 'package:pinext/app/bloc/archive_cubit/archive_cubit.dart';
 import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/bloc/homeframe_cubit/homeframe_page_cubit.dart';
@@ -31,6 +32,7 @@ class _HomeframeState extends State<Homeframe> {
     CardHandler().getUserCards();
 
     context.read<ArchiveCubit>().getCurrentMonthTransactionArchive(context);
+    context.read<AlertCubit>().getAlertMessage(context: context);
     if (Platform.isAndroid) {
       // showNotification();
     }
@@ -67,7 +69,13 @@ class _HomeframeState extends State<Homeframe> {
   }
 }
 
-List homeframePages = [const Homepage(), const ArchivePage(), const BudgetPage(), const CardsAndBalancePage(), const AppSettingsScreen()];
+List<Widget> homeframePages = [
+  const Homepage(),
+  const ArchivePage(),
+  const BudgetPage(),
+  const CardsAndBalancePage(),
+  const AppSettingsScreen(),
+];
 
 class HomeframeView extends StatelessWidget {
   HomeframeView({super.key});
@@ -108,7 +116,7 @@ class HomeframeView extends StatelessWidget {
                   onPageChanged: (value) {
                     context.read<HomeframeCubit>().updateHomeframePage(value);
                   },
-                  itemBuilder: (context, index) => homeframePages[index] as Widget,
+                  itemBuilder: (context, index) => homeframePages[index],
                 );
               },
             ),
