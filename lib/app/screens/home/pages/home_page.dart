@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,6 +11,7 @@ import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/bloc/homeframe_cubit/homeframe_page_cubit.dart';
 import 'package:pinext/app/bloc/homepage_cubit/homepage_cubit.dart';
+import 'package:pinext/app/bloc/region_cubit/region_cubit.dart';
 import 'package:pinext/app/bloc/userBloc/user_bloc.dart';
 import 'package:pinext/app/screens/home/widgets/homepage_expense_tracker_widget.dart';
 import 'package:pinext/app/screens/home/widgets/homepage_get_balance_widget.dart';
@@ -15,6 +19,8 @@ import 'package:pinext/app/screens/home/widgets/homepage_get_past_transactions_w
 import 'package:pinext/app/screens/home/widgets/homepage_goals_and_milestone_widget.dart';
 import 'package:pinext/app/screens/home/widgets/homepage_saving_for_this_month_widget.dart';
 import 'package:pinext/app/screens/home/widgets/homepage_your_cards_widget.dart';
+import 'package:pinext/app/services/date_time_services.dart';
+import 'package:pinext/app/services/firebase_services.dart';
 import 'package:pinext/app/shared/widgets/budget_estimations.dart';
 
 class Homepage extends StatelessWidget {
@@ -63,6 +69,7 @@ class HomepageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log('Current year is: $currentYear');
     return Scaffold(
       floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
       floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
@@ -160,6 +167,136 @@ class HomepageView extends StatelessWidget {
                       height: 12,
                     ),
                     const HomepageGetSavingsForThisMonthWidget(),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    Text(
+                      'Overview',
+                      style: boldTextStyle.copyWith(
+                        fontSize: 20,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(
+                        defaultPadding,
+                      ),
+                      width: getWidth(context),
+                      decoration: BoxDecoration(
+                        color: greyColor,
+                        borderRadius: BorderRadius.circular(
+                          defaultBorder,
+                        ),
+                      ),
+                      child: Column(
+                        children: [
+                          SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              children: [
+                                StreamBuilder(
+                                  stream: FirebaseServices()
+                                      .firebaseFirestore
+                                      .collection('pinext_users')
+                                      .doc(FirebaseServices().getUserId())
+                                      .collection('pinext_user_monthly_stats')
+                                      .doc(currentYear)
+                                      .collection('savings')
+                                      .snapshots(),
+                                  builder: (context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+                                    if (snapshot.connectionState == ConnectionState.waiting) {
+                                      return const Center(
+                                        child: SizedBox.shrink(),
+                                      );
+                                    }
+                                    if (snapshot.data!.docs.isEmpty) {
+                                      return const Center(
+                                        child: Text('No data found!'),
+                                      );
+                                    }
+                                    return SizedBox(
+                                      height: 100,
+                                      child: ListView.builder(
+                                        itemCount: snapshot.data!.docs.length,
+                                        shrinkWrap: true,
+                                        scrollDirection: Axis.horizontal,
+                                        physics: const NeverScrollableScrollPhysics(),
+                                        itemBuilder: (context, index) {
+                                          return Container(
+                                            height: 90,
+                                            padding: const EdgeInsets.symmetric(horizontal: 5),
+                                            child: Column(
+                                              children: [
+                                                Text(
+                                                  'JAN',
+                                                  style: regularTextStyle.copyWith(
+                                                    fontSize: 10,
+                                                    color: customBlackColor.withOpacity(.6),
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  height: 2,
+                                                ),
+                                                Text(
+                                                  '+ 118K ${context.watch<RegionCubit>().state.countryData.symbol}',
+                                                  style: regularTextStyle.copyWith(fontSize: 12),
+                                                ),
+                                                const SizedBox(
+                                                  height: 8,
+                                                ),
+                                                Container(
+                                                  height: 30,
+                                                  width: 5,
+                                                  decoration: const BoxDecoration(
+                                                    color: darkPurpleColor,
+                                                    borderRadius: BorderRadius.only(
+                                                      topLeft: Radius.circular(defaultBorder),
+                                                      topRight: Radius.circular(defaultBorder),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            height: 1,
+                            width: double.maxFinite,
+                            color: primaryColor.withOpacity(.3),
+                          ),
+                          Row(
+                            children: [
+                              const SizedBox(
+                                width: 30,
+                              ),
+                              Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 5),
+                                child: Container(
+                                  height: 30,
+                                  width: 5,
+                                  decoration: const BoxDecoration(
+                                    color: Colors.redAccent,
+                                    borderRadius: BorderRadius.only(
+                                      bottomLeft: Radius.circular(defaultBorder),
+                                      bottomRight: Radius.circular(defaultBorder),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
                     const SizedBox(
                       height: 12,
                     ),

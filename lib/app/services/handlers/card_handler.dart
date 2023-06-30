@@ -13,7 +13,7 @@ class CardHandler {
 
   Future<void> getUserCards() async {
     userCards = [];
-    QuerySnapshot cardData =
+    final QuerySnapshot cardData =
         await FirebaseServices().firebaseFirestore.collection('pinext_users').doc(UserHandler().currentUser.userId).collection('pinext_cards').get();
     for (var i = 0; i < cardData.docs.length; i++) {
       final cardModel = PinextCardModel.fromMap(cardData.docs[i].data() as Map<String, dynamic>);
@@ -91,7 +91,7 @@ class CardHandler {
 
   Future<PinextCardModel> getCard(String cardId) async {
     PinextCardModel pinextCardModel;
-    DocumentSnapshot cardSnapshot =
+    final DocumentSnapshot cardSnapshot =
         await FirebaseServices().firebaseFirestore.collection('pinext_users').doc(FirebaseServices().getUserId()).collection('pinext_cards').doc(cardId).get();
     pinextCardModel = PinextCardModel.fromMap(cardSnapshot.data() as Map<String, dynamic>);
     return pinextCardModel;
