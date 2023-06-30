@@ -228,6 +228,7 @@ class HomepageView extends StatelessWidget {
                                             height: 90,
                                             padding: const EdgeInsets.symmetric(horizontal: 5),
                                             child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.end,
                                               children: [
                                                 Text(
                                                   'JAN',
@@ -240,8 +241,8 @@ class HomepageView extends StatelessWidget {
                                                   height: 2,
                                                 ),
                                                 Text(
-                                                  '+ 118K ${context.watch<RegionCubit>().state.countryData.symbol}',
-                                                  style: regularTextStyle.copyWith(fontSize: 12),
+                                                  '${double.parse(snapshot.data!.docs[index].data()['amount'].toString()).floor()}${context.watch<RegionCubit>().state.countryData.symbol}',
+                                                  style: regularTextStyle.copyWith(fontSize: 10),
                                                 ),
                                                 const SizedBox(
                                                   height: 8,
