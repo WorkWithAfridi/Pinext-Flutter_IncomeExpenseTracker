@@ -64,6 +64,14 @@
 	<true/>
 	<key>NSLocalNotificationsUsageDescription</key>
 	<string>Allow the app to send notifications.</string>
+	<key>LSApplicationQueriesSchemes</key>
+    <array>
+      <string>sms</string>
+      <string>tel</string>
+      <string>http</string>
+      <string>https</string>
+      <string>mailto</string>
+    </array>
 
 </dict>
 </plist>
