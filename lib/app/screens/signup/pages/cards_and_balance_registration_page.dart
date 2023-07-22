@@ -442,7 +442,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                 child: BlocConsumer<SigninCubit, SigninState>(
                   listener: (context, state) {
                     if (state is SigninErrorState) {
-                      GetCustomSnackbar(
+                      showToast(
                         title: 'Snap, an error occurred!',
                         message: state.errorMessage,
                         snackbarType: SnackbarType.success,
@@ -478,7 +478,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                                   regionCode: context.read<RegionCubit>().state.countryData.code,
                                 );
                           } else {
-                            GetCustomSnackbar(
+                            showToast(
                               title: '....',
                               message: 'You need to fill up the form to create an account.',
                               snackbarType: SnackbarType.info,

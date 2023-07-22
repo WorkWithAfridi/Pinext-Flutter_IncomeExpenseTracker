@@ -54,7 +54,7 @@ class BudgetView extends StatelessWidget {
             if (state is SubscriptionUpdatedSuccessfullyState) {
               context.read<UserBloc>().add(RefreshUserStateEvent(context: context));
             } else if (state is SubscriptionUpdatedErrorState) {
-              GetCustomSnackbar(
+              showToast(
                 title: 'Snap',
                 message: state.errorMessage,
                 snackbarType: SnackbarType.error,
@@ -760,7 +760,7 @@ class SubscriptionCard extends StatelessWidget {
                                 context: context,
                               );
                         } else {
-                          GetCustomSnackbar(
+                          showToast(
                             title: 'Snap',
                             message: 'This subscription has already been processed and added into PINEXT archive!',
                             snackbarType: SnackbarType.info,

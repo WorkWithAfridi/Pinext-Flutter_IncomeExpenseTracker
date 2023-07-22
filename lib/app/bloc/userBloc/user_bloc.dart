@@ -116,7 +116,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       emit(UnauthenticatedUserState());
       event.context.read<DemoBloc>().add(DisableDemoModeEvent());
     } else {
-      GetCustomSnackbar(
+      showToast(
         title: 'Snap',
         message: 'An error occurred while trying to sign you out! Please try closing the app and opening it again.',
         snackbarType: SnackbarType.info,

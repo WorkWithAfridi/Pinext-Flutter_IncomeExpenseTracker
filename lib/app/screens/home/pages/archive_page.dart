@@ -99,7 +99,7 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
                           final selectedMonth = '0${int.parse(state.selectedMonth)}'.length > 2
                               ? '0${int.parse(state.selectedMonth)}'.substring(1, 3)
                               : '0${int.parse(state.selectedMonth)}';
-                          GetCustomSnackbar(
+                          showToast(
                             title: 'Generating Report',
                             message: 'Your report is being generated, please be patient! :)',
                             snackbarType: SnackbarType.info,

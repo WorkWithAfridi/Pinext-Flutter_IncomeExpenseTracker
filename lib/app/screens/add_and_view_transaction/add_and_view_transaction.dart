@@ -292,7 +292,7 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
         listener: (context, state) {
           if (state is TransactionDeletedSuccessfully) {
             Navigator.pop(context);
-            GetCustomSnackbar(
+            showToast(
               title: 'Transaction deleted!!',
               message: 'Your transaction data has been deleted.',
               snackbarType: SnackbarType.success,
@@ -307,7 +307,7 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
               context.read<ArchiveCubit>().getCurrentMonthTransactionArchive(context);
             }
           } else if (state is TransactionNotDeleted) {
-            GetCustomSnackbar(
+            showToast(
               title: 'ERROR',
               message: state.errorMessage,
               snackbarType: SnackbarType.error,

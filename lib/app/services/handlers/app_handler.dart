@@ -28,7 +28,7 @@ class AppHandler {
   }
 
   Future<void> checkForUpdate(BuildContext context) async {
-    // GetCustomSnackbar(
+    // showToast(
     //   title: "App Version: $appVersion",
     //   message: "Checking for updates!",
     //   snackbarType: SnackbarType.info,
@@ -88,7 +88,7 @@ class AppHandler {
                       );
                       Navigator.of(context).pop();
                     } else {
-                      GetCustomSnackbar(
+                      showToast(
                         title: 'Snap',
                         message: 'An error occurred! Please try again later',
                         snackbarType: SnackbarType.error,
@@ -104,7 +104,7 @@ class AppHandler {
           },
         );
       } else {
-        GetCustomSnackbar(
+        showToast(
           title: 'App Version v$appVersion',
           message: "You're currently on the latest build of the app! :D",
           snackbarType: SnackbarType.info,
@@ -188,7 +188,7 @@ class AppHandler {
     if (await canLaunchUrl(email)) {
       await launchUrl(email);
     } else {
-      GetCustomSnackbar(
+      showToast(
         title: 'Snap',
         message: 'An error occurred! Please try again later',
         snackbarType: SnackbarType.error,
@@ -206,7 +206,7 @@ class AppHandler {
       );
       Navigator.of(context).pop();
     } else {
-      GetCustomSnackbar(
+      showToast(
         title: 'Snap',
         message: 'An error occurred! Please try again later',
         snackbarType: SnackbarType.error,

@@ -11,8 +11,8 @@ import 'package:pinext/country_data/country_data.dart';
 
 class SelectRegionScreen extends StatelessWidget {
   SelectRegionScreen({
-    super.key,
     required this.isUpdateUserRegion,
+    super.key,
   });
   bool isUpdateUserRegion;
 
@@ -55,7 +55,7 @@ class SelectRegionScreen extends StatelessWidget {
                             onTap: () {
                               if (isUpdateUserRegion) {
                                 context.read<RegionCubit>().updateRegion(CountryHandler().countryList[index]).then((value) {
-                                  GetCustomSnackbar(
+                                  showToast(
                                     title: 'Region updated!',
                                     message: 'Your currency is now set as ${CountryHandler().countryList[index].currency}.',
                                     snackbarType: SnackbarType.info,
@@ -66,7 +66,7 @@ class SelectRegionScreen extends StatelessWidget {
                               } else {
                                 context.read<RegionCubit>().selectRegion(CountryHandler().countryList[index]);
 
-                                GetCustomSnackbar(
+                                showToast(
                                   title: 'Region updated!',
                                   message: 'Your currency is now set as ${CountryHandler().countryList[index].currency}.',
                                   snackbarType: SnackbarType.info,

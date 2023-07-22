@@ -84,7 +84,7 @@ class GetDemoModeButton extends StatelessWidget {
               );
             }
             if (status != '') {
-              GetCustomSnackbar(
+              showToast(
                 title: 'DEMO-MODE',
                 message: 'Presentation mode has been $status.',
                 snackbarType: SnackbarType.info,

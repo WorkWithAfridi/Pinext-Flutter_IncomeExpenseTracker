@@ -199,7 +199,7 @@ class AppSettingsScreen extends StatelessWidget {
                             Uri.parse(privicyPolicyUrl),
                           );
                         } else {
-                          GetCustomSnackbar(
+                          showToast(
                             title: 'Pinext-PrivicyPolicy',
                             message: 'Privicy pplicy is being generated. Please wait. :)',
                             snackbarType: SnackbarType.info,
