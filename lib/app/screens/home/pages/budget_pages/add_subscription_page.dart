@@ -88,14 +88,14 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
             if (state is AddSubscriptionSuccessState) {
               context.read<UserBloc>().add(RefreshUserStateEvent(context: context));
               Navigator.pop(context);
-              GetCustomSnackbar(
+              showToast(
                 title: 'Subscription added!!',
                 message: 'A new subscription has been added!',
                 snackbarType: SnackbarType.success,
                 context: context,
               );
             } else if (state is AddSubscriptionErrorState) {
-              GetCustomSnackbar(
+              showToast(
                 title: 'Snap',
                 message: 'An error occurred while trying to add your subscription.',
                 snackbarType: SnackbarType.error,
@@ -103,7 +103,7 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
               );
               context.read<AddSubscriptionCubit>().resetState();
             } else if (state is SubscriptionFailedToUpdateState) {
-              GetCustomSnackbar(
+              showToast(
                 title: 'Snap',
                 message: state.errorMessage,
                 snackbarType: SnackbarType.error,
@@ -113,7 +113,7 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
             } else if (state is SubscriptionSuccessfullyUpdatedState) {
               context.read<UserBloc>().add(RefreshUserStateEvent(context: context));
               Navigator.pop(context);
-              GetCustomSnackbar(
+              showToast(
                 title: 'Updated',
                 message: 'Your subscription has been updated!',
                 snackbarType: SnackbarType.success,
@@ -121,7 +121,7 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
               );
             } else if (state is DeletedSubscriptionSuccessState) {
               Navigator.pop(context);
-              GetCustomSnackbar(
+              showToast(
                 title: 'Deleted',
                 message: 'Your subscription has been deleted.',
                 snackbarType: SnackbarType.info,
@@ -823,7 +823,7 @@ class _SaveButton extends StatelessWidget {
                         ),
                       );
                 } else {
-                  GetCustomSnackbar(
+                  showToast(
                     title: 'ERROR',
                     message: 'Please input all the required fields and try again!',
                     snackbarType: SnackbarType.error,

@@ -198,14 +198,14 @@ class _SigninScreenViewState extends State<SigninScreenView> {
                                           .then(
                                         (value) {
                                           if (value == 'Success') {
-                                            GetCustomSnackbar(
+                                            showToast(
                                               title: 'We sent you a code',
                                               message: 'Please check your email to reset your password.',
                                               snackbarType: SnackbarType.info,
                                               context: context,
                                             );
                                           } else {
-                                            GetCustomSnackbar(
+                                            showToast(
                                               title: 'Snap',
                                               message: value,
                                               snackbarType: SnackbarType.info,
@@ -215,7 +215,7 @@ class _SigninScreenViewState extends State<SigninScreenView> {
                                         },
                                       );
                                     } else {
-                                      GetCustomSnackbar(
+                                      showToast(
                                         title: 'Snap',
                                         message: 'We need your email in order to reset your password!',
                                         snackbarType: SnackbarType.info,
@@ -259,7 +259,7 @@ class _SigninScreenViewState extends State<SigninScreenView> {
                         context.read<UserBloc>().add(RefreshUserStateEvent(context: context));
                       }
                       if (state is LoginErrorState) {
-                        GetCustomSnackbar(
+                        showToast(
                           title: 'Snap',
                           message: state.errorMessage,
                           snackbarType: SnackbarType.error,
@@ -282,7 +282,7 @@ class _SigninScreenViewState extends State<SigninScreenView> {
                                     password: passwordController.text,
                                   );
                             } else {
-                              GetCustomSnackbar(
+                              showToast(
                                 title: 'Snap',
                                 message: 'We need your email and password in order to sign you in!',
                                 snackbarType: SnackbarType.info,

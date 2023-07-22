@@ -86,7 +86,7 @@ class CardsAndBalanceView extends StatelessWidget {
                   context.read<UserBloc>().add(RefreshUserStateEvent(context: context));
                 }
                 if (state is CardsAndBalancesSuccessfullyRemovedCardState) {
-                  GetCustomSnackbar(
+                  showToast(
                     title: 'Success',
                     message: 'Card has been removed from your card list.',
                     snackbarType: SnackbarType.success,

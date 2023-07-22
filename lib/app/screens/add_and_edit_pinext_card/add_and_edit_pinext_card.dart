@@ -342,7 +342,7 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                     context.read<AddCardCubit>().reset();
                     context.read<CardsAndBalancesCubit>().resetState();
                     Navigator.pop(context);
-                    GetCustomSnackbar(
+                    showToast(
                       title: 'Success',
                       message: 'Your card details have been updated!!',
                       snackbarType: SnackbarType.success,
@@ -355,7 +355,7 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                   if (state is CardsAndBalancesFailedToEditedCardState) {
                     context.read<AddCardCubit>().reset();
                     context.read<CardsAndBalancesCubit>().resetState();
-                    GetCustomSnackbar(
+                    showToast(
                       title: 'Error',
                       message: 'Your card details have been updated!!',
                       snackbarType: SnackbarType.success,
@@ -369,7 +369,7 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                     listener: (context, state) {
                       if (widget.isEditCardScreen) {
                         if (state is EditCardErrorState) {
-                          GetCustomSnackbar(
+                          showToast(
                             title: 'Error',
                             message: 'Sorry! :( Couldnt update your card!',
                             snackbarType: SnackbarType.error,
@@ -392,7 +392,7 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                         }
                       } else {
                         if (state is AddCardErrorState) {
-                          GetCustomSnackbar(
+                          showToast(
                             title: 'ERROR :(',
                             message: 'An error occurred while trying to add you card, please try again later!',
                             snackbarType: SnackbarType.error,
@@ -415,7 +415,7 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                             context.read<CardsAndBalancesCubit>().addCard(newPinextCard);
                           }
                           Navigator.pop(context);
-                          GetCustomSnackbar(
+                          showToast(
                             title: 'Pinext Card added!!',
                             message: 'A new card has been added to your card list.',
                             snackbarType: SnackbarType.success,

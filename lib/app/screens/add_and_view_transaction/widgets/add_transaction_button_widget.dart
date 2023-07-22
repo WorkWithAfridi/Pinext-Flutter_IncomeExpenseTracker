@@ -47,7 +47,7 @@ class AddTransactionButtonWidget extends StatelessWidget {
                   ROUTES.getHomeframeRoute,
                   (route) => false,
                 );
-                GetCustomSnackbar(
+                showToast(
                   title: 'Transaction added!!',
                   message: 'Your transaction data has been stored.',
                   snackbarType: SnackbarType.success,
@@ -56,7 +56,7 @@ class AddTransactionButtonWidget extends StatelessWidget {
               }
             } else {
               Navigator.pop(context);
-              GetCustomSnackbar(
+              showToast(
                 title: 'Transaction added!!',
                 message: 'Your transaction data has been stored.',
                 snackbarType: SnackbarType.success,
@@ -65,7 +65,7 @@ class AddTransactionButtonWidget extends StatelessWidget {
             }
           }
           if (state is AddTransactionsErrorState) {
-            GetCustomSnackbar(
+            showToast(
               title: 'Snap',
               message: state.errorMessage,
               snackbarType: SnackbarType.error,
@@ -86,7 +86,7 @@ class AddTransactionButtonWidget extends StatelessWidget {
                 if (formKey.currentState!.validate()) {
                   if (amountController.text.isNotEmpty && detailsController.text.isNotEmpty && state.selectedCardNo != 'none' && state.selectedTag != '') {
                     if (isViewOnly) {
-                      GetCustomSnackbar(
+                      showToast(
                         title: 'Hello',
                         message: 'This function has not yet been deployed! :)',
                         snackbarType: SnackbarType.info,
@@ -94,7 +94,7 @@ class AddTransactionButtonWidget extends StatelessWidget {
                       );
                     } else {
                       if (state is AddTransactionsLoadingState) {
-                        GetCustomSnackbar(
+                        showToast(
                           title: 'Snap',
                           message: 'A transaction is being processed! Please be patient. :)',
                           snackbarType: SnackbarType.error,
@@ -115,28 +115,28 @@ class AddTransactionButtonWidget extends StatelessWidget {
                     }
                   } else {
                     if (state.selectedCardNo == 'none') {
-                      GetCustomSnackbar(
+                      showToast(
                         title: 'Error',
                         message: 'Please select a valid card and try again!',
                         snackbarType: SnackbarType.error,
                         context: context,
                       );
                     } else if (detailsController.text.isEmpty) {
-                      GetCustomSnackbar(
+                      showToast(
                         title: 'Error',
                         message: 'Please enter valid details of the transaction and try again!',
                         snackbarType: SnackbarType.error,
                         context: context,
                       );
                     } else if (amountController.text.isEmpty) {
-                      GetCustomSnackbar(
+                      showToast(
                         title: 'Error',
                         message: 'Please enter valid amount and try again!',
                         snackbarType: SnackbarType.error,
                         context: context,
                       );
                     } else if (state.selectedTag == '') {
-                      GetCustomSnackbar(
+                      showToast(
                         title: 'Error',
                         message: 'Please enter a valid transaction tag and try again!',
                         snackbarType: SnackbarType.error,

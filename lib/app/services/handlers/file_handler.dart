@@ -113,7 +113,7 @@ class FileHandler {
       await file.create();
       await OpenFile.open(fileName);
     } catch (err) {
-      GetCustomSnackbar(
+      showToast(
         title: 'Snap',
         message: "Can't open file. An error occurred!",
         snackbarType: SnackbarType.error,

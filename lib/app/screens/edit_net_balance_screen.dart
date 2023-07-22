@@ -157,7 +157,7 @@ class EditNetBalanceView extends StatelessWidget {
                         Navigator.pop(context);
                         context.read<EditNetBalanceCubit>().resetState();
                       } else if (state is EditNetBalanceErrorState) {
-                        GetCustomSnackbar(
+                        showToast(
                           title: 'Snap',
                           message: state.errorMessage,
                           snackbarType: SnackbarType.error,
@@ -176,7 +176,7 @@ class EditNetBalanceView extends StatelessWidget {
                         callBackFunction: () {
                           if (demoBlocState is DemoDisabledState) {
                             if (netBalanceController.text == netBalance) {
-                              GetCustomSnackbar(
+                              showToast(
                                 title: '!!',
                                 message: 'Please update with a new amount and try again!',
                                 snackbarType: SnackbarType.error,

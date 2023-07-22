@@ -166,7 +166,7 @@ class UserRegistrationPage extends StatelessWidget {
                         1,
                       );
                     } else {
-                      GetCustomSnackbar(
+                      showToast(
                         title: '....',
                         message: 'You need to fill up the form to proceed to the next step!',
                         snackbarType: SnackbarType.info,

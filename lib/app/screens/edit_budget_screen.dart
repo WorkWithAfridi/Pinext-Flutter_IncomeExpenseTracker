@@ -14,9 +14,9 @@ import 'package:pinext/app/shared/widgets/info_widget.dart';
 
 class EditbudgetScreen extends StatelessWidget {
   EditbudgetScreen({
-    super.key,
     required this.monthlyBudget,
     required this.amountSpentSoFar,
+    super.key,
   });
 
   String monthlyBudget;
@@ -36,9 +36,9 @@ class EditbudgetScreen extends StatelessWidget {
 
 class Editbudgetview extends StatelessWidget {
   Editbudgetview({
-    super.key,
     required this.monthlyBudget,
     required this.amountSpentSoFar,
+    super.key,
   });
 
   String monthlyBudget;
@@ -140,14 +140,14 @@ class Editbudgetview extends StatelessWidget {
                         context.read<UserBloc>().add(RefreshUserStateEvent(context: context));
                         Navigator.pop(context);
                         context.read<EditBudgetCubit>().resetState();
-                        GetCustomSnackbar(
+                        showToast(
                           title: 'Success',
                           message: 'Your monthly budget has been updated!',
                           snackbarType: SnackbarType.success,
                           context: context,
                         );
                       } else if (state is EditBudgetErrorState) {
-                        GetCustomSnackbar(
+                        showToast(
                           title: 'Snap',
                           message: state.errorMessage,
                           snackbarType: SnackbarType.error,

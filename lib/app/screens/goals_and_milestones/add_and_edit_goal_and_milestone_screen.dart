@@ -295,7 +295,7 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                   listener: (addGoalContext, state) {
                     if (state is AddGoalSuccessState) {
                       Navigator.pop(context);
-                      GetCustomSnackbar(
+                      showToast(
                         title: 'Pinext Goal added!!',
                         message: 'A new goal has been added.',
                         snackbarType: SnackbarType.success,
@@ -305,7 +305,7 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                       log('An error occurred while trying to add a new goal!');
                     } else if (state is UpdateGoalSuccessState) {
                       Navigator.pop(context);
-                      GetCustomSnackbar(
+                      showToast(
                         title: 'Pinext Goal updated!!',
                         message: 'Your goal has been updated',
                         snackbarType: SnackbarType.success,
@@ -313,7 +313,7 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                       );
                     } else if (state is DeleteGoalSuccessState) {
                       Navigator.pop(context);
-                      GetCustomSnackbar(
+                      showToast(
                         title: 'Pinext Goal Deleted',
                         message: 'Your goal has been achieved!',
                         snackbarType: SnackbarType.success,
