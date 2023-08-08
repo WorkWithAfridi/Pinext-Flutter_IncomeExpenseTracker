@@ -21,13 +21,7 @@ import 'package:pinext/app/shared/widgets/pinext_goal_minimized.dart';
 
 class CardsAndBalancesRegistrationPage extends StatelessWidget {
   CardsAndBalancesRegistrationPage({
-    super.key,
-    required this.monthlyBudgetController,
-    required this.budgetSpentSoFarController,
-    required this.emailController,
-    required this.userNameController,
-    required this.passwordController,
-    required this.pageController,
+    required this.monthlyBudgetController, required this.budgetSpentSoFarController, required this.emailController, required this.userNameController, required this.passwordController, required this.pageController, super.key,
   });
 
   TextEditingController userNameController;

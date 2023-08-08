@@ -232,10 +232,10 @@ class ApiService extends BaseService {
       case 403:
         return response.data;
       case 500:
-        log('RESPONSE DATA : ${response.data.toString()}');
+        log('RESPONSE DATA : ${response.data}');
         return response.data;
       default:
-        log('RESPONSE DATA : ${response.data.toString()}');
+        log('RESPONSE DATA : ${response.data}');
         return response.data;
     }
   }

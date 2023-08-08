@@ -14,7 +14,7 @@ class UserHandler {
 
   late PinextUserModel currentUser;
   Future<PinextUserModel> getCurrentUser() async {
-    DocumentSnapshot userSnapshot = await FirebaseServices().firebaseFirestore.collection('pinext_users').doc(FirebaseServices().getUserId()).get();
+    final DocumentSnapshot userSnapshot = await FirebaseServices().firebaseFirestore.collection('pinext_users').doc(FirebaseServices().getUserId()).get();
     currentUser = PinextUserModel.fromMap(userSnapshot.data() as Map<String, dynamic>);
 
     await updateUserDataMonthlyStats(currentUser);

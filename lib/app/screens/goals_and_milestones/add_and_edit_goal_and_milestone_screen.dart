@@ -19,11 +19,7 @@ import 'package:uuid/uuid.dart';
 
 class AddAndEditGoalsAndMilestoneScreen extends StatelessWidget {
   AddAndEditGoalsAndMilestoneScreen({
-    super.key,
-    required this.addingNewGoalDuringSignupProcess,
-    required this.addingNewGoal,
-    required this.editingGoal,
-    required this.pinextGoalModel,
+    required this.addingNewGoalDuringSignupProcess, required this.addingNewGoal, required this.editingGoal, required this.pinextGoalModel, super.key,
   });
 
   bool addingNewGoalDuringSignupProcess;
@@ -47,11 +43,7 @@ class AddAndEditGoalsAndMilestoneScreen extends StatelessWidget {
 
 class AddAndEditGoalsAndMilestoneView extends StatefulWidget {
   AddAndEditGoalsAndMilestoneView({
-    super.key,
-    required this.addingNewGoalDuringSignupProcess,
-    required this.addingNewGoal,
-    required this.editingGoal,
-    required this.pinextGoalModel,
+    required this.addingNewGoalDuringSignupProcess, required this.addingNewGoal, required this.editingGoal, required this.pinextGoalModel, super.key,
   });
 
   bool addingNewGoalDuringSignupProcess;
@@ -338,7 +330,7 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                               title: titleController.text,
                               amount: amountController.text,
                               description: descriptionController.text,
-                              id: const Uuid().v4().toString(),
+                              id: const Uuid().v4(),
                             );
                             context.read<SigninCubit>().addGoal(pinextGoalModel);
                             Navigator.pop(context);
@@ -347,7 +339,7 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                               title: titleController.text,
                               amount: amountController.text,
                               description: descriptionController.text,
-                              id: const Uuid().v4().toString(),
+                              id: const Uuid().v4(),
                             );
                             await addGoalContext.read<AddGoalCubit>().addGoal(pinextGoalModel);
                           } else if (widget.editingGoal) {

@@ -63,19 +63,19 @@ class AddCardCubit extends Cubit<AddCardState> {
     if (title.isNotEmpty && balance.isNotEmpty) {
       emit(
         EditCardSuccessState(
-          title: title.toString(),
-          description: description.toString(),
+          title: title,
+          description: description,
           balance: double.parse(balance),
-          color: color.toString(),
+          color: color,
         ),
       );
     } else {
       emit(
         EditCardErrorState(
-          title: title.toString(),
-          description: description.toString(),
+          title: title,
+          description: description,
           balance: double.parse(balance),
-          color: color.toString(),
+          color: color,
         ),
       );
     }
@@ -85,8 +85,8 @@ class AddCardCubit extends Cubit<AddCardState> {
     if (title.isNotEmpty && balance.isNotEmpty) {
       emit(
         AddCardSuccessState(
-          title: title.toString(),
-          description: description.toString(),
+          title: title,
+          description: description,
           balance: double.parse(balance),
           color: color,
         ),

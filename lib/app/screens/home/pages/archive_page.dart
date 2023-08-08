@@ -234,7 +234,7 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
                           },
                           child: Padding(
                             padding: EdgeInsets.only(right: currentMonth == 'December' ? defaultPadding : 8),
-                            child: state.selectedMonth.toString() == (index).toString()
+                            child: state.selectedMonth == (index).toString()
                                 ? Chip(
                                     label: Text(
                                       currentMonth,

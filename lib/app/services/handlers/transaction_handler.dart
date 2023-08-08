@@ -126,7 +126,7 @@ class TransactionHandler {
     var response = 'An error occured while trying to delete your transaction';
     // try {
     final date = DateTime.parse(transactionModel.transactionDate);
-    final month = date.month.toString().length == 1 ? '0${date.month.toString()}' : date.month.toString();
+    final month = date.month.toString().length == 1 ? '0${date.month}' : date.month.toString();
 
     const updatedBalance = 0.0;
 

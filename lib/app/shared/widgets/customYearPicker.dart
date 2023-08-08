@@ -73,12 +73,12 @@ class CalendarDatePicker extends StatefulWidget {
   /// If [selectableDayPredicate] is non-null, it must return `true` for the
   /// [initialDate].
   CalendarDatePicker({
-    super.key,
     required DateTime initialDate,
     required DateTime firstDate,
     required DateTime lastDate,
-    DateTime? currentDate,
     required this.onDateChanged,
+    super.key,
+    DateTime? currentDate,
     this.onDisplayedMonthChanged,
     this.initialCalendarMode = DatePickerMode.day,
     this.selectableDayPredicate,
@@ -417,7 +417,6 @@ class _DatePickerModeToggleButtonState extends State<_DatePickerModeToggleButton
 class _MonthPicker extends StatefulWidget {
   /// Creates a month picker.
   _MonthPicker({
-    super.key,
     required this.initialMonth,
     required this.currentDate,
     required this.firstDate,
@@ -425,6 +424,7 @@ class _MonthPicker extends StatefulWidget {
     required this.selectedDate,
     required this.onChanged,
     required this.onDisplayedMonthChanged,
+    super.key,
     this.selectableDayPredicate,
   })  : assert(!firstDate.isAfter(lastDate)),
         assert(!selectedDate.isBefore(firstDate)),
@@ -811,13 +811,13 @@ class _FocusedDate extends InheritedWidget {
 class _DayPicker extends StatefulWidget {
   /// Creates a day picker.
   _DayPicker({
-    super.key,
     required this.currentDate,
     required this.displayedMonth,
     required this.firstDate,
     required this.lastDate,
     required this.selectedDate,
     required this.onChanged,
+    super.key,
     this.selectableDayPredicate,
   })  : assert(!firstDate.isAfter(lastDate)),
         assert(!selectedDate.isBefore(firstDate)),
@@ -983,8 +983,8 @@ class _DayPickerState extends State<_DayPicker> {
           );
         }
 
-        Widget dayWidget = Container(
-          decoration: decoration,
+        Widget dayWidget = DecoratedBox(
+          decoration: decoration!,
           child: Center(
             child: Text(
               localizations.formatDecimal(day),
@@ -1084,13 +1084,13 @@ class CustomYearPicker extends StatefulWidget {
   /// The [firstDate], [lastDate], [selectedDate], and [onChanged]
   /// arguments must be non-null. The [lastDate] must be after the [firstDate].
   CustomYearPicker({
-    super.key,
-    DateTime? currentDate,
     required this.firstDate,
     required this.lastDate,
-    DateTime? initialDate,
     required this.selectedDate,
     required this.onChanged,
+    super.key,
+    DateTime? currentDate,
+    DateTime? initialDate,
     this.dragStartBehavior = DragStartBehavior.start,
   })  : assert(!firstDate.isAfter(lastDate)),
         currentDate = DateUtils.dateOnly(currentDate ?? DateTime.now()),

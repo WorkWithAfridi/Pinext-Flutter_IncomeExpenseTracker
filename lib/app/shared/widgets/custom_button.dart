@@ -6,14 +6,10 @@ import 'package:pinext/app/app_data/theme_data/colors.dart';
 
 class GetCustomButton extends StatelessWidget {
   GetCustomButton({
-    super.key,
-    required this.title,
-    required this.titleColor,
-    required this.buttonColor,
+    required this.title, required this.titleColor, required this.buttonColor, required this.callBackFunction, super.key,
     this.iconColor = whiteColor,
     this.icon,
     this.isLoading = false,
-    required this.callBackFunction,
   });
   final String title;
   final Color titleColor;
