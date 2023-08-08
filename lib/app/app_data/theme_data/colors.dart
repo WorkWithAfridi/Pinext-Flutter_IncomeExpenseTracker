@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-const Color primaryColor = Color(0xff0A0F34); //Color(0xff783EF0);
-const Color darkPurpleColor = Color(0xff3b47a1);
+const Color primaryColor = Color(0xff3F51B5); //Color(0xff783EF0);
+const Color darkPurpleColor = Color(0xff303F9F);
 const Color cyanColor = Color(0xffA6E6EF);
 const Color whiteColor = Color(0xffFFFFFF);
-const Color customBlackColor = Color(0xff0A0F34);
+const Color customBlackColor = Color(0xff212121);
 const Color greyColor = Color(0xffF7F7F7);
 
 Color getColorFromString(String colorInStringFormat) {
