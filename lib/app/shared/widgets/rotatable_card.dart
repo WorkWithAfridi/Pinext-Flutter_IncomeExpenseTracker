@@ -5,9 +5,7 @@ import 'package:pinext/app/app_data/app_constants/domentions.dart';
 
 class RotatableCard extends StatefulWidget {
   const RotatableCard({
-    super.key,
-    required this.front,
-    required this.back,
+    required this.front, required this.back, super.key,
   });
   final Widget front;
   final Widget back;

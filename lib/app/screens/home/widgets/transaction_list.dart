@@ -128,7 +128,7 @@ class TransactionsList extends StatelessWidget {
                                         (index) {
                                           return GestureDetector(
                                             onTap: () {
-                                              final selectedFilter = filters[index].toString();
+                                              final selectedFilter = filters[index];
                                               if (state.selectedFilter == selectedFilter && selectedFilter == 'All transactions') {
                                                 return;
                                               }
@@ -144,7 +144,7 @@ class TransactionsList extends StatelessWidget {
                                             child: Chip(
                                               elevation: 0,
                                               label: Text(
-                                                filters[index].toString(),
+                                                filters[index],
                                                 style: regularTextStyle.copyWith(
                                                   color: filters[index] == state.selectedFilter ? whiteColor : customBlackColor.withOpacity(.6),
                                                   fontWeight: filters[index] == state.selectedFilter ? FontWeight.w600 : FontWeight.normal,
@@ -233,7 +233,7 @@ class TransactionsList extends StatelessWidget {
                                       );
                                       context.read<UserStatisticsCubit>().updateStatistics(
                                             amount: double.parse(pinextTransactionModel.amount),
-                                            isExpense: pinextTransactionModel.transactionType.toString() == 'Expense',
+                                            isExpense: pinextTransactionModel.transactionType == 'Expense',
                                             tag: pinextTransactionModel.transactionTag,
                                             tagAmount: double.parse(
                                               pinextTransactionModel.amount,
@@ -389,12 +389,12 @@ class _GetStatisticsWidget extends StatelessWidget {
 
                                             var totalEarnings = '';
                                             if (state is AuthenticatedUserState) {
-                                              totalEarnings = state.monthlyEarnings.toString();
+                                              totalEarnings = state.monthlyEarnings;
                                             }
                                             return _GetOverviewWidget(
                                               isDemoActive: demoBlocState is DemoEnabledState,
                                               title: "You've earned",
-                                              amount: totalEarnings.toString(),
+                                              amount: totalEarnings,
                                             );
                                           },
                                         ),
@@ -416,12 +416,12 @@ class _GetStatisticsWidget extends StatelessWidget {
 
                                             var totalSavings = '';
                                             if (state is AuthenticatedUserState) {
-                                              totalSavings = state.monthlySavings.toString();
+                                              totalSavings = state.monthlySavings;
                                             }
                                             return _GetOverviewWidget(
                                               isDemoActive: demoBlocState is DemoEnabledState,
                                               title: "You've saved",
-                                              amount: totalSavings.toString(),
+                                              amount: totalSavings,
                                             );
                                           },
                                         ),
@@ -447,12 +447,12 @@ class _GetStatisticsWidget extends StatelessWidget {
                               final demoBlocState = context.watch<DemoBloc>().state;
                               var netWorth = '';
                               if (state is AuthenticatedUserState) {
-                                netWorth = state.netBalance.toString();
+                                netWorth = state.netBalance;
                               }
                               return _GetOverviewWidget(
                                 isDemoActive: demoBlocState is DemoEnabledState,
                                 title: 'Current NET. balance',
-                                amount: netWorth.toString(),
+                                amount: netWorth,
                               );
                             },
                           ),

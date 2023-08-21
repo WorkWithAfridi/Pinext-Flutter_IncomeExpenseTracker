@@ -18,9 +18,7 @@ import 'package:pinext/app/shared/widgets/gradient_text.dart';
 
 class TransactionDetailsCard extends StatefulWidget {
   TransactionDetailsCard({
-    super.key,
-    required this.pinextTransactionModel,
-    required this.isLastIndex,
+    required this.pinextTransactionModel, required this.isLastIndex, super.key,
   });
 
   final PinextTransactionModel pinextTransactionModel;

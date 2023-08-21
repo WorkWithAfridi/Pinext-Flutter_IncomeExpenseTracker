@@ -15,6 +15,7 @@ class AddTransactionsCubit extends Cubit<AddTransactionsState> {
             selectedDescription: 'none',
             markAs: true,
             selectedTag: '',
+            transactionDate: DateTime.now(),
           ),
         );
 
@@ -26,6 +27,7 @@ class AddTransactionsCubit extends Cubit<AddTransactionsState> {
         selectedDescription: state.selectedDescription,
         markAs: state.markAs,
         selectedTag: state.selectedTag,
+        transactionDate: state.transactionDate,
       ),
     );
   }
@@ -38,6 +40,7 @@ class AddTransactionsCubit extends Cubit<AddTransactionsState> {
         selectedDescription: state.selectedDescription,
         markAs: !state.markAs,
         selectedTag: state.selectedTag,
+        transactionDate: state.transactionDate,
       ),
     );
   }
@@ -56,6 +59,7 @@ class AddTransactionsCubit extends Cubit<AddTransactionsState> {
         selectedDescription: state.selectedDescription,
         markAs: state.markAs,
         selectedTag: state.selectedTag,
+        transactionDate: state.transactionDate,
       ),
     );
     await Future.delayed(const Duration(seconds: 1));
@@ -67,6 +71,7 @@ class AddTransactionsCubit extends Cubit<AddTransactionsState> {
       markedAs: state.markAs,
       transactionTag: transctionTag,
       context: context,
+      transactionDate: state.transactionDate,
     );
     if (response == 'Success') {
       context.read<UserBloc>().add(RefreshUserStateEvent(context: context));
@@ -78,6 +83,7 @@ class AddTransactionsCubit extends Cubit<AddTransactionsState> {
           selectedDescription: state.selectedDescription,
           markAs: state.markAs,
           selectedTag: state.selectedTag,
+          transactionDate: state.transactionDate,
         ),
       );
     } else {
@@ -89,6 +95,7 @@ class AddTransactionsCubit extends Cubit<AddTransactionsState> {
           selectedDescription: state.selectedDescription,
           markAs: state.markAs,
           selectedTag: state.selectedTag,
+          transactionDate: state.transactionDate,
         ),
       );
     }
@@ -102,6 +109,20 @@ class AddTransactionsCubit extends Cubit<AddTransactionsState> {
         selectedDescription: state.selectedDescription,
         markAs: state.markAs,
         selectedTag: state.selectedTag,
+        transactionDate: state.transactionDate,
+      ),
+    );
+  }
+
+  void updateEntryDate(DateTime dateTime) {
+    emit(
+      AddTransactionsDefaultState(
+        selectedCardNo: state.selectedCardNo,
+        selectedTransactionMode: state.selectedTransactionMode,
+        selectedDescription: state.selectedDescription,
+        markAs: state.markAs,
+        selectedTag: state.selectedTag,
+        transactionDate: dateTime,
       ),
     );
   }
@@ -114,6 +135,7 @@ class AddTransactionsCubit extends Cubit<AddTransactionsState> {
         selectedDescription: state.selectedDescription,
         markAs: state.markAs,
         selectedTag: state.selectedTag,
+        transactionDate: state.transactionDate,
       ),
     );
   }
@@ -125,6 +147,7 @@ class AddTransactionsCubit extends Cubit<AddTransactionsState> {
         selectedCardNo: state.selectedCardNo,
         selectedDescription: selectedDescription,
         markAs: state.markAs,
+        transactionDate: state.transactionDate,
         selectedTag: state.selectedTag,
       ),
     );
@@ -145,6 +168,7 @@ class AddTransactionsCubit extends Cubit<AddTransactionsState> {
         selectedDescription: state.selectedDescription,
         markAs: state.markAs,
         selectedTag: selectedTag,
+        transactionDate: state.transactionDate,
       ),
     );
   }

@@ -116,7 +116,7 @@ class HomepageView extends StatelessWidget {
                                 Text(
                                   getGreetings(),
                                   style: regularTextStyle.copyWith(
-                                    color: customBlackColor.withOpacity(.6),
+                                    color: customBlackColor,
                                   ),
                                 ),
                                 Text(

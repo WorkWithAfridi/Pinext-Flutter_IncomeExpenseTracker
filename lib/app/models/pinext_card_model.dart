@@ -35,7 +35,7 @@ class PinextCardModel {
       description: map['description'] as String,
       balance: double.parse(map['balance'].toString()),
       color: map['color'] as String,
-      lastTransactionData: map['lastTransactionData'] as String,
+      lastTransactionData: map['lastTransactionData'].toString(),
     );
   }
 

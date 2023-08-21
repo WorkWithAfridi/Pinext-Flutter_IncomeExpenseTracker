@@ -140,7 +140,7 @@ class AuthenticationServices {
 
   Future<bool> isUserSignedIn() async {
     if (FirebaseServices().firebaseAuth.currentUser != null) {
-      DocumentSnapshot userSnapshot = await FirebaseServices().firebaseFirestore.collection('pinext_users').doc(FirebaseServices().getUserId()).get();
+      final DocumentSnapshot userSnapshot = await FirebaseServices().firebaseFirestore.collection('pinext_users').doc(FirebaseServices().getUserId()).get();
       if (userSnapshot.data() != null) {
         return true;
       }

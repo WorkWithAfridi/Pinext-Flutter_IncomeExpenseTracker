@@ -5,16 +5,11 @@ import 'package:pinext/app/app_data/theme_data/colors.dart';
 
 class CustomTextFormField extends StatefulWidget {
   CustomTextFormField({
-    super.key,
-    required this.controller,
-    required this.hintTitle,
+    required this.controller, required this.hintTitle, required this.onChanged, required this.validator, required this.suffixButtonAction, super.key,
     this.numberOfLines = 1,
     this.isPassword = false,
     this.textInputType = TextInputType.text,
-    required this.onChanged,
-    required this.validator,
     this.showClearSuffix = false,
-    required this.suffixButtonAction,
     this.isEnabled = true,
     this.textInputAction = TextInputAction.next,
   });

@@ -58,6 +58,7 @@ class SubscriptionHandler {
           transactionTag: 'Subscription',
           markedAs: true,
           context: context,
+          transactionDate: DateTime.now(),
         );
 
         if (response == 'Success') {

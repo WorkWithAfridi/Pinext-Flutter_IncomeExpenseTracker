@@ -14,11 +14,7 @@ import 'package:pinext/app/shared/widgets/custom_text_field.dart';
 
 class UserRegistrationPage extends StatelessWidget {
   UserRegistrationPage({
-    super.key,
-    required this.userNameController,
-    required this.emailController,
-    required this.passwordController,
-    required this.pageController,
+    required this.userNameController, required this.emailController, required this.passwordController, required this.pageController, super.key,
   });
   TextEditingController userNameController;
   TextEditingController emailController;

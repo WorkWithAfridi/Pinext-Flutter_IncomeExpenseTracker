@@ -2,9 +2,7 @@ import 'package:flutter/widgets.dart';
 
 class AnimatedCounterTextWidget extends StatefulWidget {
   const AnimatedCounterTextWidget({
-    super.key,
-    required this.begin,
-    required this.end,
+    required this.begin, required this.end, super.key,
     this.precision = 0,
     this.curve = Curves.linear,
     this.duration = const Duration(milliseconds: 250),
@@ -75,9 +73,7 @@ class _AnimatedCounterTextWidgetState extends State<AnimatedCounterTextWidget> w
 
 class _AnimatedCounterTextWidget extends AnimatedWidget {
   const _AnimatedCounterTextWidget({
-    super.key,
-    required this.animation,
-    required this.precision,
+    required this.animation, required this.precision, super.key,
     this.style,
     this.textAlign,
     this.textDirection,

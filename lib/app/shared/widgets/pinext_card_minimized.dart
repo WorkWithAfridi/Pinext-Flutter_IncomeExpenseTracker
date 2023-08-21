@@ -15,10 +15,7 @@ import 'package:timeago/timeago.dart' as timeago;
 
 class PinextCardMinimized extends StatelessWidget {
   PinextCardMinimized({
-    super.key,
-    required this.pinextCardModel,
-    required this.onDeleteButtonClick,
-    required this.onEditButtonClick,
+    required this.pinextCardModel, required this.onDeleteButtonClick, required this.onEditButtonClick, super.key,
   });
 
   final PinextCardModel pinextCardModel;

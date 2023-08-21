@@ -10,6 +10,7 @@ import 'package:pinext/app/bloc/cards_and_balances_cubit/cards_and_balances_cubi
 import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/bloc/signup_cubit/signin_cubit_cubit.dart';
 import 'package:pinext/app/models/pinext_card_model.dart';
+import 'package:pinext/app/services/handlers/card_handler.dart';
 import 'package:pinext/app/shared/widgets/custom_button.dart';
 import 'package:pinext/app/shared/widgets/custom_snackbar.dart';
 import 'package:pinext/app/shared/widgets/custom_text_field.dart';
@@ -414,6 +415,7 @@ class _AddAndEditPinextCardViewState extends State<AddAndEditPinextCardView> {
                           } else {
                             context.read<CardsAndBalancesCubit>().addCard(newPinextCard);
                           }
+                          CardHandler().getUserCards();
                           Navigator.pop(context);
                           showToast(
                             title: 'Pinext Card added!!',

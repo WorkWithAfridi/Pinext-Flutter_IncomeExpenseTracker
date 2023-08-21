@@ -27,6 +27,7 @@ class TransactionHandler {
     required bool markedAs,
     required String transactionTag,
     required BuildContext context,
+    required DateTime transactionDate,
   }) async {
     var response = 'Error';
     try {
@@ -41,7 +42,7 @@ class TransactionHandler {
         amount: amount,
         details: description.toLowerCase(),
         cardId: cardId,
-        transactionDate: DateTime.now().toString(),
+        transactionDate: transactionDate.toString(),
         transactionId: transactionId,
         transactionTag: transactionTag,
       );
@@ -75,11 +76,11 @@ class TransactionHandler {
           .doc(pinextTransactionModel.cardId)
           .update({
         'balance': adjustedAmount,
-        'lastTransactionData': DateTime.now().toString(),
+        'lastTransactionData': transactionDate.toString(),
       });
 
       // //Adjusting global balances
-      if (markedAs) {
+      if (markedAs && transactionDate.month == DateTime.now().month && transactionDate.year == DateTime.now().year) {
         final pinextUserModel = UserHandler().currentUser;
         if (transactionType == 'Income') {
           final adjustedMonthlySavings = double.parse(pinextUserModel.monthlySavings) + double.parse(amount);
@@ -126,7 +127,7 @@ class TransactionHandler {
     var response = 'An error occured while trying to delete your transaction';
     // try {
     final date = DateTime.parse(transactionModel.transactionDate);
-    final month = date.month.toString().length == 1 ? '0${date.month.toString()}' : date.month.toString();
+    final month = date.month.toString().length == 1 ? '0${date.month}' : date.month.toString();
 
     const updatedBalance = 0.0;
 

@@ -5,8 +5,7 @@ import 'package:pinext/app/app_data/theme_data/colors.dart';
 
 class InfoWidget extends StatelessWidget {
   InfoWidget({
-    super.key,
-    required this.infoText,
+    required this.infoText, super.key,
   });
 
   String infoText;
