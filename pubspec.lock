@@ -85,17 +85,10 @@ packages:
     dependency: "direct main"
     description:
       name: cloud_firestore
-<<<<<<< HEAD
-      sha256: "035b91f66b60dab5eefcc217accc734020234f79d963b075699920b95334a755"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.8.3"
-=======
       sha256: f1a06ad4499ed9ab73703560d44893e6b9e66ce3923c9121f4ef3981c972057f
       url: "https://pub.dev"
     source: hosted
     version: "4.8.4"
->>>>>>> origin/dev_branch
   cloud_firestore_platform_interface:
     dependency: transitive
     description:
@@ -188,17 +181,10 @@ packages:
     dependency: "direct main"
     description:
       name: dio
-<<<<<<< HEAD
-      sha256: "3866d67f93523161b643187af65f5ac08bc991a5bcdaf41a2d587fe4ccb49993"
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.3.0"
-=======
       sha256: ce75a1b40947fea0a0e16ce73337122a86762e38b982e1ccb909daa3b9bc4197
       url: "https://pub.dev"
     source: hosted
     version: "5.3.2"
->>>>>>> origin/dev_branch
   elegant_notification:
     dependency: "direct main"
     description:
@@ -267,47 +253,26 @@ packages:
     dependency: "direct main"
     description:
       name: firebase_auth
-<<<<<<< HEAD
-      sha256: acfbe55bc23e94ccc7228b7fc7b9abc0005597c1de226f6e3a0103ac29728fbe
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.7.1"
-=======
       sha256: "49fd35ce06f2530dd460e5dc123235731cb61dd7c76b0af4b6e190404880d04d"
       url: "https://pub.dev"
     source: hosted
     version: "4.7.2"
->>>>>>> origin/dev_branch
   firebase_auth_platform_interface:
     dependency: transitive
     description:
       name: firebase_auth_platform_interface
-<<<<<<< HEAD
-      sha256: "4ab0a8997994db2b76bf0652689d7908ca935a99314857c683251bc23d31c287"
-      url: "https://pub.dev"
-    source: hosted
-    version: "6.16.0"
-=======
       sha256: "817f3ceb84ef5e9adaaf50cf7a19255f6ffcdd12c6f9e9aa4cf00fc7f2eb3cfb"
       url: "https://pub.dev"
     source: hosted
     version: "6.16.1"
->>>>>>> origin/dev_branch
   firebase_auth_web:
     dependency: transitive
     description:
       name: firebase_auth_web
-<<<<<<< HEAD
-      sha256: "2e694a612a0739c0cf5f426d515dda37ee5827bab211d16e76bcad6a082925eb"
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.6.1"
-=======
       sha256: e9044778287f1ff8f9f4cee7e247b03ec87bb8977e0e65ad27dc337e196132e8
       url: "https://pub.dev"
     source: hosted
     version: "5.6.2"
->>>>>>> origin/dev_branch
   firebase_core:
     dependency: "direct main"
     description:
@@ -708,17 +673,10 @@ packages:
     dependency: transitive
     description:
       name: path_provider_foundation
-<<<<<<< HEAD
-      sha256: "916731ccbdce44d545414dd9961f26ba5fbaa74bcbb55237d8e65a623a8c7297"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.2.4"
-=======
       sha256: "1b744d3d774e5a879bb76d6cd1ecee2ba2c6960c03b1020cd35212f6aa267ac5"
       url: "https://pub.dev"
     source: hosted
     version: "2.3.0"
->>>>>>> origin/dev_branch
   path_provider_linux:
     dependency: transitive
     description:
@@ -1176,17 +1134,10 @@ packages:
     dependency: transitive
     description:
       name: xdg_directories
-<<<<<<< HEAD
-      sha256: e0b1147eec179d3911f1f19b59206448f78195ca1d20514134e10641b7d7fbff
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.1"
-=======
       sha256: f0c26453a2d47aa4c2570c6a033246a3fc62da2fe23c7ffdd0a7495086dc0247
       url: "https://pub.dev"
     source: hosted
     version: "1.0.2"
->>>>>>> origin/dev_branch
   xml:
     dependency: transitive
     description:
