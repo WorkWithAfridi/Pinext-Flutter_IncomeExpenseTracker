@@ -76,11 +76,11 @@ class TransactionHandler {
           .doc(pinextTransactionModel.cardId)
           .update({
         'balance': adjustedAmount,
-        'lastTransactionData': DateTime.now().toString(),
+        'lastTransactionData': transactionDate.toString(),
       });
 
       // //Adjusting global balances
-      if (markedAs) {
+      if (markedAs && transactionDate.month == DateTime.now().month && transactionDate.year == DateTime.now().year) {
         final pinextUserModel = UserHandler().currentUser;
         if (transactionType == 'Income') {
           final adjustedMonthlySavings = double.parse(pinextUserModel.monthlySavings) + double.parse(amount);
