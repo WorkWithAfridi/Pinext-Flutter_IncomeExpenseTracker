@@ -76,6 +76,8 @@ class AddAndViewTransactionView extends StatefulWidget {
 class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
   late TextEditingController amountController;
   late TextEditingController detailsController;
+  late DateTime transactionDate;
+
   List listOfTransactionDetailSuggestions = [
     'donation',
     'breakfast',
@@ -410,7 +412,69 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
                             suffixButtonAction: () {},
                           ),
                           const SizedBox(
-                            height: 12,
+                            height: 16,
+                          ),
+                          Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Entry date:',
+                                    style: boldTextStyle.copyWith(
+                                      color: customBlackColor.withOpacity(
+                                        .6,
+                                      ),
+                                    ),
+                                  ),
+                                  GestureDetector(
+                                    onTap: () async {
+                                      final picked = await showDatePicker(
+                                        context: context,
+                                        initialDate: DateTime.now(),
+                                        firstDate: DateTime(2000),
+                                        lastDate: DateTime(2101),
+                                      );
+                                      if (picked != null) {
+                                        context.read<AddTransactionsCubit>().updateEntryDate(picked);
+                                      }
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8),
+                                        color: Colors.grey[100],
+                                      ),
+                                      child: widget.isViewOnly
+                                          ? Text(
+                                              widget.pinextTransactionModel!.transactionDate.substring(0, 10).replaceAll('-', ' / '),
+                                              style: boldTextStyle.copyWith(
+                                                color: primaryColor.withOpacity(
+                                                  .95,
+                                                ),
+                                              ),
+                                            )
+                                          : BlocBuilder<AddTransactionsCubit, AddTransactionsState>(
+                                              builder: (context, state) {
+                                                return Text(
+                                                  state.transactionDate.toString().substring(0, 10).replaceAll('-', ' / '),
+                                                  style: boldTextStyle.copyWith(
+                                                    color: primaryColor.withOpacity(
+                                                      .95,
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 12,
+                              ),
+                            ],
                           ),
                           if (widget.isViewOnly && widget.pinextTransactionModel!.transactionTag != '')
                             Column(
@@ -431,9 +495,7 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
                                   height: 12,
                                 ),
                               ],
-                            )
-                          else
-                            const SizedBox.shrink(),
+                            ),
                           if (widget.isViewOnly)
                             Text(
                               'Card',

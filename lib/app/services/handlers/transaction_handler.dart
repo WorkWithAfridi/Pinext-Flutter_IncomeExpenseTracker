@@ -27,6 +27,7 @@ class TransactionHandler {
     required bool markedAs,
     required String transactionTag,
     required BuildContext context,
+    required DateTime transactionDate,
   }) async {
     var response = 'Error';
     try {
@@ -41,7 +42,7 @@ class TransactionHandler {
         amount: amount,
         details: description.toLowerCase(),
         cardId: cardId,
-        transactionDate: DateTime.now().toString(),
+        transactionDate: transactionDate.toString(),
         transactionId: transactionId,
         transactionTag: transactionTag,
       );
