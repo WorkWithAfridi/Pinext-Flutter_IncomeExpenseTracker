@@ -285,9 +285,9 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
                 ),
                 const SizedBox(
                   width: 6,
-                )
+                ),
               ],
-            )
+            ),
         ],
       ),
       body: BlocListener<DeleteTransactionCubit, DeleteTransactionState>(
@@ -420,7 +420,7 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    'Entry date:',
+                                    'Transaction date:',
                                     style: boldTextStyle.copyWith(
                                       color: customBlackColor.withOpacity(
                                         .6,
@@ -468,7 +468,7 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
                                               },
                                             ),
                                     ),
-                                  )
+                                  ),
                                 ],
                               ),
                               const SizedBox(
