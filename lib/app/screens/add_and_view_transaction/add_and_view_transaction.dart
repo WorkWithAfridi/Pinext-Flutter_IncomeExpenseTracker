@@ -429,14 +429,16 @@ class _AddAndViewTransactionViewState extends State<AddAndViewTransactionView> {
                                   ),
                                   GestureDetector(
                                     onTap: () async {
-                                      final picked = await showDatePicker(
-                                        context: context,
-                                        initialDate: DateTime.now(),
-                                        firstDate: DateTime(2000),
-                                        lastDate: DateTime(2101),
-                                      );
-                                      if (picked != null) {
-                                        context.read<AddTransactionsCubit>().updateEntryDate(picked);
+                                      if (!widget.isViewOnly) {
+                                        final picked = await showDatePicker(
+                                          context: context,
+                                          initialDate: DateTime.now(),
+                                          firstDate: DateTime(2000),
+                                          lastDate: DateTime(2101),
+                                        );
+                                        if (picked != null) {
+                                          context.read<AddTransactionsCubit>().updateEntryDate(picked);
+                                        }
                                       }
                                     },
                                     child: Container(
