@@ -100,7 +100,7 @@ void showPinextCardPopup(
                     ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         );

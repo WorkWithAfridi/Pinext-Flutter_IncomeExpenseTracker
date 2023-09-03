@@ -115,7 +115,7 @@ class HomepageGetBalanceWidget extends StatelessWidget {
                           size: 20,
                         )
                       else
-                        const SizedBox.shrink()
+                        const SizedBox.shrink(),
                     ],
                   ),
                 ),

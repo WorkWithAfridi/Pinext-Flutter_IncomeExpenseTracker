@@ -126,7 +126,7 @@ class ViewGoalsAndMilestoneView extends StatelessWidget {
                             );
                           },
                         ),
-                      )
+                      ),
                     ],
                   );
                 },

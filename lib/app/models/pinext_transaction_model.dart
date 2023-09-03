@@ -67,5 +67,5 @@ List<String> transactionTags = [
   'Miscellaneous',
   'Others',
   'Transfer',
-  'Subscription'
+  'Subscription',
 ];

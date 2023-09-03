@@ -154,7 +154,7 @@ class TransactionsList extends StatelessWidget {
                                             ),
                                           );
                                         },
-                                      ).toList(),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -172,7 +172,7 @@ class TransactionsList extends StatelessWidget {
                                       );
                                     },
                                   ),
-                                )
+                                ),
                               ],
                             ),
                             BlocBuilder<ArchiveSearchCubit, ArchiveSearchState>(
@@ -456,7 +456,7 @@ class _GetStatisticsWidget extends StatelessWidget {
                               );
                             },
                           ),
-                          const _GetTransactionHistryOverviewWidget()
+                          const _GetTransactionHistryOverviewWidget(),
                         ],
                       );
               },
@@ -758,7 +758,7 @@ class _GetOverviewWidget extends StatelessWidget {
               ),
             );
           },
-        )
+        ),
       ],
     );
   }

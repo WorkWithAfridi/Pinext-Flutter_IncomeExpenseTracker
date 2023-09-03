@@ -26,7 +26,7 @@ class ApiRepo {
       'country_code2': 'BD',
       'isp': 'Assigned for Safura POP Customers',
       'response_code': '200',
-      'response_message': 'OK'
+      'response_message': 'OK',
     });
   }
 

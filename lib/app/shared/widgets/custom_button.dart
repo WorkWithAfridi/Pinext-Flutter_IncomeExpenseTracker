@@ -62,7 +62,7 @@ class GetCustomButton extends StatelessWidget {
                     ),
                   ),
                 ],
-              )
+              ),
           ],
         ),
       ),

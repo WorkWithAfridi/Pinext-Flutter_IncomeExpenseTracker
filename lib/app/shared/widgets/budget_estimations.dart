@@ -46,7 +46,7 @@ class GetBudgetEstimationsWidget extends StatelessWidget {
               const SizedBox(
                 width: 8,
               ),
-              const GetHorizontalBar()
+              const GetHorizontalBar(),
             ],
           ),
         const SizedBox(

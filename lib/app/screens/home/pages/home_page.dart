@@ -311,7 +311,7 @@ class HomepageView extends StatelessWidget {
                     const SizedBox(
                       height: 12,
                     ),
-                    const HomepageGetGoalsAndMilestonesWidget()
+                    const HomepageGetGoalsAndMilestonesWidget(),
                   ],
                 ),
               ),

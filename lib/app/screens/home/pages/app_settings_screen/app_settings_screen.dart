@@ -269,7 +269,7 @@ class AppSettingsScreen extends StatelessWidget {
                 }
                 return const SizedBox.shrink();
               },
-            )
+            ),
           ],
         ),
       ),

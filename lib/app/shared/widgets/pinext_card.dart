@@ -282,7 +282,7 @@ class PinextCard extends StatelessWidget {
                             ),
                           ],
                         ),
-                      )
+                      ),
                     ],
                   ),
                   // if (cardModel != null)
@@ -314,7 +314,7 @@ class PinextCard extends StatelessWidget {
                       ),
                     )
                   else
-                    const SizedBox.shrink()
+                    const SizedBox.shrink(),
                 ],
               ),
             ),

@@ -16,7 +16,7 @@ class CardHandler {
     final QuerySnapshot cardData =
         await FirebaseServices().firebaseFirestore.collection('pinext_users').doc(UserHandler().currentUser.userId).collection('pinext_cards').get();
     for (var i = 0; i < cardData.docs.length; i++) {
-      final cardModel = PinextCardModel.fromMap(cardData.docs[i].data() as Map<String, dynamic>);
+      final cardModel = PinextCardModel.fromMap(cardData.docs[i].data()! as Map<String, dynamic>);
       userCards!.add(cardModel);
     }
   }
@@ -93,7 +93,7 @@ class CardHandler {
     PinextCardModel pinextCardModel;
     final DocumentSnapshot cardSnapshot =
         await FirebaseServices().firebaseFirestore.collection('pinext_users').doc(FirebaseServices().getUserId()).collection('pinext_cards').doc(cardId).get();
-    pinextCardModel = PinextCardModel.fromMap(cardSnapshot.data() as Map<String, dynamic>);
+    pinextCardModel = PinextCardModel.fromMap(cardSnapshot.data()! as Map<String, dynamic>);
     return pinextCardModel;
   }
 
@@ -106,7 +106,7 @@ class CardHandler {
           .collection(CARDS_DIRECTORY)
           .doc(newVersion.cardId)
           .get();
-      var currentVersion = PinextCardModel.fromMap(userDocument.data() as Map<String, dynamic>);
+      var currentVersion = PinextCardModel.fromMap(userDocument.data()! as Map<String, dynamic>);
 
       final currentNetBalance = double.parse(UserHandler().currentUser.netBalance);
       double adjustedNetBalance;
@@ -134,7 +134,7 @@ class CardHandler {
           .collection(CARDS_DIRECTORY)
           .doc(newVersion.cardId)
           .get();
-      currentVersion = PinextCardModel.fromMap(userDocument.data() as Map<String, dynamic>);
+      currentVersion = PinextCardModel.fromMap(userDocument.data()! as Map<String, dynamic>);
       return 'Success';
     } on FirebaseException catch (err) {
       return err.message.toString();

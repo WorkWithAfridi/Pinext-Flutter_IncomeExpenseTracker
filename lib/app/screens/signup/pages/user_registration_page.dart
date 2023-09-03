@@ -209,14 +209,14 @@ class UserRegistrationPage extends StatelessWidget {
                           fontSize: 14,
                           color: primaryColor,
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
               ),
               const SizedBox(
                 height: 100,
-              )
+              ),
             ],
           ),
         ),

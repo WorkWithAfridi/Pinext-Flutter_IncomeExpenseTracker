@@ -86,7 +86,7 @@ class PinextDrawer extends StatelessWidget {
                             ),
                           ],
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),

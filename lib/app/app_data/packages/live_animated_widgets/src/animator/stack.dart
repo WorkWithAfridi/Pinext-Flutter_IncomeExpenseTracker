@@ -20,7 +20,8 @@ class VisibilityStack {
     required this.showItemInterval,
   });
 
-  Duration delay, showItemInterval;
+  Duration delay;
+  Duration showItemInterval;
   bool _firstAnimation = true;
   final Map<AnimationDirection, bool> _isAnimatedTo = {
     AnimationDirection.toEnd: false,

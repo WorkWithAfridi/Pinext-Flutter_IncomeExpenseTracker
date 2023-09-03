@@ -193,7 +193,7 @@ class EditNetBalanceView extends StatelessWidget {
                         },
                       );
                     },
-                  )
+                  ),
                 ],
               ),
             ),

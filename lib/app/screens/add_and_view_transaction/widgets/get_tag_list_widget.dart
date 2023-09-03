@@ -71,7 +71,7 @@ class GetTagsList extends StatelessWidget {
                       ),
                     );
                   },
-                ).toList(),
+                ),
               ],
             );
           },

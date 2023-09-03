@@ -54,7 +54,7 @@ class _CustomLoader extends State<CustomLoader> {
                     color: customBlackColor,
                     fontWeight: FontWeight.w400,
                   ),
-                )
+                ),
               ],
             ),
           ),

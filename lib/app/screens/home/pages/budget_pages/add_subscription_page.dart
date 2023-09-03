@@ -214,7 +214,7 @@ class _AddSubscriptionViewState extends State<AddSubscriptionView> {
                 ],
               )
             else
-              const SizedBox.shrink()
+              const SizedBox.shrink(),
           ],
         ),
         body: SizedBox(
@@ -639,14 +639,14 @@ class _GetAlreadyPaidWidget extends StatelessWidget {
                               ),
                             ),
                           ),
-                        )
+                        ),
                       ],
                     );
                   },
                 ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );

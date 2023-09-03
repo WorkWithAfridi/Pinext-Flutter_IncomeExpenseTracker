@@ -21,7 +21,7 @@ class AlertCubit extends Cubit<AlertState> {
     required BuildContext context,
   }) async {
     final DocumentSnapshot alertSnapshot = await FirebaseServices().firebaseFirestore.collection('app_data').doc('alert_message').get();
-    final notificationMessageModel = NotificationMessageModel.fromMap(alertSnapshot.data() as Map<String, dynamic>);
+    final notificationMessageModel = NotificationMessageModel.fromMap(alertSnapshot.data()! as Map<String, dynamic>);
     if (notificationMessageModel.showAlert) {
       notificationMessageModel.alertMessage = notificationMessageModel.alertMessage.replaceAll('*newline*', '\n');
       await Future.delayed(const Duration(seconds: 2)).then((value) async {

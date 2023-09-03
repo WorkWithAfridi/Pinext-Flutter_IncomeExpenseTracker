@@ -23,7 +23,8 @@ class AnimateIfVisible extends StatefulWidget {
         super(key: key);
 
   final AutoAnimatedBuilder builder;
-  final Duration duration, delay;
+  final Duration duration;
+  final Duration delay;
 
   /// A fraction in the range \[0, 1\] that represents what proportion of the
   /// widget is visible (assuming rectangular bounding boxes).
@@ -107,7 +108,8 @@ class AnimateIfVisibleWrapper extends StatefulWidget {
 
   final ScrollController? controller;
   final Widget child;
-  final Duration delay, showItemInterval;
+  final Duration delay;
+  final Duration showItemInterval;
 
   @override
   State<AnimateIfVisibleWrapper> createState() => _AnimateIfVisibleWrapperState();

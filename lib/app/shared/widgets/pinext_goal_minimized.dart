@@ -109,7 +109,7 @@ class PinextGoalCardMinimized extends StatelessWidget {
                                 ),
                               ],
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ],

@@ -127,7 +127,7 @@ class CardsAndBalancesRegistrationPage extends StatelessWidget {
                     child: InfoWidget(
                       infoText: 'Please add PINEXT cards to see your updated NET balance!',
                     ),
-                  )
+                  ),
                 ],
               ),
               const SizedBox(

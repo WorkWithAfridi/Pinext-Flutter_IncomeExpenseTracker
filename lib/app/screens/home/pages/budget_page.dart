@@ -159,7 +159,7 @@ class _GetStatisticsWidget extends StatelessWidget {
                 const SizedBox(
                   width: 8,
                 ),
-                const GetHorizontalBar()
+                const GetHorizontalBar(),
               ],
             ),
             const SizedBox(
@@ -396,7 +396,7 @@ class _GetStatisticsWidget extends StatelessWidget {
                 const SizedBox(
                   width: 8,
                 ),
-                const GetHorizontalBar()
+                const GetHorizontalBar(),
               ],
             ),
             const SizedBox(
@@ -554,7 +554,7 @@ class _GetOverviewWidget extends StatelessWidget {
               ),
             );
           },
-        )
+        ),
       ],
     );
   }
@@ -768,7 +768,7 @@ class SubscriptionCard extends StatelessWidget {
                           );
                         }
                       },
-                    )
+                    ),
                 ],
               );
             },
@@ -798,7 +798,7 @@ class _GetSubscriptionDetailsWidget extends StatelessWidget {
             const SizedBox(
               width: 8,
             ),
-            const GetHorizontalBar()
+            const GetHorizontalBar(),
           ],
         ),
         const SizedBox(

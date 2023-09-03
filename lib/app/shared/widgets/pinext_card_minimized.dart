@@ -123,7 +123,7 @@ class PinextCardMinimized extends StatelessWidget {
                               //   ),
                               // ),
                             ],
-                          )
+                          ),
                         ],
                       ),
                     ),
@@ -198,13 +198,13 @@ class PinextCardMinimized extends StatelessWidget {
                                   AntIcons.deleteOutlined,
                                   color: Colors.red,
                                 ),
-                              )
+                              ),
                             ],
-                          )
+                          ),
                         ],
-                      )
+                      ),
                     ],
-                  )
+                  ),
                 ],
               );
             },

@@ -107,7 +107,7 @@ class HomepageGetGoalsAndMilestonesWidget extends StatelessWidget {
                       );
                     },
                   ),
-                )
+                ),
               ],
             );
           },

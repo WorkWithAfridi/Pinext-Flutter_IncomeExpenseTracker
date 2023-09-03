@@ -104,21 +104,21 @@ class SelectRegionScreen extends StatelessWidget {
                                           color: primaryColor,
                                         )
                                       else
-                                        const SizedBox.shrink()
+                                        const SizedBox.shrink(),
                                     ],
                                   );
                                 },
                               ),
                             ),
                           ),
-                          const Divider()
+                          const Divider(),
                         ],
                       );
                     },
                   ),
                   const SizedBox(
                     height: kToolbarHeight,
-                  )
+                  ),
                 ],
               ),
             ),
@@ -131,7 +131,7 @@ class SelectRegionScreen extends StatelessWidget {
                     )
                   : const SizedBox.shrink();
             },
-          )
+          ),
         ],
       ),
     );

@@ -81,7 +81,7 @@ class GetBottomNavigationBar extends StatelessWidget {
               ),
               const SizedBox(
                 width: defaultPadding * 2,
-              )
+              ),
             ],
           ),
         );

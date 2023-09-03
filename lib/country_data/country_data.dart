@@ -206,7 +206,7 @@ class CountryHandler {
     {'name': 'Vietnam', 'code': 'VN', 'currency': 'Vietnamese đồng', 'symbol': '₫', 'symbolPlacement': 'right'},
     {'name': 'Yemen', 'code': 'YE', 'currency': 'Yemeni rial', 'symbol': '﷼', 'symbolPlacement': 'left'},
     {'name': 'Zambia', 'code': 'ZM', 'currency': 'Zambian kwacha', 'symbol': 'ZK', 'symbolPlacement': 'right'},
-    {'name': 'Zimbabwe', 'code': 'ZW', 'currency': 'Zimbabwean dollar', 'symbol': r'$', 'symbolPlacement': 'left'}
+    {'name': 'Zimbabwe', 'code': 'ZW', 'currency': 'Zimbabwean dollar', 'symbol': r'$', 'symbolPlacement': 'left'},
   ];
 
   void _setUpCountryList() {

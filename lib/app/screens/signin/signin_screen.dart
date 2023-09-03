@@ -164,7 +164,7 @@ class _SigninScreenViewState extends State<SigninScreenView> {
                                       },
                                       suffixButtonAction: () {},
                                     ),
-                                  )
+                                  ),
                                 ],
                               ),
                             ),
@@ -318,7 +318,7 @@ class _SigninScreenViewState extends State<SigninScreenView> {
                             fontSize: 14,
                             color: primaryColor,
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -340,7 +340,7 @@ class _SigninScreenViewState extends State<SigninScreenView> {
                           const SizedBox(
                             width: 8,
                           ),
-                          const GetHorizontalBar()
+                          const GetHorizontalBar(),
                         ],
                       ),
                       const SizedBox(
@@ -367,7 +367,7 @@ class _SigninScreenViewState extends State<SigninScreenView> {
                     ],
                   )
                 else
-                  const SizedBox.shrink()
+                  const SizedBox.shrink(),
               ],
             ),
           ),

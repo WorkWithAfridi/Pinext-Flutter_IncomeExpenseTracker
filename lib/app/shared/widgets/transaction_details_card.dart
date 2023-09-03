@@ -80,7 +80,7 @@ class _TransactionDetailsCardState extends State<TransactionDetailsCard> {
                               future: CardHandler().getCardData(widget.pinextTransactionModel.cardId),
                               builder: (context, snapshot) {
                                 if (snapshot.hasData) {
-                                  final cardDetails = snapshot.data as PinextCardModel;
+                                  final cardDetails = snapshot.data! as PinextCardModel;
                                   return GradientText(
                                     demoBlocState is DemoEnabledState ? 'Bank' : cardDetails.title,
                                     colors: GetGradientFromString(
@@ -181,7 +181,7 @@ class _TransactionDetailsCardState extends State<TransactionDetailsCard> {
                     height: 1,
                     width: getWidth(context),
                     color: customBlackColor.withOpacity(.05),
-                  )
+                  ),
               ],
             ),
           );

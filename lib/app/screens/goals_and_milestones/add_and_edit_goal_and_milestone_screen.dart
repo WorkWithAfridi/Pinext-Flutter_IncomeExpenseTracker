@@ -166,11 +166,11 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                 ),
                 const SizedBox(
                   width: 6,
-                )
+                ),
               ],
             )
           else
-            const SizedBox.shrink()
+            const SizedBox.shrink(),
         ],
       ),
       body: SingleChildScrollView(
@@ -358,7 +358,7 @@ class _AddAndEditGoalsAndMilestoneState extends State<AddAndEditGoalsAndMileston
                 ),
                 const SizedBox(
                   height: 30,
-                )
+                ),
               ],
             ),
           ),
