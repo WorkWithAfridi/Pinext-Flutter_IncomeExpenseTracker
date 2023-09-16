@@ -140,8 +140,8 @@ class HomepageView extends StatelessWidget {
                             ),
                             Container(
                               height: 22,
-                              width: 1,
-                              color: darkPurpleColor,
+                              width: .8,
+                              color: customBlackColor,
                             ),
                             Expanded(
                               child: Builder(
