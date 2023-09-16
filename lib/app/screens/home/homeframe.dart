@@ -3,11 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_intro/flutter_intro.dart';
-import 'package:pinext/app/app_data/appVersion.dart';
-import 'package:pinext/app/app_data/app_constants/fonts.dart';
 import 'package:pinext/app/bloc/alert_cubit/alert_cubit.dart';
 import 'package:pinext/app/bloc/archive_cubit/archive_cubit.dart';
-import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/bloc/homeframe_cubit/homeframe_page_cubit.dart';
 import 'package:pinext/app/screens/home/pages/app_settings_screen/app_settings_screen.dart';
 import 'package:pinext/app/screens/home/pages/archive_page.dart';
@@ -80,28 +77,14 @@ List<Widget> homeframePages = [
 class HomeframeView extends StatelessWidget {
   HomeframeView({super.key});
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      appBar: AppBar(
-        centerTitle: true,
-        title: Builder(
-          builder: (context) {
-            final demoBlocState = context.watch<DemoBloc>().state;
-            final homepageCubitState = context.watch<HomeframeCubit>().state;
-            return Text(
-              demoBlocState is DemoEnabledState
-                  ? 'PINEXT : DEMO-MODE'
-                  : homepageCubitState.selectedIndex == 4
-                      ? 'PINEXT : v$appVersion'
-                      : 'PINEXT',
-              style: regularTextStyle.copyWith(
-                fontSize: 14,
-              ),
-            );
-          },
-        ),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(0),
+        child: AppBar(),
       ),
       // drawer: const PinextDrawer(),
       body: Column(

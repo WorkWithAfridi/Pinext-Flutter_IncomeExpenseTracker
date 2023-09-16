@@ -67,69 +67,76 @@ class BudgetView extends StatelessWidget {
         ),
       ],
       child: Scaffold(
-        floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
-        floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              CustomTransitionPageRoute(
-                childWidget: AddSubscriptionPage(),
-              ),
-            );
-          },
-          backgroundColor: darkPurpleColor,
-          child: const Icon(
-            Icons.add,
-            color: whiteColor,
-            size: 18,
-          ),
-        ),
         backgroundColor: whiteColor,
         body: SizedBox(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: defaultPadding,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Animate(
-                    effects: const [
-                      SlideEffect(),
-                      FadeEffect(),
-                    ],
-                    child: Text(
-                      'Budget & Subscriptions',
-                      style: cursiveTextStyle.copyWith(
-                        fontSize: 30,
-                        color: primaryColor,
+          height: getHeight(context),
+          width: getWidth(context),
+          child: Stack(
+            children: [
+              SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: defaultPadding,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Animate(
+                        effects: const [
+                          SlideEffect(),
+                          FadeEffect(),
+                        ],
+                        child: Text(
+                          'Budget & Subscriptions',
+                          style: cursiveTextStyle.copyWith(
+                            fontSize: 30,
+                            color: primaryColor,
+                          ),
+                        ),
                       ),
-                    ),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      GetBudgetEstimationsWidget(),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      const _GetStatisticsWidget(),
+                      const _GetSubscriptionDetailsWidget(),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      const _GetSubscriptionWidget(),
+                      const SizedBox(
+                        height: kToolbarHeight * 2,
+                      ),
+                    ],
                   ),
-                  const SizedBox(
-                    height: 12,
-                  ),
-                  GetBudgetEstimationsWidget(),
-                  const SizedBox(
-                    height: 12,
-                  ),
-                  const _GetStatisticsWidget(),
-                  const _GetSubscriptionDetailsWidget(),
-                  const SizedBox(
-                    height: 12,
-                  ),
-                  const _GetSubscriptionWidget(),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                ],
+                ),
               ),
-            ),
+              Positioned(
+                bottom: defaultPadding,
+                right: defaultPadding,
+                child: FloatingActionButton(
+                  elevation: 6,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      CustomTransitionPageRoute(
+                        childWidget: AddSubscriptionPage(),
+                      ),
+                    );
+                  },
+                  backgroundColor: darkPurpleColor,
+                  child: const Icon(
+                    Icons.add,
+                    color: whiteColor,
+                    size: 18,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
