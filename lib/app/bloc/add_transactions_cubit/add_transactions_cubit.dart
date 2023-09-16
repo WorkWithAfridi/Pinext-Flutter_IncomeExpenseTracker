@@ -62,7 +62,6 @@ class AddTransactionsCubit extends Cubit<AddTransactionsState> {
         transactionDate: state.transactionDate,
       ),
     );
-    await Future.delayed(const Duration(seconds: 1));
     final response = await TransactionHandler().addTransaction(
       amount: amount,
       description: details,
@@ -75,7 +74,7 @@ class AddTransactionsCubit extends Cubit<AddTransactionsState> {
     );
     if (response == 'Success') {
       context.read<UserBloc>().add(RefreshUserStateEvent(context: context));
-      await Future.delayed(const Duration(milliseconds: 400));
+      await Future.delayed(const Duration(seconds: 1));
       emit(
         AddTransactionsSuccessState(
           selectedTransactionMode: state.selectedTransactionMode,
