@@ -67,3 +67,23 @@ The AppData collection is used to store app version data. This collection contai
 
 Conclusion
 The Firebase database for the Pinext app is designed to store user data, card data, transaction data, goals, and app version data. Each collection and subcollection has its own set of documents and fields that store specific data. By organizing the data in this way, the app can efficiently store and retrieve data, providing a seamless user experience.
+
+## Contribution - Pinext is now OPEN SOURCE!!
+
+Contributing to Pinext is a fantastic way to get involved and help us make this project even better. To contribute, follow these steps:
+
+Fork the Repository: Start by forking our project's repository to your GitHub account. This will create a copy of the project under your account.
+
+Clone the Repository: Next, clone the forked repository to your local machine using the git clone command.
+
+Set Up the Database: To get the project running locally, you'll need to set up the database configuration files: google-services.json for Android and GoogleServices-Info.plist for iOS. Please use your own Firebase project and credentials to create these files. This ensures that your contributions won't interfere with the project's existing database.
+
+Make Your Changes: Now you can start making the changes you want to contribute to the project. Ensure that your changes follow our coding guidelines and best practices.
+
+Commit and Push: After making the necessary changes, commit your code and push it to your forked repository on GitHub.
+
+Create a Pull Request: Go to the original project's repository and click on the "New Pull Request" button. GitHub will guide you through the process of creating a pull request from your fork. Be sure to provide a clear and concise description of your changes.
+
+Review and Merge: Once your pull request is created, I will review the changes. If everything looks good, I will merge the pull request into the production branch. If any additional changes are needed, I'll provide feedback in the pull request discussion.
+
+By following these steps, you'll be actively contributing to Pinext and helping us improve it for everyone. Thank you for your valuable contributions!
