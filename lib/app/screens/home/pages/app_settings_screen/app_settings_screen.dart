@@ -62,6 +62,77 @@ class AppSettingsScreen extends StatelessWidget {
                         horizontal: 3,
                       ),
                       child: Text(
+                        'Exciting News',
+                        style: regularTextStyle.copyWith(
+                          fontSize: 12,
+                          color: customBlackColor.withOpacity(.5),
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    GestureDetector(
+                      onTap: () async {
+                        await launchUrl(
+                          Uri.parse('https://github.com/WorkWithAfridi/Pinext-Flutter_IncomeExpenseTracker'),
+                          mode: LaunchMode.externalApplication,
+                        );
+                      },
+                      child: Container(
+                        width: getWidth(context),
+                        decoration: BoxDecoration(
+                          color: greyColor,
+                          borderRadius: BorderRadius.circular(defaultBorder),
+                        ),
+                        alignment: Alignment.centerLeft,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: defaultPadding,
+                          vertical: defaultPadding,
+                        ),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Pinext is Going Open Source!',
+                                  style: regularTextStyle.copyWith(
+                                    fontSize: 15,
+                                  ),
+                                ),
+                                const Icon(
+                                  Icons.star,
+                                  color: customBlackColor,
+                                  size: 18,
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 12,
+                            ),
+                            Text(
+                              """
+We have some fantastic news to share with you! Pinext is taking a big step towards openness and transparency. Starting now, we're making Pinext an open-source project!
+
+This means that Pinext will become a community-driven project where developers and users like you can collaborate, contribute, and help shape the future of the app. We believe that open source is the way to create better software and empower our community.""",
+                              style: regularTextStyle.copyWith(
+                                fontSize: 15,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 3,
+                      ),
+                      child: Text(
                         'User',
                         style: regularTextStyle.copyWith(
                           fontSize: 12,
