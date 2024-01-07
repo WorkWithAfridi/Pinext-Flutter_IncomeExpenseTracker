@@ -127,6 +127,8 @@ class HomepageView extends StatelessWidget {
                                                 color: primaryColor,
                                                 height: 1.3,
                                               ),
+                                              maxLines: 2,
+                                              textAlign: TextAlign.end,
                                             ),
                                           ],
                                         ),
