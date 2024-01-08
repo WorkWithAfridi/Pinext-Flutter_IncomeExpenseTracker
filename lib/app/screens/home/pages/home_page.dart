@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -65,9 +66,12 @@ class HomepageView extends StatelessWidget {
     return 'Hello';
   }
 
+  bool shouldShowAnimation = true;
+
   @override
   Widget build(BuildContext context) {
     log('Current year is: $currentYear');
+    shouldShowAnimation = false;
     return Scaffold(
       body: SizedBox(
         height: getHeight(context),
@@ -85,99 +89,105 @@ class HomepageView extends StatelessWidget {
                     const SizedBox(
                       height: 6,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: defaultPadding,
-                      ),
-                      child: Container(
-                        color: whiteColor,
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Builder(
-                                builder: (context) {
-                                  final state = context.watch<UserBloc>().state;
-                                  final demoBlocState = context.watch<DemoBloc>().state;
-                                  if (state is AuthenticatedUserState) {
-                                    return Padding(
-                                      padding: const EdgeInsets.only(right: defaultPadding),
-                                      child: Animate(
-                                        effects: const [
-                                          SlideEffect(),
-                                          FadeEffect(),
-                                        ],
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.end,
-                                          children: [
-                                            // TextButton(
-                                            //   onPressed: () => throw Exception(),
-                                            //   child: const Text('Throw Test Exception'),
-                                            // ),
-                                            Text(
-                                              getGreetings(),
-                                              style: regularTextStyle.copyWith(
-                                                color: customBlackColor,
-                                                fontSize: 12,
-                                              ),
-                                            ),
-                                            Text(
-                                              demoBlocState is DemoEnabledState ? 'Kyoto' : state.username,
-                                              style: cursiveTextStyle.copyWith(
-                                                fontSize: 28,
-                                                color: primaryColor,
-                                                height: 1.3,
-                                              ),
-                                              maxLines: 2,
-                                              textAlign: TextAlign.end,
-                                            ),
+                    FadeInDown(
+                      duration: const Duration(milliseconds: 350),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: defaultPadding,
+                        ),
+                        child: Container(
+                          color: whiteColor,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Builder(
+                                  builder: (context) {
+                                    final state = context.watch<UserBloc>().state;
+                                    final demoBlocState = context.watch<DemoBloc>().state;
+                                    if (state is AuthenticatedUserState) {
+                                      return Padding(
+                                        padding: const EdgeInsets.only(right: defaultPadding),
+                                        child: Animate(
+                                          effects: const [
+                                            SlideEffect(),
+                                            FadeEffect(),
                                           ],
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.end,
+                                            children: [
+                                              // TextButton(
+                                              //   onPressed: () => throw Exception(),
+                                              //   child: const Text('Throw Test Exception'),
+                                              // ),
+                                              Text(
+                                                getGreetings(),
+                                                style: regularTextStyle.copyWith(
+                                                  color: customBlackColor,
+                                                  fontSize: 12,
+                                                ),
+                                              ),
+                                              Text(
+                                                demoBlocState is DemoEnabledState ? 'Kyoto' : state.username,
+                                                style: cursiveTextStyle.copyWith(
+                                                  fontSize: 28,
+                                                  color: primaryColor,
+                                                  height: 1.3,
+                                                ),
+                                                maxLines: 2,
+                                                textAlign: TextAlign.end,
+                                              ),
+                                            ],
+                                          ),
                                         ),
+                                      );
+                                    } else {
+                                      return const SizedBox.shrink();
+                                    }
+                                  },
+                                ),
+                              ),
+                              Container(
+                                height: 22,
+                                width: .8,
+                                color: customBlackColor,
+                              ),
+                              Expanded(
+                                child: Builder(
+                                  builder: (context) {
+                                    final demoBlocState = context.watch<DemoBloc>().state;
+                                    final homepageCubitState = context.watch<HomeframeCubit>().state;
+                                    return Padding(
+                                      padding: const EdgeInsets.only(left: defaultPadding),
+                                      child: Text(
+                                        demoBlocState is DemoEnabledState
+                                            ? 'PINEXT : DEMO-MODE'
+                                            : homepageCubitState.selectedIndex == 4
+                                                ? 'PINEXT : v$appVersion'
+                                                : 'PINEXT',
+                                        style: regularTextStyle.copyWith(
+                                          fontSize: 16,
+                                        ),
+                                        textAlign: TextAlign.left,
                                       ),
                                     );
-                                  } else {
-                                    return const SizedBox.shrink();
-                                  }
-                                },
+                                  },
+                                ),
                               ),
-                            ),
-                            Container(
-                              height: 22,
-                              width: .8,
-                              color: customBlackColor,
-                            ),
-                            Expanded(
-                              child: Builder(
-                                builder: (context) {
-                                  final demoBlocState = context.watch<DemoBloc>().state;
-                                  final homepageCubitState = context.watch<HomeframeCubit>().state;
-                                  return Padding(
-                                    padding: const EdgeInsets.only(left: defaultPadding),
-                                    child: Text(
-                                      demoBlocState is DemoEnabledState
-                                          ? 'PINEXT : DEMO-MODE'
-                                          : homepageCubitState.selectedIndex == 4
-                                              ? 'PINEXT : v$appVersion'
-                                              : 'PINEXT',
-                                      style: regularTextStyle.copyWith(
-                                        fontSize: 16,
-                                      ),
-                                      textAlign: TextAlign.left,
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
                     const SizedBox(
                       height: 8,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
-                      child: HomepageGetBalanceWidget(
-                        tapToOpenUpdateNetBalancePage: false,
+                    FadeInLeft(
+                      duration: const Duration(milliseconds: 350),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+                        child: HomepageGetBalanceWidget(
+                          tapToOpenUpdateNetBalancePage: false,
+                        ),
                       ),
                     ),
                     Padding(
@@ -191,13 +201,19 @@ class HomepageView extends StatelessWidget {
                             // height: 16,
                             height: 12,
                           ),
-                          GetBudgetEstimationsWidget(
-                            isForHomePage: true,
+                          FadeInRight(
+                            duration: const Duration(milliseconds: 350),
+                            child: GetBudgetEstimationsWidget(
+                              isForHomePage: true,
+                            ),
                           ),
                           const SizedBox(
                             height: 12,
                           ),
-                          const HomepageGetSavingsForThisMonthWidget(),
+                          FadeInLeft(
+                            duration: const Duration(milliseconds: 350),
+                            child: const HomepageGetSavingsForThisMonthWidget(),
+                          ),
                           const SizedBox(
                             height: 12,
                           ),
@@ -337,11 +353,17 @@ class HomepageView extends StatelessWidget {
                           const SizedBox(
                             height: 12,
                           ),
-                          const HomepageGetExpensesWidget(),
+                          FadeInUp(
+                            duration: const Duration(milliseconds: 350),
+                            child: const HomepageGetExpensesWidget(),
+                          ),
                           const SizedBox(
                             height: 12,
                           ),
-                          const HomepageGetPastTransactionsWidget(),
+                          FadeInUp(
+                            duration: const Duration(milliseconds: 350),
+                            child: const HomepageGetPastTransactionsWidget(),
+                          ),
                           const SizedBox(
                             height: 12,
                           ),
@@ -359,16 +381,19 @@ class HomepageView extends StatelessWidget {
               Positioned(
                 bottom: defaultPadding,
                 right: defaultPadding,
-                child: FloatingActionButton(
-                  elevation: 6,
-                  onPressed: () {
-                    context.read<HomeframeCubit>().openAddTransactionsPage(context);
-                  },
-                  backgroundColor: customBlackColor,
-                  child: const Icon(
-                    Icons.add,
-                    color: whiteColor,
-                    size: 18,
+                child: FadeInUp(
+                  duration: const Duration(milliseconds: 350),
+                  child: FloatingActionButton(
+                    elevation: 6,
+                    onPressed: () {
+                      context.read<HomeframeCubit>().openAddTransactionsPage(context);
+                    },
+                    backgroundColor: customBlackColor,
+                    child: const Icon(
+                      Icons.add,
+                      color: whiteColor,
+                      size: 18,
+                    ),
                   ),
                 ),
               ),
