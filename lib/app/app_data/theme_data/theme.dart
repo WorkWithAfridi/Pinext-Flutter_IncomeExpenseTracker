@@ -6,6 +6,9 @@ class PinextTheme {
     visualDensity: VisualDensity.compact,
     primaryColor: primaryColor,
     scaffoldBackgroundColor: whiteColor,
+    chipTheme: const ChipThemeData(
+      side: BorderSide.none,
+    ),
     colorScheme: const ColorScheme(
       brightness: Brightness.light,
       primary: primaryColor,
