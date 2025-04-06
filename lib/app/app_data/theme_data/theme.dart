@@ -8,6 +8,7 @@ class PinextTheme {
     scaffoldBackgroundColor: whiteColor,
     chipTheme: const ChipThemeData(
       side: BorderSide.none,
+      backgroundColor: whiteColor,
     ),
     colorScheme: const ColorScheme(
       brightness: Brightness.light,
@@ -17,8 +18,6 @@ class PinextTheme {
       onSecondary: customBlackColor,
       error: Colors.red,
       onError: customBlackColor,
-      background: whiteColor,
-      onBackground: customBlackColor,
       surface: whiteColor,
       onSurface: customBlackColor,
     ),
