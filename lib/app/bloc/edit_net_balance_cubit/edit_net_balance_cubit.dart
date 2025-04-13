@@ -8,7 +8,7 @@ part 'edit_net_balance_state.dart';
 
 class EditNetBalanceCubit extends Cubit<EditNetBalanceState> {
   EditNetBalanceCubit() : super(EditNetBalanceDefaultState());
-  updateNetBalance({required String newNetBalance}) async {
+  Future<void> updateNetBalance({required String newNetBalance}) async {
     emit(EditNetBalanceLoadingState());
     await Future.delayed(const Duration(seconds: 1));
     var response = 'Error';
@@ -29,7 +29,7 @@ class EditNetBalanceCubit extends Cubit<EditNetBalanceState> {
     }
   }
 
-  resetState() {
+  void resetState() {
     emit(EditNetBalanceDefaultState());
   }
 }

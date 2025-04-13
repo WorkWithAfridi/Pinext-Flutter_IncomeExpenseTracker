@@ -44,7 +44,7 @@ class ApiService extends BaseService {
         url,
       );
       responseJson = returnResponse(response);
-    } on DioError catch (error) {
+    } on DioException catch (error) {
       responseJson = returnResponse(error.response!);
     } on SocketException {
       return {
@@ -53,7 +53,7 @@ class ApiService extends BaseService {
         'data': [],
       };
     } catch (e) {
-      if (e is DioError) {
+      if (e is DioException) {
         print("Response at Repo ${e.response?.data["message"]}");
         return {
           'error': true,
@@ -74,7 +74,7 @@ class ApiService extends BaseService {
     try {
       response = await _dio.get(url);
       responseJson = returnResponse(response);
-    } on DioError catch (error) {
+    } on DioException catch (error) {
       responseJson = returnResponse(error.response!);
     } on SocketException {
       return {
@@ -83,7 +83,7 @@ class ApiService extends BaseService {
         'data': [],
       };
     } catch (e) {
-      if (e is DioError) {
+      if (e is DioException) {
         print("Response at Repo ${e.response?.data["message"]}");
 
         return {
@@ -103,7 +103,7 @@ class ApiService extends BaseService {
     try {
       response = await _dio.get(url, queryParameters: parameters);
       responseJson = returnResponse(response);
-    } on DioError catch (error) {
+    } on DioException catch (error) {
       responseJson = returnResponse(error.response!);
     } on SocketException {
       return {
@@ -112,7 +112,7 @@ class ApiService extends BaseService {
         'data': [],
       };
     } catch (e) {
-      if (e is DioError) {
+      if (e is DioException) {
         print("Response at Repo ${e.response?.data["message"]}");
 
         return {
@@ -135,7 +135,7 @@ class ApiService extends BaseService {
         data: data,
       );
       responseJson = returnResponse(response);
-    } on DioError catch (error) {
+    } on DioException catch (error) {
       responseJson = returnResponse(error.response!);
     } on SocketException {
       return {
@@ -144,7 +144,7 @@ class ApiService extends BaseService {
         'data': [],
       };
     } catch (e) {
-      if (e is DioError) {
+      if (e is DioException) {
         print("Response at Repo ${e.response?.data["message"]}");
         return {
           'error': true,
@@ -166,7 +166,7 @@ class ApiService extends BaseService {
         data: data,
       );
       responseJson = returnResponse(response);
-    } on DioError catch (error) {
+    } on DioException catch (error) {
       responseJson = returnResponse(error.response!);
     } on SocketException {
       return {
@@ -175,7 +175,7 @@ class ApiService extends BaseService {
         'data': [],
       };
     } catch (e) {
-      if (e is DioError) {
+      if (e is DioException) {
         return {
           'error': true,
           'message': e.response?.data['message'],
@@ -196,7 +196,7 @@ class ApiService extends BaseService {
         data: data,
       );
       responseJson = returnResponse(response);
-    } on DioError catch (error) {
+    } on DioException catch (error) {
       responseJson = returnResponse(error.response!);
     } on SocketException {
       return {
@@ -205,7 +205,7 @@ class ApiService extends BaseService {
         'data': [],
       };
     } catch (e) {
-      if (e is DioError) {
+      if (e is DioException) {
         return {
           'error': true,
           'message': e.response?.data['message'],

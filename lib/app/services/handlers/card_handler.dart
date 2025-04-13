@@ -49,7 +49,7 @@ class CardHandler {
     required bool duringSignIn,
   }) async {
     if (duringSignIn) {
-      return await FirebaseServices()
+      return FirebaseServices()
           .firebaseFirestore
           .collection('pinext_users')
           .doc(FirebaseServices().getUserId())
@@ -87,7 +87,7 @@ class CardHandler {
     return;
   }
 
-  editCard(PinextCardModel pinextCardModel) {}
+  void editCard(PinextCardModel pinextCardModel) {}
 
   Future<PinextCardModel> getCard(String cardId) async {
     PinextCardModel pinextCardModel;

@@ -30,7 +30,7 @@ class UpdateSubscriptionCubit extends Cubit<UpdateSubscriptionState> {
     }
   }
 
-  resetState() {
+  void resetState() {
     emit(UpdateSubscriptionDefault());
   }
 }

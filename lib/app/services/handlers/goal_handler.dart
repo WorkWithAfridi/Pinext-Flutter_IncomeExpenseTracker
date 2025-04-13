@@ -9,7 +9,7 @@ class GoalHandler {
   Future addGoal({
     required PinextGoalModel pinextGoalModel,
   }) async {
-    return await FirebaseServices()
+    return FirebaseServices()
         .firebaseFirestore
         .collection('pinext_users')
         .doc(FirebaseServices().getUserId())
@@ -21,7 +21,7 @@ class GoalHandler {
   Future updateGoal({
     required PinextGoalModel pinextGoalModel,
   }) async {
-    return await FirebaseServices()
+    return FirebaseServices()
         .firebaseFirestore
         .collection('pinext_users')
         .doc(FirebaseServices().getUserId())
@@ -33,7 +33,7 @@ class GoalHandler {
   Future deleteGoal({
     required PinextGoalModel pinextGoalModel,
   }) async {
-    return await FirebaseServices()
+    return FirebaseServices()
         .firebaseFirestore
         .collection('pinext_users')
         .doc(FirebaseServices().getUserId())

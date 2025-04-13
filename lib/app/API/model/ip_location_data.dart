@@ -36,14 +36,14 @@ class IpLocationData {
 
   factory IpLocationData.fromMap(Map<String, dynamic> map) {
     return IpLocationData(
-      ip: map['ip'] != null ? map['ip'].toString() : null,
-      ip_number: map['ip_number'] != null ? map['ip_number'].toString() : null,
-      ip_version: map['ip_version'] != null ? map['ip_version'].toString() : null,
-      country_name: map['country_name'] != null ? map['country_name'].toString() : null,
-      country_code2: map['country_code2'] != null ? map['country_code2'].toString() : null,
-      isp: map['isp'] != null ? map['isp'].toString() : null,
-      response_code: map['response_code'] != null ? map['response_code'].toString() : null,
-      response_message: map['response_message'] != null ? map['response_message'].toString() : null,
+      ip: map['ip']?.toString(),
+      ip_number: map['ip_number']?.toString(),
+      ip_version: map['ip_version']?.toString(),
+      country_name: map['country_name']?.toString(),
+      country_code2: map['country_code2']?.toString(),
+      isp: map['isp']?.toString(),
+      response_code: map['response_code']?.toString(),
+      response_message: map['response_message']?.toString(),
     );
   }
 

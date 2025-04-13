@@ -12,7 +12,7 @@ class HomepageCubit extends Cubit<HomepageState> {
           ),
         );
 
-  changeMenuFilter(String filterName) {
+  void changeMenuFilter(String filterName) {
     emit(
       HomepageInitialState(
         selectedFilter: filterName,

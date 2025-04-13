@@ -89,105 +89,99 @@ class HomepageView extends StatelessWidget {
                     const SizedBox(
                       height: 6,
                     ),
-                    FadeInDown(
-                      duration: const Duration(milliseconds: 350),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: defaultPadding,
-                        ),
-                        child: Container(
-                          color: whiteColor,
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Builder(
-                                  builder: (context) {
-                                    final state = context.watch<UserBloc>().state;
-                                    final demoBlocState = context.watch<DemoBloc>().state;
-                                    if (state is AuthenticatedUserState) {
-                                      return Padding(
-                                        padding: const EdgeInsets.only(right: defaultPadding),
-                                        child: Animate(
-                                          effects: const [
-                                            SlideEffect(),
-                                            FadeEffect(),
-                                          ],
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.end,
-                                            children: [
-                                              // TextButton(
-                                              //   onPressed: () => throw Exception(),
-                                              //   child: const Text('Throw Test Exception'),
-                                              // ),
-                                              Text(
-                                                getGreetings(),
-                                                style: regularTextStyle.copyWith(
-                                                  color: customBlackColor,
-                                                  fontSize: 12,
-                                                ),
-                                              ),
-                                              Text(
-                                                demoBlocState is DemoEnabledState ? 'Kyoto' : state.username,
-                                                style: cursiveTextStyle.copyWith(
-                                                  fontSize: 28,
-                                                  color: primaryColor,
-                                                  height: 1.3,
-                                                ),
-                                                maxLines: 2,
-                                                textAlign: TextAlign.end,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      );
-                                    } else {
-                                      return const SizedBox.shrink();
-                                    }
-                                  },
-                                ),
-                              ),
-                              Container(
-                                height: 22,
-                                width: .8,
-                                color: customBlackColor,
-                              ),
-                              Expanded(
-                                child: Builder(
-                                  builder: (context) {
-                                    final demoBlocState = context.watch<DemoBloc>().state;
-                                    final homepageCubitState = context.watch<HomeframeCubit>().state;
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: defaultPadding,
+                      ),
+                      child: ColoredBox(
+                        color: whiteColor,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Builder(
+                                builder: (context) {
+                                  final state = context.watch<UserBloc>().state;
+                                  final demoBlocState = context.watch<DemoBloc>().state;
+                                  if (state is AuthenticatedUserState) {
                                     return Padding(
-                                      padding: const EdgeInsets.only(left: defaultPadding),
-                                      child: Text(
-                                        demoBlocState is DemoEnabledState
-                                            ? 'PINEXT : DEMO-MODE'
-                                            : homepageCubitState.selectedIndex == 4
-                                                ? 'PINEXT : v$appVersion'
-                                                : 'PINEXT',
-                                        style: regularTextStyle.copyWith(
-                                          fontSize: 16,
+                                      padding: const EdgeInsets.only(right: defaultPadding),
+                                      child: Animate(
+                                        effects: const [
+                                          SlideEffect(),
+                                          FadeEffect(),
+                                        ],
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.end,
+                                          children: [
+                                            // TextButton(
+                                            //   onPressed: () => throw Exception(),
+                                            //   child: const Text('Throw Test Exception'),
+                                            // ),
+                                            Text(
+                                              getGreetings(),
+                                              style: regularTextStyle.copyWith(
+                                                color: customBlackColor,
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            Text(
+                                              demoBlocState is DemoEnabledState ? 'Kyoto' : state.username,
+                                              style: cursiveTextStyle.copyWith(
+                                                fontSize: 28,
+                                                color: primaryColor,
+                                                height: 1.3,
+                                              ),
+                                              maxLines: 2,
+                                              textAlign: TextAlign.end,
+                                            ),
+                                          ],
                                         ),
-                                        textAlign: TextAlign.left,
                                       ),
                                     );
-                                  },
-                                ),
+                                  } else {
+                                    return const SizedBox.shrink();
+                                  }
+                                },
                               ),
-                            ],
-                          ),
+                            ),
+                            Container(
+                              height: 22,
+                              width: .8,
+                              color: customBlackColor,
+                            ),
+                            Expanded(
+                              child: Builder(
+                                builder: (context) {
+                                  final demoBlocState = context.watch<DemoBloc>().state;
+                                  final homepageCubitState = context.watch<HomeframeCubit>().state;
+                                  return Padding(
+                                    padding: const EdgeInsets.only(left: defaultPadding),
+                                    child: Text(
+                                      demoBlocState is DemoEnabledState
+                                          ? 'PINEXT : DEMO-MODE'
+                                          : homepageCubitState.selectedIndex == 4
+                                              ? 'PINEXT : v$appVersion'
+                                              : 'PINEXT',
+                                      style: regularTextStyle.copyWith(
+                                        fontSize: 16,
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
                     const SizedBox(
                       height: 8,
                     ),
-                    FadeInLeft(
-                      duration: const Duration(milliseconds: 350),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
-                        child: HomepageGetBalanceWidget(
-                          tapToOpenUpdateNetBalancePage: false,
-                        ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+                      child: HomepageGetBalanceWidget(
+                        tapToOpenUpdateNetBalancePage: false,
                       ),
                     ),
                     Padding(
@@ -201,19 +195,13 @@ class HomepageView extends StatelessWidget {
                             // height: 16,
                             height: 12,
                           ),
-                          FadeInRight(
-                            duration: const Duration(milliseconds: 350),
-                            child: GetBudgetEstimationsWidget(
-                              isForHomePage: true,
-                            ),
+                          GetBudgetEstimationsWidget(
+                            isForHomePage: true,
                           ),
                           const SizedBox(
                             height: 12,
                           ),
-                          FadeInLeft(
-                            duration: const Duration(milliseconds: 350),
-                            child: const HomepageGetSavingsForThisMonthWidget(),
-                          ),
+                          const HomepageGetSavingsForThisMonthWidget(),
                           const SizedBox(
                             height: 12,
                           ),
@@ -353,17 +341,11 @@ class HomepageView extends StatelessWidget {
                           const SizedBox(
                             height: 12,
                           ),
-                          FadeInUp(
-                            duration: const Duration(milliseconds: 350),
-                            child: const HomepageGetExpensesWidget(),
-                          ),
+                          const HomepageGetExpensesWidget(),
                           const SizedBox(
                             height: 12,
                           ),
-                          FadeInUp(
-                            duration: const Duration(milliseconds: 350),
-                            child: const HomepageGetPastTransactionsWidget(),
-                          ),
+                          const HomepageGetPastTransactionsWidget(),
                           const SizedBox(
                             height: 12,
                           ),

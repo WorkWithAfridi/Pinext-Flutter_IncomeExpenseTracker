@@ -211,7 +211,7 @@ class _ArchiveMonthViewState extends State<ArchiveMonthView> {
         ),
         Material(
           elevation: 4,
-          child: Container(
+          child: ColoredBox(
             color: whiteColor,
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),

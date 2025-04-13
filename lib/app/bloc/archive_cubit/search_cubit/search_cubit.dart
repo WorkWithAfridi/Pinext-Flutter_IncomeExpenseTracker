@@ -11,7 +11,7 @@ class ArchiveSearchCubit extends Cubit<ArchiveSearchState> {
             searchTerm: '',
           ),
         );
-  toogleSearch() {
+  void toogleSearch() {
     emit(
       ArchiveSearchDefaultState(
         isSearchActive: !state.isSearchActive,
@@ -20,7 +20,7 @@ class ArchiveSearchCubit extends Cubit<ArchiveSearchState> {
     );
   }
 
-  resetState() {
+  void resetState() {
     emit(
       ArchiveSearchDefaultState(
         isSearchActive: false,
@@ -29,7 +29,7 @@ class ArchiveSearchCubit extends Cubit<ArchiveSearchState> {
     );
   }
 
-  updateSearchTerm(String srchTerm) {
+  void updateSearchTerm(String srchTerm) {
     emit(
       ArchiveSearchDefaultState(
         isSearchActive: state.isSearchActive,

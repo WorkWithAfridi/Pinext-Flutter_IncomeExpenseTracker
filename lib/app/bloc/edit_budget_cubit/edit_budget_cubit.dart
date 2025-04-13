@@ -32,7 +32,7 @@ class EditBudgetCubit extends Cubit<EditBudgetState> {
     }
   }
 
-  resetState() {
+  void resetState() {
     emit(EditBudgetDefaultState());
   }
 }

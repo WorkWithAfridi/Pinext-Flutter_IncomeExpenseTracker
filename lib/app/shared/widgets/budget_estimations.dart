@@ -95,7 +95,7 @@ class GetBudgetEstimationsWidget extends StatelessWidget {
                             );
                           }
                         },
-                        child: Container(
+                        child: ColoredBox(
                           color: Colors.transparent,
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.end,

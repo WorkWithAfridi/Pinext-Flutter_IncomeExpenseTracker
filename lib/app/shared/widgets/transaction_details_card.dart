@@ -10,7 +10,6 @@ import 'package:pinext/app/app_data/extensions/string_extensions.dart';
 import 'package:pinext/app/app_data/theme_data/colors.dart';
 import 'package:pinext/app/bloc/demoBloc/demo_bloc.dart';
 import 'package:pinext/app/bloc/region_cubit/region_cubit.dart';
-import 'package:pinext/app/models/pinext_card_model.dart';
 import 'package:pinext/app/models/pinext_transaction_model.dart';
 import 'package:pinext/app/screens/add_and_view_transaction/add_and_view_transaction.dart';
 import 'package:pinext/app/services/handlers/card_handler.dart';
@@ -51,7 +50,7 @@ class _TransactionDetailsCardState extends State<TransactionDetailsCard> {
       child: Builder(
         builder: (context) {
           final demoBlocState = context.watch<DemoBloc>().state;
-          return Container(
+          return ColoredBox(
             color: Colors.transparent,
             child: Column(
               children: [
@@ -80,7 +79,7 @@ class _TransactionDetailsCardState extends State<TransactionDetailsCard> {
                               future: CardHandler().getCardData(widget.pinextTransactionModel.cardId),
                               builder: (context, snapshot) {
                                 if (snapshot.hasData) {
-                                  final cardDetails = snapshot.data! as PinextCardModel;
+                                  final cardDetails = snapshot.data!;
                                   return GradientText(
                                     demoBlocState is DemoEnabledState ? 'Bank' : cardDetails.title,
                                     colors: GetGradientFromString(
