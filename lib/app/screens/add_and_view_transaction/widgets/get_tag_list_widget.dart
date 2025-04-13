@@ -59,15 +59,18 @@ class GetTagsList extends StatelessWidget {
                           context.read<AddTransactionsCubit>().changeSelectedTag('');
                         }
                       },
-                      child: Chip(
-                        label: Text(
-                          transactionTags[index],
-                          style: regularTextStyle.copyWith(
-                            color: transactionTags[index] == state.selectedTag ? whiteColor : customBlackColor.withOpacity(.6),
-                            fontWeight: transactionTags[index] == state.selectedTag ? FontWeight.w600 : FontWeight.normal,
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 8),
+                        child: Chip(
+                          label: Text(
+                            transactionTags[index],
+                            style: regularTextStyle.copyWith(
+                              color: transactionTags[index] == state.selectedTag ? whiteColor : customBlackColor.withOpacity(.6),
+                              fontWeight: transactionTags[index] == state.selectedTag ? FontWeight.w600 : FontWeight.normal,
+                            ),
                           ),
+                          backgroundColor: transactionTags[index] == state.selectedTag ? primaryColor : greyColor,
                         ),
-                        backgroundColor: transactionTags[index] == state.selectedTag ? primaryColor : greyColor,
                       ),
                     );
                   },
